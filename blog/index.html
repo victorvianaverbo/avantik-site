@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Avantik - Dicas para palestrantes e empresas</title>
+  <meta name="description" content="Artigos sobre como contratar palestrantes, organizar eventos e crescer como palestrante profissional. Dicas, tendencias e guias praticos.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  <script src="/script.js" defer></script>
+
+  <style>
+    /* ==========================================
+       PAGE HERO (Blog)
+       ========================================== */
+
+    .page-hero {
+      padding-top: calc(72px + clamp(3rem, 8vw, 6rem));
+      padding-bottom: var(--section-py);
+      text-align: center;
+    }
+
+    .page-hero__label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .page-hero__label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 1.25rem;
+      height: 2px;
+      background: var(--color-accent);
+    }
+
+    .page-hero__title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--color-text);
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .page-hero__subtitle {
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      color: var(--color-text-secondary);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ==========================================
+       BLOG FILTER PILLS
+       ========================================== */
+
+    .blog-grid__filters {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .blog-grid__filter {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      padding: 0.5rem 1.25rem;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all 300ms var(--ease-out);
+    }
+
+    .blog-grid__filter:hover {
+      border-color: var(--color-text);
+    }
+
+    .blog-grid__filter--active {
+      background: var(--color-text);
+      color: #FFFFFF;
+      border-color: transparent;
+    }
+
+    .blog-grid__filter--active:hover {
+      border-color: transparent;
+    }
+
+    /* ==========================================
+       BLOG CARDS GRID
+       ========================================== */
+
+    .blog-grid__list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 960px) {
+      .blog-grid__list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .blog-grid__list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================
+       BLOG CARD
+       ========================================== */
+
+    .blog-card {
+      display: flex;
+      flex-direction: column;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out), border-color 300ms;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      border-color: transparent;
+    }
+
+    .blog-card[hidden] {
+      display: none;
+    }
+
+    .blog-card__image {
+      width: 100%;
+      height: 180px;
+      position: relative;
+    }
+
+    /* Gradient placeholder backgrounds - editorial/muted */
+    .blog-card:nth-child(20n+1) .blog-card__image { background: linear-gradient(135deg, rgba(67, 64, 160, 0.12) 0%, rgba(232, 106, 51, 0.08) 100%); }
+    .blog-card:nth-child(20n+2) .blog-card__image { background: linear-gradient(135deg, rgba(232, 106, 51, 0.10) 0%, rgba(67, 64, 160, 0.06) 100%); }
+    .blog-card:nth-child(20n+3) .blog-card__image { background: linear-gradient(160deg, rgba(67, 64, 160, 0.08) 0%, rgba(45, 43, 110, 0.14) 100%); }
+    .blog-card:nth-child(20n+4) .blog-card__image { background: linear-gradient(145deg, rgba(232, 106, 51, 0.06) 0%, rgba(67, 64, 160, 0.10) 100%); }
+    .blog-card:nth-child(20n+5) .blog-card__image { background: linear-gradient(120deg, rgba(45, 43, 110, 0.10) 0%, rgba(232, 106, 51, 0.12) 100%); }
+    .blog-card:nth-child(20n+6) .blog-card__image { background: linear-gradient(135deg, rgba(232, 106, 51, 0.12) 0%, rgba(45, 43, 110, 0.08) 100%); }
+    .blog-card:nth-child(20n+7) .blog-card__image { background: linear-gradient(150deg, rgba(67, 64, 160, 0.10) 0%, rgba(232, 106, 51, 0.06) 100%); }
+    .blog-card:nth-child(20n+8) .blog-card__image { background: linear-gradient(130deg, rgba(45, 43, 110, 0.06) 0%, rgba(67, 64, 160, 0.12) 100%); }
+    .blog-card:nth-child(20n+9) .blog-card__image { background: linear-gradient(170deg, rgba(232, 106, 51, 0.08) 0%, rgba(45, 43, 110, 0.10) 100%); }
+    .blog-card:nth-child(20n+10) .blog-card__image { background: linear-gradient(140deg, rgba(67, 64, 160, 0.14) 0%, rgba(232, 106, 51, 0.06) 100%); }
+    .blog-card:nth-child(20n+11) .blog-card__image { background: linear-gradient(125deg, rgba(232, 106, 51, 0.10) 0%, rgba(67, 64, 160, 0.12) 100%); }
+    .blog-card:nth-child(20n+12) .blog-card__image { background: linear-gradient(155deg, rgba(45, 43, 110, 0.12) 0%, rgba(232, 106, 51, 0.08) 100%); }
+    .blog-card:nth-child(20n+13) .blog-card__image { background: linear-gradient(135deg, rgba(67, 64, 160, 0.06) 0%, rgba(45, 43, 110, 0.14) 100%); }
+    .blog-card:nth-child(20n+14) .blog-card__image { background: linear-gradient(165deg, rgba(232, 106, 51, 0.12) 0%, rgba(67, 64, 160, 0.08) 100%); }
+    .blog-card:nth-child(20n+15) .blog-card__image { background: linear-gradient(110deg, rgba(45, 43, 110, 0.08) 0%, rgba(232, 106, 51, 0.14) 100%); }
+    .blog-card:nth-child(20n+16) .blog-card__image { background: linear-gradient(145deg, rgba(67, 64, 160, 0.12) 0%, rgba(45, 43, 110, 0.06) 100%); }
+    .blog-card:nth-child(20n+17) .blog-card__image { background: linear-gradient(135deg, rgba(232, 106, 51, 0.08) 0%, rgba(67, 64, 160, 0.14) 100%); }
+    .blog-card:nth-child(20n+18) .blog-card__image { background: linear-gradient(160deg, rgba(45, 43, 110, 0.14) 0%, rgba(232, 106, 51, 0.06) 100%); }
+    .blog-card:nth-child(20n+19) .blog-card__image { background: linear-gradient(120deg, rgba(67, 64, 160, 0.08) 0%, rgba(232, 106, 51, 0.10) 100%); }
+    .blog-card:nth-child(20n+20) .blog-card__image { background: linear-gradient(150deg, rgba(232, 106, 51, 0.14) 0%, rgba(45, 43, 110, 0.10) 100%); }
+
+    .blog-card__body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .blog-card__tag {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .blog-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      color: var(--color-text);
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+    }
+
+    .blog-card__excerpt {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 1.25rem;
+    }
+
+    .blog-card__meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+      opacity: 0.7;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <span class="header__logo-name">Avantik</span>
+        <span class="header__logo-tagline">Apogeu do Palestrante</span>
+      </a>
+
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+        <a href="/blog/" class="header__link header__link--active">Blog</a>
+      </div>
+
+      <div class="header__actions">
+        <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu overlay -->
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <a href="/blog/" class="header__mobile-link">Blog</a>
+      <div class="header__mobile-actions">
+        <a href="/diretorio/" class="btn btn--outline">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+      <div class="container">
+        <span class="page-hero__label" data-aos="fade-up">Blog</span>
+        <h1 class="page-hero__title" data-aos="fade-up" data-aos-delay="80">Conteudo para quem contrata e quem palestra</h1>
+        <p class="page-hero__subtitle" data-aos="fade-up" data-aos-delay="160">Dicas, guias e tendencias para empresas que buscam palestrantes e profissionais que vivem de palco.</p>
+      </div>
+    </section>
+
+    <!-- BLOG GRID -->
+    <section class="blog-grid section">
+      <div class="container">
+
+        <!-- Filter tabs -->
+        <div class="blog-grid__filters" data-aos="fade-up">
+          <button class="blog-grid__filter blog-grid__filter--active" data-blog-filter="todos">Todos</button>
+          <button class="blog-grid__filter" data-blog-filter="empresas">Para Empresas</button>
+          <button class="blog-grid__filter" data-blog-filter="palestrantes">Para Palestrantes</button>
+        </div>
+
+        <!-- Article cards grid -->
+        <div class="blog-grid__list">
+
+          <!-- 1 -->
+          <a href="/blog/como-escolher-palestrante-sipat/" class="blog-card" data-blog-category="empresas" data-aos="fade-up">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Como escolher o palestrante ideal para sua SIPAT</h2>
+              <p class="blog-card__excerpt">Guia completo para selecionar o palestrante que vai engajar sua equipe na Semana de Prevencao.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 2 -->
+          <a href="/blog/quanto-custa-contratar-palestrante/" class="blog-card" data-blog-category="empresas" data-aos="fade-up" data-aos-delay="100">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Quanto custa contratar um palestrante em 2025</h2>
+              <p class="blog-card__excerpt">Entenda as faixas de preco, o que influencia o cache e como negociar o melhor custo-beneficio.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 3 -->
+          <a href="/blog/temas-palestras-sipat/" class="blog-card" data-blog-category="empresas" data-aos="fade-up" data-aos-delay="200">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">10 temas de palestras para SIPAT que realmente engajam</h2>
+              <p class="blog-card__excerpt">Os temas mais procurados e eficazes para a Semana Interna de Prevencao de Acidentes.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 4 -->
+          <a href="/blog/como-organizar-evento-corporativo/" class="blog-card" data-blog-category="empresas" data-aos="fade-up">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Como organizar um evento corporativo de sucesso</h2>
+              <p class="blog-card__excerpt">Do planejamento a execucao: checklist completo para eventos que geram resultado.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 5 -->
+          <a href="/blog/palestras-dia-da-mulher/" class="blog-card" data-blog-category="empresas" data-aos="fade-up" data-aos-delay="100">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Palestras para o Dia da Mulher: como escolher o tema certo</h2>
+              <p class="blog-card__excerpt">Temas que vao alem do discurso e criam impacto real na cultura da empresa.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 6 -->
+          <a href="/blog/outubro-rosa-empresas-palestras/" class="blog-card" data-blog-category="empresas" data-aos="fade-up" data-aos-delay="200">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Outubro Rosa nas empresas: palestras que fazem a diferenca</h2>
+              <p class="blog-card__excerpt">Como usar este momento para conscientizar e engajar colaboradores de verdade.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 7 -->
+          <a href="/blog/temas-treinamento-lideranca/" class="blog-card" data-blog-category="empresas" data-aos="fade-up">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Lideranca: os melhores temas para treinamentos corporativos</h2>
+              <p class="blog-card__excerpt">Desenvolva lideres que inspiram com os temas mais eficazes do mercado.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 8 -->
+          <a href="/blog/medir-roi-palestra-corporativa/" class="blog-card" data-blog-category="empresas" data-aos="fade-up" data-aos-delay="100">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Como medir o ROI de uma palestra corporativa</h2>
+              <p class="blog-card__excerpt">Metricas praticas para provar o valor do investimento em palestras e treinamentos.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 9 -->
+          <a href="/blog/saude-mental-trabalho-palestras/" class="blog-card" data-blog-category="empresas" data-aos="fade-up" data-aos-delay="200">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Saude mental no trabalho: palestras que transformam o ambiente</h2>
+              <p class="blog-card__excerpt">Por que investir em saude mental e como escolher o palestrante certo para este tema.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 10 -->
+          <a href="/blog/diversidade-inclusao-palestras/" class="blog-card" data-blog-category="empresas" data-aos="fade-up">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Empresas</span>
+              <h2 class="blog-card__title">Diversidade e inclusao: como trazer o tema para sua empresa</h2>
+              <p class="blog-card__excerpt">Palestras que educam, sensibilizam e criam mudanca real na cultura organizacional.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 11 -->
+          <a href="/blog/como-se-tornar-palestrante/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up" data-aos-delay="100">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Como se tornar palestrante profissional: guia completo</h2>
+              <p class="blog-card__excerpt">O passo a passo para iniciar e consolidar sua carreira como palestrante.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 12 -->
+          <a href="/blog/como-precificar-palestras/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up" data-aos-delay="200">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Como precificar suas palestras: do iniciante ao premium</h2>
+              <p class="blog-card__excerpt">Estrategias para definir o valor do seu trabalho sem subestimar ou afastar clientes.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 13 -->
+          <a href="/blog/marketing-pessoal-palestrantes/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Marketing pessoal para palestrantes: construa sua marca</h2>
+              <p class="blog-card__excerpt">Como se posicionar no mercado e ser lembrado por quem contrata palestrantes.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 14 -->
+          <a href="/blog/portfolio-palestrante-profissional/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up" data-aos-delay="100">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Como criar um portfolio de palestrante que vende</h2>
+              <p class="blog-card__excerpt">Os elementos essenciais para um portfolio que converte visitantes em contratos.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 15 -->
+          <a href="/blog/plataformas-para-palestrantes/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up" data-aos-delay="200">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Plataformas para palestrantes: onde se cadastrar em 2025</h2>
+              <p class="blog-card__excerpt">As melhores plataformas para ganhar visibilidade e receber propostas de eventos.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 16 -->
+          <a href="/blog/como-conseguir-mais-eventos/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Como conseguir mais eventos como palestrante</h2>
+              <p class="blog-card__excerpt">Estrategias praticas para aumentar sua agenda e fechar mais contratos.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 17 -->
+          <a href="/blog/pilares-palestrante-sucesso/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up" data-aos-delay="100">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Os 4 pilares do palestrante de sucesso</h2>
+              <p class="blog-card__excerpt">Conteudo, Performance, Apresentacao e Posicionamento: domine cada um.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 18 -->
+          <a href="/blog/como-criar-palestra-transformadora/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up" data-aos-delay="200">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Como criar uma palestra que transforma a plateia</h2>
+              <p class="blog-card__excerpt">Tecnicas de storytelling, estrutura e engajamento para palestras memoraveis.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 19 -->
+          <a href="/blog/tendencias-palestras-corporativas/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Tendencias de palestras corporativas em 2025</h2>
+              <p class="blog-card__excerpt">Os temas, formatos e abordagens que estao dominando o mercado de eventos.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- 20 -->
+          <a href="/blog/networking-para-palestrantes/" class="blog-card" data-blog-category="palestrantes" data-aos="fade-up" data-aos-delay="100">
+            <div class="blog-card__image"></div>
+            <div class="blog-card__body">
+              <span class="blog-card__tag">Para Palestrantes</span>
+              <h2 class="blog-card__title">Networking para palestrantes: construa sua rede de contatos</h2>
+              <p class="blog-card__excerpt">Como criar conexoes estrategicas que geram oportunidades reais de palco.</p>
+              <div class="blog-card__meta">
+                <span>Avantik</span>
+                <span>5 min de leitura</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Coluna 1: Marca -->
+        <div class="footer__brand">
+          <a href="/" class="footer__logo">
+            <span class="footer__logo-name">Avantik</span>
+            <span class="footer__logo-tagline">Apogeu do Palestrante</span>
+          </a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/apogeudopalestrante" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="https://facebook.com/avantik" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://youtube.com/avantik" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Navegacao -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegacao</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+
+        <!-- Coluna 3: Legal -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Politica de Privacidade</a>
+            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Copyright bar -->
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+        <p class="footer__made">Feito com cuidado em BH</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Blog filter script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var filters = document.querySelectorAll('[data-blog-filter]');
+      var cards = document.querySelectorAll('.blog-card');
+
+      filters.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var filter = this.getAttribute('data-blog-filter');
+
+          // Update active state
+          filters.forEach(function(b) { b.classList.remove('blog-grid__filter--active'); });
+          this.classList.add('blog-grid__filter--active');
+
+          // Filter cards
+          cards.forEach(function(card) {
+            var category = card.getAttribute('data-blog-category');
+            if (filter === 'todos' || category === filter) {
+              card.removeAttribute('hidden');
+            } else {
+              card.setAttribute('hidden', '');
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

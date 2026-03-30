@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Palestrante | Avantik</title>
+  <meta name="description" content="Veja o perfil completo do palestrante, video e solicite orcamento diretamente na Avantik.">
+
+  <meta property="og:title" content="Palestrante | Avantik">
+  <meta property="og:description" content="Veja o perfil completo do palestrante, video e solicite orcamento diretamente na Avantik.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="">
+  <meta property="og:url" content="https://www.avantik.com.br/palestrante/">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- FONTS: DM Serif Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    /* Profile hero */
+    .profile-hero {
+      padding-top: calc(72px + clamp(2rem, 6vw, 4rem));
+      padding-bottom: clamp(2rem, 4vw, 3rem);
+      background: var(--color-bg);
+    }
+
+    .profile-hero__grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: clamp(2rem, 4vw, 3rem);
+      align-items: start;
+    }
+
+    .profile-hero__photo-wrap {
+      position: sticky;
+      top: calc(72px + 2rem);
+    }
+
+    .profile-hero__photo {
+      width: 280px;
+      height: 280px;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: var(--color-muted-bg);
+      border: 1px solid var(--color-border);
+    }
+
+    .profile-hero__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-hero__photo--placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+      color: rgba(255,255,255,0.3);
+      font-size: 5rem;
+      font-family: var(--font-heading);
+    }
+
+    .profile-hero__name {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-hero__location {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+    .profile-hero__location::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+      flex-shrink: 0;
+    }
+
+    .profile-hero__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .profile-hero__tags span {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.375rem 0.875rem;
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+      border-radius: 100px;
+    }
+
+    .profile-hero__meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .profile-hero__rating {
+      color: #F59E0B;
+    }
+
+    .profile-hero__price {
+      color: var(--color-text-secondary);
+    }
+
+    .profile-hero__actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Bio */
+    .profile-bio {
+      background: var(--color-surface);
+    }
+
+    .profile-bio__title,
+    .profile-video__title,
+    .profile-related__title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 1.5rem;
+      color: var(--color-text);
+    }
+
+    .profile-bio__text {
+      max-width: 720px;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--color-text-secondary);
+      white-space: pre-line;
+    }
+
+    /* Video */
+    .profile-video {
+      background: var(--color-bg);
+    }
+
+    .profile-video__wrap {
+      max-width: 720px;
+      aspect-ratio: 16 / 9;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .profile-video__wrap iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Social */
+    .profile-social {
+      background: var(--color-surface);
+      padding-top: 0;
+    }
+
+    .profile-social__links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      max-width: 720px;
+    }
+
+    .profile-social__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      padding: 0.625rem 1.25rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.625rem;
+      transition: color 250ms, border-color 250ms;
+    }
+
+    .profile-social__link:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    /* CTA */
+    .profile-cta {
+      background: var(--color-bg);
+    }
+
+    .profile-cta__card {
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.5rem;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .profile-cta__title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 0.75rem;
+    }
+
+    .profile-cta__text {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.65;
+    }
+
+    /* Related */
+    .profile-related {
+      background: var(--color-surface);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .profile-hero__grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .profile-hero__photo-wrap {
+        position: static;
+        display: flex;
+        justify-content: center;
+      }
+
+      .profile-hero__photo {
+        width: 200px;
+        height: 200px;
+      }
+
+      .profile-hero__location {
+        justify-content: center;
+      }
+
+      .profile-hero__tags {
+        justify-content: center;
+      }
+
+      .profile-hero__meta {
+        justify-content: center;
+      }
+
+      .profile-hero__actions {
+        justify-content: center;
+      }
+
+      .profile-cta__card {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-hero__photo {
+        width: 160px;
+        height: 160px;
+      }
+
+      .profile-hero__actions {
+        flex-direction: column;
+      }
+
+      .profile-hero__actions .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <span class="header__logo-name">Avantik</span>
+        <span class="header__logo-tagline">Apogeu do Palestrante</span>
+      </a>
+
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link header__link--active">Encontrar Palestrantes</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+        <a href="/blog/" class="header__link">Blog</a>
+      </div>
+
+      <div class="header__actions">
+        <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu overlay -->
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <a href="/blog/" class="header__mobile-link">Blog</a>
+      <div class="header__mobile-actions">
+        <a href="/diretorio/" class="btn btn--outline">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Loading state -->
+    <div class="profile-loading" id="profile-loading">
+      <div class="container" style="padding-top:calc(72px + 4rem);text-align:center">
+        <p style="color:var(--color-text-muted)">Carregando perfil...</p>
+      </div>
+    </div>
+
+    <!-- Not found state -->
+    <div class="profile-notfound" id="profile-notfound" hidden>
+      <div class="container" style="padding-top:calc(72px + 4rem);text-align:center;padding-bottom:4rem">
+        <h1 style="font-size:2rem;margin-bottom:1rem">Palestrante nao encontrado</h1>
+        <p style="color:var(--color-text-secondary);margin-bottom:2rem">O perfil que voce procura nao existe ou foi desativado.</p>
+        <a href="/diretorio/" class="btn btn--accent">Ver todos os palestrantes</a>
+      </div>
+    </div>
+
+    <!-- Profile content (populated by JS) -->
+    <article class="profile" id="profile-content" hidden>
+      <!-- Profile Hero -->
+      <section class="profile-hero">
+        <div class="profile-hero__grid container">
+          <div class="profile-hero__photo-wrap">
+            <div class="profile-hero__photo" id="profile-photo"></div>
+          </div>
+          <div class="profile-hero__info">
+            <h1 class="profile-hero__name" id="profile-name"></h1>
+            <p class="profile-hero__location" id="profile-location"></p>
+            <div class="profile-hero__tags" id="profile-tags"></div>
+            <div class="profile-hero__meta">
+              <span class="profile-hero__rating" id="profile-rating"></span>
+              <span class="profile-hero__price" id="profile-price"></span>
+            </div>
+            <div class="profile-hero__actions">
+              <a id="profile-cta-whatsapp" href="#" class="btn btn--accent btn--lg" target="_blank" rel="noopener">Solicitar Orcamento</a>
+              <a id="profile-cta-video" href="#video" class="btn btn--outline-dark btn--lg" hidden>Ver Video</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bio -->
+      <section class="profile-bio section" id="profile-bio-section" hidden>
+        <div class="container">
+          <h2 class="profile-bio__title">Sobre</h2>
+          <div class="profile-bio__text" id="profile-bio"></div>
+        </div>
+      </section>
+
+      <!-- Video -->
+      <section class="profile-video section" id="profile-video-section" hidden>
+        <div class="container">
+          <h2 class="profile-video__title" id="video">Video</h2>
+          <div class="profile-video__wrap">
+            <iframe id="profile-video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- Social Links -->
+      <section class="profile-social section" id="profile-social-section" hidden>
+        <div class="container">
+          <div class="profile-social__links" id="profile-social-links"></div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="profile-cta section">
+        <div class="container">
+          <div class="profile-cta__card">
+            <h2 class="profile-cta__title" id="profile-cta-title">Quer contratar este palestrante?</h2>
+            <p class="profile-cta__text">Envie uma mensagem diretamente. Sem intermediarios, sem comissao.</p>
+            <a id="profile-cta-bottom" href="#" class="btn btn--accent btn--lg" target="_blank" rel="noopener">Solicitar Orcamento pelo WhatsApp</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Related Speakers -->
+      <section class="profile-related section" id="profile-related-section" hidden>
+        <div class="container">
+          <h2 class="profile-related__title">Palestrantes similares</h2>
+          <div class="directory-grid" id="related-grid" style="max-width:1000px;margin:0 auto"></div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Coluna 1: Marca -->
+        <div class="footer__brand">
+          <a href="/" class="footer__logo">
+            <span class="footer__logo-name">Avantik</span>
+            <span class="footer__logo-tagline">Apogeu do Palestrante</span>
+          </a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/apogeudopalestrante" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="https://facebook.com/avantik" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://youtube.com/avantik" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Navegacao -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegacao</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+
+        <!-- Coluna 3: Legal -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Politica de Privacidade</a>
+            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+
+        <!-- Coluna 4: Contato -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="tel:+5531993861408" class="footer__contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              (31) 99386-1408
+            </a>
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              contato@avantik.com.br
+            </a>
+            <a href="https://wa.me/5531993861408" target="_blank" rel="noopener noreferrer" class="footer__whatsapp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+              Fale pelo WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright bar -->
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+        <p class="footer__made">Feito com cuidado em BH</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase, formatPriceRange, getYouTubeEmbed, getTierBadge, TIERS } from '/lib/supabase.js';
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
+    const id = params.get('id');
+
+    if (!slug && !id) {
+      window.location.href = '/diretorio/';
+    } else {
+      loadProfile();
+    }
+
+    async function loadProfile() {
+      let query = supabase
+        .from('speakers')
+        .select('*, speaker_themes(themes(id, name, slug))')
+        .eq('active', true);
+
+      if (slug) query = query.eq('slug', slug);
+      else query = query.eq('id', id);
+
+      const { data: speaker, error } = await query.single();
+
+      if (error || !speaker) {
+        document.getElementById('profile-loading').hidden = true;
+        document.getElementById('profile-notfound').hidden = false;
+        return;
+      }
+
+      const themes = (speaker.speaker_themes || []).map(st => st.themes).filter(Boolean);
+
+      // Update page title and meta
+      document.title = `${speaker.name} | Palestrante - Avantik`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.content = `${speaker.name} - palestrante de ${themes.map(t => t.name).join(', ')}. Veja perfil, video e solicite orcamento na Avantik.`;
+
+      // Photo
+      const photoDiv = document.getElementById('profile-photo');
+      if (speaker.photo_url) {
+        photoDiv.innerHTML = `<img src="${speaker.photo_url}" alt="${speaker.name}">`;
+      } else {
+        photoDiv.classList.add('profile-hero__photo--placeholder');
+        photoDiv.innerHTML = `<span>${speaker.name.charAt(0)}</span>`;
+      }
+
+      // Info
+      document.getElementById('profile-name').textContent = speaker.name;
+
+      // Tier badge
+      const badgeHtml = getTierBadge(speaker.plan);
+      if (badgeHtml) {
+        document.getElementById('profile-name').insertAdjacentHTML('afterend',
+          `<div style="margin-bottom:0.75rem">${badgeHtml}</div>`);
+      }
+
+      const location = [speaker.city, speaker.state].filter(Boolean).join(', ');
+      const locationEl = document.getElementById('profile-location');
+      if (location) {
+        locationEl.textContent = location;
+      } else {
+        locationEl.hidden = true;
+      }
+
+      // Tags
+      const tagsEl = document.getElementById('profile-tags');
+      tagsEl.innerHTML = themes.map(t => `<span>${t.name}</span>`).join('');
+
+      // Rating & Price
+      document.getElementById('profile-rating').innerHTML = `&#9733; ${speaker.rating || '5.0'}`;
+      document.getElementById('profile-price').textContent = formatPriceRange(speaker.price_min, speaker.price_max);
+
+      // WhatsApp CTA - restricted by plan
+      const tier = TIERS[speaker.plan] || TIERS.essencial;
+      const phone = speaker.phone ? speaker.phone.replace(/\D/g, '') : '';
+      const whatsappMsg = encodeURIComponent(`Ola ${speaker.name}, encontrei seu perfil na Avantik e gostaria de saber sobre disponibilidade para uma palestra.`);
+
+      let ctaUrl, ctaText;
+      if (tier.whatsappVisible && phone) {
+        ctaUrl = `https://wa.me/${phone}?text=${whatsappMsg}`;
+        ctaText = 'Solicitar Orcamento';
+      } else {
+        ctaUrl = `mailto:${speaker.email}?subject=Proposta de palestra - Avantik&body=${decodeURIComponent(whatsappMsg)}`;
+        ctaText = 'Enviar Proposta por Email';
+      }
+
+      document.getElementById('profile-cta-whatsapp').href = ctaUrl;
+      document.getElementById('profile-cta-whatsapp').textContent = ctaText;
+      document.getElementById('profile-cta-bottom').href = ctaUrl;
+      document.getElementById('profile-cta-bottom').textContent = tier.whatsappVisible ? 'Solicitar Orcamento pelo WhatsApp' : 'Enviar Proposta por Email';
+
+      // Bio
+      if (speaker.bio) {
+        document.getElementById('profile-bio').textContent = speaker.bio;
+        document.getElementById('profile-bio-section').hidden = false;
+      }
+
+      // Video
+      const embedUrl = getYouTubeEmbed(speaker.video_url);
+      if (embedUrl) {
+        document.getElementById('profile-video-iframe').src = embedUrl;
+        document.getElementById('profile-video-section').hidden = false;
+        document.getElementById('profile-cta-video').hidden = false;
+      }
+
+      // Social links
+      const socialLinks = [];
+      if (speaker.instagram) {
+        const handle = speaker.instagram.replace('@', '');
+        socialLinks.push(`<a href="https://instagram.com/${handle}" target="_blank" rel="noopener noreferrer" class="profile-social__link"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>@${handle}</a>`);
+      }
+      if (speaker.linkedin) {
+        socialLinks.push(`<a href="${speaker.linkedin}" target="_blank" rel="noopener noreferrer" class="profile-social__link"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>`);
+      }
+      if (speaker.website) {
+        socialLinks.push(`<a href="${speaker.website}" target="_blank" rel="noopener noreferrer" class="profile-social__link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Website</a>`);
+      }
+
+      if (socialLinks.length > 0) {
+        document.getElementById('profile-social-links').innerHTML = socialLinks.join('');
+        document.getElementById('profile-social-section').hidden = false;
+      }
+
+      // Show profile
+      document.getElementById('profile-loading').hidden = true;
+      document.getElementById('profile-content').hidden = false;
+
+      // Load related speakers
+      if (themes.length > 0) {
+        const themeIds = themes.map(t => t.id);
+        const { data: related } = await supabase
+          .from('speaker_themes')
+          .select('speaker_id, speakers(*, speaker_themes(themes(name, slug)))')
+          .in('theme_id', themeIds)
+          .neq('speaker_id', speaker.id)
+          .limit(20);
+
+        if (related && related.length > 0) {
+          // Deduplicate and limit to 3
+          const seen = new Set();
+          const unique = [];
+          for (const r of related) {
+            if (r.speakers && r.speakers.active && !seen.has(r.speakers.id)) {
+              seen.add(r.speakers.id);
+              const s = r.speakers;
+              s.themes = (s.speaker_themes || []).map(st => st.themes).filter(Boolean);
+              unique.push(s);
+              if (unique.length >= 3) break;
+            }
+          }
+
+          if (unique.length > 0) {
+            const relatedGrid = document.getElementById('related-grid');
+            relatedGrid.innerHTML = unique.map(s => {
+              const photoHtml = s.photo_url
+                ? `<div class="speaker-card__photo"><img src="${s.photo_url}" alt="${s.name}" loading="lazy"></div>`
+                : `<div class="speaker-card__photo speaker-card__photo--placeholder"><span>${s.name.charAt(0)}</span></div>`;
+              const tagsHtml = s.themes.map(t => `<span>${t.name}</span>`).join('');
+              const loc = [s.city, s.state].filter(Boolean).join(', ');
+              const relBadgeHtml = getTierBadge(s.plan);
+              const relDestaqueClass = s.plan === 'destaque' ? ' speaker-card--destaque' : '';
+              return `
+                <a href="/palestrante/?slug=${s.slug}" class="speaker-card${relDestaqueClass}">
+                  ${photoHtml}
+                  <div class="speaker-card__body">
+                    <span class="speaker-card__name">${s.name}</span>
+                    ${relBadgeHtml}
+                    ${loc ? `<span class="speaker-card__location">${loc}</span>` : ''}
+                    <div class="speaker-card__tags">${tagsHtml}</div>
+                    <div class="speaker-card__bottom">
+                      <span class="speaker-card__rating">&#9733; ${s.rating || '5.0'}</span>
+                      <span class="speaker-card__price">${formatPriceRange(s.price_min, s.price_max)}</span>
+                    </div>
+                  </div>
+                </a>
+              `;
+            }).join('');
+            document.getElementById('profile-related-section').hidden = false;
+          }
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

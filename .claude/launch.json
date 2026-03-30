@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "avantik-local",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "8888", "C:/Users/Victor/Desktop/Projetos/avantik/avantik"],
+      "port": 8888
+    }
+  ]
+}

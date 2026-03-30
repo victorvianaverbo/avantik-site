@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Para Palestrantes | Avantik - Leve sua carreira a novos palcos</title>
+  <meta name="description" content="Cadastre seu perfil na Avantik e seja encontrado por empresas de todo o Brasil. Plano gratuito disponivel. Sem comissao sobre o cache.">
+
+  <meta property="og:title" content="Para Palestrantes | Avantik - Leve sua carreira a novos palcos">
+  <meta property="og:description" content="Cadastre seu perfil na Avantik e seja encontrado por empresas de todo o Brasil. Plano gratuito disponivel.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.avantik.com.br/para-palestrantes/">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- FONTS: DM Serif Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  <script src="/script.js" defer></script>
+
+  <style>
+    /* ==========================================
+       PAGE HERO (Para Palestrantes)
+       ========================================== */
+
+    .page-hero {
+      padding-top: calc(72px + clamp(3rem, 8vw, 6rem));
+      text-align: center;
+    }
+
+    .page-hero__label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .page-hero__label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 1.25rem;
+      height: 2px;
+      background: var(--color-accent);
+    }
+
+    .page-hero__title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--color-text);
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    .page-hero__subtitle {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      line-height: 1.65;
+      color: var(--color-text-secondary);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .page-hero__ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .page-hero__trust {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .page-hero__trust-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-hero__trust-number {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--color-text);
+    }
+
+    .page-hero__trust-label {
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+    }
+
+    .page-hero__trust-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--color-border);
+    }
+
+    /* ==========================================
+       BENEFITS
+       ========================================== */
+
+    .benefits {
+      background: var(--color-surface);
+    }
+
+    .benefits__header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .benefits__label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .benefits__label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 1.25rem;
+      height: 2px;
+      background: var(--color-accent);
+    }
+
+    .benefits__title {
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      color: var(--color-text);
+      line-height: 1.2;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .benefits__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .benefits__card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-out);
+    }
+
+    .benefits__card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+    }
+
+    .benefits__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--color-accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .benefits__card-title {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .benefits__card-text {
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .benefits__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================
+       PRICING
+       ========================================== */
+
+    .pricing {
+      background: var(--color-bg);
+    }
+
+    .pricing__header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .pricing__label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .pricing__label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 1.25rem;
+      height: 2px;
+      background: var(--color-accent);
+    }
+
+    .pricing__title {
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      color: var(--color-text);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .pricing__subtitle {
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
+      line-height: 1.65;
+      color: var(--color-text-secondary);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .pricing__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .pricing__card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-out);
+    }
+
+    .pricing__card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+    }
+
+    .pricing__card--featured {
+      border-color: var(--color-accent);
+      box-shadow: 0 4px 24px rgba(232, 106, 51, 0.12);
+      position: relative;
+    }
+
+    .pricing__card--featured:hover {
+      box-shadow: 0 16px 40px rgba(232, 106, 51, 0.18);
+    }
+
+    .pricing__badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-accent);
+      color: #FFFFFF;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.375rem 1rem;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .pricing__name {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing__price {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      color: var(--color-text);
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing__price span {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+
+    .pricing__period {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .pricing__features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .pricing__feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+
+    .pricing__feature svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--color-accent);
+    }
+
+    .pricing__cta {
+      width: 100%;
+    }
+
+    @media (max-width: 960px) {
+      .pricing__grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+    }
+
+    /* ==========================================
+       TESTIMONIALS
+       ========================================== */
+
+    .testimonials {
+      background: var(--color-surface);
+    }
+
+    .testimonials__header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .testimonials__label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .testimonials__label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 1.25rem;
+      height: 2px;
+      background: var(--color-accent);
+    }
+
+    .testimonials__title {
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      color: var(--color-text);
+      line-height: 1.2;
+    }
+
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .testimonials__card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+    }
+
+    .testimonials__quote {
+      color: var(--color-accent);
+      opacity: 0.3;
+      margin-bottom: 1rem;
+    }
+
+    .testimonials__text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-text);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonials__author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .testimonials__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-accent-light), rgba(46, 43, 95, 0.08));
+    }
+
+    .testimonials__author-name {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text);
+      display: block;
+    }
+
+    .testimonials__author-role {
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .testimonials__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================
+       FAQ
+       ========================================== */
+
+    .faq {
+      background: var(--color-bg);
+    }
+
+    .faq__header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .faq__title {
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      color: var(--color-text);
+      line-height: 1.2;
+    }
+
+    .faq__list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .faq__item {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .faq__item:first-child {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .faq__question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.5rem 0;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text);
+      text-align: left;
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: color 0.25s;
+    }
+
+    .faq__question:hover {
+      color: var(--color-accent);
+    }
+
+    .faq__question-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s var(--ease-out);
+    }
+
+    .faq__item--open .faq__question-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq__answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--ease-out), padding 0.4s var(--ease-out);
+    }
+
+    .faq__item--open .faq__answer {
+      max-height: 500px;
+    }
+
+    .faq__answer-inner {
+      padding-bottom: 1.5rem;
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+    }
+
+    /* ==========================================
+       CTA SECTION (Reuses cta-final styles)
+       ========================================== */
+
+    .cta-speakers {
+      background: var(--color-surface);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <span class="header__logo-name">Avantik</span>
+        <span class="header__logo-tagline">Apogeu do Palestrante</span>
+      </a>
+
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/para-palestrantes/" class="header__link header__link--active">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+        <a href="/blog/" class="header__link">Blog</a>
+      </div>
+
+      <div class="header__actions">
+        <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu overlay -->
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <a href="/blog/" class="header__mobile-link">Blog</a>
+      <div class="header__mobile-actions">
+        <a href="/diretorio/" class="btn btn--outline">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero section">
+      <div class="container">
+        <span class="page-hero__label" data-aos="fade-up">Para Palestrantes</span>
+
+        <h1 class="page-hero__title" data-aos="fade-up" data-aos-delay="80">Sua carreira merece mais palcos</h1>
+
+        <p class="page-hero__subtitle" data-aos="fade-up" data-aos-delay="160">Cadastre seu perfil e seja encontrado por empresas de todo o Brasil. Sem comissao sobre o cache.</p>
+
+        <div class="page-hero__ctas" data-aos="fade-up" data-aos-delay="240">
+          <a href="/cadastro/" class="btn btn--accent btn--lg">Criar Meu Perfil</a>
+          <a href="#planos" class="btn btn--outline-dark btn--lg">Ver planos</a>
+        </div>
+
+        <div class="page-hero__trust" data-aos="fade-up" data-aos-delay="320">
+          <div class="page-hero__trust-item">
+            <span class="page-hero__trust-number">+200</span>
+            <span class="page-hero__trust-label">palestrantes</span>
+          </div>
+          <span class="page-hero__trust-divider"></span>
+          <div class="page-hero__trust-item">
+            <span class="page-hero__trust-number">+500</span>
+            <span class="page-hero__trust-label">eventos</span>
+          </div>
+          <span class="page-hero__trust-divider"></span>
+          <div class="page-hero__trust-item">
+            <span class="page-hero__trust-number">+50</span>
+            <span class="page-hero__trust-label">temas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="benefits section">
+      <div class="container">
+        <div class="benefits__header">
+          <span class="benefits__label" data-aos="fade-up">Vantagens</span>
+          <h2 class="benefits__title" data-aos="fade-up" data-aos-delay="80">Tudo que voce precisa para crescer como palestrante</h2>
+        </div>
+
+        <div class="benefits__grid">
+          <article class="benefits__card" data-aos="fade-up" data-aos-delay="100">
+            <div class="benefits__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3 class="benefits__card-title">Visibilidade real</h3>
+            <p class="benefits__card-text">Investimos em trafego e marketing para que seu perfil apareca para quem realmente contrata palestrantes.</p>
+          </article>
+
+          <article class="benefits__card" data-aos="fade-up" data-aos-delay="200">
+            <div class="benefits__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 0 1 0 5H18"/><path d="M18 15h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M6 15H4.5a2.5 2.5 0 0 0 0 5H6"/><path d="M6 9v12"/><path d="M18 9v6"/></svg>
+            </div>
+            <h3 class="benefits__card-title">Programa Apogeu</h3>
+            <p class="benefits__card-text">Desenvolvimento exclusivo nos 4 pilares: Conteudo, Performance, Apresentacao e Posicionamento.</p>
+          </article>
+
+          <article class="benefits__card" data-aos="fade-up" data-aos-delay="300">
+            <div class="benefits__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h3 class="benefits__card-title">Zero comissao</h3>
+            <p class="benefits__card-text">Diferente de agencias, nao ficamos com parte do seu cache. Voce recebe 100% do valor contratado.</p>
+          </article>
+
+          <article class="benefits__card" data-aos="fade-up" data-aos-delay="400">
+            <div class="benefits__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="benefits__card-title">Comunidade ativa</h3>
+            <p class="benefits__card-text">Networking, troca de experiencias e oportunidades compartilhadas entre profissionais que vivem de palco.</p>
+          </article>
+
+          <article class="benefits__card" data-aos="fade-up" data-aos-delay="500">
+            <div class="benefits__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="benefits__card-title">Perfil otimizado</h3>
+            <p class="benefits__card-text">Seu portfolio digital completo: bio, fotos, videos, temas e faixa de preco. Tudo em um so lugar.</p>
+          </article>
+
+          <article class="benefits__card" data-aos="fade-up" data-aos-delay="600">
+            <div class="benefits__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <h3 class="benefits__card-title">Propostas diretas</h3>
+            <p class="benefits__card-text">Empresas enviam propostas diretamente. Voce decide quais aceitar, sem intermediarios.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing section" id="planos">
+      <div class="container">
+        <div class="pricing__header">
+          <span class="pricing__label" data-aos="fade-up">Planos</span>
+          <h2 class="pricing__title" data-aos="fade-up" data-aos-delay="80">Escolha o plano ideal para sua carreira</h2>
+          <p class="pricing__subtitle" data-aos="fade-up" data-aos-delay="160">Sem contrato de fidelidade. Upgrade, downgrade ou cancele quando quiser.</p>
+        </div>
+
+        <div class="pricing__grid">
+          <!-- Essencial -->
+          <div class="pricing__card" data-aos="fade-up" data-aos-delay="100">
+            <span class="pricing__name">Essencial</span>
+            <span class="pricing__price">Gratis</span>
+            <span class="pricing__period">Para sempre</span>
+
+            <div class="pricing__features">
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Perfil basico na plataforma</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>1 foto de perfil</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Ate 3 temas de atuacao</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Contato por email</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Aparece nos resultados de busca</span>
+              </div>
+            </div>
+
+            <a href="/cadastro/?plano=essencial" class="btn btn--outline-dark pricing__cta">Comecar Gratis</a>
+          </div>
+
+          <!-- Profissional (Featured) -->
+          <div class="pricing__card pricing__card--featured" data-aos="fade-up" data-aos-delay="200">
+            <span class="pricing__badge">Mais popular</span>
+            <span class="pricing__name">Profissional</span>
+            <span class="pricing__price">R$ 67 <span>/mes</span></span>
+            <span class="pricing__period">Cobrado mensalmente</span>
+
+            <div class="pricing__features">
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Tudo do Essencial</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>10 fotos no perfil</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Todos os temas de atuacao</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>1 video</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>WhatsApp visivel para empresas</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Selo verificado</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Prioridade na busca</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Programa Apogeu (basico)</span>
+              </div>
+            </div>
+
+            <a href="/cadastro/?plano=profissional" class="btn btn--accent pricing__cta">Comecar com Profissional</a>
+          </div>
+
+          <!-- Destaque -->
+          <div class="pricing__card" data-aos="fade-up" data-aos-delay="300">
+            <span class="pricing__name">Destaque</span>
+            <span class="pricing__price">R$ 147 <span>/mes</span></span>
+            <span class="pricing__period">Cobrado mensalmente</span>
+
+            <div class="pricing__features">
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Tudo do Profissional</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Fotos e videos ilimitados</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Selo dourado de destaque</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Topo dos resultados de busca</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Destaque na homepage</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Programa Apogeu (completo)</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Analytics de views e leads</span>
+              </div>
+              <div class="pricing__feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Suporte prioritario</span>
+              </div>
+            </div>
+
+            <a href="/cadastro/?plano=destaque" class="btn btn--outline-dark pricing__cta">Comecar com Destaque</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials section">
+      <div class="container">
+        <div class="testimonials__header">
+          <span class="testimonials__label" data-aos="fade-up">Depoimentos</span>
+          <h2 class="testimonials__title" data-aos="fade-up" data-aos-delay="80">O que dizem nossos palestrantes</h2>
+        </div>
+
+        <div class="testimonials__grid">
+          <article class="testimonials__card" data-aos="fade-up" data-aos-delay="150">
+            <svg class="testimonials__quote" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <p class="testimonials__text">Desde que entrei na Avantik, recebi 4 propostas no primeiro mes. A visibilidade mudou minha carreira.</p>
+            <div class="testimonials__author">
+              <div class="testimonials__avatar"></div>
+              <div>
+                <span class="testimonials__author-name">Ricardo Almeida</span>
+                <span class="testimonials__author-role">Palestrante de Lideranca</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="testimonials__card" data-aos="fade-up" data-aos-delay="300">
+            <svg class="testimonials__quote" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            <p class="testimonials__text">Finalmente uma plataforma que entende o palestrante. Sem comissao, perfil profissional e propostas diretas.</p>
+            <div class="testimonials__author">
+              <div class="testimonials__avatar"></div>
+              <div>
+                <span class="testimonials__author-name">Mariana Torres</span>
+                <span class="testimonials__author-role">Palestrante de Saude Mental</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq section">
+      <div class="container">
+        <div class="faq__header" data-aos="fade-up">
+          <h2 class="faq__title">Perguntas frequentes</h2>
+        </div>
+
+        <div class="faq__list">
+          <div class="faq__item" data-aos="fade-up" data-aos-delay="100">
+            <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
+              <span>Como funciona o cadastro?</span>
+              <span class="faq__question-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">Crie sua conta, escolha um plano e monte seu perfil completo com bio, fotos, videos e temas. Em minutos seu perfil esta no ar e visivel para empresas de todo o Brasil.</div>
+            </div>
+          </div>
+
+          <div class="faq__item" data-aos="fade-up" data-aos-delay="150">
+            <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
+              <span>Preciso pagar comissao sobre meus contratos?</span>
+              <span class="faq__question-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">Nao. Diferente de agencias tradicionais, a Avantik nao cobra comissao sobre o seu cache. O valor que voce combinar com a empresa e 100% seu.</div>
+            </div>
+          </div>
+
+          <div class="faq__item" data-aos="fade-up" data-aos-delay="200">
+            <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
+              <span>Posso cancelar a qualquer momento?</span>
+              <span class="faq__question-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">Sim. Nao ha contrato de fidelidade. Voce pode fazer upgrade, downgrade ou cancelar a renovacao do plano quando quiser.</div>
+            </div>
+          </div>
+
+          <div class="faq__item" data-aos="fade-up" data-aos-delay="250">
+            <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
+              <span>Como as empresas me encontram?</span>
+              <span class="faq__question-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">Empresas buscam palestrantes por tema, regiao e avaliacao. Investimos em trafego e marketing para trazer decisores qualificados ate a plataforma.</div>
+            </div>
+          </div>
+
+          <div class="faq__item" data-aos="fade-up" data-aos-delay="300">
+            <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
+              <span>O que e o Programa Apogeu do Palestrante?</span>
+              <span class="faq__question-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">E nosso programa exclusivo de desenvolvimento que trabalha 4 pilares: Conteudo (o que voce fala), Performance (como voce fala), Apresentacao (como voce se mostra) e Posicionamento (como voce e percebido no mercado).</div>
+            </div>
+          </div>
+
+          <div class="faq__item" data-aos="fade-up" data-aos-delay="350">
+            <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
+              <span>Qual a diferenca entre os planos?</span>
+              <span class="faq__question-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq__answer">
+              <div class="faq__answer-inner">A principal diferenca esta no numero de fotos, videos e temas no perfil, alem de beneficios como destaque na busca, selo verificado e acesso ao Programa Apogeu. O plano Profissional e o mais popular por equilibrar custo e beneficios.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-speakers section">
+      <div class="container">
+        <div class="cta-final__card" data-aos="zoom-in">
+          <!-- Particulas decorativas -->
+          <div class="cta-final__particle cta-final__particle--1" aria-hidden="true"></div>
+          <div class="cta-final__particle cta-final__particle--2" aria-hidden="true"></div>
+          <div class="cta-final__particle cta-final__particle--3" aria-hidden="true"></div>
+          <div class="cta-final__particle cta-final__particle--4" aria-hidden="true"></div>
+
+          <h2 class="cta-final__title">Pronto para conquistar mais palcos?</h2>
+          <p class="cta-final__text">Crie seu perfil agora e comece a receber propostas de empresas de todo o Brasil.</p>
+          <a href="/cadastro/" class="btn btn--accent cta-final__btn">Criar Meu Perfil</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Coluna 1: Marca -->
+        <div class="footer__brand">
+          <a href="/" class="footer__logo">
+            <span class="footer__logo-name">Avantik</span>
+            <span class="footer__logo-tagline">Apogeu do Palestrante</span>
+          </a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/apogeudopalestrante" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="https://facebook.com/avantik" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://youtube.com/avantik" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Navegacao -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegacao</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+
+        <!-- Coluna 3: Legal -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Politica de Privacidade</a>
+            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+
+        <!-- Coluna 4: Contato -->
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="tel:+5531993861408" class="footer__contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              (31) 99386-1408
+            </a>
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              contato@avantik.com.br
+            </a>
+            <a href="https://wa.me/5531993861408" target="_blank" rel="noopener noreferrer" class="footer__whatsapp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+              Fale pelo WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright bar -->
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+        <p class="footer__made">Feito com cuidado em BH</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
