@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Publicar Oportunidade | Avantik</title>
+  <meta name="description" content="Publique uma oportunidade e receba candidaturas de palestrantes qualificados. SIPAT, treinamentos, workshops, palestras corporativas e mais.">
+
+  <link rel="canonical" href="https://www.avantik.com.br/projetos/novo/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- FONTS: DM Serif Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .new-project {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .new-project__form {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .new-project__fieldset {
+      border: none;
+      padding: 0;
+      margin: 0 0 2rem;
+    }
+
+    .new-project__fieldset:last-of-type {
+      margin-bottom: 1.5rem;
+    }
+
+    .new-project__legend {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--color-text);
+      margin-bottom: 1.25rem;
+      display: block;
+      width: 100%;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .new-project__field {
+      margin-bottom: 1.25rem;
+    }
+
+    .new-project__field label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .new-project__field input,
+    .new-project__field select,
+    .new-project__field textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.625rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-surface);
+      transition: border-color 0.2s, outline-color 0.2s;
+    }
+
+    .new-project__field input::placeholder,
+    .new-project__field textarea::placeholder {
+      color: var(--color-text-secondary);
+    }
+
+    .new-project__field input:focus,
+    .new-project__field select:focus,
+    .new-project__field textarea:focus {
+      border-color: var(--color-accent);
+      outline: 2px solid var(--color-accent);
+      outline-offset: -1px;
+    }
+
+    .new-project__field textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .new-project__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Theme pills */
+    .new-project__themes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .new-project__theme-pill {
+      padding: 0.4rem 0.875rem;
+      border: 1px solid var(--color-border);
+      border-radius: 100px;
+      background: var(--color-surface);
+      color: var(--color-text-secondary);
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .new-project__theme-pill:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .new-project__theme-pill--active {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #fff;
+    }
+
+    .new-project__theme-pill--active:hover {
+      color: #fff;
+    }
+
+    /* Error / Success */
+    .new-project__error,
+    .new-project__success {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 0.625rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .new-project__error {
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
+    .new-project__success {
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .new-project__error--visible,
+    .new-project__success--visible {
+      display: block;
+    }
+
+    .new-project__submit {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .new-project__submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Success state */
+    .new-project__done {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .new-project__done--visible {
+      display: block;
+    }
+
+    .new-project__done-icon {
+      width: 64px;
+      height: 64px;
+      background: #ecfdf5;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .new-project__done-icon svg {
+      color: var(--color-success);
+    }
+
+    .new-project__done-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--color-text);
+      margin-bottom: 0.75rem;
+    }
+
+    .new-project__done-text {
+      color: var(--color-text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .new-project__done-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    @media (max-width: 480px) {
+      .new-project__form {
+        padding: 1.75rem 1.25rem;
+        border-radius: 1rem;
+      }
+
+      .new-project__row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo"><img src="/images/logo.png" alt="Avantik" class="header__logo-img"></a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+      </div>
+      <div class="header__actions" id="header-actions">
+        <a href="/entrar/" class="btn btn--outline btn--sm">Entrar</a>
+        <a href="/cadastro-empresa/" class="btn btn--accent btn--sm">Publicar Oportunidade</a>
+      </div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <div class="header__mobile-actions">
+        <a href="/entrar/" class="btn btn--outline">Entrar</a>
+        <a href="/cadastro-empresa/" class="btn btn--accent">Publicar Oportunidade</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero section">
+      <div class="container">
+        <span class="page-hero__label">Publicar</span>
+        <h1 class="page-hero__title">Publique uma oportunidade</h1>
+        <p class="page-hero__subtitle">Descreva o evento e receba candidaturas de palestrantes qualificados</p>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="new-project">
+          <div class="new-project__form" id="form-wrapper">
+
+            <div class="new-project__error" id="form-error" role="alert"></div>
+
+            <form id="project-form" novalidate>
+              <!-- Detalhes do evento -->
+              <fieldset class="new-project__fieldset">
+                <legend class="new-project__legend">Detalhes do evento</legend>
+
+                <div class="new-project__field">
+                  <label for="título">Título do projeto *</label>
+                  <input type="text" id="titulo" name="titulo" required placeholder="Ex: Palestrante para SIPAT 2026">
+                </div>
+
+                <div class="new-project__field">
+                  <label for="event-type">Tipo de evento *</label>
+                  <select id="event-type" name="event_type" required>
+                    <option value="">Selecione o tipo</option>
+                  </select>
+                </div>
+
+                <div class="new-project__field">
+                  <label>Tema (opcional)</label>
+                  <div class="new-project__themes" id="theme-pills"></div>
+                  <input type="hidden" id="selected-theme" name="theme_id" value="">
+                </div>
+
+                <div class="new-project__field">
+                  <label for="descrição">Descrição *</label>
+                  <textarea id="descricao" name="descricao" required rows="6" placeholder="Descreva o evento, público-alvo, objetivos..."></textarea>
+                </div>
+              </fieldset>
+
+              <!-- Local e data -->
+              <fieldset class="new-project__fieldset">
+                <legend class="new-project__legend">Local e data</legend>
+
+                <div class="new-project__row">
+                  <div class="new-project__field">
+                    <label for="event-date">Data do evento</label>
+                    <input type="date" id="event-date" name="event_date">
+                  </div>
+
+                  <div class="new-project__field">
+                    <label for="event-location">Local do evento</label>
+                    <input type="text" id="event-location" name="event_location" placeholder="Ex: Sao Paulo, SP ou Online">
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Orçamento -->
+              <fieldset class="new-project__fieldset">
+                <legend class="new-project__legend">Orçamento</legend>
+
+                <div class="new-project__row">
+                  <div class="new-project__field">
+                    <label for="budget-min">Orçamento mínimo (R$)</label>
+                    <input type="number" id="budget-min" name="budget_min" min="0" step="100" placeholder="Ex: 3000">
+                  </div>
+
+                  <div class="new-project__field">
+                    <label for="budget-max">Orçamento máximo (R$)</label>
+                    <input type="number" id="budget-max" name="budget_max" min="0" step="100" placeholder="Ex: 8000">
+                  </div>
+                </div>
+              </fieldset>
+
+              <!-- Honeypot anti-spam -->
+              <div style="position:absolute;left:-9999px" aria-hidden="true">
+                <input type="text" name="website_hp" tabindex="-1" autocomplete="off">
+              </div>
+
+              <button type="submit" class="btn btn--accent btn--lg new-project__submit" id="submit-btn">Publicar Oportunidade</button>
+            </form>
+          </div>
+
+          <!-- Success state -->
+          <div class="new-project__done" id="success-state">
+            <div class="new-project__done-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h2 class="new-project__done-title">Oportunidade publicada!</h2>
+            <p class="new-project__done-text">Palestrantes já podem visualizar e se candidatar ao seu projeto.</p>
+            <div class="new-project__done-links">
+              <a href="#" class="btn btn--accent" id="view-project-link">Ver oportunidade</a>
+              <a href="/meus-projetos/" class="btn btn--outline">Meus projetos</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo"><img src="/images/logo.png" alt="Avantik" class="footer__logo-img"></a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegação</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/projetos/">Oportunidades</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+import { supabase, escapeHtml, requireAuth, EVENT_TYPES } from '/lib/supabase.js';
+
+// Auth check
+const auth = await requireAuth('contractor');
+if (!auth) throw new Error('redirect');
+
+const form = document.getElementById('project-form');
+const formWrapper = document.getElementById('form-wrapper');
+const successState = document.getElementById('success-state');
+const submitBtn = document.getElementById('submit-btn');
+const errorDiv = document.getElementById('form-error');
+const viewProjectLink = document.getElementById('view-project-link');
+const honeypot = form.querySelector('[name="website_hp"]');
+
+let selectedThemeId = null;
+
+// Populate event type dropdown
+const eventTypeSelect = document.getElementById('event-type');
+Object.entries(EVENT_TYPES).forEach(([key, label]) => {
+  const opt = document.createElement('option');
+  opt.value = key;
+  opt.textContent = label;
+  eventTypeSelect.appendChild(opt);
+});
+
+// Load theme pills
+async function loadThemes() {
+  const { data } = await supabase.from('themes').select('*').order('name');
+  if (!data) return;
+  const container = document.getElementById('theme-pills');
+  data.forEach(theme => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'new-project__theme-pill';
+    btn.textContent = theme.name;
+    btn.dataset.themeId = theme.id;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.new-project__theme-pill').forEach(b => b.classList.remove('new-project__theme-pill--active'));
+      if (selectedThemeId === theme.id) {
+        selectedThemeId = null;
+        document.getElementById('selected-theme').value = '';
+      } else {
+        selectedThemeId = theme.id;
+        document.getElementById('selected-theme').value = theme.id;
+        btn.classList.add('new-project__theme-pill--active');
+      }
+    });
+    container.appendChild(btn);
+  });
+}
+
+function showError(msg) {
+  errorDiv.textContent = msg;
+  errorDiv.classList.add('new-project__error--visible');
+  errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function hideError() {
+  errorDiv.textContent = '';
+  errorDiv.classList.remove('new-project__error--visible');
+}
+
+function setLoading(loading) {
+  submitBtn.disabled = loading;
+  submitBtn.textContent = loading ? 'Publicando...' : 'Publicar Oportunidade';
+}
+
+// Form submit
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideError();
+
+  // Honeypot check
+  if (honeypot && honeypot.value) return;
+
+  const titulo = document.getElementById('titulo').value.trim();
+  const eventType = document.getElementById('event-type').value;
+  const descricao = document.getElementById('descricao').value.trim();
+  const eventDate = document.getElementById('event-date').value || null;
+  const eventLocation = document.getElementById('event-location').value.trim() || null;
+  const budgetMin = document.getElementById('budget-min').value ? Number(document.getElementById('budget-min').value) : null;
+  const budgetMax = document.getElementById('budget-max').value ? Number(document.getElementById('budget-max').value) : null;
+  const themeId = selectedThemeId || null;
+
+  // Validation
+  if (!título || !eventType || !descrição) {
+    showError('Preencha todos os campos obrigatórios (título, tipo de evento e descrição).');
+    return;
+  }
+
+  if (budgetMin && budgetMax && budgetMin > budgetMax) {
+    showError('O orçamento mínimo não pode ser maior que o máximo.');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const { data, error } = await supabase
+      .from('projects')
+      .insert({
+        contractor_id: auth.profile.id,
+        title: titulo,
+        event_type: eventType,
+        theme_id: themeId,
+        description: descricao,
+        event_date: eventDate,
+        event_location: eventLocation,
+        budget_min: budgetMin,
+        budget_max: budgetMax,
+        status: 'aberto'
+      })
+      .select('id')
+      .single();
+
+    if (error) {
+      console.error('Insert error:', error);
+      showError('Erro ao publicar oportunidade. Tente novamente.');
+      setLoading(false);
+      return;
+    }
+
+    // Show success
+    formWrapper.style.display = 'none';
+    viewProjectLink.href = `/projetos/ver/?id=${data.id}`;
+    successState.classList.add('new-project__done--visible');
+  } catch (err) {
+    console.error('Submit error:', err);
+    showError('Erro ao publicar oportunidade. Tente novamente.');
+    setLoading(false);
+  }
+});
+
+// Init
+await loadThemes();
+  </script>
+
+</body>
+</html>

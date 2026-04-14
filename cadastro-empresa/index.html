@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cadastro Empresa | Avantik</title>
+  <meta name="description" content="Cadastre sua empresa na Avantik. Publique oportunidades e encontre os melhores palestrantes do Brasil para seus eventos corporativos.">
+
+  <link rel="canonical" href="https://www.avantik.com.br/cadastro-empresa/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- FONTS: DM Serif Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .auth-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: calc(80px + 2rem) var(--container-px) 4rem;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .auth-card__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .auth-card__subtitle {
+      color: var(--color-text-secondary);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    .auth-field {
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-field label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .auth-field input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.625rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-surface);
+      transition: border-color 0.2s, outline-color 0.2s;
+    }
+
+    .auth-field input::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .auth-field input:focus {
+      border-color: var(--color-accent);
+      outline: 2px solid var(--color-accent);
+      outline-offset: -1px;
+    }
+
+    .auth-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .auth-row .auth-field {
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-error,
+    .auth-success {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 0.625rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .auth-error {
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
+    .auth-success {
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .auth-error--visible,
+    .auth-success--visible {
+      display: block;
+    }
+
+    .auth-submit {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .auth-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .auth-links {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+    }
+
+    .auth-links a {
+      color: var(--color-accent-hover);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .auth-links a:hover {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 1rem;
+      }
+
+      .auth-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <img src="/images/logo.png" alt="Avantik" class="header__logo-img">
+      </a>
+
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+        <a href="/blog/" class="header__link">Blog</a>
+      </div>
+
+      <div class="header__actions" id="header-actions">
+        <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu overlay -->
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <a href="/blog/" class="header__mobile-link">Blog</a>
+      <div class="header__mobile-actions">
+        <a href="/diretorio/" class="btn btn--outline">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="auth-page">
+      <div class="auth-card">
+        <h1 class="auth-card__title">Cadastrar como Empresa</h1>
+        <p class="auth-card__subtitle">Crie sua conta para publicar oportunidades e encontrar palestrantes</p>
+
+        <div class="auth-error" id="auth-error" role="alert"></div>
+        <div class="auth-success" id="auth-success" role="status"></div>
+
+        <form id="signup-form" novalidate>
+          <div class="auth-row">
+            <div class="auth-field">
+              <label for="nome">Nome completo *</label>
+              <input type="text" id="nome" name="nome" required autocomplete="name" placeholder="Seu nome completo">
+            </div>
+
+            <div class="auth-field">
+              <label for="email">Email corporativo *</label>
+              <input type="email" id="email" name="email" required autocomplete="email" placeholder="seu@empresa.com.br">
+            </div>
+          </div>
+
+          <div class="auth-row">
+            <div class="auth-field">
+              <label for="password">Senha *</label>
+              <input type="password" id="password" name="password" required minlength="6" autocomplete="new-password" placeholder="Mínimo 6 caracteres">
+            </div>
+
+            <div class="auth-field">
+              <label for="password-confirm">Confirmar senha *</label>
+              <input type="password" id="password-confirm" name="password_confirm" required minlength="6" autocomplete="new-password" placeholder="Repita a senha">
+            </div>
+          </div>
+
+          <div class="auth-row">
+            <div class="auth-field">
+              <label for="whatsapp">WhatsApp</label>
+              <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" placeholder="(00) 00000-0000">
+            </div>
+
+            <div class="auth-field">
+              <label for="empresa">Empresa *</label>
+              <input type="text" id="empresa" name="empresa" required autocomplete="organization" placeholder="Nome da empresa">
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label for="cargo">Cargo</label>
+            <input type="text" id="cargo" name="cargo" autocomplete="organization-title" placeholder="Ex: Gerente de RH, Coordenadora de T&D">
+          </div>
+
+          <!-- Honeypot anti-spam -->
+          <div style="position:absolute;left:-9999px" aria-hidden="true">
+            <input type="text" name="website_hp" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button type="submit" class="btn btn--accent btn--lg auth-submit" id="submit-btn">Criar Conta</button>
+        </form>
+
+        <div class="auth-links">
+          <p>Já tem conta? <a href="/entrar/">Entrar</a></p>
+          <p>E palestrante? <a href="/cadastro/">Cadastre-se aqui</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo"><img src="/images/logo.png" alt="Avantik" class="footer__logo-img"></a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegacao</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/projetos/">Oportunidades</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Politica de Privacidade</a>
+            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase, authSignUp, getUser, getUserType } from '/lib/supabase.js';
+
+    const form = document.getElementById('signup-form');
+    const nomeInput = document.getElementById('nome');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById('password-confirm');
+    const whatsappInput = document.getElementById('whatsapp');
+    const empresaInput = document.getElementById('empresa');
+    const cargoInput = document.getElementById('cargo');
+    const submitBtn = document.getElementById('submit-btn');
+    const errorDiv = document.getElementById('auth-error');
+    const successDiv = document.getElementById('auth-success');
+    const honeypot = form.querySelector('[name="website_hp"]');
+
+    // Flag para modo "adicionar papel" (usuario ja logado)
+    let existingUser = null;
+    let isAddingRole = false;
+
+    function showError(msg) {
+      successDiv.classList.remove('auth-success--visible');
+      errorDiv.textContent = msg;
+      errorDiv.classList.add('auth-error--visible');
+      errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function showSuccess(msg) {
+      errorDiv.classList.remove('auth-error--visible');
+      successDiv.textContent = msg;
+      successDiv.classList.add('auth-success--visible');
+    }
+
+    function hideMessages() {
+      errorDiv.textContent = '';
+      errorDiv.classList.remove('auth-error--visible');
+      successDiv.textContent = '';
+      successDiv.classList.remove('auth-success--visible');
+    }
+
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      submitBtn.textContent = loading ? 'Criando...' : (isAddingRole ? 'Adicionar Perfil de Empresa' : 'Criar Conta');
+    }
+
+    // Verificar se usuario ja esta logado
+    try {
+      const user = await getUser();
+      if (user) {
+        const result = await getUserType(user.id);
+        // Se ja e contratante, redirecionar
+        if (result.hasRole('contractor')) {
+          window.location.href = '/meus-projetos/';
+        } else {
+          // Usuario logado mas nao e contratante — modo "adicionar papel"
+          existingUser = user;
+          isAddingRole = true;
+
+          // Ocultar campos de email/senha (ja tem conta)
+          document.querySelector('.auth-card__title').textContent = 'Adicionar perfil de empresa';
+          document.querySelector('.auth-card__subtitle').textContent = 'Voce ja tem conta como palestrante. Adicione seu perfil de empresa para publicar oportunidades.';
+          emailInput.closest('.auth-field').style.display = 'none';
+          passwordInput.closest('.auth-field').parentElement.style.display = 'none'; // ocultar a row inteira
+          nomeInput.value = result.getProfile('speaker')?.name || '';
+          submitBtn.textContent = 'Adicionar Perfil de Empresa';
+
+          // Ocultar links de cadastro
+          document.querySelector('.auth-links').style.display = 'none';
+        }
+      }
+    } catch (err) {
+      // Nao logado, continuar normalmente
+    }
+
+    // Form submit handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideMessages();
+
+      // Honeypot check
+      if (honeypot && honeypot.value) return;
+
+      const nome = nomeInput.value.trim();
+      const whatsapp = whatsappInput.value.trim();
+      const empresa = empresaInput.value.trim();
+      const cargo = cargoInput.value.trim();
+
+      // Modo "adicionar papel" — usuario ja logado
+      if (isAddingRole && existingUser) {
+        if (!nome || !empresa) {
+          showError('Preencha nome e empresa.');
+          return;
+        }
+
+        setLoading(true);
+
+        try {
+          const { error: insertError } = await supabase.rpc('create_contractor', {
+            p_auth_id: existingUser.id,
+            p_name: nome,
+            p_email: existingUser.email,
+            p_phone: whatsapp || null,
+            p_company: empresa,
+            p_role: cargo || null,
+          });
+
+          if (insertError) {
+            console.error('Contractor insert error:', insertError);
+            showError('Erro ao adicionar perfil de empresa. Tente novamente.');
+            setLoading(false);
+            return;
+          }
+
+          // Salvar papel ativo e redirecionar
+          try { localStorage.setItem('avantik_active_role', 'contractor'); } catch(_) {}
+          window.location.href = '/meus-projetos/';
+        } catch (err) {
+          showError('Erro ao adicionar perfil. Tente novamente.');
+          setLoading(false);
+        }
+        return;
+      }
+
+      // Modo normal — novo cadastro
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      const passwordConfirm = passwordConfirmInput.value;
+
+      // Validation
+      if (!nome || !email || !password || !passwordConfirm || !empresa) {
+        showError('Preencha todos os campos obrigatorios.');
+        return;
+      }
+
+      if (password.length < 6) {
+        showError('A senha deve ter no minimo 6 caracteres.');
+        return;
+      }
+
+      if (password !== passwordConfirm) {
+        showError('As senhas nao coincidem. Verifique e tente novamente.');
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        // Create auth user
+        const data = await authSignUp(email, password);
+
+        if (!data.user) {
+          showError('Erro ao criar conta. Tente novamente.');
+          setLoading(false);
+          return;
+        }
+
+        // Tentar estabelecer sessao (funciona se email confirmation esta desligado)
+        const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+
+        // Inserir perfil de contratante via RPC (SECURITY DEFINER contorna RLS)
+        const { error: insertError } = await supabase.rpc('create_contractor', {
+          p_auth_id: data.user.id,
+          p_name: nome,
+          p_email: email,
+          p_phone: whatsapp || null,
+          p_company: empresa,
+          p_role: cargo || null,
+        });
+
+        if (insertError) {
+          console.error('Contractor insert error:', insertError);
+          showError('Conta criada, mas houve um erro ao salvar o perfil. Faca login e tente novamente.');
+          setLoading(false);
+          return;
+        }
+
+        // Se signIn funcionou, redirecionar para dashboard
+        if (!signInErr) {
+          window.location.href = '/meus-projetos/';
+        } else {
+          showSuccess('Conta criada com sucesso! Verifique seu email para confirmar o cadastro e depois faca login.');
+          setLoading(false);
+        }
+      } catch (err) {
+        const msg = err?.message || '';
+        if (msg.includes('already registered') || msg.includes('already been registered')) {
+          showError('Este email ja esta cadastrado. Tente fazer login ou use outro email.');
+        } else if (msg.includes('valid email')) {
+          showError('Por favor, insira um email valido.');
+        } else if (msg.includes('Password')) {
+          showError('A senha deve ter no minimo 6 caracteres.');
+        } else {
+          showError('Erro ao criar conta. Tente novamente.');
+        }
+        setLoading(false);
+      }
+    });
+  </script>
+
+</body>
+</html>

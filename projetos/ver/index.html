@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Oportunidade | Avantik</title>
+  <meta name="description" content="Veja detalhes destá oportunidade para palestrantes e candidate-se diretamente pela plataforma Avantik.">
+
+  <link rel="canonical" href="https://www.avantik.com.br/projetos/ver/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- FONTS: DM Serif Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .project-detail {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .project-detail__back {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .project-detail__back:hover {
+      color: var(--color-accent);
+    }
+
+    .project-detail__status {
+      display: inline-block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.3rem 0.875rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    .project-detail__status--aberto {
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .project-detail__status--encerrado {
+      background: var(--color-muted-bg);
+      color: var(--color-text-secondary);
+    }
+
+    .project-detail__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 400;
+      color: var(--color-text);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .project-detail__company {
+      font-size: 1.0625rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-detail__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .project-detail__meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .project-detail__meta-item svg {
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .project-detail__budget {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--color-accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-detail__theme {
+      display: inline-block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 0.3rem 0.875rem;
+      border-radius: 100px;
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+      margin-bottom: 2rem;
+    }
+
+    .project-detail__desc {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--color-text);
+      white-space: pre-line;
+      margin-bottom: 2rem;
+    }
+
+    .project-detail__published {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    /* Application form */
+    .project-apply {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .project-apply__title {
+      font-family: var(--font-heading);
+      font-size: 1.375rem;
+      font-weight: 400;
+      color: var(--color-text);
+      margin-bottom: 1.25rem;
+    }
+
+    .project-apply__field {
+      margin-bottom: 1.25rem;
+    }
+
+    .project-apply__field label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .project-apply__field input,
+    .project-apply__field textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.625rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-surface);
+      transition: border-color 0.2s, outline-color 0.2s;
+    }
+
+    .project-apply__field input::placeholder,
+    .project-apply__field textarea::placeholder {
+      color: var(--color-text-secondary);
+    }
+
+    .project-apply__field input:focus,
+    .project-apply__field textarea:focus {
+      border-color: var(--color-accent);
+      outline: 2px solid var(--color-accent);
+      outline-offset: -1px;
+    }
+
+    .project-apply__field textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .project-apply__submit {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .project-apply__submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .project-apply__error {
+      display: none;
+      background: #fef2f2;
+      color: #991b1b;
+      padding: 0.75rem 1rem;
+      border-radius: 0.625rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .project-apply__error--visible {
+      display: block;
+    }
+
+    .project-apply__success {
+      display: none;
+      text-align: center;
+      padding: 1.5rem 0;
+    }
+
+    .project-apply__success--visible {
+      display: block;
+    }
+
+    .project-apply__success-icon {
+      width: 48px;
+      height: 48px;
+      background: #ecfdf5;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .project-apply__success-icon svg {
+      color: var(--color-success);
+    }
+
+    .project-apply__success-text {
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 0.25rem;
+    }
+
+    .project-apply__success-sub {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+    }
+
+    /* Banners */
+    .project-banner--closed {
+      background: var(--color-muted-bg);
+      border: 1px solid var(--color-border);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      margin-top: 3rem;
+      color: var(--color-text-secondary);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    .project-banner--applied {
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      margin-top: 3rem;
+      color: #065f46;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    .project-banner--login {
+      background: var(--color-accent-light);
+      border: 1px solid rgba(232, 185, 49, 0.2);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    .project-banner--login a {
+      color: var(--color-accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .project-banner--login a:hover {
+      text-decoration: underline;
+    }
+
+    /* Loading state */
+    .project-loading {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--color-text-secondary);
+    }
+
+    .project-loading__spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Not found */
+    .project-notfound {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .project-notfound__title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--color-text);
+      margin-bottom: 0.75rem;
+    }
+
+    .project-notfound__text {
+      color: var(--color-text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .project-detail__meta {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .project-apply {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo"><img src="/images/logo.png" alt="Avantik" class="header__logo-img"></a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link header__link--active">Oportunidades</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+      </div>
+      <div class="header__actions" id="header-actions">
+        <a href="/entrar/" class="btn btn--outline btn--sm">Entrar</a>
+        <a href="/cadastro-empresa/" class="btn btn--accent btn--sm">Publicar Oportunidade</a>
+      </div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <div class="header__mobile-actions">
+        <a href="/entrar/" class="btn btn--outline">Entrar</a>
+        <a href="/cadastro-empresa/" class="btn btn--accent">Publicar Oportunidade</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="project-detail">
+
+          <!-- Loading state -->
+          <div class="project-loading" id="loading-state">
+            <div class="project-loading__spinner"></div>
+            <p>Carregando oportunidade...</p>
+          </div>
+
+          <!-- Not found state -->
+          <div class="project-notfound" id="notfound-state" style="display:none">
+            <h1 class="project-notfound__title">Oportunidade não encontrada</h1>
+            <p class="project-notfound__text">Esta oportunidade pode ter sido removida ou o link está incorreto.</p>
+            <a href="/projetos/" class="btn btn--accent">Ver todas as oportunidades</a>
+          </div>
+
+          <!-- Content (shown after load) -->
+          <div id="project-content" style="display:none">
+            <a href="/projetos/" class="project-detail__back">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              Todas as oportunidades
+            </a>
+
+            <div id="status-badge"></div>
+            <h1 class="project-detail__title" id="project-title"></h1>
+            <p class="project-detail__company" id="project-company"></p>
+
+            <div class="project-detail__meta" id="project-meta"></div>
+
+            <div id="project-budget"></div>
+            <div id="project-theme"></div>
+
+            <div class="project-detail__desc" id="project-desc"></div>
+            <p class="project-detail__published" id="project-published"></p>
+
+            <!-- Dynamic sections inserted by JS -->
+            <div id="project-action"></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo"><img src="/images/logo.png" alt="Avantik" class="footer__logo-img"></a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegação</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/projetos/">Oportunidades</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+import { supabase, escapeHtml, formatPriceRange, getUser, getUserType, EVENT_TYPES } from '/lib/supabase.js';
+
+const loadingState = document.getElementById('loading-state');
+const notfoundState = document.getElementById('notfound-state');
+const projectContent = document.getElementById('project-content');
+
+// Get project ID from URL
+const params = new URLSearchParams(window.location.search);
+const projectId = params.get('id');
+
+if (!projectId) {
+  loadingState.style.display = 'none';
+  notfoundState.style.display = 'block';
+  throw new Error('No project ID');
+}
+
+// Fetch project
+const { data: project, error } = await supabase
+  .from('projects')
+  .select('*, themes(name), contractors(company)')
+  .eq('id', projectId)
+  .single();
+
+if (error || !project) {
+  loadingState.style.display = 'none';
+  notfoundState.style.display = 'block';
+  throw new Error('Project not found');
+}
+
+// Check user status
+let currentUser = null;
+let userType = null;
+let userProfile = null;
+let speakerProfile = null;
+let hasApplied = false;
+
+try {
+  currentUser = await getUser();
+  if (currentUser) {
+    const result = await getUserType(currentUser.id);
+    userType = result.type;
+    userProfile = result.profile;
+
+    // Verificar se TEM papel de speaker (mesmo se papel ativo e contractor)
+    speakerProfile = result.hasRole ? result.getProfile('speaker') : (userType === 'speaker' ? userProfile : null);
+    if (speakerProfile) {
+      const { data: existingApp } = await supabase
+        .from('project_applications')
+        .select('id')
+        .eq('project_id', projectId)
+        .eq('speaker_id', speakerProfile.id)
+        .limit(1);
+
+      hasApplied = existingApp && existingApp.length > 0;
+    }
+  }
+} catch (e) {
+  // Not logged in, continue
+}
+
+// Render project details
+const companyName = project.contractors?.company || 'Empresa';
+const themeName = project.themes?.name || null;
+const typeLabel = EVENT_TYPES[project.event_type] || project.event_type || '';
+
+// Status badge
+const statusClass = project.status === 'aberto' ? 'project-detail__status--aberto' : 'project-detail__status--encerrado';
+const statusLabel = project.status === 'aberto' ? 'Aberto' : 'Encerrado';
+document.getElementById('status-badge').innerHTML = `<span class="project-detail__status ${statusClass}">${statusLabel}</span>`;
+
+// Title
+document.getElementById('project-title').textContent = project.title;
+
+// Company
+document.getElementById('project-company').textContent = companyName;
+
+// Meta
+const metaItems = [];
+if (typeLabel) {
+  metaItems.push(`<span class="project-detail__meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>${escapeHtml(typeLabel)}</span>`);
+}
+if (project.event_date) {
+  const d = new Date(project.event_date + 'T00:00:00');
+  const formatted = d.toLocaleDateString('pt-BR');
+  metaItems.push(`<span class="project-detail__meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${formatted}</span>`);
+}
+if (project.event_location) {
+  metaItems.push(`<span class="project-detail__meta-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${escapeHtml(project.event_location)}</span>`);
+}
+document.getElementById('project-meta').innerHTML = metaItems.join('');
+
+// Budget
+const budget = formatPriceRange(project.budget_min, project.budget_max);
+document.getElementById('project-budget').innerHTML = `<p class="project-detail__budget">Orçamento: ${budget}</p>`;
+
+// Theme
+if (themeName) {
+  document.getElementById('project-theme').innerHTML = `<span class="project-detail__theme">${escapeHtml(themeName)}</span>`;
+}
+
+// Description
+document.getElementById('project-desc').textContent = project.description || '';
+
+// Published date
+const pubDate = new Date(project.created_at);
+const formattedPubDate = pubDate.toLocaleDateString('pt-BR');
+document.getElementById('project-published').textContent = `Publicado em ${formattedPubDate}`;
+
+// Update page title
+document.title = `${project.title} | Avantik`;
+
+// Action section
+const actionDiv = document.getElementById('project-action');
+
+if (project.status === 'encerrado') {
+  actionDiv.innerHTML = `
+    <div class="project-banner--closed">
+      <p>Esta oportunidade foi encerrada e não aceita mais candidaturas.</p>
+    </div>
+  `;
+} else if (project.status === 'aberto') {
+  if (speakerProfile && hasApplied) {
+    actionDiv.innerHTML = `
+      <div class="project-banner--applied">
+        <p>Voce ja se candidatou a esta oportunidade.</p>
+      </div>
+    `;
+  } else if (speakerProfile) {
+    // Show application form
+    actionDiv.innerHTML = `
+      <div class="project-apply">
+        <h2 class="project-apply__title">Candidatar-se</h2>
+        <div class="project-apply__error" id="apply-error" role="alert"></div>
+        <form id="apply-form" novalidate>
+          <div class="project-apply__field">
+            <label for="apply-message">Mensagem *</label>
+            <textarea id="apply-message" name="message" required rows="5" placeholder="Explique por que você e ideal para este evento..."></textarea>
+          </div>
+          <div class="project-apply__field">
+            <label for="apply-price">Preço proposto (R$)</label>
+            <input type="number" id="apply-price" name="proposed_price" min="0" step="100" placeholder="Opcional">
+          </div>
+          <button type="submit" class="btn btn--accent btn--lg project-apply__submit" id="apply-submit">Enviar Candidatura</button>
+        </form>
+        <div class="project-apply__success" id="apply-success">
+          <div class="project-apply__success-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <p class="project-apply__success-text">Candidatura enviada com sucesso!</p>
+          <p class="project-apply__success-sub">A empresa recebera sua proposta e podera entrar em contato.</p>
+        </div>
+      </div>
+    `;
+
+    // Handle form submit
+    const applyForm = document.getElementById('apply-form');
+    const applySubmit = document.getElementById('apply-submit');
+    const applyError = document.getElementById('apply-error');
+    const applySuccess = document.getElementById('apply-success');
+
+    applyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      applyError.classList.remove('project-apply__error--visible');
+
+      const message = document.getElementById('apply-message').value.trim();
+      const proposedPrice = document.getElementById('apply-price').value ? Number(document.getElementById('apply-price').value) : null;
+
+      if (!message) {
+        applyError.textContent = 'Escreva uma mensagem para se candidatar.';
+        applyError.classList.add('project-apply__error--visible');
+        return;
+      }
+
+      applySubmit.disabled = true;
+      applySubmit.textContent = 'Enviando...';
+
+      try {
+        const { error: insertError } = await supabase
+          .from('project_applications')
+          .insert({
+            project_id: projectId,
+            speaker_id: speakerProfile.id,
+            message: message,
+            proposed_price: proposedPrice
+          });
+
+        if (insertError) {
+          if (insertError.code === '23505') {
+            applyError.textContent = 'Você ja se candidatou a esta oportunidade.';
+          } else {
+            applyError.textContent = 'Erro ao enviar candidatura. Tente novamente.';
+          }
+          applyError.classList.add('project-apply__error--visible');
+          applySubmit.disabled = false;
+          applySubmit.textContent = 'Enviar Candidatura';
+          return;
+        }
+
+        // Success
+        applyForm.style.display = 'none';
+        applySuccess.classList.add('project-apply__success--visible');
+      } catch (err) {
+        console.error('Apply error:', err);
+        applyError.textContent = 'Erro ao enviar candidatura. Tente novamente.';
+        applyError.classList.add('project-apply__error--visible');
+        applySubmit.disabled = false;
+        applySubmit.textContent = 'Enviar Candidatura';
+      }
+    });
+  } else if (!currentUser) {
+    // Not logged in
+    const redirectUrl = encodeURIComponent(`/projetos/ver/?id=${projectId}`);
+    actionDiv.innerHTML = `
+      <div class="project-banner--login">
+        <p><a href="/entrar/?redirect=${redirectUrl}">Faça login</a> para se candidatar a esta oportunidade.</p>
+      </div>
+    `;
+  }
+}
+
+// Show content, hide loading
+loadingState.style.display = 'none';
+projectContent.style.display = 'block';
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+nome,email,telefone,cidade,estado,bio,foto_url,video_url,preco_minimo,preco_maximo,instagram,linkedin,website,plano,temas
+Ana Mendes,ana@exemplo.com,+5531999999999,Belo Horizonte,MG,"Palestrante especialista em liderança com 10 anos de experiência.",https://exemplo.com/foto.jpg,https://youtube.com/watch?v=exemplo,5000,10000,@anamendes,https://linkedin.com/in/anamendes,https://anamendes.com.br,profissional,"Liderança;Motivacional"
+Carlos Silva,carlos@exemplo.com,+5511988888888,São Paulo,SP,"Especialista em vendas e negociação para equipes comerciais.",,https://youtube.com/watch?v=exemplo2,8000,15000,@carlossilva,,,essencial,"Vendas;Comunicação"

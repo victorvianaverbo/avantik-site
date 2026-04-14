@@ -5,31 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Avantik | Encontre o Palestrante Certo para Seu Evento</title>
-  <meta name="description" content="Plataforma que conecta empresas aos melhores palestrantes do Brasil. Filtre por tema, preco e avaliacao. SIPAT, lideranca, vendas, motivacional e mais.">
+  <meta name="description" content="Plataforma que conecta empresas aos melhores palestrantes do Brasil. Filtre por tema, preço e avaliação. SIPAT, liderança, vendas, motivacional e mais.">
 
   <meta property="og:title" content="Avantik | Encontre o Palestrante Certo para Seu Evento">
-  <meta property="og:description" content="Plataforma que conecta empresas aos melhores palestrantes do Brasil. Filtre por tema, preco e avaliacao.">
+  <meta property="og:description" content="Plataforma que conecta empresas aos melhores palestrantes do Brasil. Filtre por tema, preço e avaliação.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="">
+  <meta property="og:image" content="https://www.avantik.com.br/images/logo.png">
   <meta property="og:url" content="https://www.avantik.com.br">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Avantik | Encontre o Palestrante Certo para Seu Evento">
 
+  <link rel="canonical" href="https://www.avantik.com.br/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <!-- FONTS: DM Serif Display + DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/css/intlTelInput.css">
 
   <link rel="stylesheet" href="/style.css">
 
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/intlTelInput.min.js" defer></script>
   <script src="/script.js" defer></script>
 </head>
 <body>
@@ -38,18 +38,18 @@
   <header class="header" id="header">
     <nav class="header__nav container">
       <a href="/" class="header__logo">
-        <span class="header__logo-name">Avantik</span>
-        <span class="header__logo-tagline">Apogeu do Palestrante</span>
+        <img src="/images/logo.png" alt="Avantik" class="header__logo-img" width="150" height="40">
       </a>
 
       <div class="header__links" id="nav-links">
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
         <a href="/sobre/" class="header__link">Sobre</a>
         <a href="/blog/" class="header__link">Blog</a>
       </div>
 
-      <div class="header__actions">
+      <div class="header__actions" id="header-actions">
         <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
         <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
       </div>
@@ -64,6 +64,7 @@
     <!-- Mobile menu overlay -->
     <div class="header__mobile" id="mobile-menu">
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <a href="/sobre/" class="header__mobile-link">Sobre</a>
       <a href="/blog/" class="header__mobile-link">Blog</a>
@@ -94,7 +95,7 @@
           </div>
 
           <p class="hero__subtitle hero__subtitle--active" id="hero-sub-empresa" role="tabpanel">
-            Encontre palestrantes qualificados para qualquer ocasiao. Filtre por tema, preco e avaliacao em segundos.
+            Encontre palestrantes qualificados para qualquer ocasião. Filtre por tema, preço e avaliação em segundos.
           </p>
           <p class="hero__subtitle" id="hero-sub-palestrante" role="tabpanel" hidden>
             Leve sua carreira a novos palcos. Ganhe visibilidade, receba propostas e foque no que faz de melhor.
@@ -140,12 +141,12 @@
             <div class="hero__card-avatar"></div>
             <div class="hero__card-info">
               <span class="hero__card-name">Ana Mendes</span>
-              <span class="hero__card-role">Palestrante de Lideranca</span>
+              <span class="hero__card-role">Palestrante de Liderança</span>
             </div>
             <div class="hero__card-tags">
-              <span>Lideranca</span>
+              <span>Liderança</span>
               <span>SIPAT</span>
-              <span>Gestao</span>
+              <span>Gestão</span>
             </div>
             <div class="hero__card-bottom">
               <span class="hero__card-rating">&#9733;&#9733;&#9733;&#9733;&#9733; 4.9</span>
@@ -182,8 +183,8 @@
                 <span class="how__step-line"></span>
               </div>
               <div class="how__step-body">
-                <h3 class="how__step-title">Busque por tema ou ocasiao</h3>
-                <p class="how__step-text">SIPAT, Dia da Mulher, Outubro Rosa, vendas, lideranca. Filtre entre dezenas de temas e encontre exatamente o que seu evento precisa.</p>
+                <h3 class="how__step-title">Busque por tema ou ocasião</h3>
+                <p class="how__step-text">SIPAT, Dia da Mulher, Outubro Rosa, vendas, liderança. Filtre entre dezenas de temas e encontre exatamente o que seu evento precisa.</p>
               </div>
             </article>
 
@@ -193,8 +194,8 @@
                 <span class="how__step-line"></span>
               </div>
               <div class="how__step-body">
-                <h3 class="how__step-title">Compare perfis e avaliacoes</h3>
-                <p class="how__step-text">Veja bio, videos, depoimentos e faixa de preco de cada palestrante. Tudo em um so lugar, sem ligar para agencias.</p>
+                <h3 class="how__step-title">Compare perfis e avaliações</h3>
+                <p class="how__step-text">Veja bio, vídeos, depoimentos e faixa de preço de cada palestrante. Tudo em um só lugar, sem ligar para agências.</p>
               </div>
             </article>
 
@@ -203,8 +204,8 @@
                 <span class="how__step-number">03</span>
               </div>
               <div class="how__step-body">
-                <h3 class="how__step-title">Solicite orcamento direto</h3>
-                <p class="how__step-text">Envie sua proposta diretamente ao palestrante. Sem intermediarios, sem surpresas. Resposta em ate 48 horas.</p>
+                <h3 class="how__step-title">Solicite orçamento direto</h3>
+                <p class="how__step-text">Envie sua proposta diretamente ao palestrante. Sem intermediários, sem surpresas. Resposta em até 48 horas.</p>
               </div>
             </article>
           </div>
@@ -219,7 +220,7 @@
               </div>
               <div class="how__step-body">
                 <h3 class="how__step-title">Crie seu perfil profissional</h3>
-                <p class="how__step-text">Monte uma vitrine completa: bio, fotos, videos, temas de palestra e faixa de preco. Seu portfolio digital em minutos.</p>
+                <p class="how__step-text">Monte uma vitrine completa: bio, fotos, vídeos, temas de palestra e faixa de preço. Seu portfólio digital em minutos.</p>
               </div>
             </article>
 
@@ -230,7 +231,7 @@
               </div>
               <div class="how__step-body">
                 <h3 class="how__step-title">Seja encontrado por quem contrata</h3>
-                <p class="how__step-text">Empresas de todo o Brasil buscam palestrantes na nossa plataforma. Apareca para os decisores certos, na hora certa.</p>
+                <p class="how__step-text">Empresas de todo o Brasil buscam palestrantes na nossa plataforma. Apareça para os decisores certos, na hora certa.</p>
               </div>
             </article>
 
@@ -240,7 +241,7 @@
               </div>
               <div class="how__step-body">
                 <h3 class="how__step-title">Receba propostas e feche contratos</h3>
-                <p class="how__step-text">Propostas chegam direto no seu e-mail. Voce decide quais aceitar. Sem comissao sobre o cache.</p>
+                <p class="how__step-text">Propostas chegam direto no seu e-mail. Você decide quais aceitar. Sem comissão sobre o cachê.</p>
               </div>
             </article>
           </div>
@@ -254,8 +255,8 @@
       <div class="container">
         <div class="categories__header">
           <span class="categories__label" data-aos="fade-up">Explore por tema</span>
-          <h2 class="categories__title" data-aos="fade-up" data-aos-delay="80">Encontre por tema ou ocasiao</h2>
-          <p class="categories__subtitle" data-aos="fade-up" data-aos-delay="160">Dezenas de categorias para conectar voce ao palestrante certo</p>
+          <h2 class="categories__title" data-aos="fade-up" data-aos-delay="80">Encontre por tema ou ocasião</h2>
+          <p class="categories__subtitle" data-aos="fade-up" data-aos-delay="160">Dezenas de categorias para conectar você ao palestrante certo</p>
         </div>
 
         <div class="categories__grid">
@@ -276,11 +277,11 @@
             <span class="categories__count">28 palestrantes</span>
           </a>
 
-          <a href="/diretorio/?tema=lideranca" class="categories__card" data-aos="fade-up" data-aos-delay="220">
+          <a href="/diretorio/?tema=liderança" class="categories__card" data-aos="fade-up" data-aos-delay="220">
             <span class="categories__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
             </span>
-            <span class="categories__name">Lideranca</span>
+            <span class="categories__name">Liderança</span>
             <span class="categories__count">25 palestrantes</span>
           </a>
 
@@ -296,15 +297,15 @@
             <span class="categories__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5 9.04 9.5a2.5 2.5 0 1 0 3.6 3.25L12 5z"/></svg>
             </span>
-            <span class="categories__name">Inteligencia Emocional</span>
+            <span class="categories__name">Inteligência Emocional</span>
             <span class="categories__count">18 palestrantes</span>
           </a>
 
-          <a href="/diretorio/?tema=comunicacao" class="categories__card categories__card--wide" data-aos="fade-up" data-aos-delay="400">
+          <a href="/diretorio/?tema=comunicação" class="categories__card categories__card--wide" data-aos="fade-up" data-aos-delay="400">
             <span class="categories__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </span>
-            <span class="categories__name">Comunicacao</span>
+            <span class="categories__name">Comunicação</span>
             <span class="categories__count">22 palestrantes</span>
           </a>
 
@@ -324,11 +325,11 @@
             <span class="categories__count">12 palestrantes</span>
           </a>
 
-          <a href="/diretorio/?tema=saude-mental" class="categories__card" data-aos="fade-up" data-aos-delay="580">
+          <a href="/diretorio/?tema=saúde-mental" class="categories__card" data-aos="fade-up" data-aos-delay="580">
             <span class="categories__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><path d="M8 3.5A7 7 0 0 1 12 2"/></svg>
             </span>
-            <span class="categories__name">Saude Mental</span>
+            <span class="categories__name">Saúde Mental</span>
             <span class="categories__count">20 palestrantes</span>
           </a>
 
@@ -336,7 +337,7 @@
             <span class="categories__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </span>
-            <span class="categories__name">Diversidade e Inclusao</span>
+            <span class="categories__name">Diversidade e Inclusão</span>
             <span class="categories__count">14 palestrantes</span>
           </a>
 
@@ -344,15 +345,15 @@
             <span class="categories__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             </span>
-            <span class="categories__name">Gestao e Empreendedorismo</span>
+            <span class="categories__name">Gestão e Empreendedorismo</span>
             <span class="categories__count">19 palestrantes</span>
           </a>
 
-          <a href="/diretorio/?tema=inovacao" class="categories__card" data-aos="fade-up" data-aos-delay="760">
+          <a href="/diretorio/?tema=inovação" class="categories__card" data-aos="fade-up" data-aos-delay="760">
             <span class="categories__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
             </span>
-            <span class="categories__name">Inovacao e Tecnologia</span>
+            <span class="categories__name">Inovação e Tecnologia</span>
             <span class="categories__count">16 palestrantes</span>
           </a>
         </div>
@@ -368,8 +369,8 @@
     <section class="speakers section" id="palestrantes">
       <div class="container">
         <div class="speakers__header">
-          <span class="speakers__label" data-aos="fade-up">Quem esta na plataforma</span>
-          <h2 class="speakers__title" data-aos="fade-up" data-aos-delay="80">Conheca quem esta movendo palcos</h2>
+          <span class="speakers__label" data-aos="fade-up">Quem está na plataforma</span>
+          <h2 class="speakers__title" data-aos="fade-up" data-aos-delay="80">Conheça quem está movendo palcos</h2>
           <p class="speakers__subtitle" data-aos="fade-up" data-aos-delay="160">Palestrantes verificados e avaliados pela comunidade Avantik</p>
         </div>
       </div>
@@ -379,14 +380,14 @@
         <div class="speakers__fade speakers__fade--right"></div>
         <div class="speakers__track">
           <!-- Card 1 -->
-          <a href="/palestrante/?slug=ana-mendes" class="speakers__card">
+          <a href="/diretorio/" class="speakers__card">
             <div class="speakers__avatar speakers__avatar--1"></div>
             <div class="speakers__info">
               <span class="speakers__name">Ana Mendes</span>
               <div class="speakers__tags">
-                <span>Lideranca</span>
+                <span>Liderança</span>
                 <span>SIPAT</span>
-                <span>Gestao</span>
+                <span>Gestão</span>
               </div>
               <div class="speakers__bottom">
                 <span class="speakers__rating">&#9733; 4.9</span>
@@ -395,7 +396,7 @@
             </div>
           </a>
           <!-- Card 2 -->
-          <a href="/palestrante/?slug=carlos-silva" class="speakers__card">
+          <a href="/diretorio/" class="speakers__card">
             <div class="speakers__avatar speakers__avatar--2"></div>
             <div class="speakers__info">
               <span class="speakers__name">Carlos Silva</span>
@@ -410,13 +411,13 @@
             </div>
           </a>
           <!-- Card 3 -->
-          <a href="/palestrante/?slug=juliana-costa" class="speakers__card">
+          <a href="/diretorio/" class="speakers__card">
             <div class="speakers__avatar speakers__avatar--3"></div>
             <div class="speakers__info">
               <span class="speakers__name">Juliana Costa</span>
               <div class="speakers__tags">
-                <span>Saude Mental</span>
-                <span>Inteligencia Emocional</span>
+                <span>Saúde Mental</span>
+                <span>Inteligência Emocional</span>
               </div>
               <div class="speakers__bottom">
                 <span class="speakers__rating">&#9733; 5.0</span>
@@ -425,14 +426,14 @@
             </div>
           </a>
           <!-- Card 4 -->
-          <a href="/palestrante/?slug=marcos-oliveira" class="speakers__card">
+          <a href="/diretorio/" class="speakers__card">
             <div class="speakers__avatar speakers__avatar--4"></div>
             <div class="speakers__info">
               <span class="speakers__name">Marcos Oliveira</span>
               <div class="speakers__tags">
-                <span>Inovacao</span>
+                <span>Inovação</span>
                 <span>Tecnologia</span>
-                <span>Gestao</span>
+                <span>Gestão</span>
               </div>
               <div class="speakers__bottom">
                 <span class="speakers__rating">&#9733; 4.7</span>
@@ -441,13 +442,13 @@
             </div>
           </a>
           <!-- Card 5 -->
-          <a href="/palestrante/?slug=patricia-santos" class="speakers__card">
+          <a href="/diretorio/" class="speakers__card">
             <div class="speakers__avatar speakers__avatar--5"></div>
             <div class="speakers__info">
-              <span class="speakers__name">Patricia Santos</span>
+              <span class="speakers__name">Patrícia Santos</span>
               <div class="speakers__tags">
                 <span>Diversidade</span>
-                <span>Comunicacao</span>
+                <span>Comunicação</span>
               </div>
               <div class="speakers__bottom">
                 <span class="speakers__rating">&#9733; 4.9</span>
@@ -456,7 +457,7 @@
             </div>
           </a>
           <!-- Card 6 -->
-          <a href="/palestrante/?slug=roberto-lima" class="speakers__card">
+          <a href="/diretorio/" class="speakers__card">
             <div class="speakers__avatar speakers__avatar--6"></div>
             <div class="speakers__info">
               <span class="speakers__name">Roberto Lima</span>
@@ -471,14 +472,14 @@
             </div>
           </a>
           <!-- Duplicados para loop infinito (clones) -->
-          <a href="/palestrante/?slug=ana-mendes" class="speakers__card" aria-hidden="true" tabindex="-1">
+          <a href="/diretorio/" class="speakers__card" aria-hidden="true" tabindex="-1">
             <div class="speakers__avatar speakers__avatar--1"></div>
             <div class="speakers__info">
               <span class="speakers__name">Ana Mendes</span>
               <div class="speakers__tags">
-                <span>Lideranca</span>
+                <span>Liderança</span>
                 <span>SIPAT</span>
-                <span>Gestao</span>
+                <span>Gestão</span>
               </div>
               <div class="speakers__bottom">
                 <span class="speakers__rating">&#9733; 4.9</span>
@@ -486,7 +487,7 @@
               </div>
             </div>
           </a>
-          <a href="/palestrante/?slug=carlos-silva" class="speakers__card" aria-hidden="true" tabindex="-1">
+          <a href="/diretorio/" class="speakers__card" aria-hidden="true" tabindex="-1">
             <div class="speakers__avatar speakers__avatar--2"></div>
             <div class="speakers__info">
               <span class="speakers__name">Carlos Silva</span>
@@ -500,13 +501,13 @@
               </div>
             </div>
           </a>
-          <a href="/palestrante/?slug=juliana-costa" class="speakers__card" aria-hidden="true" tabindex="-1">
+          <a href="/diretorio/" class="speakers__card" aria-hidden="true" tabindex="-1">
             <div class="speakers__avatar speakers__avatar--3"></div>
             <div class="speakers__info">
               <span class="speakers__name">Juliana Costa</span>
               <div class="speakers__tags">
-                <span>Saude Mental</span>
-                <span>Inteligencia Emocional</span>
+                <span>Saúde Mental</span>
+                <span>Inteligência Emocional</span>
               </div>
               <div class="speakers__bottom">
                 <span class="speakers__rating">&#9733; 5.0</span>
@@ -514,14 +515,14 @@
               </div>
             </div>
           </a>
-          <a href="/palestrante/?slug=marcos-oliveira" class="speakers__card" aria-hidden="true" tabindex="-1">
+          <a href="/diretorio/" class="speakers__card" aria-hidden="true" tabindex="-1">
             <div class="speakers__avatar speakers__avatar--4"></div>
             <div class="speakers__info">
               <span class="speakers__name">Marcos Oliveira</span>
               <div class="speakers__tags">
-                <span>Inovacao</span>
+                <span>Inovação</span>
                 <span>Tecnologia</span>
-                <span>Gestao</span>
+                <span>Gestão</span>
               </div>
               <div class="speakers__bottom">
                 <span class="speakers__rating">&#9733; 4.7</span>
@@ -529,13 +530,13 @@
               </div>
             </div>
           </a>
-          <a href="/palestrante/?slug=patricia-santos" class="speakers__card" aria-hidden="true" tabindex="-1">
+          <a href="/diretorio/" class="speakers__card" aria-hidden="true" tabindex="-1">
             <div class="speakers__avatar speakers__avatar--5"></div>
             <div class="speakers__info">
-              <span class="speakers__name">Patricia Santos</span>
+              <span class="speakers__name">Patrícia Santos</span>
               <div class="speakers__tags">
                 <span>Diversidade</span>
-                <span>Comunicacao</span>
+                <span>Comunicação</span>
               </div>
               <div class="speakers__bottom">
                 <span class="speakers__rating">&#9733; 4.9</span>
@@ -543,7 +544,7 @@
               </div>
             </div>
           </a>
-          <a href="/palestrante/?slug=roberto-lima" class="speakers__card" aria-hidden="true" tabindex="-1">
+          <a href="/diretorio/" class="speakers__card" aria-hidden="true" tabindex="-1">
             <div class="speakers__avatar speakers__avatar--6"></div>
             <div class="speakers__info">
               <span class="speakers__name">Roberto Lima</span>
@@ -584,8 +585,8 @@
             <div class="why__icon-wrap">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
             </div>
-            <h3 class="why__card-title">Visibilidade real, nao promessa</h3>
-            <p class="why__card-text">Investimos em trafego e marketing para que seu perfil seja encontrado por quem realmente contrata.</p>
+            <h3 class="why__card-title">Visibilidade real, não promessa</h3>
+            <p class="why__card-text">Investimos em tráfego e marketing para que seu perfil seja encontrado por quem realmente contrata.</p>
           </article>
 
           <article class="why__card why__card--2" data-aos="fade-up" data-aos-delay="150">
@@ -593,8 +594,8 @@
             <div class="why__icon-wrap">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 0 1 0 5H18"/><path d="M18 15h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M6 15H4.5a2.5 2.5 0 0 0 0 5H6"/><path d="M6 9v12"/><path d="M18 9v6"/></svg>
             </div>
-            <h3 class="why__card-title">Programa Apogeu do Palestrante</h3>
-            <p class="why__card-text">Nosso programa exclusivo desenvolve sua carreira nos 4 pilares: Conteudo, Performance, Apresentacao e Posicionamento.</p>
+            <h3 class="why__card-title">Programa de Desenvolvimento</h3>
+            <p class="why__card-text">Nosso programa exclusivo desenvolve sua carreira nos 4 pilares: Conteúdo, Performance, Apresentação e Posicionamento.</p>
           </article>
 
           <article class="why__card why__card--3" data-aos="fade-up" data-aos-delay="300">
@@ -602,8 +603,8 @@
             <div class="why__icon-wrap">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <h3 class="why__card-title">Sem comissao sobre o cache</h3>
-            <p class="why__card-text">Diferente de agencias tradicionais, nao ficamos com parte do seu cache. Voce recebe 100% do valor contratado.</p>
+            <h3 class="why__card-title">Sem comissão sobre o cachê</h3>
+            <p class="why__card-text">Diferente de agências tradicionais, não ficamos com parte do seu cachê. Você recebe 100% do valor contratado.</p>
           </article>
 
           <article class="why__card why__card--4" data-aos="fade-up" data-aos-delay="450">
@@ -612,17 +613,17 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <h3 class="why__card-title">Comunidade ativa de palestrantes</h3>
-            <p class="why__card-text">Troca de experiencias, networking e oportunidades compartilhadas entre profissionais que vivem de palco.</p>
+            <p class="why__card-text">Troca de experiências, networking e oportunidades compartilhadas entre profissionais que vivem de palco.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- PROVA SOCIAL: Editorial + Layered + Glassmorphism -->
+    <!-- DEPOIMENTOS: Video Immersive + Spotlight -->
     <section class="social section" id="depoimentos">
       <div class="social__wrapper">
-        <!-- Circulo decorativo -->
         <div class="social__deco-circle" aria-hidden="true"></div>
+        <div class="social__deco-circle social__deco-circle--2" aria-hidden="true"></div>
 
         <div class="container">
           <div class="social__header">
@@ -630,52 +631,93 @@
             <h2 class="social__title" data-aos="fade-up" data-aos-delay="80">O que dizem sobre a <span class="social__title-accent">Avantik</span></h2>
           </div>
 
-          <div class="social__grid">
-            <article class="social__card" data-aos="fade-up" data-aos-delay="150">
-              <svg class="social__quote" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-              <p class="social__text">Precisavamos de um palestrante para SIPAT em menos de 2 semanas. Na Avantik encontramos, comparamos e fechamos em 3 dias. A palestra foi um sucesso.</p>
-              <div class="social__author">
-                <div class="social__avatar social__avatar--1"></div>
-                <div>
-                  <span class="social__author-name">Fernanda Ribeiro</span>
-                  <span class="social__author-role">Coordenadora de T&D</span>
+          <!-- Video Showcase: Spotlight layout -->
+          <div class="social__showcase" data-aos="fade-up" data-aos-delay="200">
+            <!-- Video principal grande -->
+            <div class="social__main-video">
+              <div class="social__main-video-inner">
+                <div class="social__video-wrap">
+                  <iframe id="social-featured-iframe" src="https://www.youtube.com/embed/_OAmNYjwZ7Q" title="Depoimento" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                 </div>
               </div>
-            </article>
+              <!-- Brilho decorativo atras do vídeo -->
+              <div class="social__main-glow" aria-hidden="true"></div>
+            </div>
 
-            <article class="social__card" data-aos="fade-up" data-aos-delay="300">
-              <svg class="social__quote" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-              <p class="social__text">Desde que entrei na plataforma, recebi 4 propostas no primeiro mes. A visibilidade que a Avantik me deu mudou minha carreira.</p>
-              <div class="social__author">
-                <div class="social__avatar social__avatar--2"></div>
-                <div>
-                  <span class="social__author-name">Ricardo Almeida</span>
-                  <span class="social__author-role">Palestrante de Lideranca</span>
+            <!-- Sidebar com thumbnails verticais -->
+            <div class="social__sidebar">
+              <button class="social__thumb social__thumb--active" data-vídeo="https://www.youtube.com/embed/_OAmNYjwZ7Q" aria-label="Depoimento 1">
+                <img src="https://img.youtube.com/vi/_OAmNYjwZ7Q/mqdefault.jpg" alt="Depoimento 1" loading="lazy" width="320" height="180">
+                <div class="social__thumb-overlay">
+                  <svg class="social__thumb-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 </div>
-              </div>
-            </article>
+                <div class="social__thumb-bar"></div>
+              </button>
+              <button class="social__thumb" data-vídeo="https://www.youtube.com/embed/-ARRAU8UwqA" aria-label="Depoimento 2">
+                <img src="https://img.youtube.com/vi/-ARRAU8UwqA/mqdefault.jpg" alt="Depoimento 2" loading="lazy" width="320" height="180">
+                <div class="social__thumb-overlay">
+                  <svg class="social__thumb-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <div class="social__thumb-bar"></div>
+              </button>
+              <button class="social__thumb" data-vídeo="https://www.youtube.com/embed/bCaSSGe6qFo" aria-label="Depoimento 3">
+                <img src="https://img.youtube.com/vi/bCaSSGe6qFo/mqdefault.jpg" alt="Depoimento 3" loading="lazy" width="320" height="180">
+                <div class="social__thumb-overlay">
+                  <svg class="social__thumb-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <div class="social__thumb-bar"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <article class="social__card" data-aos="fade-up" data-aos-delay="450">
-              <svg class="social__quote" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-              <p class="social__text">Chega de ligar para agencia e esperar orcamento. Na Avantik eu filtro, comparo e decido na hora. E os palestrantes sao realmente bons.</p>
-              <div class="social__author">
-                <div class="social__avatar social__avatar--3"></div>
-                <div>
-                  <span class="social__author-name">Camila Duarte</span>
-                  <span class="social__author-role">Gerente de RH</span>
-                </div>
-              </div>
-            </article>
+    <!-- CLIENTES & PARCEIROS: Carrossel com setas -->
+    <section class="clients section">
+      <div class="container">
+        <div class="clients__header" data-aos="fade-up">
+          <div class="clients__icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
+          </div>
+          <h2 class="clients__title">CLIENTES E PARCEIROS</h2>
+        </div>
+
+        <div class="clients__carousel" data-aos="fade-up" data-aos-delay="150">
+          <button class="clients__arrow clients__arrow--prev" aria-label="Anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+
+          <div class="clients__viewport">
+            <div class="clients__track" id="clients-track">
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/3bf.png" alt="3BF" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/abco.png" alt="ABCO" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/araujo.png" alt="Araujo" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/contabilidade.png" alt="Contabilidade AV" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/crie.png" alt="Crie" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/direcional.png" alt="Direcional" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/empreender.png" alt="Empreender" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/gofree.png" alt="GoFree" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/illustrar.png" alt="Illustrar" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/invista.png" alt="Invista" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/observatrio.png" alt="Observatório" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/ourominas.png" alt="Ourominas" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/permuto.png" alt="Permuto" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/prefeitura-contagem.png" alt="Prefeitura de Contagem" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/royal.png" alt="Royal" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/sbt.png" alt="SBT" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/tambasa.png" alt="Tambasa" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/trokz.png" alt="Trokz" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/tv.png" alt="TV" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/adm.png" alt="ADM" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/unisv.png" alt="UNISV" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/via-permuta.png" alt="Via Permuta" loading="lazy" width="120" height="80"></div>
+            </div>
           </div>
 
-          <!-- Logos -->
-          <div class="social__logos" data-aos="fade-up" data-aos-delay="600">
-            <div class="social__logo-placeholder"></div>
-            <div class="social__logo-placeholder"></div>
-            <div class="social__logo-placeholder"></div>
-            <div class="social__logo-placeholder"></div>
-            <div class="social__logo-placeholder"></div>
-          </div>
+          <button class="clients__arrow clients__arrow--next" aria-label="Próximo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -696,14 +738,14 @@
           </div>
 
           <div class="cta-final__content cta-final__content--active" id="cta-empresa" role="tabpanel">
-            <h2 class="cta-final__title">Seu proximo evento merece o palestrante certo</h2>
-            <p class="cta-final__text">Busque entre centenas de profissionais qualificados. Filtre por tema, preco e avaliacao. Comece gratuitamente.</p>
+            <h2 class="cta-final__title">Seu próximo evento merece o palestrante certo</h2>
+            <p class="cta-final__text">Busque entre centenas de profissionais qualificados. Filtre por tema, preço e avaliação. Comece gratuitamente.</p>
             <a href="/diretorio/" class="btn btn--accent cta-final__btn">Buscar Palestrantes Agora</a>
           </div>
 
           <div class="cta-final__content" id="cta-palestrante" role="tabpanel" hidden>
             <h2 class="cta-final__title">Sua carreira merece mais palcos</h2>
-            <p class="cta-final__text">Cadastre seu perfil e seja encontrado por empresas de todo o Brasil. Plano gratuito disponivel.</p>
+            <p class="cta-final__text">Cadastre seu perfil e seja encontrado por empresas de todo o Brasil. Plano gratuito disponível.</p>
             <a href="/cadastro/" class="btn btn--accent cta-final__btn">Criar Meu Perfil</a>
           </div>
         </div>
@@ -719,8 +761,7 @@
         <!-- Coluna 1: Marca -->
         <div class="footer__brand">
           <a href="/" class="footer__logo">
-            <span class="footer__logo-name">Avantik</span>
-            <span class="footer__logo-tagline">Apogeu do Palestrante</span>
+            <img src="/images/logo.png" alt="Avantik" class="footer__logo-img" width="150" height="44">
           </a>
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
           <div class="footer__socials">
@@ -736,9 +777,9 @@
           </div>
         </div>
 
-        <!-- Coluna 2: Navegacao -->
+        <!-- Coluna 2: Navegação -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegacao</h4>
+          <h4 class="footer__col-title">Navegação</h4>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
@@ -751,8 +792,8 @@
         <div class="footer__col">
           <h4 class="footer__col-title">Legal</h4>
           <nav class="footer__links">
-            <a href="/privacidade/">Politica de Privacidade</a>
-            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
             <a href="/contrato/">Contrato do Assinante</a>
           </nav>
         </div>

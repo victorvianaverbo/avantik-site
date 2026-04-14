@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Entrar | Avantik</title>
+  <meta name="description" content="Faça login na Avantik. Acesse sua conta como palestrante ou contratante e gerencie seus projetos e perfil.">
+
+  <link rel="canonical" href="https://www.avantik.com.br/entrar/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- FONTS: DM Serif Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .auth-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: calc(80px + 2rem) var(--container-px) 4rem;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .auth-card__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .auth-card__subtitle {
+      color: var(--color-text-secondary);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    .auth-field {
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-field label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .auth-field input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.625rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-surface);
+      transition: border-color 0.2s, outline-color 0.2s;
+    }
+
+    .auth-field input::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .auth-field input:focus {
+      border-color: var(--color-accent);
+      outline: 2px solid var(--color-accent);
+      outline-offset: -1px;
+    }
+
+    .auth-error {
+      display: none;
+      background: #fef2f2;
+      color: #991b1b;
+      padding: 0.75rem 1rem;
+      border-radius: 0.625rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .auth-error--visible {
+      display: block;
+    }
+
+    .auth-submit {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .auth-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .auth-links {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+    }
+
+    .auth-links a {
+      color: var(--color-accent-hover);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .auth-links a:hover {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <img src="/images/logo.png" alt="Avantik" class="header__logo-img">
+      </a>
+
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+        <a href="/blog/" class="header__link">Blog</a>
+      </div>
+
+      <div class="header__actions" id="header-actions">
+        <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu overlay -->
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <a href="/blog/" class="header__mobile-link">Blog</a>
+      <div class="header__mobile-actions">
+        <a href="/diretorio/" class="btn btn--outline">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="auth-page">
+      <div class="auth-card">
+        <h1 class="auth-card__title">Entrar na Avantik</h1>
+        <p class="auth-card__subtitle">Acesse sua conta como palestrante ou contratante</p>
+
+        <div class="auth-error" id="auth-error" role="alert"></div>
+
+        <form id="login-form" novalidate>
+          <div class="auth-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" placeholder="seu@email.com">
+          </div>
+
+          <div class="auth-field">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" required minlength="6" autocomplete="current-password" placeholder="Sua senha">
+          </div>
+
+          <button type="submit" class="btn btn--accent btn--lg auth-submit" id="submit-btn">Entrar</button>
+        </form>
+
+        <div class="auth-links">
+          <p>Não tem conta?</p>
+          <a href="/cadastro/">Cadastrar como Palestrante</a><br>
+          <a href="/cadastro-empresa/">Cadastrar como Empresa</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo"><img src="/images/logo.png" alt="Avantik" class="footer__logo-img"></a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegacao</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/projetos/">Oportunidades</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Politica de Privacidade</a>
+            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { authSignIn, getUser, getUserType } from '/lib/supabase.js';
+
+    const form = document.getElementById('login-form');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const submitBtn = document.getElementById('submit-btn');
+    const errorDiv = document.getElementById('auth-error');
+
+    function showError(msg) {
+      errorDiv.textContent = msg;
+      errorDiv.classList.add('auth-error--visible');
+    }
+
+    function hideError() {
+      errorDiv.textContent = '';
+      errorDiv.classList.remove('auth-error--visible');
+    }
+
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      submitBtn.textContent = loading ? 'Entrando...' : 'Entrar';
+    }
+
+    function getRedirectUrl(type) {
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get('redirect');
+      if (redirect && redirect.startsWith('/')) return redirect;
+
+      // Verificar papel ativo salvo no localStorage
+      try {
+        const activeRole = localStorage.getItem('avantik_active_role');
+        if (activeRole === 'contractor') return '/meus-projetos/';
+        if (activeRole === 'speaker') return '/projetos/';
+      } catch (_) {}
+
+      if (type === 'contractor') return '/meus-projetos/';
+      if (type === 'speaker') return '/projetos/';
+      return '/';
+    }
+
+    // If already logged in, redirect immediately
+    try {
+      const user = await getUser();
+      if (user) {
+        const { type } = await getUserType(user.id);
+        window.location.href = getRedirectUrl(type);
+      }
+    } catch (err) {
+      // Not logged in, continue
+    }
+
+    // Form submit handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showError('Preencha todos os campos.');
+        return;
+      }
+
+      if (password.length < 6) {
+        showError('A senha deve ter no mínimo 6 caracteres.');
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const { user } = await authSignIn(email, password);
+        const { type } = await getUserType(user.id);
+        window.location.href = getRedirectUrl(type);
+      } catch (err) {
+        const msg = err?.message || '';
+        if (msg.includes('Invalid login credentials')) {
+          showError('Email ou senha incorretos. Verifique e tente novamente.');
+        } else if (msg.includes('Email not confirmed')) {
+          showError('Confirme seu email antes de fazer login. Verifique sua caixa de entrada.');
+        } else {
+          showError('Erro ao fazer login. Tente novamente.');
+        }
+        setLoading(false);
+      }
+    });
+  </script>
+
+</body>
+</html>

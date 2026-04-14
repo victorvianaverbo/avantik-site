@@ -13,8 +13,8 @@
 
 # Redirect www → apex
 [[redirects]]
-  from = "https://www.example.com/*"
-  to = "https://example.com/:splat"
+  from = "https://www.avantik.com.br/*"
+  to = "https://avantik.com.br/:splat"
   status = 301
   force = true
 
@@ -25,8 +25,9 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; frame-src https://www.youtube.com; connect-src 'self' https://*.supabase.co https://img.youtube.com; media-src 'self'"
 
-# Cache para assets estaticos
+# Cache para assets estaticos (sem immutable para CSS/JS sem versionamento)
 [[headers]]
   for = "/images/*"
   [headers.values]
@@ -35,12 +36,12 @@
 [[headers]]
   for = "*.css"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=86400"
 
 [[headers]]
   for = "*.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=86400"
 
 [[headers]]
   for = "*.woff2"
@@ -49,5 +50,10 @@
 
 [[headers]]
   for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/clientes-pareceiros-avantik/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

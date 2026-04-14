@@ -4,7 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sobre a Avantik | Conectando empresas aos melhores palestrantes</title>
-  <meta name="description" content="Conheca a Avantik: a plataforma que conecta empresas aos melhores palestrantes do Brasil. Mais de 200 palestrantes e 500 eventos realizados.">
+  <meta name="description" content="Conheça a Avantik: a plataforma que conecta empresas aos melhores palestrantes do Brasil. Mais de 200 palestrantes e 500 eventos realizados.">
+  <meta property="og:title" content="Sobre a Avantik">
+  <meta property="og:description" content="A plataforma que conecta empresas aos melhores palestrantes do Brasil.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.avantik.com.br/images/logo.png">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://www.avantik.com.br/sobre/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,14 +55,14 @@
 
     .page-hero__title {
       font-size: clamp(2rem, 5vw, 3.5rem);
-      color: var(--color-text);
+      color: #FFFFFF;
       max-width: 800px;
       margin: 0 auto 1.5rem;
     }
 
     .page-hero__subtitle {
       font-size: clamp(1rem, 2vw, 1.125rem);
-      color: var(--color-text-secondary);
+      color: rgba(255, 255, 255, 0.6);
       max-width: 640px;
       margin: 0 auto;
       line-height: 1.7;
@@ -498,18 +504,18 @@
   <header class="header" id="header">
     <nav class="header__nav container">
       <a href="/" class="header__logo">
-        <span class="header__logo-name">Avantik</span>
-        <span class="header__logo-tagline">Apogeu do Palestrante</span>
+        <img src="/images/logo.png" alt="Avantik" class="header__logo-img">
       </a>
 
       <div class="header__links" id="nav-links">
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
         <a href="/sobre/" class="header__link header__link--active">Sobre</a>
         <a href="/blog/" class="header__link">Blog</a>
       </div>
 
-      <div class="header__actions">
+      <div class="header__actions" id="header-actions">
         <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
         <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
       </div>
@@ -524,6 +530,7 @@
     <!-- Mobile menu overlay -->
     <div class="header__mobile" id="mobile-menu">
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <a href="/sobre/" class="header__mobile-link">Sobre</a>
       <a href="/blog/" class="header__mobile-link">Blog</a>
@@ -541,7 +548,7 @@
       <div class="container">
         <span class="page-hero__label" data-aos="fade-up">Sobre nos</span>
         <h1 class="page-hero__title" data-aos="fade-up" data-aos-delay="80">Conectamos quem transforma a quem precisa ser transformado</h1>
-        <p class="page-hero__subtitle" data-aos="fade-up" data-aos-delay="160">A Avantik e a plataforma que une empresas aos melhores palestrantes do Brasil, com transparencia, tecnologia e respeito pela carreira de quem vive de palco.</p>
+        <p class="page-hero__subtitle" data-aos="fade-up" data-aos-delay="160">A Avantik e a plataforma que une empresas aos melhores palestrantes do Brasil, com transparência, tecnologia e respeito pela carreira de quem vive de palco.</p>
       </div>
     </section>
 
@@ -551,17 +558,16 @@
         <div class="about-mission__grid">
 
           <div class="about-mission__content" data-aos="fade-right">
-            <span class="about-mission__label">Nossa missao</span>
-            <h2 class="about-mission__title">Aumentar a assertividade na contratacao de palestrantes</h2>
-            <p class="about-mission__text">Acreditamos que todo evento merece o palestrante certo. Nao o mais famoso, nao o mais caro — o certo. Aquele que fala a lingua do seu publico, que entende o contexto da sua empresa e que entrega resultado real.</p>
-            <p class="about-mission__text">Por isso criamos a Avantik: uma plataforma onde empresas encontram, comparam e contratam palestrantes com transparencia total. Sem intermediarios, sem comissoes escondidas, sem surpresas.</p>
+            <span class="about-mission__label">Nossa missão</span>
+            <h2 class="about-mission__title">Aumentar a assertividade na contratação de palestrantes</h2>
+            <p class="about-mission__text">Acreditamos que todo evento merece o palestrante certo. Não o mais famoso, não o mais caro — o certo. Aquele que fala a lingua do seu público, que entende o contexto da sua empresa é que entrega resultado real.</p>
+            <p class="about-mission__text">Por isso criamos a Avantik: uma plataforma onde empresas encontram, comparam e contratam palestrantes com transparência total. Sem intermediários, sem comissoes escondidas, sem surpresas.</p>
           </div>
 
           <div class="about-mission__visual" data-aos="fade-left" data-aos-delay="120">
             <p class="about-mission__quote">O palestrante certo no palco certo.</p>
             <div class="about-mission__logo-mark">
-              <span class="about-mission__logo-mark-name">Avantik</span>
-              <span class="about-mission__logo-mark-tagline">Apogeu do Palestrante</span>
+              <img src="/images/logo.png" alt="Avantik" style="height: 48px; width: auto;">
             </div>
           </div>
 
@@ -586,7 +592,7 @@
 
           <div class="about-numbers__item" data-aos="fade-up" data-aos-delay="200">
             <span class="about-numbers__item-number" data-count-to="50">0</span>
-            <span class="about-numbers__item-label">temas disponiveis</span>
+            <span class="about-numbers__item-label">temas disponíveis</span>
           </div>
 
           <div class="about-numbers__item" data-aos="fade-up" data-aos-delay="300">
@@ -604,19 +610,19 @@
 
         <div class="about-pillars__header">
           <span class="about-pillars__label" data-aos="fade-up">Programa exclusivo</span>
-          <h2 class="about-pillars__title" data-aos="fade-up" data-aos-delay="80">Apogeu do Palestrante</h2>
+          <h2 class="about-pillars__title" data-aos="fade-up" data-aos-delay="80">Desenvolvimento Profissional</h2>
           <p class="about-pillars__subtitle" data-aos="fade-up" data-aos-delay="160">Nosso programa de desenvolvimento profissional trabalha os 4 pilares essenciais para uma carreira solida nos palcos.</p>
         </div>
 
         <div class="about-pillars__grid">
 
-          <!-- Pillar 1: Conteudo -->
+          <!-- Pillar 1: Conteúdo -->
           <div class="about-pillars__card" data-aos="fade-up" data-aos-delay="0">
             <div class="about-pillars__card-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
             </div>
-            <h3 class="about-pillars__card-title">Conteudo</h3>
-            <p class="about-pillars__card-text">O que voce fala. Ajudamos a estruturar palestras com conteudo relevante, dados atualizados e narrativas que conectam.</p>
+            <h3 class="about-pillars__card-title">Conteúdo</h3>
+            <p class="about-pillars__card-text">O que você fala. Ajudamos a estruturar palestras com conteúdo relevante, dados atualizados e narrativas que conectam.</p>
           </div>
 
           <!-- Pillar 2: Performance -->
@@ -625,16 +631,16 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
             </div>
             <h3 class="about-pillars__card-title">Performance</h3>
-            <p class="about-pillars__card-text">Como voce fala. Tecnicas de oratoria, presenca de palco e dominio do improviso para prender qualquer plateia.</p>
+            <p class="about-pillars__card-text">Como você fala. Técnicas de oratória, presença de palco e domínio do improvisó para prender qualquer plateia.</p>
           </div>
 
-          <!-- Pillar 3: Apresentacao -->
+          <!-- Pillar 3: Apresentação -->
           <div class="about-pillars__card" data-aos="fade-up" data-aos-delay="200">
             <div class="about-pillars__card-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
             </div>
-            <h3 class="about-pillars__card-title">Apresentacao</h3>
-            <p class="about-pillars__card-text">Como voce se mostra. Fotos profissionais, videos de qualidade e materiais que vendem antes mesmo da palestra.</p>
+            <h3 class="about-pillars__card-title">Apresentação</h3>
+            <p class="about-pillars__card-text">Como você se mostra. Fotos profissionais, vídeos de qualidade e materiais que vendem antes mesmo da palestra.</p>
           </div>
 
           <!-- Pillar 4: Posicionamento -->
@@ -643,7 +649,7 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
             </div>
             <h3 class="about-pillars__card-title">Posicionamento</h3>
-            <p class="about-pillars__card-text">Como voce e percebido. Estrategia de marca pessoal, nicho de atuacao e autoridade no seu tema.</p>
+            <p class="about-pillars__card-text">Como você e percebido. Estratégia de marca pessoal, nicho de atuação e autoridade no seu tema.</p>
           </div>
 
         </div>
@@ -656,7 +662,7 @@
 
         <div class="about-partners__header">
           <span class="about-partners__label" data-aos="fade-up">Quem confia na Avantik</span>
-          <h2 class="about-partners__title" data-aos="fade-up" data-aos-delay="80">Empresas que ja encontraram palestrantes conosco</h2>
+          <h2 class="about-partners__title" data-aos="fade-up" data-aos-delay="80">Empresas que já encontraram palestrantes conosco</h2>
         </div>
 
         <div class="about-partners__logos" data-aos="fade-up" data-aos-delay="200">
@@ -677,8 +683,8 @@
     <section class="section">
       <div class="container">
         <div class="cta-about__card" data-aos="zoom-in">
-          <h2 class="cta-about__title">Faca parte da Avantik</h2>
-          <p class="cta-about__text">Seja voce uma empresa buscando o palestrante ideal ou um palestrante querendo mais visibilidade, a Avantik e o lugar certo.</p>
+          <h2 class="cta-about__title">Faça parte da Avantik</h2>
+          <p class="cta-about__text">Seja você uma empresa buscando o palestrante ideal ou um palestrante querendo mais visibilidade, a Avantik é o lugar certo.</p>
           <div class="cta-about__actions">
             <a href="/diretorio/" class="btn btn--accent btn--lg">Buscar Palestrantes</a>
             <a href="/para-palestrantes/" class="btn btn--outline-dark btn--lg">Sou Palestrante</a>
@@ -696,8 +702,7 @@
         <!-- Coluna 1: Marca -->
         <div class="footer__brand">
           <a href="/" class="footer__logo">
-            <span class="footer__logo-name">Avantik</span>
-            <span class="footer__logo-tagline">Apogeu do Palestrante</span>
+            <img src="/images/logo.png" alt="Avantik" class="footer__logo-img">
           </a>
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
           <div class="footer__socials">
@@ -713,9 +718,9 @@
           </div>
         </div>
 
-        <!-- Coluna 2: Navegacao -->
+        <!-- Coluna 2: Navegação -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegacao</h4>
+          <h4 class="footer__col-title">Navegação</h4>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
@@ -728,8 +733,8 @@
         <div class="footer__col">
           <h4 class="footer__col-title">Legal</h4>
           <nav class="footer__links">
-            <a href="/privacidade/">Politica de Privacidade</a>
-            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
             <a href="/contrato/">Contrato do Assinante</a>
           </nav>
         </div>

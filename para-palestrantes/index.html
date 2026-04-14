@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Para Palestrantes | Avantik - Leve sua carreira a novos palcos</title>
-  <meta name="description" content="Cadastre seu perfil na Avantik e seja encontrado por empresas de todo o Brasil. Plano gratuito disponivel. Sem comissao sobre o cache.">
+  <meta name="description" content="Cadastre seu perfil na Avantik e seja encontrado por empresas de todo o Brasil. Plano gratuito disponível. Sem comissão sobre o cachê.">
 
   <meta property="og:title" content="Para Palestrantes | Avantik - Leve sua carreira a novos palcos">
-  <meta property="og:description" content="Cadastre seu perfil na Avantik e seja encontrado por empresas de todo o Brasil. Plano gratuito disponivel.">
+  <meta property="og:description" content="Cadastre seu perfil na Avantik e seja encontrado por empresas de todo o Brasil. Plano gratuito disponível.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.avantik.com.br/para-palestrantes/">
 
@@ -62,7 +62,7 @@
 
     .page-hero__title {
       font-size: clamp(2.5rem, 6vw, 4rem);
-      color: var(--color-text);
+      color: #FFFFFF;
       line-height: 1.1;
       margin-bottom: 1.25rem;
     }
@@ -70,7 +70,7 @@
     .page-hero__subtitle {
       font-size: clamp(1rem, 1.5vw, 1.25rem);
       line-height: 1.65;
-      color: var(--color-text-secondary);
+      color: rgba(255, 255, 255, 0.6);
       max-width: 560px;
       margin: 0 auto 2.5rem;
     }
@@ -99,18 +99,29 @@
     .page-hero__trust-number {
       font-family: var(--font-heading);
       font-size: 1.5rem;
-      color: var(--color-text);
+      color: var(--color-accent);
     }
 
     .page-hero__trust-label {
       font-size: 0.8125rem;
-      color: var(--color-text-secondary);
+      color: rgba(255, 255, 255, 0.45);
     }
 
     .page-hero__trust-divider {
       width: 1px;
       height: 32px;
-      background: var(--color-border);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Botão outline no hero escuro */
+    .page-hero .btn--outline-dark {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    .page-hero .btn--outline-dark:hover {
+      background: var(--color-accent);
+      color: var(--color-dark);
     }
 
     /* ==========================================
@@ -572,8 +583,7 @@
   <header class="header" id="header">
     <nav class="header__nav container">
       <a href="/" class="header__logo">
-        <span class="header__logo-name">Avantik</span>
-        <span class="header__logo-tagline">Apogeu do Palestrante</span>
+        <img src="/images/logo.png" alt="Avantik" class="header__logo-img">
       </a>
 
       <div class="header__links" id="nav-links">
@@ -583,7 +593,7 @@
         <a href="/blog/" class="header__link">Blog</a>
       </div>
 
-      <div class="header__actions">
+      <div class="header__actions" id="header-actions">
         <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
         <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
       </div>
@@ -598,6 +608,7 @@
     <!-- Mobile menu overlay -->
     <div class="header__mobile" id="mobile-menu">
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <a href="/sobre/" class="header__mobile-link">Sobre</a>
       <a href="/blog/" class="header__mobile-link">Blog</a>
@@ -617,7 +628,7 @@
 
         <h1 class="page-hero__title" data-aos="fade-up" data-aos-delay="80">Sua carreira merece mais palcos</h1>
 
-        <p class="page-hero__subtitle" data-aos="fade-up" data-aos-delay="160">Cadastre seu perfil e seja encontrado por empresas de todo o Brasil. Sem comissao sobre o cache.</p>
+        <p class="page-hero__subtitle" data-aos="fade-up" data-aos-delay="160">Cadastre seu perfil e seja encontrado por empresas de todo o Brasil. Sem comissão sobre o cachê.</p>
 
         <div class="page-hero__ctas" data-aos="fade-up" data-aos-delay="240">
           <a href="/cadastro/" class="btn btn--accent btn--lg">Criar Meu Perfil</a>
@@ -648,7 +659,7 @@
       <div class="container">
         <div class="benefits__header">
           <span class="benefits__label" data-aos="fade-up">Vantagens</span>
-          <h2 class="benefits__title" data-aos="fade-up" data-aos-delay="80">Tudo que voce precisa para crescer como palestrante</h2>
+          <h2 class="benefits__title" data-aos="fade-up" data-aos-delay="80">Tudo que você precisa para crescer como palestrante</h2>
         </div>
 
         <div class="benefits__grid">
@@ -657,23 +668,23 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
             </div>
             <h3 class="benefits__card-title">Visibilidade real</h3>
-            <p class="benefits__card-text">Investimos em trafego e marketing para que seu perfil apareca para quem realmente contrata palestrantes.</p>
+            <p class="benefits__card-text">Investimos em tráfego e marketing para que seu perfil apareça para quem realmente contrata palestrantes.</p>
           </article>
 
           <article class="benefits__card" data-aos="fade-up" data-aos-delay="200">
             <div class="benefits__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5C7 4 9 7 12 7s5-3 7.5-3a2.5 2.5 0 0 1 0 5H18"/><path d="M18 15h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M6 15H4.5a2.5 2.5 0 0 0 0 5H6"/><path d="M6 9v12"/><path d="M18 9v6"/></svg>
             </div>
-            <h3 class="benefits__card-title">Programa Apogeu</h3>
-            <p class="benefits__card-text">Desenvolvimento exclusivo nos 4 pilares: Conteudo, Performance, Apresentacao e Posicionamento.</p>
+            <h3 class="benefits__card-title">Programa Avantik Pro</h3>
+            <p class="benefits__card-text">Desenvolvimento exclusivo nos 4 pilares: Conteúdo, Performance, Apresentação e Posicionamento.</p>
           </article>
 
           <article class="benefits__card" data-aos="fade-up" data-aos-delay="300">
             <div class="benefits__icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <h3 class="benefits__card-title">Zero comissao</h3>
-            <p class="benefits__card-text">Diferente de agencias, nao ficamos com parte do seu cache. Voce recebe 100% do valor contratado.</p>
+            <h3 class="benefits__card-title">Zero comissão</h3>
+            <p class="benefits__card-text">Diferente de agências, não ficamos com parte do seu cachê. Você recebe 100% do valor contratado.</p>
           </article>
 
           <article class="benefits__card" data-aos="fade-up" data-aos-delay="400">
@@ -681,7 +692,7 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <h3 class="benefits__card-title">Comunidade ativa</h3>
-            <p class="benefits__card-text">Networking, troca de experiencias e oportunidades compartilhadas entre profissionais que vivem de palco.</p>
+            <p class="benefits__card-text">Networking, troca de experiências e oportunidades compartilhadas entre profissionais que vivem de palco.</p>
           </article>
 
           <article class="benefits__card" data-aos="fade-up" data-aos-delay="500">
@@ -689,7 +700,7 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             </div>
             <h3 class="benefits__card-title">Perfil otimizado</h3>
-            <p class="benefits__card-text">Seu portfolio digital completo: bio, fotos, videos, temas e faixa de preco. Tudo em um so lugar.</p>
+            <p class="benefits__card-text">Seu portfólio digital completo: bio, fotos, vídeos, temas e faixa de preço. Tudo em um só lugar.</p>
           </article>
 
           <article class="benefits__card" data-aos="fade-up" data-aos-delay="600">
@@ -697,7 +708,7 @@
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
             <h3 class="benefits__card-title">Propostas diretas</h3>
-            <p class="benefits__card-text">Empresas enviam propostas diretamente. Voce decide quais aceitar, sem intermediarios.</p>
+            <p class="benefits__card-text">Empresas enviam propostas diretamente. Você decide quais aceitar, sem intermediários.</p>
           </article>
         </div>
       </div>
@@ -716,13 +727,13 @@
           <!-- Essencial -->
           <div class="pricing__card" data-aos="fade-up" data-aos-delay="100">
             <span class="pricing__name">Essencial</span>
-            <span class="pricing__price">Gratis</span>
+            <span class="pricing__price">Grátis</span>
             <span class="pricing__period">Para sempre</span>
 
             <div class="pricing__features">
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Perfil basico na plataforma</span>
+                <span>Perfil básico na plataforma</span>
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -730,7 +741,7 @@
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Ate 3 temas de atuacao</span>
+                <span>Até 3 temas de atuação</span>
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -742,7 +753,7 @@
               </div>
             </div>
 
-            <a href="/cadastro/?plano=essencial" class="btn btn--outline-dark pricing__cta">Comecar Gratis</a>
+            <a href="/cadastro/?plano=essencial" class="btn btn--outline-dark pricing__cta">Começar Grátis</a>
           </div>
 
           <!-- Profissional (Featured) -->
@@ -763,15 +774,15 @@
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Todos os temas de atuacao</span>
+                <span>Todos os temas de atuação</span>
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>1 video</span>
+                <span>1 vídeo</span>
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>WhatsApp visivel para empresas</span>
+                <span>WhatsApp visível para empresas</span>
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -783,11 +794,11 @@
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Programa Apogeu (basico)</span>
+                <span>Programa Avantik Pro (básico)</span>
               </div>
             </div>
 
-            <a href="/cadastro/?plano=profissional" class="btn btn--accent pricing__cta">Comecar com Profissional</a>
+            <a href="/cadastro/?plano=profissional" class="btn btn--accent pricing__cta">Começar com Profissional</a>
           </div>
 
           <!-- Destaque -->
@@ -803,7 +814,7 @@
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Fotos e videos ilimitados</span>
+                <span>Fotos e vídeos ilimitados</span>
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -819,7 +830,7 @@
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Programa Apogeu (completo)</span>
+                <span>Programa Avantik Pro (completo)</span>
               </div>
               <div class="pricing__feature">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -831,7 +842,7 @@
               </div>
             </div>
 
-            <a href="/cadastro/?plano=destaque" class="btn btn--outline-dark pricing__cta">Comecar com Destaque</a>
+            <a href="/cadastro/?plano=destaque" class="btn btn--outline-dark pricing__cta">Começar com Destaque</a>
           </div>
         </div>
       </div>
@@ -853,19 +864,19 @@
               <div class="testimonials__avatar"></div>
               <div>
                 <span class="testimonials__author-name">Ricardo Almeida</span>
-                <span class="testimonials__author-role">Palestrante de Lideranca</span>
+                <span class="testimonials__author-role">Palestrante de Liderança</span>
               </div>
             </div>
           </article>
 
           <article class="testimonials__card" data-aos="fade-up" data-aos-delay="300">
             <svg class="testimonials__quote" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-            <p class="testimonials__text">Finalmente uma plataforma que entende o palestrante. Sem comissao, perfil profissional e propostas diretas.</p>
+            <p class="testimonials__text">Finalmente uma plataforma que entende o palestrante. Sem comissão, perfil profissional e propostas diretas.</p>
             <div class="testimonials__author">
               <div class="testimonials__avatar"></div>
               <div>
                 <span class="testimonials__author-name">Mariana Torres</span>
-                <span class="testimonials__author-role">Palestrante de Saude Mental</span>
+                <span class="testimonials__author-role">Palestrante de Saúde Mental</span>
               </div>
             </div>
           </article>
@@ -889,31 +900,31 @@
               </span>
             </button>
             <div class="faq__answer">
-              <div class="faq__answer-inner">Crie sua conta, escolha um plano e monte seu perfil completo com bio, fotos, videos e temas. Em minutos seu perfil esta no ar e visivel para empresas de todo o Brasil.</div>
+              <div class="faq__answer-inner">Crie sua conta, escolha um plano e monte seu perfil completo com bio, fotos, vídeos e temas. Em minutos seu perfil está no ar e visível para empresas de todo o Brasil.</div>
             </div>
           </div>
 
           <div class="faq__item" data-aos="fade-up" data-aos-delay="150">
             <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
-              <span>Preciso pagar comissao sobre meus contratos?</span>
+              <span>Precisó pagar comissão sobre meus contratos?</span>
               <span class="faq__question-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               </span>
             </button>
             <div class="faq__answer">
-              <div class="faq__answer-inner">Nao. Diferente de agencias tradicionais, a Avantik nao cobra comissao sobre o seu cache. O valor que voce combinar com a empresa e 100% seu.</div>
+              <div class="faq__answer-inner">Não. Diferente de agências tradicionais, a Avantik não cobra comissão sobre o seu cachê. O valor que você combinar com a empresa e 100% seu.</div>
             </div>
           </div>
 
           <div class="faq__item" data-aos="fade-up" data-aos-delay="200">
             <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
-              <span>Posso cancelar a qualquer momento?</span>
+              <span>Possó cancelar a qualquer momento?</span>
               <span class="faq__question-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               </span>
             </button>
             <div class="faq__answer">
-              <div class="faq__answer-inner">Sim. Nao ha contrato de fidelidade. Voce pode fazer upgrade, downgrade ou cancelar a renovacao do plano quando quiser.</div>
+              <div class="faq__answer-inner">Sim. Não ha contrato de fidelidade. Você pode fazer upgrade, downgrade ou cancelar a renovação do plano quando quiser.</div>
             </div>
           </div>
 
@@ -925,31 +936,31 @@
               </span>
             </button>
             <div class="faq__answer">
-              <div class="faq__answer-inner">Empresas buscam palestrantes por tema, regiao e avaliacao. Investimos em trafego e marketing para trazer decisores qualificados ate a plataforma.</div>
+              <div class="faq__answer-inner">Empresas buscam palestrantes por tema, região e avaliação. Investimos em tráfego e marketing para trazer decisores qualificados até a plataforma.</div>
             </div>
           </div>
 
           <div class="faq__item" data-aos="fade-up" data-aos-delay="300">
             <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
-              <span>O que e o Programa Apogeu do Palestrante?</span>
+              <span>O que é o Programa de Desenvolvimento Avantik?</span>
               <span class="faq__question-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               </span>
             </button>
             <div class="faq__answer">
-              <div class="faq__answer-inner">E nosso programa exclusivo de desenvolvimento que trabalha 4 pilares: Conteudo (o que voce fala), Performance (como voce fala), Apresentacao (como voce se mostra) e Posicionamento (como voce e percebido no mercado).</div>
+              <div class="faq__answer-inner">E nosso programa exclusivo de desenvolvimento que trabalha 4 pilares: Conteúdo (o que você fala), Performance (como você fala), Apresentação (como você se mostra) e Posicionamento (como você e percebido no mercado).</div>
             </div>
           </div>
 
           <div class="faq__item" data-aos="fade-up" data-aos-delay="350">
             <button class="faq__question" aria-expanded="false" onclick="this.parentElement.classList.toggle('faq__item--open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('faq__item--open'))">
-              <span>Qual a diferenca entre os planos?</span>
+              <span>Qual a diferença entre os planos?</span>
               <span class="faq__question-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               </span>
             </button>
             <div class="faq__answer">
-              <div class="faq__answer-inner">A principal diferenca esta no numero de fotos, videos e temas no perfil, alem de beneficios como destaque na busca, selo verificado e acesso ao Programa Apogeu. O plano Profissional e o mais popular por equilibrar custo e beneficios.</div>
+              <div class="faq__answer-inner">A principal diferença está no número de fotos, vídeos e temas no perfil, além de benefícios como destaque na busca, selo verificado e acesso ao Programa Avantik Pro. O plano Profissional é o mais popular por equilibrar custo e benefícios.</div>
             </div>
           </div>
         </div>
@@ -982,8 +993,7 @@
         <!-- Coluna 1: Marca -->
         <div class="footer__brand">
           <a href="/" class="footer__logo">
-            <span class="footer__logo-name">Avantik</span>
-            <span class="footer__logo-tagline">Apogeu do Palestrante</span>
+            <img src="/images/logo.png" alt="Avantik" class="footer__logo-img">
           </a>
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
           <div class="footer__socials">
@@ -999,9 +1009,9 @@
           </div>
         </div>
 
-        <!-- Coluna 2: Navegacao -->
+        <!-- Coluna 2: Navegação -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegacao</h4>
+          <h4 class="footer__col-title">Navegação</h4>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
@@ -1014,8 +1024,8 @@
         <div class="footer__col">
           <h4 class="footer__col-title">Legal</h4>
           <nav class="footer__links">
-            <a href="/privacidade/">Politica de Privacidade</a>
-            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
             <a href="/contrato/">Contrato do Assinante</a>
           </nav>
         </div>

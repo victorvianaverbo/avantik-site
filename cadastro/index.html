@@ -10,8 +10,10 @@
   <meta property="og:title" content="Cadastro de Palestrante | Avantik">
   <meta property="og:description" content="Cadastre-se como palestrante na Avantik. Preencha seus dados e comece a receber propostas de empresas de todo o Brasil.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.avantik.com.br/images/logo.png">
   <meta property="og:url" content="https://www.avantik.com.br/cadastro/">
-
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://www.avantik.com.br/cadastro/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
   <!-- FONTS: DM Serif Display + DM Sans -->
@@ -166,7 +168,7 @@
 
     .cadastro-plan__radio:checked + .cadastro-plan__card {
       border-color: var(--color-accent);
-      box-shadow: 0 0 0 1px var(--color-accent), 0 4px 16px rgba(232,106,51,0.1);
+      box-shadow: 0 0 0 1px var(--color-accent), 0 4px 16px rgba(232,185,49,0.1);
     }
 
     .cadastro-plan__badge {
@@ -267,8 +269,7 @@
   <header class="header" id="header">
     <nav class="header__nav container">
       <a href="/" class="header__logo">
-        <span class="header__logo-name">Avantik</span>
-        <span class="header__logo-tagline">Apogeu do Palestrante</span>
+        <img src="/images/logo.png" alt="Avantik" class="header__logo-img">
       </a>
 
       <div class="header__links" id="nav-links">
@@ -278,7 +279,7 @@
         <a href="/blog/" class="header__link">Blog</a>
       </div>
 
-      <div class="header__actions">
+      <div class="header__actions" id="header-actions">
         <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
         <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
       </div>
@@ -293,6 +294,7 @@
     <!-- Mobile menu overlay -->
     <div class="header__mobile" id="mobile-menu">
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <a href="/sobre/" class="header__mobile-link">Sobre</a>
       <a href="/blog/" class="header__mobile-link">Blog</a>
@@ -330,10 +332,10 @@
                 <input type="radio" name="plan" value="essencial" class="cadastro-plan__radio">
                 <div class="cadastro-plan__card">
                   <span class="cadastro-plan__name">Essencial</span>
-                  <span class="cadastro-plan__price">Gratis</span>
+                  <span class="cadastro-plan__price">Grátis</span>
                   <ul class="cadastro-plan__features">
                     <li>1 foto de perfil</li>
-                    <li>Ate 3 temas</li>
+                    <li>Até 3 temas</li>
                     <li>Contato por email</li>
                   </ul>
                 </div>
@@ -345,9 +347,9 @@
                   <span class="cadastro-plan__name">Profissional</span>
                   <span class="cadastro-plan__price">R$ 67<small>/mes</small></span>
                   <ul class="cadastro-plan__features">
-                    <li>10 fotos, 1 video</li>
+                    <li>10 fotos, 1 vídeo</li>
                     <li>Todos os temas</li>
-                    <li>WhatsApp visivel</li>
+                    <li>WhatsApp visível</li>
                     <li>Selo verificado</li>
                     <li>Prioridade na busca</li>
                   </ul>
@@ -359,11 +361,11 @@
                   <span class="cadastro-plan__name">Destaque</span>
                   <span class="cadastro-plan__price">R$ 147<small>/mes</small></span>
                   <ul class="cadastro-plan__features">
-                    <li>Fotos e videos ilimitados</li>
+                    <li>Fotos e vídeos ilimitados</li>
                     <li>Selo dourado</li>
                     <li>Topo da busca</li>
                     <li>Destaque na home</li>
-                    <li>Programa Apogeu completo</li>
+                    <li>Programa Avantik Pro completo</li>
                   </ul>
                 </div>
               </label>
@@ -382,6 +384,11 @@
             <div class="form-group">
               <label class="form-label" for="email">Email *</label>
               <input type="email" class="form-input" id="email" name="email" required placeholder="seu@email.com">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="senha">Senha *</label>
+              <input type="password" class="form-input" id="senha" name="senha" required minlength="6" placeholder="Mínimo 6 caracteres">
             </div>
 
             <div class="form-group">
@@ -404,13 +411,13 @@
             </div>
           </fieldset>
 
-          <!-- Sobre Voce -->
+          <!-- Sobre Você -->
           <fieldset class="cadastro-section">
-            <legend class="cadastro-section__title">Sobre Voce</legend>
+            <legend class="cadastro-section__title">Sobre Você</legend>
 
             <div class="form-group">
-              <label class="form-label" for="bio">Bio / Sobre voce</label>
-              <textarea class="form-input" id="bio" name="bio" rows="5" placeholder="Conte sobre sua trajetoria, experiencia e estilo de palestra..."></textarea>
+              <label class="form-label" for="bio">Bio / Sobre você</label>
+              <textarea class="form-input" id="bio" name="bio" rows="5" placeholder="Conte sobre sua trajetória, experiência e estilo de palestra..."></textarea>
             </div>
 
             <div class="form-group">
@@ -437,7 +444,7 @@
             <legend class="cadastro-section__title">Suas Palestras</legend>
 
             <div class="form-group">
-              <label class="form-label">Temas de atuacao *</label>
+              <label class="form-label">Temas de atuação *</label>
               <p id="theme-limit-hint" style="font-size:0.8125rem;color:var(--color-text-muted);margin-bottom:0.75rem">Selecione pelo menos 1 tema</p>
               <div class="cadastro-themes" id="themes-grid">
                 <!-- Theme pills loaded from Supabase -->
@@ -447,11 +454,11 @@
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
               <div class="form-group">
-                <label class="form-label" for="price_min">Preco minimo (R$)</label>
+                <label class="form-label" for="price_min">Preço mínimo (R$)</label>
                 <input type="number" class="form-input" id="price_min" name="price_min" placeholder="Ex: 3000" min="0">
               </div>
               <div class="form-group">
-                <label class="form-label" for="price_max">Preco maximo (R$)</label>
+                <label class="form-label" for="price_max">Preço máximo (R$)</label>
                 <input type="number" class="form-input" id="price_max" name="price_max" placeholder="Ex: 10000" min="0">
               </div>
             </div>
@@ -489,7 +496,7 @@
         <div class="cadastro-success" id="cadastro-success" hidden>
           <div class="cadastro-success__icon">&#10003;</div>
           <h2 class="cadastro-success__title">Perfil criado com sucesso!</h2>
-          <p class="cadastro-success__text">Seu perfil ja esta visivel para empresas de todo o Brasil.</p>
+          <p class="cadastro-success__text">Seu perfil já está visível para empresas de todo o Brasil.</p>
           <a id="profile-link" href="#" class="btn btn--accent btn--lg">Ver meu perfil</a>
         </div>
       </div>
@@ -504,8 +511,7 @@
         <!-- Coluna 1: Marca -->
         <div class="footer__brand">
           <a href="/" class="footer__logo">
-            <span class="footer__logo-name">Avantik</span>
-            <span class="footer__logo-tagline">Apogeu do Palestrante</span>
+            <img src="/images/logo.png" alt="Avantik" class="footer__logo-img">
           </a>
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
           <div class="footer__socials">
@@ -521,9 +527,9 @@
           </div>
         </div>
 
-        <!-- Coluna 2: Navegacao -->
+        <!-- Coluna 2: Navegação -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegacao</h4>
+          <h4 class="footer__col-title">Navegação</h4>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
@@ -536,8 +542,8 @@
         <div class="footer__col">
           <h4 class="footer__col-title">Legal</h4>
           <nav class="footer__links">
-            <a href="/privacidade/">Politica de Privacidade</a>
-            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
             <a href="/contrato/">Contrato do Assinante</a>
           </nav>
         </div>
@@ -571,7 +577,13 @@
   </footer>
 
   <script type="module">
-import { supabase, generateSlug, ensureUniqueSlug, ESTADOS_BR } from '/lib/supabase.js';
+import { supabase, generateSlug, generatePalestraSlug, ensureUniqueSlug, ESTADOS_BR, authSignUp, findSpeakerByEmail, linkSpeakerAuth, getUser } from '/lib/supabase.js';
+
+// Se ja esta logado, redirecionar
+const currentUser = await getUser();
+if (currentUser) {
+  window.location.href = '/projetos/';
+}
 
 // Pre-select plan from URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -604,7 +616,7 @@ function applyPlanLimits() {
   const themeHint = document.getElementById('theme-limit-hint');
   if (themeHint) {
     themeHint.textContent = limits.maxThemes < 99
-      ? `Selecione ate ${limits.maxThemes} temas`
+      ? `Selecione até ${limits.maxThemes} temas`
       : 'Selecione quantos temas quiser';
   }
 }
@@ -648,7 +660,7 @@ async function loadThemes() {
       } else {
         const maxThemes = PLAN_LIMITS[getSelectedPlan()].maxThemes;
         if (selectedThemes.size >= maxThemes) {
-          alert(`Seu plano permite no maximo ${maxThemes} tema(s). Faca upgrade para selecionar mais.`);
+          alert(`Seu plano permite no máximo ${maxThemes} tema(s). Faça upgrade para selecionar mais.`);
           return;
         }
         selectedThemes.add(theme.id);
@@ -672,7 +684,7 @@ fotoInput.addEventListener('change', () => {
   const file = fotoInput.files[0];
   if (!file) return;
   if (file.size > 2 * 1024 * 1024) {
-    alert('A foto deve ter no maximo 2MB.');
+    alert('A foto deve ter no máximo 2MB.');
     fotoInput.value = '';
     return;
   }
@@ -704,20 +716,26 @@ form.addEventListener('submit', async (e) => {
   // Validate required fields
   const nome = document.getElementById('nome').value.trim();
   const email = document.getElementById('email').value.trim();
+  const senha = document.getElementById('senha').value;
 
-  if (!nome || !email) {
-    showFeedback('error', 'Preencha nome e email.');
+  if (!nome || !email || !senha) {
+    showFeedback('error', 'Preencha nome, email e senha.');
+    return;
+  }
+
+  if (senha.length < 6) {
+    showFeedback('error', 'A senha deve ter pelo menos 6 caracteres.');
     return;
   }
 
   if (selectedThemes.size === 0) {
-    showFeedback('error', 'Selecione pelo menos 1 tema de atuacao.');
+    showFeedback('error', 'Selecione pelo menos 1 tema de atuação.');
     return;
   }
 
   const planLimits = PLAN_LIMITS[getSelectedPlan()];
   if (selectedThemes.size > planLimits.maxThemes) {
-    showFeedback('error', `Seu plano permite no maximo ${planLimits.maxThemes} tema(s). Remova alguns ou faca upgrade.`);
+    showFeedback('error', `Seu plano permite no máximo ${planLimits.maxThemes} tema(s). Remova alguns ou faça upgrade.`);
     return;
   }
 
@@ -725,6 +743,23 @@ form.addEventListener('submit', async (e) => {
   submitBtn.textContent = 'Cadastrando...';
 
   try {
+    // 0. Criar conta no Supabase Auth
+    const authData = await authSignUp(email, senha);
+    const authId = authData.user?.id;
+    if (!authId) throw new Error('Erro ao criar conta. Tente novamente.');
+
+    // Verificar se ja existe speaker com este email (migracao)
+    const existingSpeaker = await findSpeakerByEmail(email);
+    if (existingSpeaker && !existingSpeaker.auth_id) {
+      // Vincular auth ao speaker existente
+      await linkSpeakerAuth(existingSpeaker.id, authId);
+      form.hidden = true;
+      successDiv.hidden = false;
+      document.getElementById('profile-link').href = '/palestrante/?id=' + existingSpeaker.id;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     // 1. Upload photo if provided
     let photoUrl = null;
     const photoFile = fotoInput.files[0];
@@ -757,6 +792,8 @@ form.addEventListener('submit', async (e) => {
     const { data: speaker, error: speakerError } = await supabase
       .from('speakers')
       .insert({
+        auth_id: authId,
+        active: true,
         plan: getSelectedPlan(),
         name: nome,
         slug: slug,
@@ -790,6 +827,34 @@ form.addEventListener('submit', async (e) => {
         .insert(themeRows);
 
       if (themesError) console.warn('Erro ao salvar temas:', themesError);
+
+      // 5b. Criar palestras iniciais a partir dos temas selecionados
+      const priceMin = parseInt(document.getElementById('price_min').value) || null;
+      const priceMax = parseInt(document.getElementById('price_max').value) || null;
+
+      // Buscar nomes dos temas selecionados
+      const { data: themesData } = await supabase
+        .from('themes')
+        .select('id, name, slug')
+        .in('id', [...selectedThemes]);
+
+      if (themesData && themesData.length > 0) {
+        const palestraRows = themesData.map(t => ({
+          speaker_id: speaker.id,
+          title: t.name,
+          slug: t.slug + '-' + speaker.slug.substring(0, 8),
+          theme_id: t.id,
+          price_min: priceMin,
+          price_max: priceMax,
+          format: 'presencial',
+        }));
+
+        const { error: palestrasError } = await supabase
+          .from('palestras')
+          .insert(palestraRows);
+
+        if (palestrasError) console.warn('Erro ao criar palestras:', palestrasError);
+      }
     }
 
     // 6. Show success

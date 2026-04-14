@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initCarouselPause();
   initFAQ();
   initBlogFilter();
+  initVideoThumbs();
+  initClientsCarousel();
+  initAuthNav();
 });
 
 /* ==========================================
@@ -469,4 +472,159 @@ function initBlogFilter() {
       });
     });
   });
+}
+
+/* ==========================================
+   VIDEO THUMBS (Depoimentos)
+   ========================================== */
+
+function initVideoThumbs() {
+  const thumbs = document.querySelectorAll('.social__thumb');
+  const iframe = document.getElementById('social-featured-iframe');
+  if (!thumbs.length || !iframe) return;
+
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const videoUrl = thumb.dataset.video;
+      if (!videoUrl) return;
+
+      iframe.src = videoUrl;
+
+      thumbs.forEach(t => t.classList.remove('social__thumb--active'));
+      thumb.classList.add('social__thumb--active');
+    });
+  });
+}
+
+/* ==========================================
+   CLIENTS CAROUSEL (setas)
+   ========================================== */
+
+function initClientsCarousel() {
+  const track = document.getElementById('clients-track');
+  const prevBtn = document.querySelector('.clients__arrow--prev');
+  const nextBtn = document.querySelector('.clients__arrow--next');
+  if (!track || !prevBtn || !nextBtn) return;
+
+  let pos = 0;
+
+  function getItemWidth() {
+    const logo = track.querySelector('.clients__logo');
+    if (!logo) return 200;
+    const style = getComputedStyle(track);
+    const gap = parseFloat(style.gap) || 24;
+    return logo.offsetWidth + gap;
+  }
+
+  function getVisibleCount() {
+    const viewport = track.parentElement;
+    return Math.floor(viewport.offsetWidth / getItemWidth()) || 1;
+  }
+
+  function getMaxPos() {
+    const total = track.querySelectorAll('.clients__logo').length;
+    return Math.max(0, total - getVisibleCount());
+  }
+
+  function update() {
+    const offset = pos * getItemWidth();
+    track.style.transform = 'translateX(-' + offset + 'px)';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    const max = getMaxPos();
+    pos = pos >= max ? 0 : pos + 1;
+    update();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    const max = getMaxPos();
+    pos = pos <= 0 ? max : pos - 1;
+    update();
+  });
+}
+
+/* ==========================================
+   AUTH NAV (estado de login no header)
+   ========================================== */
+
+async function initAuthNav() {
+  try {
+    const { supabase, authSignOut, getUserType } = await import('/lib/supabase.js');
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const result = await getUserType(user.id);
+    if (!result.type) return;
+
+    const contractor = result.getProfile('contractor');
+    const speaker = result.getProfile('speaker');
+    const hasBoth = contractor && speaker;
+
+    const headerActions = document.getElementById('header-actions') || document.querySelector('.header__actions');
+    const mobileActions = document.querySelector('.header__mobile-actions');
+    if (!headerActions) return;
+
+    // Expor funcoes no window
+    window.__avantikLogout = async () => {
+      await authSignOut();
+      try { localStorage.removeItem('avantik_active_role'); } catch(_) {}
+      location.href = '/';
+    };
+
+    window.__avantikSwitchRole = (role) => {
+      try { localStorage.setItem('avantik_active_role', role); } catch(_) {}
+      location.reload();
+    };
+
+    // Determinar papel ativo
+    let activeRole = result.type;
+
+    let navHtml = '';
+    let mobileHtml = '';
+
+    // Seletor de contexto (so aparece se tem os dois papeis)
+    let switchHtml = '';
+    let switchMobileHtml = '';
+    if (hasBoth) {
+      const otherRole = activeRole === 'contractor' ? 'speaker' : 'contractor';
+      const otherLabel = otherRole === 'contractor' ? 'Contratante' : 'Palestrante';
+      switchHtml = `<button class="btn btn--sm" onclick="window.__avantikSwitchRole('${otherRole}')" title="Trocar para ${otherLabel}" style="font-size:0.75rem;padding:0.375rem 0.75rem">Modo ${otherLabel}</button>`;
+      switchMobileHtml = `<button class="btn btn--outline" onclick="window.__avantikSwitchRole('${otherRole}')">Trocar para ${otherLabel}</button>`;
+    }
+
+    if (activeRole === 'contractor' && contractor) {
+      navHtml = `
+        <a href="/meus-projetos/" class="btn btn--outline btn--sm">Meus Projetos</a>
+        <a href="/projetos/novo/" class="btn btn--accent btn--sm">Publicar Oportunidade</a>
+        ${switchHtml}
+        <button class="btn btn--sm" onclick="window.__avantikLogout()">Sair</button>
+      `;
+      mobileHtml = `
+        <a href="/meus-projetos/" class="btn btn--outline">Meus Projetos</a>
+        <a href="/projetos/novo/" class="btn btn--accent">Publicar Oportunidade</a>
+        ${switchMobileHtml}
+      `;
+    } else if (activeRole === 'speaker' && speaker) {
+      navHtml = `
+        <a href="/projetos/" class="btn btn--outline btn--sm">Oportunidades</a>
+        <a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent btn--sm">Meu Perfil</a>
+        ${switchHtml}
+        <button class="btn btn--sm" onclick="window.__avantikLogout()">Sair</button>
+      `;
+      mobileHtml = `
+        <a href="/projetos/" class="btn btn--outline">Oportunidades</a>
+        <a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent">Meu Perfil</a>
+        ${switchMobileHtml}
+      `;
+    }
+
+    if (navHtml) {
+      headerActions.innerHTML = navHtml;
+      if (mobileActions) mobileActions.innerHTML = mobileHtml;
+    }
+  } catch (e) {
+    // Silently fail - nav stays in default state
+  }
 }
