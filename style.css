@@ -2755,6 +2755,16 @@ ul, ol {
   flex-direction: column;
 }
 
+/* Empurra o CTA para a base quando um card tem menos features
+   que o outro - mantem alturas iguais com botoes alinhados */
+.pricing__grid--two .pricing__features {
+  flex: 1;
+}
+
+.pricing__grid--two .pricing__cta {
+  margin-top: auto;
+}
+
 /* Destaque sutil do item "15 dias gratis" nos cards */
 .pricing__feature--highlight {
   background: rgba(232, 185, 49, 0.08);
