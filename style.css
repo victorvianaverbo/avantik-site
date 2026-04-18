@@ -2739,9 +2739,17 @@ ul, ol {
 }
 
 .pricing__grid--two {
-  grid-template-columns: repeat(2, minmax(0, 380px));
-  max-width: 820px;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pricing__grid--two > .pricing__card {
+  flex: 0 1 380px;
+  min-width: 0;
 }
 
 .pricing__card {
