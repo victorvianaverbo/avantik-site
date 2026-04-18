@@ -967,7 +967,16 @@
       if (slug) query = query.eq('slug', slug);
       else query = query.eq('id', id);
 
-      const { data: speaker, error } = await query.single();
+      // Ganho de latencia: dispara speaker (await) E palestras (lazy pelo id)
+      // em paralelo. Como palestras precisa do speaker.id, usamos uma promise
+      // encadeada que ja foi lancada - retornamos depois do speaker.
+      const speakerPromise = query.single();
+
+      // Tambem dispara getUser em paralelo para o bloco "Contato direto"
+      // (nao bloqueia a renderizacao do perfil).
+      const authUserPromise = getUser().catch(() => null);
+
+      const { data: speaker, error } = await speakerPromise;
 
       if (error || !speaker) {
         document.getElementById('profile-loading').hidden = true;
@@ -1106,26 +1115,30 @@
       // em /projetos/novo/ (CTA "Publicar oportunidade"). Isto evita que o
       // contratante pule a plataforma.
 
-      // Contato Direto — visivel APENAS se contratante tem proposta ACEITA com este palestrante
-      try {
-        const authUser = await getUser();
-        if (authUser) {
+      // Show profile IMMEDIATAMENTE — o bloco "Contato direto" (que depende de
+      // auth + proposta aceita) carrega depois, sem bloquear a renderizacao.
+      document.getElementById('profile-loading').hidden = true;
+      document.getElementById('profile-content').hidden = false;
+
+      // Contato Direto — carrega em background (usa authUserPromise iniciada no topo)
+      (async () => {
+        try {
+          const authUser = await authUserPromise;
+          if (!authUser) return;
+
           const status = await getUserType(authUser.id);
           const contractorProfile = status.hasRole('contractor') ? status.getProfile('contractor') : null;
+          if (!contractorProfile) return;
 
-          let hasAcceptedProposal = false;
-          if (contractorProfile) {
-            // Verificar se existe proposta aceita entre este contratante e este palestrante
-            const { data: acceptedApps } = await supabase
-              .from('project_applications')
-              .select('id, projects!inner(contractor_id)')
-              .eq('speaker_id', speaker.id)
-              .eq('status', 'aceita')
-              .eq('projects.contractor_id', contractorProfile.id)
-              .limit(1);
-            hasAcceptedProposal = acceptedApps && acceptedApps.length > 0;
-          }
+          const { data: acceptedApps } = await supabase
+            .from('project_applications')
+            .select('id, projects!inner(contractor_id)')
+            .eq('speaker_id', speaker.id)
+            .eq('status', 'aceita')
+            .eq('projects.contractor_id', contractorProfile.id)
+            .limit(1);
 
+          const hasAcceptedProposal = acceptedApps && acceptedApps.length > 0;
           if (hasAcceptedProposal) {
             const phoneDigits = speaker.phone ? speaker.phone.replace(/\D/g, '') : '';
             const cards = [];
@@ -1179,14 +1192,10 @@
               document.getElementById('profile-contact-direct').hidden = false;
             }
           }
+        } catch (e) {
+          console.warn('contact-direct detection failed:', e);
         }
-      } catch (e) {
-        console.warn('contact-direct detection failed:', e);
-      }
-
-      // Show profile
-      document.getElementById('profile-loading').hidden = true;
-      document.getElementById('profile-content').hidden = false;
+      })();
 
       // Load related speakers
       if (themes.length > 0) {
