@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Primeiro Acesso | Avantik</title>
+  <meta name="description" content="Palestrantes já cadastrados pela equipe Avantik: crie sua senha e ative seu perfil.">
+  <meta name="robots" content="noindex,nofollow">
+
+  <link rel="canonical" href="https://www.avantik.com.br/primeiro-acesso/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .auth-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: calc(80px + 2rem) var(--container-px) 4rem;
+      background: var(--color-dark);
+      position: relative;
+    }
+
+    .auth-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(197, 165, 114, 0.12), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(197, 165, 114, 0.08), transparent 50%);
+      pointer-events: none;
+    }
+
+    .auth-card {
+      position: relative;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .auth-card__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .auth-card__subtitle {
+      color: var(--color-text-secondary);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    .auth-field { margin-bottom: 1.25rem; }
+
+    .auth-field label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .auth-field input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.625rem;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      background: var(--color-surface);
+    }
+
+    .auth-field input:focus {
+      border-color: var(--color-accent);
+      outline: 2px solid var(--color-accent);
+      outline-offset: -1px;
+    }
+
+    .auth-field input[readonly] {
+      background: var(--color-bg-soft, #f7f7f7);
+      color: var(--color-text-secondary);
+    }
+
+    .auth-hint {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+      margin-top: 0.375rem;
+    }
+
+    .auth-error,
+    .auth-success {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 0.625rem;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .auth-error {
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
+    .auth-success {
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .auth-error--visible,
+    .auth-success--visible { display: block; }
+
+    .auth-submit {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .auth-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .auth-links {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+    }
+
+    .auth-links a {
+      color: var(--color-accent-hover);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .auth-links a:hover {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+
+    .auth-step-name {
+      font-weight: 600;
+      color: var(--color-text);
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .auth-step-email {
+      color: var(--color-text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-confirm-box {
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    .auth-confirm-box__icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      background: var(--color-accent-soft, #fef3c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent);
+    }
+
+    /* Plan picker */
+    .plan-picker {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .plan-picker__option {
+      display: block;
+      cursor: pointer;
+    }
+
+    .plan-picker__option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .plan-picker__card {
+      position: relative;
+      padding: 1.25rem 1rem;
+      border: 2px solid var(--color-border);
+      border-radius: 0.875rem;
+      background: var(--color-surface);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      text-align: center;
+    }
+
+    .plan-picker__option input:checked + .plan-picker__card {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.15);
+    }
+
+    .plan-picker__badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-accent);
+      color: var(--color-dark);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .plan-picker__name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--color-text);
+      margin-bottom: 0.25rem;
+    }
+
+    .plan-picker__price {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .plan-picker__price small {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+    .plan-picker__features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      text-align: left;
+    }
+
+    .plan-picker__features li {
+      padding: 0.25rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .plan-picker__features li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: var(--color-accent);
+      font-weight: 700;
+    }
+
+    @media (max-width: 480px) {
+      .auth-card { padding: 1.75rem 1.25rem; border-radius: 1rem; }
+      .plan-picker { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <img src="/images/logo.png" alt="Avantik" class="header__logo-img">
+      </a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+        <a href="/blog/" class="header__link">Blog</a>
+      </div>
+      <div class="header__actions" id="header-actions">
+        <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <a href="/blog/" class="header__mobile-link">Blog</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="auth-page">
+      <div class="auth-card">
+
+        <!-- STEP 1: email -->
+        <div id="step-email">
+          <h1 class="auth-card__title">Primeiro acesso</h1>
+          <p class="auth-card__subtitle">Se a equipe Avantik já cadastrou seu perfil, use este fluxo para criar sua senha e assumir o controle da sua conta.</p>
+
+          <div class="auth-error" id="email-error" role="alert"></div>
+
+          <form id="email-form" novalidate>
+            <div class="auth-field">
+              <label for="email">Email cadastrado</label>
+              <input type="email" id="email" name="email" required autocomplete="email" placeholder="seu@email.com">
+              <p class="auth-hint">Use o mesmo email que foi informado à equipe Avantik.</p>
+            </div>
+
+            <button type="submit" class="btn btn--accent btn--lg auth-submit" id="email-submit">Continuar</button>
+          </form>
+
+          <div class="auth-links">
+            <p>Já tem senha? <a href="/entrar/">Entrar</a></p>
+            <p>Ainda não tem cadastro? <a href="/cadastro/">Criar conta</a></p>
+          </div>
+        </div>
+
+        <!-- STEP 2: senha -->
+        <div id="step-password" hidden>
+          <h1 class="auth-card__title">Crie sua senha</h1>
+          <p class="auth-card__subtitle">Seu perfil já existe na Avantik. Defina uma senha para ativar o acesso.</p>
+
+          <div class="auth-step-name" id="speaker-name"></div>
+          <div class="auth-step-email" id="speaker-email"></div>
+
+          <div class="auth-error" id="password-error" role="alert"></div>
+
+          <form id="password-form" novalidate>
+            <div class="auth-field">
+              <label for="password">Nova senha</label>
+              <input type="password" id="password" name="password" required minlength="6" autocomplete="new-password" placeholder="Mínimo 6 caracteres">
+            </div>
+
+            <div class="auth-field">
+              <label for="password-confirm">Confirmar senha</label>
+              <input type="password" id="password-confirm" name="password-confirm" required minlength="6" autocomplete="new-password" placeholder="Digite novamente">
+            </div>
+
+            <button type="submit" class="btn btn--accent btn--lg auth-submit" id="password-submit">Continuar</button>
+          </form>
+
+          <div class="auth-links">
+            <a href="#" id="back-to-email">Usar outro email</a>
+          </div>
+        </div>
+
+        <!-- STEP 2.5: escolher plano -->
+        <div id="step-plan" hidden>
+          <h1 class="auth-card__title">Escolha seu plano</h1>
+          <p class="auth-card__subtitle"><strong>15 dias grátis</strong> para testar. Sem fidelidade, cancele quando quiser.</p>
+
+          <div class="auth-error" id="plan-error" role="alert"></div>
+
+          <form id="plan-form" novalidate>
+            <div class="plan-picker">
+              <label class="plan-picker__option">
+                <input type="radio" name="trial-plan" value="profissional" checked>
+                <div class="plan-picker__card">
+                  <span class="plan-picker__badge">Recomendado</span>
+                  <div class="plan-picker__name">Profissional</div>
+                  <div class="plan-picker__price">R$ 67<small>/mês</small></div>
+                  <ul class="plan-picker__features">
+                    <li>10 fotos, 1 vídeo</li>
+                    <li>Até 99 palestras</li>
+                    <li>WhatsApp visível</li>
+                    <li>Selo verificado</li>
+                  </ul>
+                </div>
+              </label>
+
+              <label class="plan-picker__option">
+                <input type="radio" name="trial-plan" value="destaque">
+                <div class="plan-picker__card">
+                  <div class="plan-picker__name">Destaque</div>
+                  <div class="plan-picker__price">R$ 147<small>/mês</small></div>
+                  <ul class="plan-picker__features">
+                    <li>Fotos e vídeos ilimitados</li>
+                    <li>Selo dourado</li>
+                    <li>Topo da busca</li>
+                    <li>Destaque na home</li>
+                  </ul>
+                </div>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn--accent btn--lg auth-submit" id="plan-submit">Ativar conta com 15 dias grátis</button>
+          </form>
+        </div>
+
+        <!-- STEP 3: confirmar email -->
+        <div id="step-confirm" hidden>
+          <div class="auth-confirm-box">
+            <div class="auth-confirm-box__icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <h1 class="auth-card__title">Confirme seu email</h1>
+            <p class="auth-card__subtitle">
+              Enviamos um link de confirmação para <strong id="confirm-email"></strong>.<br>
+              Clique no link e depois faça login normalmente na página de entrada.
+            </p>
+            <a href="/entrar/" class="btn btn--accent btn--lg auth-submit">Ir para o login</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase, authSignUp, findSpeakerByEmail, linkSpeakerAuth, getUser } from '/lib/supabase.js';
+
+    const stepEmail = document.getElementById('step-email');
+    const stepPassword = document.getElementById('step-password');
+    const stepPlan = document.getElementById('step-plan');
+    const stepConfirm = document.getElementById('step-confirm');
+
+    const emailForm = document.getElementById('email-form');
+    const emailInput = document.getElementById('email');
+    const emailSubmit = document.getElementById('email-submit');
+    const emailError = document.getElementById('email-error');
+
+    const passwordForm = document.getElementById('password-form');
+    const passwordInput = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById('password-confirm');
+    const passwordSubmit = document.getElementById('password-submit');
+    const passwordError = document.getElementById('password-error');
+
+    const planForm = document.getElementById('plan-form');
+    const planSubmit = document.getElementById('plan-submit');
+    const planError = document.getElementById('plan-error');
+
+    const speakerNameEl = document.getElementById('speaker-name');
+    const speakerEmailEl = document.getElementById('speaker-email');
+    const confirmEmailEl = document.getElementById('confirm-email');
+    const backToEmail = document.getElementById('back-to-email');
+
+    let currentSpeaker = null;
+    let currentEmail = null;
+    let currentPassword = null;
+
+    function showError(el, msg) {
+      el.textContent = msg;
+      el.classList.add('auth-error--visible');
+    }
+
+    function hideError(el) {
+      el.textContent = '';
+      el.classList.remove('auth-error--visible');
+    }
+
+    function goTo(step) {
+      stepEmail.hidden = step !== 'email';
+      stepPassword.hidden = step !== 'password';
+      stepPlan.hidden = step !== 'plan';
+      stepConfirm.hidden = step !== 'confirm';
+    }
+
+    // Se ja esta logado, redireciona
+    try {
+      const user = await getUser();
+      if (user) {
+        window.location.href = '/minhas-palestras/';
+      }
+    } catch (_) {}
+
+    // STEP 1
+    emailForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError(emailError);
+      const email = emailInput.value.trim().toLowerCase();
+
+      if (!email) return showError(emailError, 'Informe seu email.');
+
+      emailSubmit.disabled = true;
+      emailSubmit.textContent = 'Verificando...';
+
+      try {
+        const speaker = await findSpeakerByEmail(email);
+
+        if (!speaker) {
+          showError(emailError, 'Este email ainda não tem perfil cadastrado na Avantik. Clique em "Criar conta" abaixo para se cadastrar.');
+          return;
+        }
+
+        if (speaker.auth_id) {
+          showError(emailError, 'Este email já tem senha cadastrada. Use a página de login.');
+          return;
+        }
+
+        currentSpeaker = speaker;
+        currentEmail = email;
+        speakerNameEl.textContent = speaker.name || 'Palestrante';
+        speakerEmailEl.textContent = email;
+        goTo('password');
+      } catch (err) {
+        showError(emailError, 'Erro ao verificar email. Tente novamente.');
+      } finally {
+        emailSubmit.disabled = false;
+        emailSubmit.textContent = 'Continuar';
+      }
+    });
+
+    backToEmail.addEventListener('click', (e) => {
+      e.preventDefault();
+      hideError(passwordError);
+      goTo('email');
+    });
+
+    // STEP 2 - valida senha, avanca pra escolha de plano
+    passwordForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      hideError(passwordError);
+
+      const password = passwordInput.value;
+      const confirm = passwordConfirmInput.value;
+
+      if (password.length < 6) return showError(passwordError, 'A senha deve ter no mínimo 6 caracteres.');
+      if (password !== confirm) return showError(passwordError, 'As senhas não conferem.');
+      if (!currentSpeaker || !currentEmail) return showError(passwordError, 'Sessão expirada. Recomece o fluxo.');
+
+      currentPassword = password;
+      goTo('plan');
+    });
+
+    // STEP 2.5 - escolhe plano e ativa conta
+    planForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError(planError);
+
+      const selectedPlan = document.querySelector('input[name="trial-plan"]:checked')?.value;
+      if (selectedPlan !== 'profissional' && selectedPlan !== 'destaque') {
+        return showError(planError, 'Escolha um dos planos para continuar.');
+      }
+      if (!currentSpeaker || !currentEmail || !currentPassword) {
+        return showError(planError, 'Sessão expirada. Recomece o fluxo.');
+      }
+
+      planSubmit.disabled = true;
+      planSubmit.textContent = 'Ativando conta...';
+
+      try {
+        const authData = await authSignUp(currentEmail, currentPassword);
+        const authId = authData.user?.id;
+
+        if (authId) {
+          try {
+            await linkSpeakerAuth(currentSpeaker.id, authId);
+          } catch (linkErr) {
+            console.warn('Falha ao vincular auth_id ao speaker', linkErr);
+          }
+
+          // Seta plano escolhido e inicia trial de 15 dias
+          try {
+            await supabase
+              .from('speakers')
+              .update({
+                plan: selectedPlan,
+                trial_started_at: new Date().toISOString(),
+              })
+              .eq('id', currentSpeaker.id);
+          } catch (planErr) {
+            console.warn('Falha ao salvar plano/trial', planErr);
+          }
+        }
+
+        confirmEmailEl.textContent = currentEmail;
+        goTo('confirm');
+      } catch (err) {
+        const msg = (err?.message || '').toLowerCase();
+        if (msg.includes('already registered') || msg.includes('already exists') || msg.includes('user already')) {
+          showError(planError, 'Este email já tem cadastro no sistema de login. Use a página de entrada.');
+        } else if (msg.includes('password')) {
+          showError(planError, 'Senha inválida. Volte e escolha outra com mais de 6 caracteres.');
+        } else {
+          showError(planError, 'Não foi possível criar o acesso. Tente novamente.');
+        }
+        planSubmit.disabled = false;
+        planSubmit.textContent = 'Ativar conta com 15 dias grátis';
+      }
+    });
+  </script>
+
+</body>
+</html>

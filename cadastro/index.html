@@ -327,19 +327,8 @@
           <!-- Escolha seu plano -->
           <fieldset class="cadastro-section">
             <legend class="cadastro-section__title">Escolha seu plano</legend>
-            <div class="cadastro-plans" id="plan-selector">
-              <label class="cadastro-plan">
-                <input type="radio" name="plan" value="essencial" class="cadastro-plan__radio">
-                <div class="cadastro-plan__card">
-                  <span class="cadastro-plan__name">Essencial</span>
-                  <span class="cadastro-plan__price">Grátis</span>
-                  <ul class="cadastro-plan__features">
-                    <li>1 foto de perfil</li>
-                    <li>1 palestra cadastrada</li>
-                    <li>Contato por email</li>
-                  </ul>
-                </div>
-              </label>
+            <p class="cadastro-section__hint" style="margin:0 0 1rem;color:var(--color-text-secondary);font-size:0.9375rem;"><strong>15 dias grátis</strong> no plano escolhido. Sem fidelidade, cancele quando quiser.</p>
+            <div class="cadastro-plans cadastro-plans--two" id="plan-selector">
               <label class="cadastro-plan">
                 <input type="radio" name="plan" value="profissional" class="cadastro-plan__radio" checked>
                 <div class="cadastro-plan__card cadastro-plan__card--recommended">
@@ -347,6 +336,7 @@
                   <span class="cadastro-plan__name">Profissional</span>
                   <span class="cadastro-plan__price">R$ 67<small>/mes</small></span>
                   <ul class="cadastro-plan__features">
+                    <li>15 dias grátis</li>
                     <li>10 fotos, 1 vídeo</li>
                     <li>Até 99 palestras</li>
                     <li>WhatsApp visível</li>
@@ -361,6 +351,7 @@
                   <span class="cadastro-plan__name">Destaque</span>
                   <span class="cadastro-plan__price">R$ 147<small>/mes</small></span>
                   <ul class="cadastro-plan__features">
+                    <li>15 dias grátis</li>
                     <li>Fotos e vídeos ilimitados</li>
                     <li>Selo dourado</li>
                     <li>Topo da busca</li>
@@ -612,22 +603,18 @@ if (preselectedPlan) {
 
 // Apply limits based on selected plan
 const PLAN_LIMITS = {
-  essencial: { maxPhotos: 1, maxPalestras: 1, maxVideos: 0 },
   profissional: { maxPhotos: 10, maxPalestras: 99, maxVideos: 1 },
   destaque: { maxPhotos: 99, maxPalestras: 999, maxVideos: 99 }
 };
 
 function getSelectedPlan() {
-  return document.querySelector('input[name="plan"]:checked')?.value || 'essencial';
+  const selected = document.querySelector('input[name="plan"]:checked')?.value;
+  if (selected === 'profissional' || selected === 'destaque') return selected;
+  return 'profissional';
 }
 
 function applyPlanLimits() {
-  const plan = getSelectedPlan();
-  const limits = PLAN_LIMITS[plan];
-
-  // Video field: hide for essencial
-  const videoGroup = document.getElementById('video_url').closest('.form-group');
-  if (videoGroup) videoGroup.style.display = limits.maxVideos === 0 ? 'none' : '';
+  // Ambos os planos (profissional e destaque) incluem video, entao nada a esconder.
 }
 
 // Listen for plan changes
@@ -724,8 +711,15 @@ form.addEventListener('submit', async (e) => {
       // Verificar se ja existe speaker com este email (migracao)
       const existingSpeaker = await findSpeakerByEmail(email);
       if (existingSpeaker && !existingSpeaker.auth_id) {
-        // Vincular auth ao speaker existente
+        // Vincular auth ao speaker existente + setar plano e iniciar trial
         await linkSpeakerAuth(existingSpeaker.id, authId);
+        await supabase
+          .from('speakers')
+          .update({
+            plan: getSelectedPlan(),
+            trial_started_at: new Date().toISOString(),
+          })
+          .eq('id', existingSpeaker.id);
         form.hidden = true;
         successDiv.hidden = false;
         document.getElementById('profile-link').href = '/palestrante/?id=' + existingSpeaker.id;
@@ -769,6 +763,7 @@ form.addEventListener('submit', async (e) => {
         auth_id: authId,
         active: true,
         plan: getSelectedPlan(),
+        trial_started_at: new Date().toISOString(),
         name: nome,
         slug: slug,
         email: email,

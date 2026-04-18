@@ -901,7 +901,7 @@
     async function loadPalestra() {
       let query = supabase
         .from('palestras')
-        .select('*, themes(name, slug), speakers(*)')
+        .select('*, themes!palestras_theme_id_fkey(name, slug), speakers(*)')
         .eq('active', true);
 
       if (slug) query = query.eq('slug', slug);

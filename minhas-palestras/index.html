@@ -265,7 +265,7 @@
     async function loadPalestras() {
       const { data: palestras, error } = await supabase
         .from('palestras')
-        .select('*, themes(name, slug)')
+        .select('*, themes!palestras_theme_id_fkey(name, slug)')
         .eq('speaker_id', speakerProfile.id)
         .order('sort_order')
         .order('created_at', { ascending: false });

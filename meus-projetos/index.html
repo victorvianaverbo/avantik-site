@@ -497,7 +497,7 @@ async function loadProjects() {
   const projectIds = projects.map(p => p.id);
   const { data: applications } = await supabase
     .from('project_applications')
-    .select('*, speakers(id, name, slug, email, phone, photo_url), palestras(id, title, themes(name))')
+    .select('*, speakers(id, name, slug, email, phone, photo_url), palestras(id, title, themes!palestras_theme_id_fkey(name))')
     .in('project_id', projectIds)
     .order('created_at', { ascending: false });
 

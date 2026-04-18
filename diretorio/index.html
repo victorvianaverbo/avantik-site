@@ -269,7 +269,7 @@ document.querySelector('[data-filter="todos"]').addEventListener('click', () => 
 async function fetchAllSpeakers() {
   const { data, error } = await supabase
     .from('speakers')
-    .select('*, palestras(id, title, slug, price_min, price_max, theme_id, themes(name, slug))')
+    .select('*, palestras(id, title, slug, price_min, price_max, theme_id, themes!palestras_theme_id_fkey(name, slug))')
     .eq('active', true)
     .order('created_at', { ascending: false });
 
