@@ -21,15 +21,19 @@
   <!-- FONTS: DM Serif Display + DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Preload da fonte LCP (DM Serif Display, subset latin) -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/dmserifdisplay/v17/-nFnOHM81r4j6k0gjAW3mujVU2B2G_Bx0g.woff2">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <!-- DNS prefetch para thumbnails e embeds do YouTube (seção de depoimentos) -->
+  <link rel="dns-prefetch" href="//img.youtube.com">
+  <link rel="dns-prefetch" href="//www.youtube.com">
 
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="/lib/aos.css" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css">
 
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+  <script src="/lib/aos.js" defer></script>
   <script src="/script.js" defer></script>
 </head>
 <body>
@@ -38,7 +42,7 @@
   <header class="header" id="header">
     <nav class="header__nav container">
       <a href="/" class="header__logo">
-        <img src="/images/logo.png" alt="Avantik" class="header__logo-img" width="150" height="40">
+        <img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="header__logo-img" width="150" height="40">
       </a>
 
       <div class="header__links" id="nav-links">
@@ -510,28 +514,28 @@
 
           <div class="clients__viewport">
             <div class="clients__track" id="clients-track">
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/3bf.png" alt="3BF" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/abco.png" alt="ABCO" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/araujo.png" alt="Araujo" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/contabilidade.png" alt="Contabilidade AV" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/crie.png" alt="Crie" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/direcional.png" alt="Direcional" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/empreender.png" alt="Empreender" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/gofree.png" alt="GoFree" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/illustrar.png" alt="Illustrar" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/invista.png" alt="Invista" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/observatrio.png" alt="Observatório" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/ourominas.png" alt="Ourominas" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/permuto.png" alt="Permuto" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/prefeitura-contagem.png" alt="Prefeitura de Contagem" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/royal.png" alt="Royal" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/sbt.png" alt="SBT" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/tambasa.png" alt="Tambasa" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/trokz.png" alt="Trokz" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/tv.png" alt="TV" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/adm.png" alt="ADM" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/unisv.png" alt="UNISV" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/clientes-pareceiros-avantik/via-permuta.png" alt="Via Permuta" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/3bf.png&w=240&q=80&fm=webp" alt="3BF" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/abco.png&w=240&q=80&fm=webp" alt="ABCO" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/araujo.png&w=240&q=80&fm=webp" alt="Araujo" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/contabilidade.png&w=240&q=80&fm=webp" alt="Contabilidade AV" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/crie.png&w=240&q=80&fm=webp" alt="Crie" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/direcional.png&w=240&q=80&fm=webp" alt="Direcional" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/empreender.png&w=240&q=80&fm=webp" alt="Empreender" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/gofree.png&w=240&q=80&fm=webp" alt="GoFree" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/illustrar.png&w=240&q=80&fm=webp" alt="Illustrar" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/invista.png&w=240&q=80&fm=webp" alt="Invista" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/observatrio.png&w=240&q=80&fm=webp" alt="Observatório" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/ourominas.png&w=240&q=80&fm=webp" alt="Ourominas" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/permuto.png&w=240&q=80&fm=webp" alt="Permuto" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/prefeitura-contagem.png&w=240&q=80&fm=webp" alt="Prefeitura de Contagem" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/royal.png&w=240&q=80&fm=webp" alt="Royal" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/sbt.png&w=240&q=80&fm=webp" alt="SBT" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tambasa.png&w=240&q=80&fm=webp" alt="Tambasa" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/trokz.png&w=240&q=80&fm=webp" alt="Trokz" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tv.png&w=240&q=80&fm=webp" alt="TV" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/adm.png&w=240&q=80&fm=webp" alt="ADM" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/unisv.png&w=240&q=80&fm=webp" alt="UNISV" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/via-permuta.png&w=240&q=80&fm=webp" alt="Via Permuta" loading="lazy" width="120" height="80"></div>
             </div>
           </div>
 
@@ -581,7 +585,7 @@
         <!-- Coluna 1: Marca -->
         <div class="footer__brand">
           <a href="/" class="footer__logo">
-            <img src="/images/logo.png" alt="Avantik" class="footer__logo-img" width="150" height="44">
+            <img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="footer__logo-img" width="150" height="44">
           </a>
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
           <div class="footer__socials">
