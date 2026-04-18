@@ -280,7 +280,7 @@
       </div>
 
       <div class="header__actions" id="header-actions">
-        <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
+        <a href="/entrar/" class="btn btn--outline btn--sm">Entrar</a>
         <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
       </div>
 
@@ -299,7 +299,7 @@
       <a href="/sobre/" class="header__mobile-link">Sobre</a>
       <a href="/blog/" class="header__mobile-link">Blog</a>
       <div class="header__mobile-actions">
-        <a href="/diretorio/" class="btn btn--outline">Buscar Palestrante</a>
+        <a href="/entrar/" class="btn btn--outline">Entrar</a>
         <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
       </div>
     </div>
@@ -335,7 +335,7 @@
                   <span class="cadastro-plan__price">Grátis</span>
                   <ul class="cadastro-plan__features">
                     <li>1 foto de perfil</li>
-                    <li>Até 3 temas</li>
+                    <li>1 palestra cadastrada</li>
                     <li>Contato por email</li>
                   </ul>
                 </div>
@@ -348,7 +348,7 @@
                   <span class="cadastro-plan__price">R$ 67<small>/mes</small></span>
                   <ul class="cadastro-plan__features">
                     <li>10 fotos, 1 vídeo</li>
-                    <li>Todos os temas</li>
+                    <li>Até 99 palestras</li>
                     <li>WhatsApp visível</li>
                     <li>Selo verificado</li>
                     <li>Prioridade na busca</li>
@@ -439,30 +439,10 @@
             </div>
           </fieldset>
 
-          <!-- Suas Palestras -->
-          <fieldset class="cadastro-section">
-            <legend class="cadastro-section__title">Suas Palestras</legend>
-
-            <div class="form-group">
-              <label class="form-label">Temas de atuação *</label>
-              <p id="theme-limit-hint" style="font-size:0.8125rem;color:var(--color-text-muted);margin-bottom:0.75rem">Selecione pelo menos 1 tema</p>
-              <div class="cadastro-themes" id="themes-grid">
-                <!-- Theme pills loaded from Supabase -->
-                <div style="color:var(--color-text-muted);font-size:0.875rem">Carregando temas...</div>
-              </div>
-            </div>
-
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-              <div class="form-group">
-                <label class="form-label" for="price_min">Preço mínimo (R$)</label>
-                <input type="number" class="form-input" id="price_min" name="price_min" placeholder="Ex: 3000" min="0">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="price_max">Preço máximo (R$)</label>
-                <input type="number" class="form-input" id="price_max" name="price_max" placeholder="Ex: 10000" min="0">
-              </div>
-            </div>
-          </fieldset>
+          <!-- Secao removida: palestras serao cadastradas em /minhas-palestras/ -->
+          <div style="background:var(--color-muted-bg);border-radius:0.75rem;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.9375rem;color:var(--color-text-secondary);line-height:1.5">
+            Após criar sua conta, você poderá cadastrar suas palestras no painel <strong>Minhas Palestras</strong>. Cada palestra cadastrada ganha automaticamente uma página de vendas.
+          </div>
 
           <!-- Redes Sociais -->
           <fieldset class="cadastro-section">
@@ -495,9 +475,12 @@
         <!-- Success state (hidden by default) -->
         <div class="cadastro-success" id="cadastro-success" hidden>
           <div class="cadastro-success__icon">&#10003;</div>
-          <h2 class="cadastro-success__title">Perfil criado com sucesso!</h2>
-          <p class="cadastro-success__text">Seu perfil já está visível para empresas de todo o Brasil.</p>
-          <a id="profile-link" href="#" class="btn btn--accent btn--lg">Ver meu perfil</a>
+          <h2 class="cadastro-success__title">Conta criada com sucesso!</h2>
+          <p class="cadastro-success__text">Agora cadastre sua primeira palestra para ativar sua página de vendas.</p>
+          <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
+            <a href="/minhas-palestras/nova/" class="btn btn--accent btn--lg">Cadastrar Primeira Palestra</a>
+            <a id="profile-link" href="#" class="btn btn--outline btn--lg">Ver Meu Perfil</a>
+          </div>
         </div>
       </div>
     </section>
@@ -577,12 +560,46 @@
   </footer>
 
   <script type="module">
-import { supabase, generateSlug, generatePalestraSlug, ensureUniqueSlug, ESTADOS_BR, authSignUp, findSpeakerByEmail, linkSpeakerAuth, getUser } from '/lib/supabase.js';
+import { supabase, generateSlug, generatePalestraSlug, ensureUniqueSlug, ESTADOS_BR, authSignUp, findSpeakerByEmail, linkSpeakerAuth, getUser, getUserType } from '/lib/supabase.js';
 
-// Se ja esta logado, redirecionar
+// Verificar estado de login
 const currentUser = await getUser();
+let isAddingRole = false;
+let existingUser = null;
+
 if (currentUser) {
-  window.location.href = '/projetos/';
+  const authStatus = await getUserType(currentUser.id);
+  // Se ja e palestrante, redirecionar
+  if (authStatus.hasRole('speaker')) {
+    window.location.href = '/projetos/';
+  } else {
+    // Usuario logado (ex: contratante) mas nao palestrante — modo "adicionar papel"
+    isAddingRole = true;
+    existingUser = currentUser;
+
+    // Pre-preencher email e esconder campos de conta
+    setTimeout(() => {
+      const emailField = document.getElementById('email');
+      const senhaField = document.getElementById('senha');
+      const senhaConfField = document.getElementById('senha_confirmacao');
+      if (emailField) {
+        emailField.value = currentUser.email;
+        emailField.readOnly = true;
+        emailField.style.opacity = '0.6';
+      }
+      if (senhaField) senhaField.closest('.form-group').style.display = 'none';
+      if (senhaConfField) senhaConfField.closest('.form-group').style.display = 'none';
+
+      const pageTitle = document.querySelector('.cadastro-hero__title, h1');
+      if (pageTitle) pageTitle.textContent = 'Adicionar perfil de palestrante';
+
+      const contractorProfile = authStatus.getProfile('contractor');
+      if (contractorProfile) {
+        const nomeField = document.getElementById('nome');
+        if (nomeField && !nomeField.value) nomeField.value = contractorProfile.name || '';
+      }
+    }, 100);
+  }
 }
 
 // Pre-select plan from URL
@@ -595,9 +612,9 @@ if (preselectedPlan) {
 
 // Apply limits based on selected plan
 const PLAN_LIMITS = {
-  essencial: { maxPhotos: 1, maxThemes: 3, maxVideos: 0 },
-  profissional: { maxPhotos: 10, maxThemes: 99, maxVideos: 1 },
-  destaque: { maxPhotos: 99, maxThemes: 99, maxVideos: 99 }
+  essencial: { maxPhotos: 1, maxPalestras: 1, maxVideos: 0 },
+  profissional: { maxPhotos: 10, maxPalestras: 99, maxVideos: 1 },
+  destaque: { maxPhotos: 99, maxPalestras: 999, maxVideos: 99 }
 };
 
 function getSelectedPlan() {
@@ -610,15 +627,7 @@ function applyPlanLimits() {
 
   // Video field: hide for essencial
   const videoGroup = document.getElementById('video_url').closest('.form-group');
-  videoGroup.style.display = limits.maxVideos === 0 ? 'none' : '';
-
-  // Theme limit hint
-  const themeHint = document.getElementById('theme-limit-hint');
-  if (themeHint) {
-    themeHint.textContent = limits.maxThemes < 99
-      ? `Selecione até ${limits.maxThemes} temas`
-      : 'Selecione quantos temas quiser';
-  }
+  if (videoGroup) videoGroup.style.display = limits.maxVideos === 0 ? 'none' : '';
 }
 
 // Listen for plan changes
@@ -636,41 +645,7 @@ ESTADOS_BR.forEach(uf => {
   estadoSelect.appendChild(opt);
 });
 
-// Load themes from Supabase
-const themesGrid = document.getElementById('themes-grid');
-const selectedThemes = new Set();
-
-async function loadThemes() {
-  const { data, error } = await supabase.from('themes').select('*').order('name');
-  if (error || !data) {
-    themesGrid.innerHTML = '<span style="color:var(--color-error)">Erro ao carregar temas</span>';
-    return;
-  }
-  themesGrid.innerHTML = '';
-  data.forEach(theme => {
-    const pill = document.createElement('button');
-    pill.type = 'button';
-    pill.className = 'cadastro-theme-pill';
-    pill.textContent = theme.name;
-    pill.dataset.themeId = theme.id;
-    pill.addEventListener('click', () => {
-      if (selectedThemes.has(theme.id)) {
-        selectedThemes.delete(theme.id);
-        pill.classList.remove('cadastro-theme-pill--selected');
-      } else {
-        const maxThemes = PLAN_LIMITS[getSelectedPlan()].maxThemes;
-        if (selectedThemes.size >= maxThemes) {
-          alert(`Seu plano permite no máximo ${maxThemes} tema(s). Faça upgrade para selecionar mais.`);
-          return;
-        }
-        selectedThemes.add(theme.id);
-        pill.classList.add('cadastro-theme-pill--selected');
-      }
-    });
-    themesGrid.appendChild(pill);
-  });
-}
-loadThemes();
+// Palestras agora sao cadastradas em /minhas-palestras/ apos o cadastro
 
 // Photo upload preview
 const fotoInput = document.getElementById('foto');
@@ -713,51 +688,50 @@ form.addEventListener('submit', async (e) => {
   // Honeypot check
   if (form.querySelector('[name="website_hp"]').value) return;
 
-  // Validate required fields
+  // Validate speaker fields
   const nome = document.getElementById('nome').value.trim();
   const email = document.getElementById('email').value.trim();
   const senha = document.getElementById('senha').value;
 
-  if (!nome || !email || !senha) {
-    showFeedback('error', 'Preencha nome, email e senha.');
+  if (!nome || !email) {
+    showFeedback('error', 'Preencha nome e email.');
     return;
   }
 
-  if (senha.length < 6) {
-    showFeedback('error', 'A senha deve ter pelo menos 6 caracteres.');
-    return;
-  }
-
-  if (selectedThemes.size === 0) {
-    showFeedback('error', 'Selecione pelo menos 1 tema de atuação.');
-    return;
-  }
-
-  const planLimits = PLAN_LIMITS[getSelectedPlan()];
-  if (selectedThemes.size > planLimits.maxThemes) {
-    showFeedback('error', `Seu plano permite no máximo ${planLimits.maxThemes} tema(s). Remova alguns ou faça upgrade.`);
-    return;
+  // Senha so obrigatoria se nao esta em modo "adicionar papel"
+  if (!isAddingRole) {
+    if (!senha || senha.length < 6) {
+      showFeedback('error', 'A senha deve ter pelo menos 6 caracteres.');
+      return;
+    }
   }
 
   submitBtn.disabled = true;
   submitBtn.textContent = 'Cadastrando...';
 
   try {
-    // 0. Criar conta no Supabase Auth
-    const authData = await authSignUp(email, senha);
-    const authId = authData.user?.id;
-    if (!authId) throw new Error('Erro ao criar conta. Tente novamente.');
+    let authId;
 
-    // Verificar se ja existe speaker com este email (migracao)
-    const existingSpeaker = await findSpeakerByEmail(email);
-    if (existingSpeaker && !existingSpeaker.auth_id) {
-      // Vincular auth ao speaker existente
-      await linkSpeakerAuth(existingSpeaker.id, authId);
-      form.hidden = true;
-      successDiv.hidden = false;
-      document.getElementById('profile-link').href = '/palestrante/?id=' + existingSpeaker.id;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
+    // Modo "adicionar papel" — usuario ja logado, reusar auth
+    if (isAddingRole && existingUser) {
+      authId = existingUser.id;
+    } else {
+      // Modo normal — criar conta no Supabase Auth
+      const authData = await authSignUp(email, senha);
+      authId = authData.user?.id;
+      if (!authId) throw new Error('Erro ao criar conta. Tente novamente.');
+
+      // Verificar se ja existe speaker com este email (migracao)
+      const existingSpeaker = await findSpeakerByEmail(email);
+      if (existingSpeaker && !existingSpeaker.auth_id) {
+        // Vincular auth ao speaker existente
+        await linkSpeakerAuth(existingSpeaker.id, authId);
+        form.hidden = true;
+        successDiv.hidden = false;
+        document.getElementById('profile-link').href = '/palestrante/?id=' + existingSpeaker.id;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
     }
 
     // 1. Upload photo if provided
@@ -804,8 +778,8 @@ form.addEventListener('submit', async (e) => {
         bio: document.getElementById('bio').value.trim() || null,
         photo_url: photoUrl,
         video_url: document.getElementById('video_url').value.trim() || null,
-        price_min: parseInt(document.getElementById('price_min').value) || null,
-        price_max: parseInt(document.getElementById('price_max').value) || null,
+        price_min: null,
+        price_max: null,
         instagram: document.getElementById('instagram').value.trim() || null,
         linkedin: document.getElementById('linkedin').value.trim() || null,
         website: document.getElementById('website').value.trim() || null,
@@ -815,53 +789,18 @@ form.addEventListener('submit', async (e) => {
 
     if (speakerError) throw new Error('Erro ao cadastrar: ' + speakerError.message);
 
-    // 5. Insert theme associations
-    const themeRows = [...selectedThemes].map(themeId => ({
-      speaker_id: speaker.id,
-      theme_id: themeId
-    }));
-
-    if (themeRows.length > 0) {
-      const { error: themesError } = await supabase
-        .from('speaker_themes')
-        .insert(themeRows);
-
-      if (themesError) console.warn('Erro ao salvar temas:', themesError);
-
-      // 5b. Criar palestras iniciais a partir dos temas selecionados
-      const priceMin = parseInt(document.getElementById('price_min').value) || null;
-      const priceMax = parseInt(document.getElementById('price_max').value) || null;
-
-      // Buscar nomes dos temas selecionados
-      const { data: themesData } = await supabase
-        .from('themes')
-        .select('id, name, slug')
-        .in('id', [...selectedThemes]);
-
-      if (themesData && themesData.length > 0) {
-        const palestraRows = themesData.map(t => ({
-          speaker_id: speaker.id,
-          title: t.name,
-          slug: t.slug + '-' + speaker.slug.substring(0, 8),
-          theme_id: t.id,
-          price_min: priceMin,
-          price_max: priceMax,
-          format: 'presencial',
-        }));
-
-        const { error: palestrasError } = await supabase
-          .from('palestras')
-          .insert(palestraRows);
-
-        if (palestrasError) console.warn('Erro ao criar palestras:', palestrasError);
-      }
-    }
+    // Palestras serao cadastradas em /minhas-palestras/ apos o cadastro
 
     // 6. Show success
     form.hidden = true;
     successDiv.hidden = false;
     document.getElementById('profile-link').href = '/palestrante/?slug=' + speaker.slug;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Se foi adicionar papel, salvar papel ativo como speaker no localStorage
+    if (isAddingRole) {
+      try { localStorage.setItem('avantik_active_role', 'speaker'); } catch(_) {}
+    }
 
   } catch (err) {
     showFeedback('error', err.message || 'Erro ao cadastrar. Tente novamente.');

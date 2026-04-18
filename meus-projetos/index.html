@@ -384,7 +384,7 @@
     </section>
 
     <!-- CONTENT -->
-    <section class="section" style="padding-top:0">
+    <section class="section">
       <div class="container">
         <div class="my-projects">
 
@@ -493,11 +493,11 @@ async function loadProjects() {
     return;
   }
 
-  // Fetch applications for all projects
+  // Fetch applications for all projects (com palestra escolhida)
   const projectIds = projects.map(p => p.id);
   const { data: applications } = await supabase
     .from('project_applications')
-    .select('*, speakers(name, slug, email, phone, photo_url)')
+    .select('*, speakers(id, name, slug, email, phone, photo_url), palestras(id, title, themes(name))')
     .in('project_id', projectIds)
     .order('created_at', { ascending: false });
 
@@ -537,17 +537,32 @@ async function loadProjects() {
       appsHtml = apps.map(app => {
         const speaker = app.speakers || {};
         const speakerName = speaker.name || 'Palestrante';
+        const palestraInfo = app.palestras
+          ? `<div class="application-card__palestra"><strong>Palestra oferecida:</strong> ${escapeHtml(app.palestras.title)}${app.palestras.themes ? ' <em>(' + escapeHtml(app.palestras.themes.name) + ')</em>' : ''}</div>`
+          : '';
+
+        const isAccepted = app.status === 'aceita';
+        const isRejected = app.status === 'rejeitada';
+
+        // Mostrar contato direto APENAS se candidatura foi aceita
+        let contactHtml = '';
+        if (isAccepted) {
+          const contactParts = [];
+          if (speaker.email) {
+            contactParts.push(`<a href="mailto:${escapeHtml(speaker.email)}">${escapeHtml(speaker.email)}</a>`);
+          }
+          if (speaker.phone) {
+            const phoneDigits = speaker.phone.replace(/\D/g, '');
+            contactParts.push(`<a href="https://wa.me/${phoneDigits}" target="_blank" rel="noopener">WhatsApp: ${escapeHtml(speaker.phone)}</a>`);
+          }
+          if (contactParts.length) {
+            contactHtml = `<div class="application-card__contact" style="background:#ecfdf5;padding:0.75rem;border-radius:0.5rem;margin-top:0.75rem"><strong>Contato direto liberado:</strong><br>${contactParts.join('<br>')}</div>`;
+          }
+        }
+
         const nameHtml = speaker.slug
           ? `<a href="/palestrante/?slug=${escapeHtml(speaker.slug)}">${escapeHtml(speakerName)}</a>`
           : escapeHtml(speakerName);
-
-        const contactParts = [];
-        if (speaker.email) {
-          contactParts.push(`<a href="mailto:${escapeHtml(speaker.email)}">${escapeHtml(speaker.email)}</a>`);
-        }
-        if (speaker.phone) {
-          contactParts.push(`<span>${escapeHtml(speaker.phone)}</span>`);
-        }
 
         const priceHtml = app.proposed_price
           ? `<span class="application-card__price">R$ ${Number(app.proposed_price).toLocaleString('pt-BR')}</span>`
@@ -555,15 +570,32 @@ async function loadProjects() {
 
         const appDate = new Date(app.created_at).toLocaleDateString('pt-BR');
 
+        // Botao de aceite (so se pendente)
+        let actionsHtml = '';
+        if (app.status === 'pendente' || !app.status) {
+          actionsHtml = `
+            <div class="application-card__actions" style="display:flex;gap:0.5rem;margin-top:0.75rem">
+              <button class="btn btn--accent btn--sm" data-accept-app="${escapeHtml(app.id)}" data-price="${app.proposed_price || 0}" data-speaker-id="${escapeHtml(speaker.id || '')}">Aceitar Proposta</button>
+              <button class="btn btn--outline btn--sm" data-reject-app="${escapeHtml(app.id)}">Rejeitar</button>
+            </div>
+          `;
+        } else if (isAccepted) {
+          actionsHtml = `<div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:#ecfdf5;color:#065f46;border-radius:0.5rem;font-size:0.8125rem;font-weight:600">PROPOSTA ACEITA — Avantik foi notificada para gerar a comissao</div>`;
+        } else if (isRejected) {
+          actionsHtml = `<div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:var(--color-muted-bg);color:var(--color-text-secondary);border-radius:0.5rem;font-size:0.8125rem">Proposta rejeitada</div>`;
+        }
+
         return `
           <div class="application-card">
             <div class="application-card__header">
               <span class="application-card__name">${nameHtml}</span>
               ${priceHtml}
             </div>
-            ${contactParts.length ? `<div class="application-card__contact">${contactParts.join('')}</div>` : ''}
+            ${palestraInfo}
             <p class="application-card__message">${escapeHtml(app.message || '')}</p>
             <span class="application-card__date">Recebida em ${appDate}</span>
+            ${actionsHtml}
+            ${contactHtml}
           </div>
         `;
       }).join('');
@@ -602,6 +634,7 @@ async function loadProjects() {
   bindLogout();
   bindToggleApps();
   bindStatusActions();
+  bindAcceptReject();
 }
 
 function bindLogout() {
@@ -666,6 +699,89 @@ function bindStatusActions() {
         btn.disabled = false;
         btn.textContent = action === 'close' ? 'Encerrar' : 'Reabrir';
       }
+    });
+  });
+}
+
+function bindAcceptReject() {
+  // Aceitar proposta
+  document.querySelectorAll('[data-accept-app]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Aceitar esta proposta? Apos confirmar, o contato direto do palestrante sera liberado e a Avantik sera notificada para cobrar a comissao de 30%.')) return;
+
+      const appId = btn.dataset.acceptApp;
+      const proposedPrice = Number(btn.dataset.price) || 0;
+      const speakerId = btn.dataset.speakerId;
+
+      btn.disabled = true;
+      btn.textContent = 'Aceitando...';
+
+      try {
+        // 1. Atualizar candidatura para 'aceita'
+        const { error: updErr } = await supabase
+          .from('project_applications')
+          .update({ status: 'aceita', accepted_at: new Date().toISOString() })
+          .eq('id', appId);
+
+        if (updErr) {
+          console.error('Aceite error:', updErr);
+          alert('Erro ao aceitar proposta. Tente novamente.');
+          btn.disabled = false;
+          btn.textContent = 'Aceitar Proposta';
+          return;
+        }
+
+        // 2. Criar commission (30% do preco proposto)
+        if (proposedPrice > 0 && speakerId) {
+          const commissionAmount = Math.round(proposedPrice * 0.30);
+          const { error: commErr } = await supabase
+            .from('commissions')
+            .insert({
+              application_id: appId,
+              speaker_id: speakerId,
+              contractor_id: auth.profile.id,
+              proposed_price: proposedPrice,
+              commission_rate: 0.30,
+              commission_amount: commissionAmount,
+              status: 'pendente'
+            });
+
+          if (commErr) {
+            console.warn('Commission insert warning:', commErr);
+            // Nao bloqueia o fluxo — Avantik pode criar manualmente depois
+          }
+        }
+
+        await loadProjects();
+      } catch (err) {
+        console.error(err);
+        alert('Erro ao aceitar. Tente novamente.');
+        btn.disabled = false;
+        btn.textContent = 'Aceitar Proposta';
+      }
+    });
+  });
+
+  // Rejeitar proposta
+  document.querySelectorAll('[data-reject-app]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Rejeitar esta proposta?')) return;
+      const appId = btn.dataset.rejectApp;
+      btn.disabled = true;
+      btn.textContent = 'Rejeitando...';
+
+      const { error } = await supabase
+        .from('project_applications')
+        .update({ status: 'rejeitada' })
+        .eq('id', appId);
+
+      if (error) {
+        alert('Erro ao rejeitar. Tente novamente.');
+        btn.disabled = false;
+        btn.textContent = 'Rejeitar';
+        return;
+      }
+      await loadProjects();
     });
   });
 }

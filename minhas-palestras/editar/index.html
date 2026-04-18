@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editar Palestra | Avantik</title>
+  <meta name="description" content="Edite os dados da sua palestra na Avantik.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .pal-form {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .pal-form__group {
+      margin-bottom: 1.5rem;
+    }
+
+    .pal-form__label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .pal-form__hint {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+      margin-top: 0.375rem;
+    }
+
+    .pal-form__input,
+    .pal-form__select,
+    .pal-form__textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.625rem;
+      background: var(--color-surface);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--color-text);
+    }
+
+    .pal-form__input:focus,
+    .pal-form__select:focus,
+    .pal-form__textarea:focus {
+      outline: 2px solid var(--color-accent);
+      outline-offset: -1px;
+      border-color: var(--color-accent);
+    }
+
+    .pal-form__textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .pal-form__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .pal-form__row {
+        grid-template-columns: 1fr;
+      }
+      .pal-form__actions {
+        flex-direction: column;
+      }
+      .pal-form__actions .btn {
+        width: 100%;
+      }
+      .pal-form__delete {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+      .pal-form__checkboxes {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    .pal-form__checkboxes {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pal-form__checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      cursor: pointer;
+      font-size: 0.9375rem;
+    }
+
+    .pal-form__feedback {
+      padding: 0.75rem 1rem;
+      border-radius: 0.625rem;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .pal-form__feedback--error {
+      background: #fef2f2;
+      color: #991b1b;
+      display: block;
+    }
+
+    .pal-form__feedback--success {
+      background: #ecfdf5;
+      color: #065f46;
+      display: block;
+    }
+
+    .pal-form__actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .pal-form__delete {
+      background: none;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+      padding: 0.625rem 1rem;
+      border-radius: 0.625rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+      margin-left: auto;
+    }
+
+    .pal-form__delete:hover {
+      background: #fef2f2;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo"><img src="/images/logo.png" alt="Avantik" class="header__logo-img"></a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
+      </div>
+      <div class="header__actions" id="header-actions"></div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <div class="header__mobile-actions"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero section">
+      <div class="container">
+        <a href="/minhas-palestras/" style="color:var(--color-text-secondary);font-size:0.875rem;text-decoration:none">← Voltar</a>
+        <h1 class="page-hero__title" id="page-title" style="margin-top:0.5rem">Editar palestra</h1>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="pal-form">
+          <div class="pal-form__feedback" id="feedback"></div>
+
+          <div id="loading" style="text-align:center;padding:2rem;color:var(--color-text-secondary)">Carregando...</div>
+
+          <form id="pal-form" hidden>
+
+            <div class="pal-form__group">
+              <label class="pal-form__label" for="p_title">Título da palestra *</label>
+              <input type="text" class="pal-form__input" id="p_title" required maxlength="120" placeholder="Ex: Liderança Feminina: do medo ao poder">
+            </div>
+
+            <div class="pal-form__group">
+              <label class="pal-form__label" for="p_theme">Categoria (tema) *</label>
+              <select class="pal-form__select" id="p_theme" required>
+                <option value="">Selecione a categoria</option>
+              </select>
+              <p class="pal-form__hint">Usada nos filtros do marketplace.</p>
+            </div>
+
+            <div class="pal-form__group">
+              <label class="pal-form__label" for="p_description">Descrição *</label>
+              <textarea class="pal-form__textarea" id="p_description" required minlength="100" maxlength="1500" rows="5" placeholder="Descreva a palestra em 1-2 parágrafos..."></textarea>
+              <p class="pal-form__hint">Mínimo 100 caracteres.</p>
+            </div>
+
+            <div class="pal-form__group">
+              <label class="pal-form__label" for="p_target">Para quem é essa palestra *</label>
+              <textarea class="pal-form__textarea" id="p_target" required minlength="30" maxlength="300" rows="2" placeholder="Ex: Líderes e gestores que querem..."></textarea>
+            </div>
+
+            <div class="pal-form__group">
+              <label class="pal-form__label">O que o público vai aprender *</label>
+              <p class="pal-form__hint" style="margin-top:0;margin-bottom:0.5rem">Liste 3 a 7 resultados que a audiência leva para casa.</p>
+              <div id="objectives-list"></div>
+              <button type="button" id="add-objective" class="btn btn--outline btn--sm" style="margin-top:0.5rem">+ Adicionar objetivo</button>
+            </div>
+
+            <div class="pal-form__row">
+              <div class="pal-form__group">
+                <label class="pal-form__label" for="p_duration">Duração *</label>
+                <select class="pal-form__select" id="p_duration" required>
+                  <option value="">Selecione</option>
+                  <option value="45">45 min</option>
+                  <option value="60">60 min</option>
+                  <option value="90">90 min</option>
+                  <option value="120">2 horas</option>
+                  <option value="180">3 horas</option>
+                  <option value="240">4 horas</option>
+                </select>
+              </div>
+              <div class="pal-form__group">
+                <label class="pal-form__label">Formato *</label>
+                <div class="pal-form__checkboxes" style="padding:0.5rem 0">
+                  <label class="pal-form__checkbox-label"><input type="checkbox" name="p_format" value="presencial"> Presencial</label>
+                  <label class="pal-form__checkbox-label"><input type="checkbox" name="p_format" value="online"> Online</label>
+                  <label class="pal-form__checkbox-label"><input type="checkbox" name="p_format" value="hibrido"> Híbrido</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="pal-form__row">
+              <div class="pal-form__group">
+                <label class="pal-form__label" for="p_price_min">Preço mínimo (R$)</label>
+                <input type="number" class="pal-form__input" id="p_price_min" min="0" placeholder="Ex: 3000">
+              </div>
+              <div class="pal-form__group">
+                <label class="pal-form__label" for="p_price_max">Preço máximo (R$)</label>
+                <input type="number" class="pal-form__input" id="p_price_max" min="0" placeholder="Ex: 10000">
+              </div>
+            </div>
+
+            <div class="pal-form__group">
+              <label class="pal-form__label" for="p_video">Vídeo (YouTube) — opcional</label>
+              <input type="url" class="pal-form__input" id="p_video" placeholder="https://youtube.com/watch?v=...">
+              <p class="pal-form__hint">Se vazio, usa o vídeo do seu perfil geral.</p>
+            </div>
+
+            <div class="pal-form__group">
+              <label class="pal-form__label" for="p_image">Imagem de capa (URL) — opcional</label>
+              <input type="url" class="pal-form__input" id="p_image" placeholder="https://...">
+              <p class="pal-form__hint">Se vazio, usa sua foto de perfil.</p>
+            </div>
+
+            <div class="pal-form__actions">
+              <button type="submit" class="btn btn--accent btn--lg" id="submit-btn">Salvar</button>
+              <a href="/minhas-palestras/" class="btn btn--outline btn--lg">Cancelar</a>
+              <button type="button" id="delete-btn" class="pal-form__delete" hidden>Excluir</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo"><img src="/images/logo.png" alt="Avantik" class="footer__logo-img"></a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegação</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/projetos/">Oportunidades</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Privacidade</a>
+            <a href="/termos/">Termos</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase, requireAuth, generatePalestraSlug, ensureUniqueSlug, TIERS, escapeHtml } from '/lib/supabase.js';
+
+    const auth = await requireAuth('speaker');
+    if (!auth) throw new Error('redirect');
+
+    const speakerProfile = auth.getProfile ? auth.getProfile('speaker') : auth.profile;
+    if (!speakerProfile) {
+      window.location.href = '/';
+      throw new Error('no speaker');
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const palestraId = params.get('id');
+    const isNew = !palestraId;
+
+    const loadingEl = document.getElementById('loading');
+    const formEl = document.getElementById('pal-form');
+    const feedbackEl = document.getElementById('feedback');
+    const submitBtn = document.getElementById('submit-btn');
+    const deleteBtn = document.getElementById('delete-btn');
+    const pageTitle = document.getElementById('page-title');
+
+    if (isNew) {
+      pageTitle.textContent = 'Nova palestra';
+      submitBtn.textContent = 'Cadastrar palestra';
+    } else {
+      deleteBtn.hidden = false;
+    }
+
+    function showError(msg) {
+      feedbackEl.textContent = msg;
+      feedbackEl.className = 'pal-form__feedback pal-form__feedback--error';
+      feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function showSuccess(msg) {
+      feedbackEl.textContent = msg;
+      feedbackEl.className = 'pal-form__feedback pal-form__feedback--success';
+    }
+
+    // Popular temas
+    async function loadThemes(selectedId) {
+      const themeSelect = document.getElementById('p_theme');
+      const { data } = await supabase.from('themes').select('*').order('name');
+      (data || []).forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.textContent = t.name;
+        if (selectedId && t.id === selectedId) opt.selected = true;
+        themeSelect.appendChild(opt);
+      });
+    }
+
+    // Adicionar objetivo
+    function addObjectiveInput(value = '') {
+      const list = document.getElementById('objectives-list');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'pal-form__input';
+      input.setAttribute('data-objective', '');
+      input.placeholder = `Objetivo ${list.children.length + 1}`;
+      input.value = value;
+      input.style.marginBottom = '0.5rem';
+      input.maxLength = 150;
+      list.appendChild(input);
+    }
+
+    document.getElementById('add-objective').addEventListener('click', () => {
+      if (document.querySelectorAll('[data-objective]').length >= 7) {
+        alert('Máximo de 7 objetivos.');
+        return;
+      }
+      addObjectiveInput();
+    });
+
+    // Carregar palestra (se edicao)
+    async function loadPalestra() {
+      if (isNew) {
+        // Checar limite do plano
+        const tier = TIERS[speakerProfile.plan] || TIERS.essencial;
+        const { count } = await supabase
+          .from('palestras')
+          .select('*', { count: 'exact', head: true })
+          .eq('speaker_id', speakerProfile.id);
+
+        if (count >= tier.maxPalestras) {
+          loadingEl.innerHTML = `<p style="color:var(--color-error)">Voce atingiu o limite de <strong>${tier.maxPalestras}</strong> palestras do seu plano (${tier.name}). <a href="/para-palestrantes/">Faca upgrade</a> para cadastrar mais.</p>`;
+          return;
+        }
+
+        await loadThemes();
+        // 3 inputs de objetivo inicial
+        addObjectiveInput();
+        addObjectiveInput();
+        addObjectiveInput();
+        loadingEl.hidden = true;
+        formEl.hidden = false;
+        return;
+      }
+
+      const { data: palestra, error } = await supabase
+        .from('palestras')
+        .select('*')
+        .eq('id', palestraId)
+        .eq('speaker_id', speakerProfile.id)
+        .single();
+
+      if (error || !palestra) {
+        loadingEl.innerHTML = '<p style="color:var(--color-error)">Palestra nao encontrada.</p>';
+        return;
+      }
+
+      await loadThemes(palestra.theme_id);
+
+      document.getElementById('p_title').value = palestra.title || '';
+      document.getElementById('p_description').value = palestra.description || '';
+      document.getElementById('p_target').value = palestra.target_audience || '';
+      document.getElementById('p_duration').value = palestra.duration_minutes || '';
+      document.getElementById('p_price_min').value = palestra.price_min || '';
+      document.getElementById('p_price_max').value = palestra.price_max || '';
+      document.getElementById('p_video').value = palestra.video_url || '';
+      document.getElementById('p_image').value = palestra.image_url || '';
+
+      // Formato
+      const fmts = palestra.format ? [palestra.format] : [];
+      document.querySelectorAll('input[name="p_format"]').forEach(cb => {
+        cb.checked = fmts.includes(cb.value);
+      });
+
+      // Objetivos
+      const objs = palestra.objectives || [];
+      if (objs.length === 0) {
+        addObjectiveInput();
+        addObjectiveInput();
+        addObjectiveInput();
+      } else {
+        objs.forEach(o => addObjectiveInput(o));
+      }
+
+      loadingEl.hidden = true;
+      formEl.hidden = false;
+    }
+
+    await loadPalestra();
+
+    // Submit
+    formEl.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      feedbackEl.className = 'pal-form__feedback';
+
+      const title = document.getElementById('p_title').value.trim();
+      const themeId = document.getElementById('p_theme').value;
+      const description = document.getElementById('p_description').value.trim();
+      const target = document.getElementById('p_target').value.trim();
+      const duration = parseInt(document.getElementById('p_duration').value) || null;
+      const priceMin = parseInt(document.getElementById('p_price_min').value) || null;
+      const priceMax = parseInt(document.getElementById('p_price_max').value) || null;
+      const videoUrl = document.getElementById('p_video').value.trim() || null;
+      const imageUrl = document.getElementById('p_image').value.trim() || null;
+      const formats = [...document.querySelectorAll('input[name="p_format"]:checked')].map(i => i.value);
+      const objectives = [...document.querySelectorAll('[data-objective]')].map(i => i.value.trim()).filter(Boolean);
+
+      if (!title || !themeId || !description || !target || !duration) {
+        showError('Preencha todos os campos obrigatorios.');
+        return;
+      }
+      if (description.length < 100) {
+        showError('Descricao deve ter pelo menos 100 caracteres.');
+        return;
+      }
+      if (objectives.length < 3) {
+        showError('Preencha pelo menos 3 objetivos.');
+        return;
+      }
+      if (formats.length === 0) {
+        showError('Selecione pelo menos um formato.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Salvando...';
+
+      const formatValue = formats[0];
+
+      const payload = {
+        title,
+        theme_id: themeId,
+        description,
+        target_audience: target,
+        duration_minutes: duration,
+        format: formatValue,
+        price_min: priceMin,
+        price_max: priceMax,
+        video_url: videoUrl,
+        image_url: imageUrl,
+        objectives,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (isNew) {
+        const slugBase = generatePalestraSlug(title);
+        payload.speaker_id = speakerProfile.id;
+        payload.slug = slugBase + '-' + speakerProfile.slug.substring(0, 8) + '-' + Math.random().toString(36).substring(2, 6);
+        payload.active = true;
+
+        const { error } = await supabase.from('palestras').insert(payload);
+        if (error) {
+          console.error(error);
+          showError('Erro ao criar palestra: ' + error.message);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Cadastrar palestra';
+          return;
+        }
+      } else {
+        const { error } = await supabase
+          .from('palestras')
+          .update(payload)
+          .eq('id', palestraId)
+          .eq('speaker_id', speakerProfile.id);
+
+        if (error) {
+          console.error(error);
+          showError('Erro ao salvar: ' + error.message);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Salvar';
+          return;
+        }
+      }
+
+      showSuccess('Salvo com sucesso! Redirecionando...');
+      setTimeout(() => { window.location.href = '/minhas-palestras/'; }, 1000);
+    });
+
+    // Delete
+    deleteBtn.addEventListener('click', async () => {
+      if (!confirm('Tem certeza que deseja excluir esta palestra? Essa acao nao pode ser desfeita.')) return;
+
+      deleteBtn.disabled = true;
+      deleteBtn.textContent = 'Excluindo...';
+
+      const { error } = await supabase
+        .from('palestras')
+        .delete()
+        .eq('id', palestraId)
+        .eq('speaker_id', speakerProfile.id);
+
+      if (error) {
+        alert('Erro ao excluir: ' + error.message);
+        deleteBtn.disabled = false;
+        deleteBtn.textContent = 'Excluir';
+        return;
+      }
+
+      window.location.href = '/minhas-palestras/';
+    });
+  </script>
+
+</body>
+</html>

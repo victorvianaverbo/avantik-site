@@ -49,7 +49,7 @@
       </div>
 
       <div class="header__actions" id="header-actions">
-        <a href="/diretorio/" class="btn btn--outline btn--sm">Buscar Palestrante</a>
+        <a href="/entrar/" class="btn btn--outline btn--sm">Entrar</a>
         <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
       </div>
 
@@ -68,7 +68,7 @@
       <a href="/sobre/" class="header__mobile-link">Sobre</a>
       <a href="/blog/" class="header__mobile-link">Blog</a>
       <div class="header__mobile-actions">
-        <a href="/diretorio/" class="btn btn--outline">Buscar Palestrante</a>
+        <a href="/entrar/" class="btn btn--outline">Entrar</a>
         <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
       </div>
     </div>
@@ -269,7 +269,7 @@ document.querySelector('[data-filter="todos"]').addEventListener('click', () => 
 async function fetchAllSpeakers() {
   const { data, error } = await supabase
     .from('speakers')
-    .select('*, speaker_themes(themes(name, slug)), palestras(id, title, price_min, price_max)')
+    .select('*, palestras(id, title, slug, price_min, price_max, theme_id, themes(name, slug))')
     .eq('active', true)
     .order('created_at', { ascending: false });
 
@@ -280,7 +280,14 @@ async function fetchAllSpeakers() {
 
   allSpeakers = (data || []).map(s => {
     const talks = (s.palestras || []).filter(Boolean);
-    // Se tem palestras, derivar preco a partir delas
+    // Derivar temas a partir das palestras (cada palestra tem 1 tema)
+    const themesMap = new Map();
+    talks.forEach(t => {
+      if (t.themes) themesMap.set(t.themes.slug, t.themes);
+    });
+    const themes = [...themesMap.values()];
+
+    // Derivar preco a partir das palestras
     let derivedPriceMin = s.price_min;
     let derivedPriceMax = s.price_max;
     if (talks.length > 0) {
@@ -290,9 +297,10 @@ async function fetchAllSpeakers() {
         derivedPriceMax = Math.max(...prices);
       }
     }
+
     return {
       ...s,
-      themes: (s.speaker_themes || []).map(st => st.themes).filter(Boolean),
+      themes,
       talks_count: talks.length,
       derived_price_min: derivedPriceMin,
       derived_price_max: derivedPriceMax,

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Minhas Palestras | Avantik</title>
+  <meta name="description" content="Gerencie suas palestras cadastradas na Avantik.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .mp {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .mp__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .mp__upgrade-notice {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+      font-size: 0.9375rem;
+      color: #78350f;
+      margin-bottom: 1.5rem;
+    }
+
+    .mp__upgrade-notice a {
+      color: #78350f;
+      font-weight: 600;
+    }
+
+    .mp__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .mp-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mp-card__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .mp-card__title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      color: var(--color-text);
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .mp-card__status {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.625rem;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+
+    .mp-card__status--ativa { background: #ecfdf5; color: #065f46; }
+    .mp-card__status--inativa { background: var(--color-muted-bg); color: var(--color-text-secondary); }
+
+    .mp-card__theme {
+      font-size: 0.75rem;
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+
+    .mp-card__meta {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .mp-card__actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--color-border);
+      flex-wrap: wrap;
+    }
+
+    .mp-card__actions .btn { font-size: 0.8125rem; padding: 0.5rem 0.875rem; }
+
+    .mp__empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.25rem;
+    }
+
+    .mp__empty-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .mp__empty-text {
+      color: var(--color-text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .mp__loading {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 640px) {
+      .mp__header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .mp__header > div {
+        text-align: center;
+      }
+      .mp__header > div[style*="display:flex"] {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .mp__header > div[style*="display:flex"] .btn {
+        width: 100%;
+        text-align: center;
+      }
+      .mp__grid {
+        grid-template-columns: 1fr;
+      }
+      .mp-card__actions {
+        flex-direction: column;
+      }
+      .mp-card__actions .btn {
+        width: 100%;
+        text-align: center;
+      }
+      .mp__upgrade-notice {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo"><img src="/images/logo.png" alt="Avantik" class="header__logo-img"></a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+      </div>
+      <div class="header__actions" id="header-actions"></div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <div class="header__mobile-actions"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero section">
+      <div class="container">
+        <span class="page-hero__label">Minhas Palestras</span>
+        <h1 class="page-hero__title" id="hero-title">Suas palestras</h1>
+        <p class="page-hero__subtitle" id="hero-subtitle">Gerencie suas páginas de vendas automáticas.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="mp">
+          <div class="mp__loading" id="loading">Carregando suas palestras...</div>
+          <div id="content" hidden></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo"><img src="/images/logo.png" alt="Avantik" class="footer__logo-img"></a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegação</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/projetos/">Oportunidades</a>
+            <a href="/sobre/">Sobre</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Privacidade</a>
+            <a href="/termos/">Termos</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase, escapeHtml, formatPriceRange, formatDuration, requireAuth, PALESTRA_FORMATS, TIERS } from '/lib/supabase.js';
+
+    const auth = await requireAuth('speaker');
+    if (!auth) throw new Error('redirect');
+
+    const speakerProfile = auth.getProfile ? auth.getProfile('speaker') : auth.profile;
+    if (!speakerProfile) {
+      window.location.href = '/';
+      throw new Error('no speaker profile');
+    }
+
+    const tier = TIERS[speakerProfile.plan] || TIERS.essencial;
+    const loadingEl = document.getElementById('loading');
+    const contentEl = document.getElementById('content');
+
+    document.getElementById('hero-title').textContent = `Olá, ${speakerProfile.name}`;
+
+    async function loadPalestras() {
+      const { data: palestras, error } = await supabase
+        .from('palestras')
+        .select('*, themes(name, slug)')
+        .eq('speaker_id', speakerProfile.id)
+        .order('sort_order')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        contentEl.innerHTML = '<p style="text-align:center;color:var(--color-error)">Erro ao carregar palestras.</p>';
+        loadingEl.hidden = true;
+        contentEl.hidden = false;
+        return;
+      }
+
+      const count = (palestras || []).length;
+      const limit = tier.maxPalestras;
+      const canAddMore = count < limit;
+
+      let html = '';
+
+      // Notice se plano essencial e ja tem 1 palestra
+      if (!canAddMore && tier.name === 'Essencial') {
+        html += `
+          <div class="mp__upgrade-notice">
+            Você está no plano <strong>Essencial</strong> e pode cadastrar apenas 1 palestra. <a href="/para-palestrantes/">Faça upgrade</a> para cadastrar mais palestras.
+          </div>
+        `;
+      }
+
+      html += `
+        <div class="mp__header">
+          <div>
+            <strong>${count}</strong> ${count === 1 ? 'palestra cadastrada' : 'palestras cadastradas'}
+            ${limit < 999 ? `<span style="color:var(--color-text-secondary);font-size:0.875rem"> (limite do plano: ${limit})</span>` : ''}
+          </div>
+          <div style="display:flex;gap:0.5rem">
+            <a href="/palestrante/?slug=${escapeHtml(speakerProfile.slug)}" class="btn btn--outline btn--sm">Ver perfil público</a>
+            ${canAddMore
+              ? '<a href="/minhas-palestras/nova/" class="btn btn--accent btn--sm">+ Nova palestra</a>'
+              : '<button class="btn btn--sm" disabled style="opacity:0.5;cursor:not-allowed">+ Nova palestra</button>'
+            }
+          </div>
+        </div>
+      `;
+
+      if (count === 0) {
+        html += `
+          <div class="mp__empty">
+            <h2 class="mp__empty-title">Nenhuma palestra cadastrada</h2>
+            <p class="mp__empty-text">Cadastre sua primeira palestra para ativar sua página de vendas automática.</p>
+            <a href="/minhas-palestras/nova/" class="btn btn--accent">+ Cadastrar primeira palestra</a>
+          </div>
+        `;
+      } else {
+        html += '<div class="mp__grid">';
+        palestras.forEach(p => {
+          const statusCls = p.active ? 'mp-card__status--ativa' : 'mp-card__status--inativa';
+          const statusLabel = p.active ? 'Ativa' : 'Inativa';
+          const themeName = p.themes ? p.themes.name : '';
+          const durationLabel = formatDuration(p.duration_minutes);
+          const formatLabel = PALESTRA_FORMATS[p.format] || p.format || '';
+          const priceLabel = formatPriceRange(p.price_min, p.price_max);
+
+          const meta = [];
+          if (durationLabel) meta.push(durationLabel);
+          if (formatLabel) meta.push(formatLabel);
+          if (priceLabel) meta.push(priceLabel);
+
+          html += `
+            <div class="mp-card">
+              <div class="mp-card__header">
+                <h3 class="mp-card__title">${escapeHtml(p.title)}</h3>
+                <span class="mp-card__status ${statusCls}">${statusLabel}</span>
+              </div>
+              ${themeName ? `<span class="mp-card__theme">${escapeHtml(themeName)}</span>` : ''}
+              <div class="mp-card__meta">${meta.map(m => `<span>${escapeHtml(m)}</span>`).join('')}</div>
+              <div class="mp-card__actions">
+                <a href="/minhas-palestras/editar/?id=${escapeHtml(p.id)}" class="btn btn--accent">Editar</a>
+                <a href="/palestra/?slug=${escapeHtml(p.slug)}" target="_blank" class="btn btn--outline">Ver página</a>
+                <button class="btn btn--outline" data-action="toggle" data-id="${escapeHtml(p.id)}" data-active="${p.active}">${p.active ? 'Desativar' : 'Ativar'}</button>
+              </div>
+            </div>
+          `;
+        });
+        html += '</div>';
+      }
+
+      contentEl.innerHTML = html;
+      loadingEl.hidden = true;
+      contentEl.hidden = false;
+
+      // Bind toggle buttons
+      document.querySelectorAll('[data-action="toggle"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.id;
+          const newActive = btn.dataset.active !== 'true';
+          btn.disabled = true;
+          btn.textContent = '...';
+
+          const { error } = await supabase
+            .from('palestras')
+            .update({ active: newActive })
+            .eq('id', id);
+
+          if (error) {
+            alert('Erro ao atualizar status. Tente novamente.');
+            btn.disabled = false;
+          } else {
+            await loadPalestras();
+          }
+        });
+      });
+    }
+
+    await loadPalestras();
+  </script>
+
+</body>
+</html>

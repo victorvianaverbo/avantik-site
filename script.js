@@ -552,79 +552,87 @@ async function initAuthNav() {
   try {
     const { supabase, authSignOut, getUserType } = await import('/lib/supabase.js');
 
+    // Escuta mudancas de estado (login/logout) para re-renderizar
+    if (!window.__avantikAuthListenerSet) {
+      window.__avantikAuthListenerSet = true;
+      supabase.auth.onAuthStateChange((event) => {
+        if (event === 'SIGNED_IN' || event === 'SIGNED_OUT' || event === 'TOKEN_REFRESHED') {
+          initAuthNav();
+        }
+      });
+    }
+
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      // Usuario deslogado — restaurar estado default (caso tenha saido)
+      const ha = document.getElementById('header-actions') || document.querySelector('.header__actions');
+      if (ha && ha.dataset.authState === 'logged') {
+        // Se a navbar estava em modo logado, recarregar para restaurar default
+        location.reload();
+      }
+      return;
+    }
 
     const result = await getUserType(user.id);
     if (!result.type) return;
 
     const contractor = result.getProfile('contractor');
     const speaker = result.getProfile('speaker');
-    const hasBoth = contractor && speaker;
 
     const headerActions = document.getElementById('header-actions') || document.querySelector('.header__actions');
     const mobileActions = document.querySelector('.header__mobile-actions');
     if (!headerActions) return;
 
-    // Expor funcoes no window
+    // Expor logout no window
     window.__avantikLogout = async () => {
       await authSignOut();
       try { localStorage.removeItem('avantik_active_role'); } catch(_) {}
       location.href = '/';
     };
 
-    window.__avantikSwitchRole = (role) => {
-      try { localStorage.setItem('avantik_active_role', role); } catch(_) {}
-      location.reload();
-    };
-
-    // Determinar papel ativo
-    let activeRole = result.type;
-
+    // Montar navbar combinando links de todos os papeis do usuario
     let navHtml = '';
     let mobileHtml = '';
 
-    // Seletor de contexto (so aparece se tem os dois papeis)
-    let switchHtml = '';
-    let switchMobileHtml = '';
-    if (hasBoth) {
-      const otherRole = activeRole === 'contractor' ? 'speaker' : 'contractor';
-      const otherLabel = otherRole === 'contractor' ? 'Contratante' : 'Palestrante';
-      switchHtml = `<button class="btn btn--sm" onclick="window.__avantikSwitchRole('${otherRole}')" title="Trocar para ${otherLabel}" style="font-size:0.75rem;padding:0.375rem 0.75rem">Modo ${otherLabel}</button>`;
-      switchMobileHtml = `<button class="btn btn--outline" onclick="window.__avantikSwitchRole('${otherRole}')">Trocar para ${otherLabel}</button>`;
+    if (speaker) {
+      navHtml += `
+        <a href="/minhas-palestras/" class="btn btn--outline btn--sm">Minhas Palestras</a>
+        <a href="/projetos/" class="btn btn--outline btn--sm">Oportunidades</a>
+      `;
+      mobileHtml += `
+        <a href="/minhas-palestras/" class="btn btn--outline">Minhas Palestras</a>
+        <a href="/projetos/" class="btn btn--outline">Oportunidades</a>
+      `;
     }
 
-    if (activeRole === 'contractor' && contractor) {
-      navHtml = `
+    if (contractor) {
+      navHtml += `
         <a href="/meus-projetos/" class="btn btn--outline btn--sm">Meus Projetos</a>
         <a href="/projetos/novo/" class="btn btn--accent btn--sm">Publicar Oportunidade</a>
-        ${switchHtml}
-        <button class="btn btn--sm" onclick="window.__avantikLogout()">Sair</button>
       `;
-      mobileHtml = `
+      mobileHtml += `
         <a href="/meus-projetos/" class="btn btn--outline">Meus Projetos</a>
         <a href="/projetos/novo/" class="btn btn--accent">Publicar Oportunidade</a>
-        ${switchMobileHtml}
       `;
-    } else if (activeRole === 'speaker' && speaker) {
-      navHtml = `
-        <a href="/projetos/" class="btn btn--outline btn--sm">Oportunidades</a>
-        <a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent btn--sm">Meu Perfil</a>
-        ${switchHtml}
-        <button class="btn btn--sm" onclick="window.__avantikLogout()">Sair</button>
-      `;
-      mobileHtml = `
-        <a href="/projetos/" class="btn btn--outline">Oportunidades</a>
-        <a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent">Meu Perfil</a>
-        ${switchMobileHtml}
-      `;
+    }
+
+    // Se e so palestrante (sem contratante), adicionar link "Meu Perfil" como CTA principal
+    if (speaker && !contractor) {
+      navHtml += `<a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent btn--sm">Meu Perfil</a>`;
+      mobileHtml += `<a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent">Meu Perfil</a>`;
+    }
+
+    // Botao sair
+    if (navHtml) {
+      navHtml += `<button class="btn btn--sm" onclick="window.__avantikLogout()">Sair</button>`;
     }
 
     if (navHtml) {
       headerActions.innerHTML = navHtml;
+      headerActions.dataset.authState = 'logged';
       if (mobileActions) mobileActions.innerHTML = mobileHtml;
     }
   } catch (e) {
-    // Silently fail - nav stays in default state
+    console.error('initAuthNav error:', e);
   }
 }

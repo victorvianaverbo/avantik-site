@@ -1,0 +1,14 @@
+{
+  "name": "avantik-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Scripts utilitarios (importacao de palestrantes/palestras). O site em si e HTML/CSS/JS puro.",
+  "scripts": {
+    "importar-planilha": "node importar-planilha.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "xlsx": "^0.18.5"
+  }
+}

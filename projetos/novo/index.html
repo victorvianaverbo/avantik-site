@@ -328,6 +328,18 @@
                     <input type="text" id="event-location" name="event_location" placeholder="Ex: Sao Paulo, SP ou Online">
                   </div>
                 </div>
+
+                <div class="new-project__row">
+                  <div class="new-project__field">
+                    <label for="deadline">Prazo para receber candidaturas *</label>
+                    <input type="date" id="deadline" name="deadline" required>
+                    <p style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.375rem">Apos essa data, a oportunidade encerra automaticamente.</p>
+                  </div>
+                </div>
+
+                <div style="background:var(--color-muted-bg);border-radius:0.625rem;padding:1rem 1.25rem;margin-top:1rem;font-size:0.875rem;color:var(--color-text-secondary);line-height:1.5">
+                  <strong style="color:var(--color-text)">Privacidade:</strong> O nome da sua empresa fica oculto na vitrine publica. Os palestrantes verao apenas o tema, descricao e prazo. Apos voce aceitar uma proposta, o nome da empresa e o contato sao revelados ao palestrante escolhido.
+                </div>
               </fieldset>
 
               <!-- Orçamento -->
@@ -493,18 +505,24 @@ form.addEventListener('submit', async (e) => {
   const descricao = document.getElementById('descricao').value.trim();
   const eventDate = document.getElementById('event-date').value || null;
   const eventLocation = document.getElementById('event-location').value.trim() || null;
+  const deadline = document.getElementById('deadline').value || null;
   const budgetMin = document.getElementById('budget-min').value ? Number(document.getElementById('budget-min').value) : null;
   const budgetMax = document.getElementById('budget-max').value ? Number(document.getElementById('budget-max').value) : null;
   const themeId = selectedThemeId || null;
 
+  if (!deadline) {
+    showError('Defina o prazo para receber candidaturas.');
+    return;
+  }
+
   // Validation
-  if (!título || !eventType || !descrição) {
-    showError('Preencha todos os campos obrigatórios (título, tipo de evento e descrição).');
+  if (!titulo || !eventType || !descricao) {
+    showError('Preencha todos os campos obrigatorios (titulo, tipo de evento e descricao).');
     return;
   }
 
   if (budgetMin && budgetMax && budgetMin > budgetMax) {
-    showError('O orçamento mínimo não pode ser maior que o máximo.');
+    showError('O orcamento minimo nao pode ser maior que o maximo.');
     return;
   }
 
@@ -521,6 +539,8 @@ form.addEventListener('submit', async (e) => {
         description: descricao,
         event_date: eventDate,
         event_location: eventLocation,
+        deadline: deadline,
+        is_anonymous: true,
         budget_min: budgetMin,
         budget_max: budgetMax,
         status: 'aberto'

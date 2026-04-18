@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin | Avantik</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .admin-page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: calc(72px + 2rem) var(--container-px) 4rem;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 2rem;
+    }
+
+    .admin-tab {
+      padding: 0.75rem 1.25rem;
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      color: var(--color-text-secondary);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .admin-tab--active {
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .admin-stat {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1rem;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .admin-stat__label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .admin-stat__value {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      color: var(--color-text);
+    }
+
+    .admin-stat--accent .admin-stat__value {
+      color: var(--color-accent);
+    }
+
+    .admin-table {
+      width: 100%;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1rem;
+      overflow: hidden;
+      border-collapse: collapse;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      padding: 0.875rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 0.875rem;
+      vertical-align: top;
+    }
+
+    .admin-table th {
+      background: var(--color-muted-bg);
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-text-secondary);
+    }
+
+    .admin-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .admin-table .strong {
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .admin-status {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      padding: 0.2rem 0.625rem;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .admin-status--pendente { background: #fef3c7; color: #78350f; }
+    .admin-status--paga { background: #ecfdf5; color: #065f46; }
+    .admin-status--cancelada { background: var(--color-muted-bg); color: var(--color-text-secondary); }
+
+    .admin-action {
+      font-size: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+
+    .admin-action:hover {
+      background: var(--color-muted-bg);
+    }
+
+    .admin-action--accent {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: white;
+    }
+
+    .admin-action--accent:hover {
+      background: var(--color-accent-hover);
+    }
+
+    .admin-empty,
+    .admin-loading,
+    .admin-denied {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--color-text-secondary);
+    }
+
+    .admin-denied h2 {
+      color: var(--color-error);
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .admin-table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo"><img src="/images/logo.png" alt="Avantik" class="header__logo-img"></a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
+      </div>
+      <div class="header__actions" id="header-actions"></div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <div class="header__mobile-actions"></div>
+    </div>
+  </header>
+
+  <main class="admin-page">
+    <h1 style="font-family:var(--font-heading);font-size:2rem;margin-bottom:0.5rem">Painel Admin</h1>
+    <p style="color:var(--color-text-secondary);margin-bottom:2rem">Gestao de comissoes e operacoes da Avantik.</p>
+
+    <div id="loading" class="admin-loading">Carregando...</div>
+    <div id="denied" class="admin-denied" hidden>
+      <h2>Acesso negado</h2>
+      <p>Esta pagina e restrita aos administradores da Avantik.</p>
+      <a href="/" class="btn btn--accent" style="margin-top:1.5rem">Voltar para Home</a>
+    </div>
+
+    <div id="content" hidden>
+      <div class="admin-stats" id="stats"></div>
+      <div id="comissoes-table"></div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { supabase, escapeHtml, getUser, getUserType } from '/lib/supabase.js';
+
+    const loadingEl = document.getElementById('loading');
+    const deniedEl = document.getElementById('denied');
+    const contentEl = document.getElementById('content');
+
+    // Verificar admin
+    const user = await getUser();
+    if (!user) {
+      window.location.href = '/entrar/?redirect=/admin/';
+      throw new Error('redirect');
+    }
+
+    const { data: contractorRow } = await supabase
+      .from('contractors')
+      .select('id, name, is_admin')
+      .eq('auth_id', user.id)
+      .maybeSingle();
+
+    if (!contractorRow || !contractorRow.is_admin) {
+      loadingEl.hidden = true;
+      deniedEl.hidden = false;
+      throw new Error('not admin');
+    }
+
+    // Carregar comissoes
+    async function loadCommissions() {
+      const { data: commissions, error } = await supabase
+        .from('commissions')
+        .select(`
+          *,
+          speakers(name, phone, email),
+          contractors(name, company, phone, email),
+          project_applications(palestras(title))
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        contentEl.innerHTML = `<p style="color:var(--color-error)">Erro ao carregar comissoes: ${escapeHtml(error.message)}</p>`;
+        loadingEl.hidden = true;
+        contentEl.hidden = false;
+        return;
+      }
+
+      const arr = commissions || [];
+      const pendentes = arr.filter(c => c.status === 'pendente');
+      const pagas = arr.filter(c => c.status === 'paga');
+
+      const totalPendente = pendentes.reduce((s, c) => s + (c.commission_amount || 0), 0);
+      const totalPago = pagas.reduce((s, c) => s + (c.commission_amount || 0), 0);
+
+      let html = '';
+
+      // Stats
+      html += `
+        <div class="admin-stats" id="stats">
+          <div class="admin-stat admin-stat--accent">
+            <span class="admin-stat__label">Comissoes pendentes</span>
+            <span class="admin-stat__value">R$ ${totalPendente.toLocaleString('pt-BR')}</span>
+          </div>
+          <div class="admin-stat">
+            <span class="admin-stat__label">Comissoes recebidas</span>
+            <span class="admin-stat__value">R$ ${totalPago.toLocaleString('pt-BR')}</span>
+          </div>
+          <div class="admin-stat">
+            <span class="admin-stat__label">Vendas intermediadas</span>
+            <span class="admin-stat__value">${arr.length}</span>
+          </div>
+          <div class="admin-stat">
+            <span class="admin-stat__label">Aguardando pagamento</span>
+            <span class="admin-stat__value">${pendentes.length}</span>
+          </div>
+        </div>
+      `;
+
+      if (arr.length === 0) {
+        html += '<div class="admin-empty">Nenhuma comissao registrada ainda.</div>';
+      } else {
+        html += `
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Palestrante</th>
+                <th>Contratante</th>
+                <th>Palestra</th>
+                <th>Venda</th>
+                <th>Comissao 30%</th>
+                <th>Status</th>
+                <th>Acoes</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        arr.forEach(c => {
+          const speaker = c.speakers || {};
+          const contractor = c.contractors || {};
+          const palestraTitle = c.project_applications?.palestras?.title || '—';
+          const data = new Date(c.created_at).toLocaleDateString('pt-BR');
+          const cobranceMsg = encodeURIComponent(`Ola ${speaker.name}, sobre a venda da palestra "${palestraTitle}" pelo valor de R$ ${(c.proposed_price || 0).toLocaleString('pt-BR')}: voce tem uma comissao Avantik de R$ ${(c.commission_amount || 0).toLocaleString('pt-BR')} (30%) a pagar. Segue PIX para quitacao: [INSERIR PIX].`);
+          const phoneDigits = (speaker.phone || '').replace(/\D/g, '');
+          const waLink = phoneDigits ? `https://wa.me/${phoneDigits}?text=${cobranceMsg}` : '';
+
+          html += `
+            <tr>
+              <td>${data}</td>
+              <td class="strong">${escapeHtml(speaker.name || '—')}<br><small style="color:var(--color-text-secondary)">${escapeHtml(speaker.email || '')}<br>${escapeHtml(speaker.phone || '')}</small></td>
+              <td>${escapeHtml(contractor.company || contractor.name || '—')}<br><small style="color:var(--color-text-secondary)">${escapeHtml(contractor.email || '')}</small></td>
+              <td>${escapeHtml(palestraTitle)}</td>
+              <td class="strong">R$ ${(c.proposed_price || 0).toLocaleString('pt-BR')}</td>
+              <td class="strong" style="color:var(--color-accent)">R$ ${(c.commission_amount || 0).toLocaleString('pt-BR')}</td>
+              <td><span class="admin-status admin-status--${c.status}">${c.status}</span></td>
+              <td>
+                ${c.status === 'pendente' ? `
+                  <button class="admin-action admin-action--accent" data-pay="${escapeHtml(c.id)}">Marcar paga</button>
+                  ${waLink ? `<a href="${waLink}" target="_blank" class="admin-action" style="text-decoration:none;display:inline-block;margin-top:0.25rem">Cobrar WhatsApp</a>` : ''}
+                ` : c.paid_at ? `<small>Paga em ${new Date(c.paid_at).toLocaleDateString('pt-BR')}</small>` : ''}
+              </td>
+            </tr>
+          `;
+        });
+
+        html += `</tbody></table>`;
+      }
+
+      contentEl.innerHTML = html;
+      loadingEl.hidden = true;
+      contentEl.hidden = false;
+
+      // Bind "Marcar paga"
+      document.querySelectorAll('[data-pay]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Confirmar que esta comissao foi paga?')) return;
+          btn.disabled = true;
+          btn.textContent = 'Atualizando...';
+
+          const { error } = await supabase
+            .from('commissions')
+            .update({ status: 'paga', paid_at: new Date().toISOString() })
+            .eq('id', btn.dataset.pay);
+
+          if (error) {
+            alert('Erro ao atualizar: ' + error.message);
+            btn.disabled = false;
+            btn.textContent = 'Marcar paga';
+            return;
+          }
+          await loadCommissions();
+        });
+      });
+    }
+
+    await loadCommissions();
+  </script>
+
+</body>
+</html>

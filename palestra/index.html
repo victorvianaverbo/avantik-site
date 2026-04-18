@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Palestra | Avantik</title>
+  <meta name="description" content="Conheça esta palestra e solicite orçamento diretamente com o palestrante.">
+
+  <link rel="canonical" href="https://www.avantik.com.br/palestra/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    /* Hero — bloco GRAFITE (branco + amarelo) */
+    .palestra-hero {
+      position: relative;
+      min-height: 70vh;
+      padding: calc(72px + 4rem) 0 4rem;
+      background: var(--color-dark);
+      background-image:
+        radial-gradient(ellipse at 30% 50%, rgba(232, 185, 49, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 20%, rgba(67, 64, 160, 0.07) 0%, transparent 50%);
+      color: white;
+      overflow: hidden;
+    }
+
+    .palestra-hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.18;
+      background-size: cover;
+      background-position: center;
+      filter: blur(2px);
+    }
+
+    .palestra-hero__overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(28, 28, 30, 0.6) 0%, rgba(28, 28, 30, 0.92) 100%);
+    }
+
+    .palestra-hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .palestra-hero__badge {
+      display: inline-block;
+      padding: 0.375rem 1rem;
+      background: var(--color-accent);
+      color: var(--color-dark);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .palestra-hero__title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .palestra-hero__subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      opacity: 0.9;
+      max-width: 720px;
+      margin: 0 auto 2rem;
+      line-height: 1.5;
+    }
+
+    .palestra-hero__meta {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      font-size: 0.9375rem;
+    }
+
+    .palestra-hero__meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.95;
+    }
+
+    .palestra-hero__meta-item strong {
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+
+    .palestra-hero__cta {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--color-accent);
+      color: var(--color-dark);
+      font-weight: 700;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 1.0625rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .palestra-hero__cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    /* Section base */
+    .palestra-section {
+      padding: 4rem 0;
+    }
+
+    .palestra-section__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: var(--color-text);
+      position: relative;
+    }
+
+    .palestra-section__title::after {
+      content: '';
+      display: block;
+      width: 56px;
+      height: 3px;
+      background: var(--color-accent);
+      margin: 0.75rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* Objectives */
+    .palestra-objectives {
+      background: var(--color-bg);
+    }
+
+    .palestra-objectives__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .palestra-objective {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .palestra-objective__icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      background: var(--color-accent);
+      color: var(--color-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9375rem;
+    }
+
+    .palestra-objective__text {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    /* About */
+    .palestra-about {
+      background: var(--color-surface);
+    }
+
+    .palestra-about__text {
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 1.0625rem;
+      line-height: 1.75;
+      color: var(--color-text-secondary);
+      white-space: pre-line;
+    }
+
+    /* Target — bloco GRAFITE */
+    .palestra-target {
+      background: var(--color-dark);
+      background-image:
+        radial-gradient(ellipse at 50% 0%, rgba(232, 185, 49, 0.05) 0%, transparent 60%);
+      position: relative;
+    }
+
+    .palestra-target .palestra-section__title {
+      color: #FFFFFF;
+    }
+
+    .palestra-target__text {
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* Details card */
+    .palestra-details {
+      background: var(--color-surface);
+    }
+
+    .palestra-details__card {
+      max-width: 720px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+      background-image:
+        radial-gradient(ellipse at 85% 15%, rgba(255, 255, 255, 0.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 85%, rgba(28, 28, 30, 0.08) 0%, transparent 50%),
+        linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+      border-radius: 1.25rem;
+      padding: 2.25rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(232, 185, 49, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .palestra-details__card > div {
+      position: relative;
+    }
+
+    .palestra-details__card > div + div::before {
+      content: '';
+      position: absolute;
+      left: -0.75rem;
+      top: 10%;
+      bottom: 10%;
+      width: 1px;
+      background: rgba(28, 28, 30, 0.15);
+    }
+
+    @media (max-width: 600px) {
+      .palestra-details__card > div + div::before {
+        display: none;
+      }
+    }
+
+    .palestra-details__item-label {
+      display: block;
+      font-size: 0.75rem;
+      color: rgba(28, 28, 30, 0.65);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .palestra-details__item-value {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--color-dark);
+    }
+
+    /* Speaker — bloco GRAFITE */
+    .palestra-speaker {
+      background: var(--color-dark);
+      background-image:
+        radial-gradient(ellipse at 20% 80%, rgba(232, 185, 49, 0.05) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 20%, rgba(67, 64, 160, 0.06) 0%, transparent 50%);
+    }
+
+    .palestra-speaker .palestra-section__title {
+      color: #FFFFFF;
+    }
+
+    .palestra-speaker__card {
+      max-width: 720px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 2rem;
+      align-items: center;
+      backdrop-filter: blur(6px);
+    }
+
+    .palestra-speaker__photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .palestra-speaker__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .palestra-speaker__name {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #FFFFFF;
+    }
+
+    .palestra-speaker__bio {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .palestra-speaker__link {
+      font-size: 0.875rem;
+      color: var(--color-accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .palestra-speaker__link:hover {
+      text-decoration: underline;
+    }
+
+    /* Contato Direto (visivel so para contratantes) */
+    .palestra-contact-direct {
+      background: var(--color-surface);
+    }
+
+    .palestra-contact-direct__header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .palestra-contact-direct__subtitle {
+      color: var(--color-text-secondary);
+      font-size: 0.9375rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .pcd__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .pcd__card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 0.875rem;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .pcd__card:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .pcd__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(232, 185, 49, 0.15);
+      color: var(--color-accent);
+    }
+
+    .pcd__info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .pcd__label {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    .pcd__value {
+      display: block;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @media (max-width: 768px) {
+      .palestra-section {
+        padding: 3rem 0;
+      }
+
+      .palestra-hero {
+        min-height: auto;
+        padding: calc(72px + 2rem) 0 2.5rem;
+      }
+
+      .palestra-hero__meta {
+        gap: 1rem;
+      }
+
+      .palestra-details__card {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+        gap: 1rem;
+      }
+
+      .pcd__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .palestra-objectives__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .palestra-speaker__card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      .palestra-speaker__photo {
+        margin: 0 auto;
+        width: 120px;
+        height: 120px;
+      }
+      .palestra-cta__form {
+        padding: 1.25rem;
+      }
+      .palestra-hero__cta,
+      .palestra-cta__button {
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+        font-size: 0.9375rem;
+      }
+      .palestra-cta__title {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Video */
+    .palestra-video {
+      background: var(--color-surface);
+    }
+
+    .palestra-video__wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .palestra-video__wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* CTA final — bloco AMARELO (grafite + branco) */
+    .palestra-cta {
+      background: var(--color-accent);
+      background-image:
+        radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 80%, rgba(28, 28, 30, 0.08) 0%, transparent 50%);
+      color: var(--color-dark);
+      text-align: center;
+    }
+
+    .palestra-cta .palestra-section__title::after {
+      background: var(--color-dark);
+    }
+
+    .palestra-cta__title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      margin-bottom: 1rem;
+      color: var(--color-dark);
+    }
+
+    .palestra-cta__text {
+      font-size: 1.0625rem;
+      color: rgba(28, 28, 30, 0.75);
+      margin-bottom: 2rem;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .palestra-cta__button {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--color-dark);
+      color: var(--color-accent);
+      font-weight: 700;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 1.0625rem;
+      transition: transform 0.2s, background 0.2s, color 0.2s;
+      margin-bottom: 2rem;
+    }
+
+    .palestra-cta__button:hover {
+      background: #0f0f11;
+      color: #FFFFFF;
+    }
+
+    .palestra-cta__button:hover {
+      transform: translateY(-2px);
+    }
+
+    .palestra-cta__form {
+      max-width: 520px;
+      margin: 2rem auto 0;
+      text-align: left;
+      background: #FFFFFF;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 24px 48px rgba(28, 28, 30, 0.12);
+      border: 1px solid rgba(28, 28, 30, 0.06);
+    }
+
+    .palestra-cta__form label {
+      display: block;
+      font-size: 0.875rem;
+      margin-bottom: 0.375rem;
+      color: var(--color-text);
+      font-weight: 600;
+    }
+
+    .palestra-cta__form input,
+    .palestra-cta__form textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 0.625rem;
+      background: #FFFFFF;
+      color: var(--color-text);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      margin-bottom: 1rem;
+    }
+
+    .palestra-cta__form input::placeholder,
+    .palestra-cta__form textarea::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .palestra-cta__form input:focus,
+    .palestra-cta__form textarea:focus {
+      outline: 2px solid var(--color-accent);
+      outline-offset: -1px;
+      border-color: var(--color-accent);
+    }
+
+    .palestra-cta__form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .palestra-cta__form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .palestra-cta__form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .palestra-cta__submit {
+      width: 100%;
+      padding: 0.875rem;
+      background: var(--color-dark);
+      color: var(--color-accent);
+      border: 0;
+      border-radius: 0.625rem;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .palestra-cta__submit:hover {
+      background: #0f0f11;
+      color: #FFFFFF;
+    }
+
+    .palestra-cta__submit:hover {
+      transform: translateY(-1px);
+    }
+
+    .palestra-cta__feedback {
+      text-align: center;
+      padding: 0.75rem;
+      border-radius: 0.625rem;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .palestra-cta__feedback--visible {
+      display: block;
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    /* Loading / Not Found */
+    .palestra-loading,
+    .palestra-notfound {
+      padding: calc(72px + 4rem) 0 4rem;
+      text-align: center;
+    }
+
+    .palestra-notfound h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo"><img src="/images/logo.png" alt="Avantik" class="header__logo-img"></a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+        <a href="/blog/" class="header__link">Blog</a>
+      </div>
+      <div class="header__actions" id="header-actions">
+        <a href="/entrar/" class="btn btn--outline btn--sm">Entrar</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <a href="/blog/" class="header__mobile-link">Blog</a>
+      <div class="header__mobile-actions">
+        <a href="/entrar/" class="btn btn--outline">Entrar</a>
+        <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Loading -->
+    <div class="palestra-loading" id="palestra-loading">
+      <div class="container">
+        <p style="color:var(--color-text-muted)">Carregando palestra...</p>
+      </div>
+    </div>
+
+    <!-- Not found -->
+    <div class="palestra-notfound" id="palestra-notfound" hidden>
+      <div class="container">
+        <h1>Palestra não encontrada</h1>
+        <p style="color:var(--color-text-secondary);margin-bottom:2rem">Esta palestra não existe ou foi desativada.</p>
+        <a href="/diretorio/" class="btn btn--accent">Ver todas as palestras</a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <article id="palestra-content" hidden>
+
+      <!-- HERO -->
+      <section class="palestra-hero">
+        <div class="palestra-hero__bg" id="hero-bg"></div>
+        <div class="palestra-hero__overlay"></div>
+        <div class="palestra-hero__content container">
+          <span class="palestra-hero__badge" id="hero-badge"></span>
+          <h1 class="palestra-hero__title" id="hero-title"></h1>
+          <p class="palestra-hero__subtitle" id="hero-subtitle"></p>
+          <div class="palestra-hero__meta" id="hero-meta"></div>
+          <a href="#contato" class="palestra-hero__cta">Solicitar Orçamento</a>
+        </div>
+      </section>
+
+      <!-- OBJECTIVES -->
+      <section class="palestra-section palestra-objectives" id="objectives-section" hidden>
+        <div class="container">
+          <h2 class="palestra-section__title">Nessa palestra você vai</h2>
+          <div class="palestra-objectives__grid" id="objectives-grid"></div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="palestra-section palestra-about" id="about-section">
+        <div class="container">
+          <h2 class="palestra-section__title">Sobre a palestra</h2>
+          <div class="palestra-about__text" id="about-text"></div>
+        </div>
+      </section>
+
+      <!-- TARGET AUDIENCE -->
+      <section class="palestra-section palestra-target" id="target-section" hidden>
+        <div class="container">
+          <h2 class="palestra-section__title">Para quem é essa palestra</h2>
+          <p class="palestra-target__text" id="target-text"></p>
+        </div>
+      </section>
+
+      <!-- DETAILS -->
+      <section class="palestra-section palestra-details">
+        <div class="container">
+          <h2 class="palestra-section__title">Como funciona</h2>
+          <div class="palestra-details__card" id="details-card"></div>
+        </div>
+      </section>
+
+      <!-- SPEAKER -->
+      <section class="palestra-section palestra-speaker">
+        <div class="container">
+          <h2 class="palestra-section__title">Sobre o palestrante</h2>
+          <div class="palestra-speaker__card">
+            <div class="palestra-speaker__photo" id="speaker-photo"></div>
+            <div>
+              <h3 class="palestra-speaker__name" id="speaker-name"></h3>
+              <p class="palestra-speaker__bio" id="speaker-bio"></p>
+              <a href="#" class="palestra-speaker__link" id="speaker-link">Ver perfil completo →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIDEO -->
+      <section class="palestra-section palestra-video" id="video-section" hidden>
+        <div class="container">
+          <h2 class="palestra-section__title">Vídeo</h2>
+          <div class="palestra-video__wrap">
+            <iframe id="video-iframe" src="" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contato Direto (visivel so para contratantes) -->
+      <section class="palestra-section palestra-contact-direct" id="palestra-contact-direct" hidden>
+        <div class="container">
+          <div class="palestra-contact-direct__header">
+            <h2 class="palestra-section__title">Contato direto com o palestrante</h2>
+            <p class="palestra-contact-direct__subtitle">Sua proposta foi aceita. Os canais oficiais do palestrante estao liberados para voce.</p>
+          </div>
+          <div class="pcd__grid" id="pcd-grid"></div>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section class="palestra-section palestra-cta" id="contato">
+        <div class="container">
+          <h2 class="palestra-cta__title">Pronto para levar essa palestra para sua empresa?</h2>
+          <p class="palestra-cta__text">Envie sua proposta e receba a resposta do palestrante diretamente pela plataforma.</p>
+          <a href="#" class="palestra-cta__button" id="cta-button" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a>
+
+          <form class="palestra-cta__form" id="contact-form">
+            <p style="text-align:center;color:var(--color-text-secondary);font-size:0.875rem;margin:0 0 1rem">ou envie uma mensagem pelo formulário:</p>
+            <div class="palestra-cta__form-row">
+              <div>
+                <label for="cf-name">Nome *</label>
+                <input type="text" id="cf-name" required placeholder="Seu nome">
+              </div>
+              <div>
+                <label for="cf-email">Email *</label>
+                <input type="email" id="cf-email" required placeholder="seu@email.com">
+              </div>
+            </div>
+            <div class="palestra-cta__form-row">
+              <div>
+                <label for="cf-company">Empresa</label>
+                <input type="text" id="cf-company" placeholder="Nome da empresa">
+              </div>
+              <div>
+                <label for="cf-date">Data do evento</label>
+                <input type="date" id="cf-date">
+              </div>
+            </div>
+            <div>
+              <label for="cf-message">Mensagem *</label>
+              <textarea id="cf-message" required placeholder="Descreva brevemente o evento..."></textarea>
+            </div>
+            <button type="submit" class="palestra-cta__submit">Enviar Mensagem</button>
+            <div class="palestra-cta__feedback" id="contact-feedback"></div>
+          </form>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo"><img src="/images/logo.png" alt="Avantik" class="footer__logo-img"></a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegação</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/projetos/">Oportunidades</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase, escapeHtml, formatPriceRange, formatDuration, getYouTubeEmbed, PALESTRA_FORMATS, TIERS, getUser, getUserType } from '/lib/supabase.js';
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
+    const id = params.get('id');
+
+    if (!slug && !id) {
+      window.location.href = '/diretorio/';
+    } else {
+      loadPalestra();
+    }
+
+    async function loadPalestra() {
+      let query = supabase
+        .from('palestras')
+        .select('*, themes(name, slug), speakers(*)')
+        .eq('active', true);
+
+      if (slug) query = query.eq('slug', slug);
+      else query = query.eq('id', id);
+
+      const { data: palestra, error } = await query.single();
+
+      if (error || !palestra || !palestra.speakers) {
+        document.getElementById('palestra-loading').hidden = true;
+        document.getElementById('palestra-notfound').hidden = false;
+        return;
+      }
+
+      const speaker = palestra.speakers;
+      const theme = palestra.themes;
+
+      // Page title + meta
+      document.title = `${palestra.title} | ${speaker.name} | Avantik`;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.content = palestra.description ? palestra.description.substring(0, 160) : `Palestra de ${speaker.name}`;
+      }
+
+      // HERO
+      const heroImage = palestra.image_url || speaker.photo_url;
+      if (heroImage) {
+        document.getElementById('hero-bg').style.backgroundImage = `url('${heroImage}')`;
+      }
+
+      if (theme) {
+        document.getElementById('hero-badge').textContent = theme.name;
+      } else {
+        document.getElementById('hero-badge').style.display = 'none';
+      }
+
+      document.getElementById('hero-title').textContent = palestra.title;
+
+      // Subtitle: primeiros 200 chars da descricao
+      if (palestra.description) {
+        const subtitle = palestra.description.length > 200
+          ? palestra.description.substring(0, 197) + '...'
+          : palestra.description;
+        document.getElementById('hero-subtitle').textContent = subtitle;
+      }
+
+      // Meta
+      const metaItems = [];
+      if (palestra.duration_minutes) {
+        metaItems.push(`<span class="palestra-hero__meta-item"><strong>${formatDuration(palestra.duration_minutes)}</strong></span>`);
+      }
+      if (palestra.format) {
+        const fmt = PALESTRA_FORMATS[palestra.format] || palestra.format;
+        metaItems.push(`<span class="palestra-hero__meta-item"><strong>${escapeHtml(fmt)}</strong></span>`);
+      }
+      if (palestra.price_min || palestra.price_max) {
+        metaItems.push(`<span class="palestra-hero__meta-item"><strong>${formatPriceRange(palestra.price_min, palestra.price_max)}</strong></span>`);
+      }
+      document.getElementById('hero-meta').innerHTML = metaItems.join('');
+
+      // OBJECTIVES
+      if (palestra.objectives && palestra.objectives.length > 0) {
+        const grid = document.getElementById('objectives-grid');
+        grid.innerHTML = palestra.objectives.map((obj, i) => `
+          <div class="palestra-objective">
+            <div class="palestra-objective__icon">${i + 1}</div>
+            <p class="palestra-objective__text">${escapeHtml(obj)}</p>
+          </div>
+        `).join('');
+        document.getElementById('objectives-section').hidden = false;
+      }
+
+      // ABOUT
+      document.getElementById('about-text').textContent = palestra.description || speaker.bio || '';
+
+      // TARGET
+      if (palestra.target_audience) {
+        document.getElementById('target-text').textContent = palestra.target_audience;
+        document.getElementById('target-section').hidden = false;
+      }
+
+      // DETAILS CARD
+      const detailsItems = [];
+      if (palestra.duration_minutes) {
+        detailsItems.push(`
+          <div>
+            <span class="palestra-details__item-label">Duração</span>
+            <span class="palestra-details__item-value">${formatDuration(palestra.duration_minutes)}</span>
+          </div>
+        `);
+      }
+      if (palestra.format) {
+        detailsItems.push(`
+          <div>
+            <span class="palestra-details__item-label">Formato</span>
+            <span class="palestra-details__item-value">${escapeHtml(PALESTRA_FORMATS[palestra.format] || palestra.format)}</span>
+          </div>
+        `);
+      }
+      if (palestra.price_min || palestra.price_max) {
+        detailsItems.push(`
+          <div>
+            <span class="palestra-details__item-label">Investimento</span>
+            <span class="palestra-details__item-value">${formatPriceRange(palestra.price_min, palestra.price_max)}</span>
+          </div>
+        `);
+      }
+      document.getElementById('details-card').innerHTML = detailsItems.join('');
+
+      // SPEAKER
+      const speakerPhoto = document.getElementById('speaker-photo');
+      if (speaker.photo_url) {
+        speakerPhoto.innerHTML = `<img src="${escapeHtml(speaker.photo_url)}" alt="${escapeHtml(speaker.name)}">`;
+      } else {
+        speakerPhoto.innerHTML = `<div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-primary),var(--color-primary-light));display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:3rem;font-family:var(--font-heading)">${escapeHtml(speaker.name.charAt(0))}</div>`;
+      }
+      document.getElementById('speaker-name').textContent = speaker.name;
+      document.getElementById('speaker-bio').textContent = speaker.bio || '';
+      document.getElementById('speaker-link').href = `/palestrante/?slug=${speaker.slug}`;
+
+      // VIDEO (palestra video ou fallback para speaker video)
+      const videoUrl = palestra.video_url || speaker.video_url;
+      const embedUrl = getYouTubeEmbed(videoUrl);
+      if (embedUrl) {
+        document.getElementById('video-iframe').src = embedUrl;
+        document.getElementById('video-section').hidden = false;
+      }
+
+      // CTA
+      const tier = TIERS[speaker.plan] || TIERS.essencial;
+      const phone = speaker.phone ? speaker.phone.replace(/\D/g, '') : '';
+      const msgEncoded = encodeURIComponent(`Ola ${speaker.name}, encontrei sua palestra "${palestra.title}" na Avantik e gostaria de solicitar um orcamento.`);
+
+      let ctaUrl;
+      if (tier.whatsappVisible && phone) {
+        ctaUrl = `https://wa.me/${phone}?text=${msgEncoded}`;
+        document.getElementById('cta-button').textContent = 'Solicitar Orçamento pelo WhatsApp';
+      } else {
+        ctaUrl = `mailto:${speaker.email}?subject=Proposta para palestra "${palestra.title}" - Avantik&body=${msgEncoded}`;
+        document.getElementById('cta-button').textContent = 'Enviar Proposta por Email';
+      }
+      document.getElementById('cta-button').href = ctaUrl;
+
+      // Contact form
+      document.getElementById('contact-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('cf-name').value.trim();
+        const email = document.getElementById('cf-email').value.trim();
+        const company = document.getElementById('cf-company').value.trim();
+        const date = document.getElementById('cf-date').value;
+        const message = document.getElementById('cf-message').value.trim();
+
+        if (!name || !email || !message) return;
+
+        const fullMsg = `Ola ${speaker.name},\n\nMeu nome e ${name}` +
+          (company ? ` da empresa ${company}` : '') +
+          `.\n\nInteresse na palestra: "${palestra.title}"` +
+          (date ? `\nData do evento: ${date}` : '') +
+          `\n\n${message}\n\nContato: ${email}`;
+
+        const encoded = encodeURIComponent(fullMsg);
+        let url;
+        if (tier.whatsappVisible && phone) {
+          url = `https://wa.me/${phone}?text=${encoded}`;
+        } else {
+          url = `mailto:${speaker.email}?subject=Proposta para "${palestra.title}" - Avantik&body=${encoded}`;
+        }
+
+        window.open(url, '_blank');
+
+        const fb = document.getElementById('contact-feedback');
+        fb.textContent = 'Mensagem preparada! Complete o envio na janela que abriu.';
+        fb.classList.add('palestra-cta__feedback--visible');
+      });
+
+      // Contato Direto — visivel APENAS se contratante tem proposta ACEITA com este palestrante
+      try {
+        const authUser = await getUser();
+        if (authUser) {
+          const status = await getUserType(authUser.id);
+          const contractorProfile = status.hasRole('contractor') ? status.getProfile('contractor') : null;
+
+          let hasAcceptedProposal = false;
+          if (contractorProfile) {
+            const { data: acceptedApps } = await supabase
+              .from('project_applications')
+              .select('id, projects!inner(contractor_id)')
+              .eq('speaker_id', speaker.id)
+              .eq('status', 'aceita')
+              .eq('projects.contractor_id', contractorProfile.id)
+              .limit(1);
+            hasAcceptedProposal = acceptedApps && acceptedApps.length > 0;
+          }
+
+          if (hasAcceptedProposal) {
+            const phoneDigits = speaker.phone ? speaker.phone.replace(/\D/g, '') : '';
+            const cards = [];
+
+            if (phoneDigits) {
+              const waMsg = encodeURIComponent(`Ola ${speaker.name}, sou contratante na Avantik e vi sua palestra "${palestra.title}". Gostaria de conversar.`);
+              cards.push(`
+                <a href="https://wa.me/${phoneDigits}?text=${waMsg}" target="_blank" rel="noopener noreferrer" class="pcd__card">
+                  <div class="pcd__icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                  </div>
+                  <div class="pcd__info">
+                    <span class="pcd__label">WhatsApp</span>
+                    <span class="pcd__value">${escapeHtml(speaker.phone)}</span>
+                  </div>
+                </a>
+              `);
+            }
+
+            if (speaker.email) {
+              cards.push(`
+                <a href="mailto:${escapeHtml(speaker.email)}" class="pcd__card">
+                  <div class="pcd__icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </div>
+                  <div class="pcd__info">
+                    <span class="pcd__label">Email</span>
+                    <span class="pcd__value">${escapeHtml(speaker.email)}</span>
+                  </div>
+                </a>
+              `);
+            }
+
+            if (speaker.website) {
+              const websiteLabel = speaker.website.replace(/^https?:\/\//, '').replace(/\/$/, '');
+              cards.push(`
+                <a href="${escapeHtml(speaker.website)}" target="_blank" rel="noopener noreferrer" class="pcd__card">
+                  <div class="pcd__icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  </div>
+                  <div class="pcd__info">
+                    <span class="pcd__label">Site oficial</span>
+                    <span class="pcd__value">${escapeHtml(websiteLabel)}</span>
+                  </div>
+                </a>
+              `);
+            }
+
+            if (cards.length > 0) {
+              document.getElementById('pcd-grid').innerHTML = cards.join('');
+              document.getElementById('palestra-contact-direct').hidden = false;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('contact-direct detection failed:', e);
+      }
+
+      // Show content
+      document.getElementById('palestra-loading').hidden = true;
+      document.getElementById('palestra-content').hidden = false;
+    }
+  </script>
+
+</body>
+</html>

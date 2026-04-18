@@ -475,10 +475,10 @@ if (!projectId) {
   throw new Error('No project ID');
 }
 
-// Fetch project
+// Fetch project (sem joinear contractors — anonimato)
 const { data: project, error } = await supabase
   .from('projects')
-  .select('*, themes(name), contractors(company)')
+  .select('*, themes(name)')
   .eq('id', projectId)
   .single();
 
@@ -520,7 +520,24 @@ try {
 }
 
 // Render project details
-const companyName = project.contractors?.company || 'Empresa';
+// Empresa anonima por padrao. So mostra nome real se:
+// 1. usuario e o dono do projeto (contratante)
+// 2. usuario e palestrante com candidatura ja aceita
+let companyName = 'Empresa contratante';
+const isOwner = userType === 'contractor' && userProfile && userProfile.id === project.contractor_id;
+const hasAcceptedApplication = false; // sera setado abaixo apos check
+
+if (isOwner) {
+  // Buscar nome real da empresa do contratante
+  const { data: ownerData } = await supabase
+    .from('contractors')
+    .select('company')
+    .eq('id', project.contractor_id)
+    .single();
+  if (ownerData?.company) companyName = ownerData.company;
+}
+// TODO: revelar empresa pra speaker com candidatura aceita (Fase C)
+
 const themeName = project.themes?.name || null;
 const typeLabel = EVENT_TYPES[project.event_type] || project.event_type || '';
 
@@ -587,19 +604,46 @@ if (project.status === 'encerrado') {
       </div>
     `;
   } else if (speakerProfile) {
-    // Show application form
-    actionDiv.innerHTML = `
+    // Buscar palestras ativas do speaker para dropdown
+    const { data: minhasPalestras } = await supabase
+      .from('palestras')
+      .select('id, title, themes(name)')
+      .eq('speaker_id', speakerProfile.id)
+      .eq('active', true)
+      .order('title');
+
+    if (!minhasPalestras || minhasPalestras.length === 0) {
+      // Speaker sem palestras — orientar a cadastrar
+      actionDiv.innerHTML = `
+        <div class="project-banner--login">
+          <p>Para se candidatar, voce precisa ter pelo menos uma palestra cadastrada. <a href="/minhas-palestras/nova/">Cadastrar minha primeira palestra</a></p>
+        </div>
+      `;
+    } else {
+      const palestraOptions = minhasPalestras.map(p =>
+        `<option value="${escapeHtml(p.id)}">${escapeHtml(p.title)}${p.themes ? ' (' + escapeHtml(p.themes.name) + ')' : ''}</option>`
+      ).join('');
+
+      // Show application form
+      actionDiv.innerHTML = `
       <div class="project-apply">
         <h2 class="project-apply__title">Candidatar-se</h2>
         <div class="project-apply__error" id="apply-error" role="alert"></div>
         <form id="apply-form" novalidate>
           <div class="project-apply__field">
-            <label for="apply-message">Mensagem *</label>
-            <textarea id="apply-message" name="message" required rows="5" placeholder="Explique por que você e ideal para este evento..."></textarea>
+            <label for="apply-palestra">Qual palestra voce esta oferecendo? *</label>
+            <select id="apply-palestra" name="palestra_id" required>
+              <option value="">Selecione uma palestra</option>
+              ${palestraOptions}
+            </select>
           </div>
           <div class="project-apply__field">
-            <label for="apply-price">Preço proposto (R$)</label>
-            <input type="number" id="apply-price" name="proposed_price" min="0" step="100" placeholder="Opcional">
+            <label for="apply-message">Mensagem *</label>
+            <textarea id="apply-message" name="message" required rows="5" placeholder="Explique por que voce e ideal para este evento..."></textarea>
+          </div>
+          <div class="project-apply__field">
+            <label for="apply-price">Preço proposto (R$) *</label>
+            <input type="number" id="apply-price" name="proposed_price" min="100" step="100" placeholder="Ex: 5000" required>
           </div>
           <button type="submit" class="btn btn--accent btn--lg project-apply__submit" id="apply-submit">Enviar Candidatura</button>
         </form>
@@ -623,11 +667,24 @@ if (project.status === 'encerrado') {
       e.preventDefault();
       applyError.classList.remove('project-apply__error--visible');
 
+      const palestraId = document.getElementById('apply-palestra').value;
       const message = document.getElementById('apply-message').value.trim();
       const proposedPrice = document.getElementById('apply-price').value ? Number(document.getElementById('apply-price').value) : null;
 
+      if (!palestraId) {
+        applyError.textContent = 'Selecione qual palestra voce esta oferecendo.';
+        applyError.classList.add('project-apply__error--visible');
+        return;
+      }
+
       if (!message) {
         applyError.textContent = 'Escreva uma mensagem para se candidatar.';
+        applyError.classList.add('project-apply__error--visible');
+        return;
+      }
+
+      if (!proposedPrice || proposedPrice < 100) {
+        applyError.textContent = 'Informe o preco proposto (minimo R$ 100).';
         applyError.classList.add('project-apply__error--visible');
         return;
       }
@@ -641,8 +698,10 @@ if (project.status === 'encerrado') {
           .insert({
             project_id: projectId,
             speaker_id: speakerProfile.id,
+            palestra_id: palestraId,
             message: message,
-            proposed_price: proposedPrice
+            proposed_price: proposedPrice,
+            status: 'pendente'
           });
 
         if (insertError) {
@@ -668,12 +727,20 @@ if (project.status === 'encerrado') {
         applySubmit.textContent = 'Enviar Candidatura';
       }
     });
+    } // fecha else (tem palestras)
   } else if (!currentUser) {
     // Not logged in
     const redirectUrl = encodeURIComponent(`/projetos/ver/?id=${projectId}`);
     actionDiv.innerHTML = `
       <div class="project-banner--login">
         <p><a href="/entrar/?redirect=${redirectUrl}">Faça login</a> para se candidatar a esta oportunidade.</p>
+      </div>
+    `;
+  } else if (!speakerProfile) {
+    // Logado mas nao e palestrante
+    actionDiv.innerHTML = `
+      <div class="project-banner--login">
+        <p>Você precisa ter perfil de palestrante para se candidatar. <a href="/cadastro/">Cadastre-se como palestrante</a> para ter acesso às oportunidades.</p>
       </div>
     `;
   }
