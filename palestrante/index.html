@@ -793,7 +793,7 @@
               <span class="profile-hero__price" id="profile-price"></span>
             </div>
             <div class="profile-hero__actions">
-              <a id="profile-cta-whatsapp" href="#" class="btn btn--accent btn--lg" target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a>
+              <a id="profile-cta-hire" href="/projetos/novo/" class="btn btn--accent btn--lg">Contratar este palestrante</a>
               <a id="profile-cta-video" href="#video" class="btn btn--outline-dark btn--lg" hidden>Ver Video</a>
             </div>
           </div>
@@ -851,43 +851,14 @@
         </div>
       </section>
 
-      <!-- CTA with contact form -->
+      <!-- CTA: convida contratante a abrir projeto na plataforma -->
       <section class="profile-cta section">
         <div class="container">
           <div class="profile-cta__card">
             <h2 class="profile-cta__title" id="profile-cta-title">Quer contratar este palestrante?</h2>
-            <p class="profile-cta__text">Envie uma mensagem diretamente ou preencha o formulario abaixo.</p>
-            <a id="profile-cta-bottom" href="#" class="btn btn--accent btn--lg" target="_blank" rel="noopener noreferrer">Solicitar Orcamento pelo WhatsApp</a>
-
-            <form class="profile-cta__form" id="contact-form">
-              <p style="text-align:center;color:var(--color-text-secondary);font-size:0.875rem;margin:1.5rem 0 1rem">ou envie uma mensagem:</p>
-              <div class="profile-cta__form-row">
-                <div class="profile-cta__form-field">
-                  <label for="contact-name">Nome *</label>
-                  <input type="text" id="contact-name" required placeholder="Seu nome">
-                </div>
-                <div class="profile-cta__form-field">
-                  <label for="contact-email">Email *</label>
-                  <input type="email" id="contact-email" required placeholder="seu@email.com">
-                </div>
-              </div>
-              <div class="profile-cta__form-row">
-                <div class="profile-cta__form-field">
-                  <label for="contact-company">Empresa</label>
-                  <input type="text" id="contact-company" placeholder="Nome da empresa">
-                </div>
-                <div class="profile-cta__form-field">
-                  <label for="contact-date">Data do evento</label>
-                  <input type="date" id="contact-date">
-                </div>
-              </div>
-              <div class="profile-cta__form-field">
-                <label for="contact-message">Mensagem *</label>
-                <textarea id="contact-message" required placeholder="Descreva seu evento e necessidades..."></textarea>
-              </div>
-              <button type="submit" class="btn btn--accent btn--lg" style="width:100%" id="contact-submit">Enviar Mensagem</button>
-              <div class="profile-cta__form-feedback" id="contact-feedback"></div>
-            </form>
+            <p class="profile-cta__text">Publique uma oportunidade na Avantik descrevendo seu evento. Este palestrante (e outros compatíveis) recebem a proposta e respondem pela plataforma, com histórico e curadoria.</p>
+            <a href="/projetos/novo/" class="btn btn--accent btn--lg">Publicar oportunidade</a>
+            <p style="margin-top:1rem;font-size:0.875rem;color:var(--color-text-secondary)">Dados de contato direto (WhatsApp e e-mail) são liberados após a proposta ser aceita.</p>
           </div>
         </div>
       </section>
@@ -1046,24 +1017,10 @@
       document.getElementById('profile-rating').innerHTML = `&#9733; ${speaker.rating || '5.0'}`;
       document.getElementById('profile-price').textContent = formatPriceRange(speaker.price_min, speaker.price_max);
 
-      // WhatsApp CTA - restricted by plan
+      // CTA de contrata\u00e7\u00e3o aponta sempre para /projetos/novo/ - canal oficial.
+      // Dados diretos (WhatsApp/email) s\u00f3 aparecem no bloco "Contato direto"
+      // quando a proposta j\u00e1 foi aceita.
       const tier = TIERS[speaker.plan] || TIERS.essencial;
-      const phone = speaker.phone ? speaker.phone.replace(/\D/g, '') : '';
-      const whatsappMsg = encodeURIComponent(`Ola ${speaker.name}, encontrei seu perfil na Avantik e gostaria de saber sobre disponibilidade para uma palestra.`);
-
-      let ctaUrl, ctaText;
-      if (tier.whatsappVisible && phone) {
-        ctaUrl = `https://wa.me/${phone}?text=${whatsappMsg}`;
-        ctaText = 'Solicitar Orçamento';
-      } else {
-        ctaUrl = `mailto:${speaker.email}?subject=Proposta de palestra - Avantik&body=${decodeURIComponent(whatsappMsg)}`;
-        ctaText = 'Enviar Proposta por Email';
-      }
-
-      document.getElementById('profile-cta-whatsapp').href = ctaUrl;
-      document.getElementById('profile-cta-whatsapp').textContent = ctaText;
-      document.getElementById('profile-cta-bottom').href = ctaUrl;
-      document.getElementById('profile-cta-bottom').textContent = tier.whatsappVisible ? 'Solicitar Orçamento pelo WhatsApp' : 'Enviar Proposta por Email';
 
       // Bio
       if (speaker.bio) {
@@ -1145,45 +1102,9 @@
         document.getElementById('profile-stats-section').hidden = false;
       }
 
-      // Contact form handler
-      const contactForm = document.getElementById('contact-form');
-      contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = document.getElementById('contact-submit');
-        const feedbackEl = document.getElementById('contact-feedback');
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Enviando...';
-
-        const contactName = document.getElementById('contact-name').value.trim();
-        const contactEmail = document.getElementById('contact-email').value.trim();
-        const contactCompany = document.getElementById('contact-company').value.trim();
-        const contactDate = document.getElementById('contact-date').value;
-        const contactMessage = document.getElementById('contact-message').value.trim();
-
-        if (!contactName || !contactEmail || !contactMessage) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Enviar Mensagem';
-          return;
-        }
-
-        // Enviar por WhatsApp/email como fallback (sem tabela de mensagens ainda)
-        const msg = `Ola ${speaker.name},\n\nMeu nome e ${contactName}` +
-          (contactCompany ? ` da empresa ${contactCompany}` : '') +
-          (contactDate ? `.\nData do evento: ${contactDate}` : '') +
-          `.\n\n${contactMessage}\n\nContato: ${contactEmail}`;
-
-        const phone = speaker.phone ? speaker.phone.replace(/\\D/g, '') : '';
-        if (tier.whatsappVisible && phone) {
-          window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-        } else {
-          window.open(`mailto:${speaker.email}?subject=Proposta de palestra - Avantik&body=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        feedbackEl.textContent = 'Mensagem preparada! Complete o envio na janela que abriu.';
-        feedbackEl.className = 'profile-cta__form-feedback profile-cta__form-feedback--success';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Enviar Mensagem';
-      });
+      // Formulario de contato direto removido: o fluxo oficial e criar projeto
+      // em /projetos/novo/ (CTA "Publicar oportunidade"). Isto evita que o
+      // contratante pule a plataforma.
 
       // Contato Direto — visivel APENAS se contratante tem proposta ACEITA com este palestrante
       try {
