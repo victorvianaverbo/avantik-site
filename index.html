@@ -683,7 +683,7 @@
             const n = Number(t.speaker_count);
             const label = `${n} palestrante${n === 1 ? '' : 's'}`;
             return `
-              <a href="/diretorio/?tema=${encodeURIComponent(t.slug)}" class="categories__card${cardMod}" data-aos="fade-up" data-aos-delay="${100 + i * 50}">
+              <a href="/diretorio/?tema=${encodeURIComponent(t.slug)}" class="categories__card${cardMod}">
                 <span class="categories__icon${iconMod}">${svgBody(isFeatured ? 40 : 24, t.icon)}</span>
                 ${deco}
                 <span class="categories__name${nameMod}">${escapeHtml(t.name)}</span>
