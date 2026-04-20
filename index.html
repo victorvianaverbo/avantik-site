@@ -623,6 +623,10 @@
         track.innerHTML = firstHalf + secondHalf;
       }
     }
+  </script>
+
+  <script type="module">
+    import { supabase, escapeHtml } from '/lib/supabase.js';
 
     // ---------- CATEGORIAS (temas dinamicos da home) ----------
     const categoriesGrid = document.getElementById('categories-grid');
