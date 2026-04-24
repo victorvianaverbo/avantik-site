@@ -506,11 +506,17 @@ async function initAuthNav() {
   try {
     const { supabase, authSignOut, getUserType } = await import('/lib/supabase.js');
 
-    // Escuta mudancas de estado (login/logout) para re-renderizar
+    // Escuta mudancas de estado (login/logout) para re-renderizar.
+    // INITIAL_SESSION dispara quando a sessao e hidratada do localStorage no load.
     if (!window.__avantikAuthListenerSet) {
       window.__avantikAuthListenerSet = true;
       supabase.auth.onAuthStateChange((event) => {
-        if (event === 'SIGNED_IN' || event === 'SIGNED_OUT' || event === 'TOKEN_REFRESHED') {
+        if (
+          event === 'INITIAL_SESSION' ||
+          event === 'SIGNED_IN' ||
+          event === 'SIGNED_OUT' ||
+          event === 'TOKEN_REFRESHED'
+        ) {
           initAuthNav();
         }
       });
