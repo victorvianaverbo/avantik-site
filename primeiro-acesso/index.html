@@ -629,6 +629,15 @@
           }
         }
 
+        // Se o Supabase esta com "Confirm email" desligado, o signUp ja cria
+        // uma sessao ativa. Nesse caso, manda direto pro painel de
+        // oportunidades do palestrante em vez de mostrar "Confirme seu email".
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          window.location.href = '/projetos/';
+          return;
+        }
+
         confirmEmailEl.textContent = currentEmail;
         goTo('confirm');
       } catch (err) {
