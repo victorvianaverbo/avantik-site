@@ -32,7 +32,7 @@ ON CONFLICT (slug) DO NOTHING;
 CREATE TABLE IF NOT EXISTS public.speakers (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   slug TEXT UNIQUE NOT NULL,
-  plan TEXT NOT NULL DEFAULT 'essencial',
+  plan TEXT NOT NULL DEFAULT 'profissional', -- profissional | premium | elite
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   phone TEXT,
@@ -54,9 +54,9 @@ CREATE TABLE IF NOT EXISTS public.speakers (
 -- Ativar segurança em nível de linha (RLS) para speakers
 ALTER TABLE public.speakers ENABLE ROW LEVEL SECURITY;
 
--- Permitir leitura pública (para página de diretório e perfil)
-CREATE POLICY "Leitura_de_palestrantes_publica" ON public.speakers
-  FOR SELECT USING (true);
+-- Leitura publica dos palestrantes: use view `speakers_public` (sem email/phone).
+-- Acesso direto a esta tabela e restringido via RLS por questoes de LGPD.
+-- Veja migrations/012-seguranca-contato.sql para as policies de acesso autenticado.
 
 -- Permitir inserção anônima (no formulário de cadastro)
 CREATE POLICY "Permitir_cadastro_de_palestrantes" ON public.speakers

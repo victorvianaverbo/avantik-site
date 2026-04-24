@@ -256,7 +256,7 @@
       throw new Error('no speaker profile');
     }
 
-    const tier = TIERS[speakerProfile.plan] || TIERS.essencial;
+    const tier = TIERS[speakerProfile.plan] || TIERS.profissional;
     const loadingEl = document.getElementById('loading');
     const contentEl = document.getElementById('content');
 
@@ -283,11 +283,11 @@
 
       let html = '';
 
-      // Notice se plano essencial e ja tem 1 palestra
-      if (!canAddMore && tier.name === 'Essencial') {
+      // Aviso quando atingiu o limite de palestras do tier atual
+      if (!canAddMore && tier.name !== 'Elite') {
         html += `
           <div class="mp__upgrade-notice">
-            Você está no plano <strong>Essencial</strong> e pode cadastrar apenas 1 palestra. <a href="/para-palestrantes/">Faça upgrade</a> para cadastrar mais palestras.
+            Você está no plano <strong>${tier.name}</strong> e pode cadastrar até ${limit} palestra${limit > 1 ? 's' : ''}. <a href="/para-palestrantes/">Faça upgrade</a> para cadastrar mais.
           </div>
         `;
       }

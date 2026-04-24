@@ -439,6 +439,30 @@
               <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/adm.png&w=240&q=80&fm=webp" alt="ADM" loading="lazy" width="120" height="80"></div>
               <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/unisv.png&w=240&q=80&fm=webp" alt="UNISV" loading="lazy" width="120" height="80"></div>
               <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/via-permuta.png&w=240&q=80&fm=webp" alt="Via Permuta" loading="lazy" width="120" height="80"></div>
+
+              <!-- Segunda metade duplicada (aria-hidden) para loop seamless da animacao -->
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/3bf.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/abco.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/araujo.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/contabilidade.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/crie.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/direcional.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/empreender.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/gofree.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/illustrar.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/invista.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/observatrio.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/ourominas.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/permuto.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/prefeitura-contagem.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/royal.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/sbt.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tambasa.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/trokz.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tv.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/adm.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/unisv.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/via-permuta.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
             </div>
           </div>
 
@@ -553,32 +577,57 @@
     </div>
   </footer>
 
-  <script type="module">
-    import { supabase, escapeHtml, formatPriceRange } from '/lib/supabase.js';
+  <script>
+  /*
+   * Dynamic import do Supabase via IntersectionObserver.
+   * Tanto o carrossel de palestrantes quanto as categorias ficam below-the-fold.
+   * O bundle Supabase (~70KB em cascata esm.sh) so baixa quando o usuario scrolla
+   * perto dessas secoes — reduz JS eager ~70KB no mobile e melhora LCP.
+   */
+  (function() {
+    function lazyLoadSection(selector, onEnter) {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      if (!('IntersectionObserver' in window)) { onEnter(); return; }
+      const io = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          io.disconnect();
+          onEnter();
+        }
+      }, { rootMargin: '300px 0px' });
+      io.observe(el);
+    }
 
-    const PLACEHOLDER_AVATAR = '/images/avatar-placeholder.svg';
-    const speakersSection = document.getElementById('palestrantes');
-    const track = document.getElementById('speakers-track');
+    // ---------- Carrossel de palestrantes ----------
+    lazyLoadSection('#palestrantes', async () => {
+      try {
+        const { supabase, escapeHtml, formatPriceRange, renderBadges } = await import('/lib/supabase.js');
 
-    if (track) {
-      const { data, error } = await supabase
-        .from('speakers')
-        .select('slug, name, bio, plan, rating, price_min, price_max, photo_url, palestras(themes!palestras_theme_id_fkey(name))')
-        .eq('active', true)
-        .not('bio', 'is', null)
-        .not('photo_url', 'is', null)
-        .neq('photo_url', PLACEHOLDER_AVATAR)
-        .order('rating', { ascending: false })
-        .limit(40);
+        const PLACEHOLDER_AVATAR = '/images/avatar-placeholder.svg';
+        const speakersSection = document.getElementById('palestrantes');
+        const track = document.getElementById('speakers-track');
+        if (!track) return;
 
-      const complete = (data || []).filter(s =>
-        s.photo_url && s.photo_url !== PLACEHOLDER_AVATAR && s.bio
-      );
+        const { data, error } = await supabase
+          .from('speakers_public')
+          .select('slug, name, bio, plan, has_seal, did_apogeu, rating, price_min, price_max, photo_url, palestras!speaker_id(themes!palestras_theme_id_fkey(name))')
+          .eq('active', true)
+          .not('bio', 'is', null)
+          .not('photo_url', 'is', null)
+          .neq('photo_url', PLACEHOLDER_AVATAR)
+          .order('rating', { ascending: false })
+          .limit(40);
 
-      if (error || complete.length === 0) {
-        speakersSection?.remove();
-      } else {
-        const planRank = { premium: 3, gold: 2, silver: 1, destaque: 3, profissional: 2, essencial: 1 };
+        const complete = (data || []).filter(s =>
+          s.photo_url && s.photo_url !== PLACEHOLDER_AVATAR && s.bio
+        );
+
+        if (error || complete.length === 0) {
+          speakersSection?.remove();
+          return;
+        }
+
+        const planRank = { elite: 3, premium: 2, profissional: 1 };
         const scored = complete
           .map(s => ({
             ...s,
@@ -599,11 +648,13 @@
             : 'Sob consulta';
           const rating = (s.rating != null ? Number(s.rating) : 5).toFixed(1);
           const cloneAttrs = isClone ? ' aria-hidden="true" tabindex="-1"' : '';
+          const badgesHtml = renderBadges(s);
           return `
             <a href="/palestrante/?slug=${encodeURIComponent(s.slug)}" class="speakers__card"${cloneAttrs}>
-              <div class="speakers__avatar" style="background-image:url('${escapeHtml(s.photo_url)}');background-size:cover;background-position:center;"></div>
+              <div class="speakers__avatar" style="background-image:url('${escapeHtml(s.photo_url)}')"></div>
               <div class="speakers__info">
                 <span class="speakers__name">${escapeHtml(s.name)}</span>
+                ${badgesHtml}
                 <div class="speakers__tags">${tags}</div>
                 <div class="speakers__bottom">
                   <span class="speakers__rating">&#9733; ${rating}</span>
@@ -613,26 +664,24 @@
             </a>`;
         };
 
-        // Loop seamless: primeira metade + segunda metade identica.
-        // Repetimos cada set o bastante para a faixa ser ~2x a largura da viewport.
         const cardWidth = 280 + 24;
         const setWidth = scored.length * cardWidth;
         const repeats = Math.max(3, Math.ceil((window.innerWidth * 2.2) / setWidth));
         const firstHalf = scored.map(s => renderCard(s, false)).join('').repeat(repeats);
         const secondHalf = scored.map(s => renderCard(s, true)).join('').repeat(repeats);
         track.innerHTML = firstHalf + secondHalf;
+      } catch (err) {
+        console.warn('[palestrantes] falha ao carregar:', err);
+        document.getElementById('palestrantes')?.remove();
       }
-    }
-  </script>
+    });
 
-  <script type="module">
-    import { supabase, escapeHtml } from '/lib/supabase.js';
+    // ---------- Categorias (temas dinamicos da home) ----------
+    lazyLoadSection('#categorias', async () => {
+      const categoriesGrid = document.getElementById('categories-grid');
+      const categoriesSection = document.getElementById('categorias');
+      if (!categoriesGrid) return;
 
-    // ---------- CATEGORIAS (temas dinamicos da home) ----------
-    const categoriesGrid = document.getElementById('categories-grid');
-    const categoriesSection = document.getElementById('categorias');
-
-    if (categoriesGrid) {
       const ICONS = {
         'hardhat':        '<path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/><path d="M10 15V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v9"/><path d="M4 15V9a6 6 0 0 1 6-6h0"/><path d="M14 3a6 6 0 0 1 6 6v6"/>',
         'flag':           '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
@@ -666,37 +715,40 @@
       const svgBody = (size, key) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[key] || DEFAULT_ICON}</svg>`;
 
       try {
+        const { supabase, escapeHtml } = await import('/lib/supabase.js');
         const { data, error } = await supabase.rpc('get_theme_speaker_counts');
         if (error) throw error;
 
         const withSpeakers = (data || []).filter(t => Number(t.speaker_count) > 0);
         if (withSpeakers.length === 0) {
           categoriesSection?.remove();
-        } else {
-          const top = withSpeakers.slice(0, 13); // 1 em destaque + ate 12 regulares
-          categoriesGrid.innerHTML = top.map((t, i) => {
-            const isFeatured = i === 0;
-            const cardMod = isFeatured ? ' categories__card--featured' : '';
-            const iconMod = isFeatured ? ' categories__icon--lg' : '';
-            const nameMod = isFeatured ? ' categories__name--lg' : '';
-            const deco = isFeatured ? '<div class="categories__card-deco"></div>' : '';
-            const n = Number(t.speaker_count);
-            const label = `${n} palestrante${n === 1 ? '' : 's'}`;
-            return `
-              <a href="/diretorio/?tema=${encodeURIComponent(t.slug)}" class="categories__card${cardMod}">
-                <span class="categories__icon${iconMod}">${svgBody(isFeatured ? 40 : 24, t.icon)}</span>
-                ${deco}
-                <span class="categories__name${nameMod}">${escapeHtml(t.name)}</span>
-                <span class="categories__count">${label}</span>
-              </a>`;
-          }).join('');
-          categoriesGrid.removeAttribute('aria-busy');
+          return;
         }
+
+        const top = withSpeakers.slice(0, 13); // 1 em destaque + ate 12 regulares
+        categoriesGrid.innerHTML = top.map((t, i) => {
+          const isFeatured = i === 0;
+          const cardMod = isFeatured ? ' categories__card--featured' : '';
+          const iconMod = isFeatured ? ' categories__icon--lg' : '';
+          const nameMod = isFeatured ? ' categories__name--lg' : '';
+          const deco = isFeatured ? '<div class="categories__card-deco"></div>' : '';
+          const n = Number(t.speaker_count);
+          const label = `${n} palestrante${n === 1 ? '' : 's'}`;
+          return `
+            <a href="/diretorio/?tema=${encodeURIComponent(t.slug)}" class="categories__card${cardMod}">
+              <span class="categories__icon${iconMod}">${svgBody(isFeatured ? 40 : 24, t.icon)}</span>
+              ${deco}
+              <span class="categories__name${nameMod}">${escapeHtml(t.name)}</span>
+              <span class="categories__count">${label}</span>
+            </a>`;
+        }).join('');
+        categoriesGrid.removeAttribute('aria-busy');
       } catch (err) {
         console.warn('[categorias] falha ao carregar temas:', err);
         categoriesSection?.remove();
       }
-    }
+    });
+  })();
   </script>
 
 </body>

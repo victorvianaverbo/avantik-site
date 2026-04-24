@@ -23,9 +23,18 @@ import { readFileSync } from 'fs';
 import * as XLSX from 'xlsx';
 
 const SUPABASE_URL = 'https://ajokzpjguhfxxudteetr.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqb2t6cGpndWhmeHh1ZHRlZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MjQ1NTQsImV4cCI6MjA5MDQwMDU1NH0.TG-ASfMGgNY4BoHsFQx8TQ-4HPVsdbGEu4zJuFAeiNg';
+// Service role key — necessario para contornar RLS ao criar themes/speakers/palestras
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqb2t6cGpndWhmeHh1ZHRlZXRyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDgyNDU1NCwiZXhwIjoyMDkwNDAwNTU0fQ.ORFf1oXdjZIUfY7FEuSsXW95p49OBouOQ1H5Zo03tXk';
 
 const AVATAR_PLACEHOLDER = '/images/avatar-placeholder.svg';
+
+// Converte link do Google Drive (/file/d/ID/view) para URL direta de imagem
+function driveToImageUrl(driveUrl) {
+  if (!driveUrl) return null;
+  const match = driveUrl.match(/\/file\/d\/([^\/]+)/);
+  if (!match) return driveUrl;
+  return `https://lh3.googleusercontent.com/d/${match[1]}=w800`;
+}
 
 const args = process.argv.slice(2);
 const fileArgIdx = args.indexOf('--file');
@@ -60,6 +69,22 @@ function cleanField(v) {
   return s;
 }
 
+// Converte valores de preco da planilha para inteiro em reais.
+// Aceita: 5000, "5000", "5.000", "R$ 5.000,00", "5000,50" -> 5000 (arredonda pra baixo).
+function parsePrice(v) {
+  if (v === null || v === undefined || v === '') return null;
+  if (typeof v === 'number') return Math.round(v);
+  const raw = v.toString().trim();
+  if (!raw) return null;
+  // Remove R$, espacos, pontos de milhar. Troca virgula decimal por ponto.
+  const cleaned = raw
+    .replace(/[R$\s]/gi, '')
+    .replace(/\.(?=\d{3}(\D|$))/g, '') // ponto de milhar
+    .replace(',', '.');
+  const n = parseFloat(cleaned);
+  return Number.isFinite(n) && n > 0 ? Math.round(n) : null;
+}
+
 function parseCidade(raw) {
   const v = cleanField(raw);
   if (!v) return { city: null, state: null };
@@ -82,8 +107,13 @@ const workbook = XLSX.read(readFileSync(XLSX_PATH), { type: 'buffer' });
 const sheetNames = workbook.SheetNames;
 console.log(`Abas encontradas: ${sheetNames.join(', ')}`);
 
-const cadastroSheetName = sheetNames.find(n => /cadastro/i.test(n));
-const palestrasSheetName = sheetNames.find(n => /p[aá]gina\s*1/i.test(n)) || sheetNames[0];
+// Aba de palestrantes: "CADASTRO BIO" (nova planilha) ou "CADASTRO" (antiga)
+const cadastroSheetName = sheetNames.find(n => /cadastro\s+bio/i.test(n))
+  || sheetNames.find(n => /^cadastro$/i.test(n));
+// Aba de palestras: "CADASTRO PALESTRA" (nova planilha) ou "Pagina1" (antiga)
+const palestrasSheetName = sheetNames.find(n => /cadastro\s+palestra/i.test(n))
+  || sheetNames.find(n => /p[aá]gina\s*1/i.test(n))
+  || sheetNames[0];
 
 if (!cadastroSheetName) throw new Error('Aba CADASTRO nao encontrada');
 if (!palestrasSheetName) throw new Error('Aba de palestras nao encontrada');
@@ -146,6 +176,13 @@ for (const row of cadastroRows) {
   const bio = cleanField(row['Bio']);
   const linkedin = cleanField(row['LinkedIn']);
   const instagram = cleanField(row['Instagram']);
+  const website = cleanField(row['Site']);
+  const photoDriveUrl = cleanField(row['Link da Foto']);
+  // Video preferencial: "Video Avantik"; fallback: canal do youtube
+  const videoUrl = cleanField(row['Video Avantik']) || cleanField(row['youtube']);
+  const photoUrl = driveToImageUrl(photoDriveUrl) || AVATAR_PLACEHOLDER;
+  const seloRaw = cleanField(row['Selo']);
+  const hasSeal = seloRaw && ['sim', 'yes', 'x', '1', 'true'].includes(seloRaw.toString().trim().toLowerCase());
 
   const payload = {
     name,
@@ -155,9 +192,12 @@ for (const row of cadastroRows) {
     state,
     linkedin,
     instagram,
-    photo_url: AVATAR_PLACEHOLDER,
+    website,
+    photo_url: photoUrl,
+    video_url: videoUrl,
     active: true,
-    plan: 'essencial',
+    plan: 'profissional',
+    has_seal: hasSeal,
   };
 
   // Ja existe? (busca por email)
@@ -215,7 +255,7 @@ console.log('---');
 
 // ---------- Importar palestras ----------
 
-let palOk = 0, palSkip = 0, palOrf = 0;
+let palOk = 0, palUpd = 0, palSkip = 0, palOrf = 0;
 
 for (const row of palestrasRows) {
   const speakerName = cleanField(row['Usuário'] || row['Usuario']);
@@ -262,36 +302,58 @@ for (const row of palestrasRows) {
   const impactPhrase = cleanField(row['Frase de Impacto']);
   const topics = cleanField(row['Assuntos abordados']);
   const targetAudience = cleanField(row['Para quem é esta palestra'] || row['Para quem e esta palestra']);
+  const priceMin = parsePrice(row['Preço Mínimo'] || row['Preco Minimo']);
+  const priceMax = parsePrice(row['Preço Máximo'] || row['Preco Maximo']);
+
+  // Payload canonico — usado tanto no insert quanto no update
+  const palestraPayload = {
+    speaker_id: sid,
+    title,
+    description,
+    theme_id: primaryThemeId,
+    target_audience: targetAudience,
+    objectives: objectives.length ? objectives : null,
+    impact_phrase: impactPhrase,
+    topics,
+    price_min: priceMin,
+    price_max: priceMax,
+    active: true,
+  };
 
   // Slug unico por (speaker_id, slug)
   const baseSlug = slugify(title);
   const { data: existingSlugs } = await supabase
     .from('palestras')
-    .select('slug')
+    .select('id, slug')
     .eq('speaker_id', sid)
     .like('slug', `${baseSlug}%`);
   let slug = baseSlug;
-  if (existingSlugs && existingSlugs.some(s => s.slug === baseSlug)) {
-    // Ja existe essa palestra para esse palestrante -> pula (idempotencia)
-    console.log(`[palestra] JA EXISTE "${title}" / ${speakerName}`);
-    palSkip++;
+  const existing = existingSlugs?.find(s => s.slug === baseSlug);
+  if (existing) {
+    // Atualiza palestra existente (refresca precos, temas, descricao etc)
+    const { error: updErr } = await supabase
+      .from('palestras')
+      .update(palestraPayload)
+      .eq('id', existing.id);
+    if (updErr) {
+      console.log(`[palestra] ERRO update "${title}" / ${speakerName}: ${updErr.message}`);
+      palSkip++;
+      continue;
+    }
+    // Re-vincula temas: apaga e insere (idempotente)
+    await supabase.from('palestra_themes').delete().eq('palestra_id', existing.id);
+    if (themesForPalestra.length > 0) {
+      const linkRows = themesForPalestra.map(t => ({ palestra_id: existing.id, theme_id: t.id }));
+      await supabase.from('palestra_themes').insert(linkRows);
+    }
+    console.log(`[palestra] UPD "${title}" / ${speakerName}${priceMin || priceMax ? ` R$ ${priceMin || '?'}-${priceMax || '?'}` : ''}`);
+    palUpd++;
     continue;
   }
 
   const { data: palInserted, error: palErr } = await supabase
     .from('palestras')
-    .insert({
-      speaker_id: sid,
-      title,
-      slug,
-      description,
-      theme_id: primaryThemeId,
-      target_audience: targetAudience,
-      objectives: objectives.length ? objectives : null,
-      impact_phrase: impactPhrase,
-      topics,
-      active: true,
-    })
+    .insert({ ...palestraPayload, slug })
     .select('id')
     .single();
 
@@ -315,5 +377,5 @@ for (const row of palestrasRows) {
 }
 
 console.log('---');
-console.log(`Palestras: ${palOk} inseridas, ${palSkip} puladas/existentes, ${palOrf} orfas`);
+console.log(`Palestras: ${palOk} inseridas, ${palUpd} atualizadas, ${palSkip} puladas, ${palOrf} orfas`);
 console.log('Concluido.');

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redefinir senha | Avantik</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+
+  <style>
+    .auth-page {
+      min-height: calc(100vh - 72px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.25rem;
+      padding: 2.5rem;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+    }
+    .auth-card__title { font-family: var(--font-heading); font-size: 1.75rem; line-height: 1.15; margin-bottom: 0.5rem; }
+    .auth-card__subtitle { color: var(--color-text-secondary); margin-bottom: 1.5rem; font-size: 0.9375rem; }
+    .auth-field { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.375rem; }
+    .auth-field label { font-size: 0.875rem; font-weight: 500; color: var(--color-text); }
+    .auth-field input { padding: 0.875rem 1rem; border: 1.5px solid var(--color-border); border-radius: 0.625rem; font-size: 1rem; font-family: inherit; }
+    .auth-field input:focus { outline: 2px solid var(--color-accent); outline-offset: -1px; border-color: transparent; }
+    .auth-error { display: none; background: #fef2f2; color: #991b1b; padding: 0.75rem 1rem; border-radius: 0.625rem; font-size: 0.875rem; margin-bottom: 1.25rem; line-height: 1.4; }
+    .auth-error--visible { display: block; }
+    .auth-success { background: #ecfdf5; color: #065f46; padding: 0.75rem 1rem; border-radius: 0.625rem; font-size: 0.875rem; margin-bottom: 1.25rem; line-height: 1.4; }
+    .auth-submit { width: 100%; margin-top: 0.5rem; min-height: 48px; }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="header__logo-img" width="150" height="40">
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="auth-page">
+      <div class="auth-card">
+        <h1 class="auth-card__title">Redefinir senha</h1>
+        <p class="auth-card__subtitle" id="card-subtitle">Escolha uma nova senha para sua conta.</p>
+
+        <div class="auth-error" id="auth-error" role="alert"></div>
+
+        <div id="loading-state" style="text-align:center;padding:1rem 0;color:var(--color-text-muted)">Verificando link...</div>
+
+        <form id="pwd-form" novalidate hidden>
+          <div class="auth-field">
+            <label for="password">Nova senha</label>
+            <input type="password" id="password" required minlength="6" autocomplete="new-password" placeholder="Mínimo 6 caracteres">
+          </div>
+          <div class="auth-field">
+            <label for="confirm">Confirmar nova senha</label>
+            <input type="password" id="confirm" required minlength="6" autocomplete="new-password" placeholder="Repita a senha">
+          </div>
+          <button type="submit" class="btn btn--accent btn--lg auth-submit" id="submit-btn">Salvar nova senha</button>
+        </form>
+
+        <div id="expired-state" hidden style="text-align:center">
+          <p style="color:var(--color-text-secondary);margin-bottom:1.5rem">Este link de redefinição expirou ou é inválido.</p>
+          <a href="/entrar/" class="btn btn--accent">Voltar para o login</a>
+        </div>
+
+        <div id="success-state" hidden style="text-align:center">
+          <div class="auth-success">Senha redefinida com sucesso. Redirecionando para o login…</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { supabase } from '/lib/supabase.js';
+
+    const loadingState = document.getElementById('loading-state');
+    const form = document.getElementById('pwd-form');
+    const expiredState = document.getElementById('expired-state');
+    const successState = document.getElementById('success-state');
+    const errorDiv = document.getElementById('auth-error');
+    const subtitleEl = document.getElementById('card-subtitle');
+    const submitBtn = document.getElementById('submit-btn');
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('confirm');
+
+    function showError(msg) {
+      errorDiv.textContent = msg;
+      errorDiv.classList.add('auth-error--visible');
+    }
+    function hideError() {
+      errorDiv.textContent = '';
+      errorDiv.classList.remove('auth-error--visible');
+    }
+
+    let isRecovery = false;
+    supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        isRecovery = true;
+        loadingState.hidden = true;
+        form.hidden = false;
+      }
+    });
+
+    // Fallback: se nao disparar PASSWORD_RECOVERY em 3s, considerar expirado
+    setTimeout(async () => {
+      if (!isRecovery) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          loadingState.hidden = true;
+          form.hidden = false;
+        } else {
+          loadingState.hidden = true;
+          expiredState.hidden = false;
+          subtitleEl.textContent = '';
+        }
+      }
+    }, 3000);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+      const pwd = passwordInput.value;
+      const confirm = confirmInput.value;
+      if (pwd.length < 6) { showError('A senha deve ter no mínimo 6 caracteres.'); return; }
+      if (pwd !== confirm) { showError('As senhas não coincidem.'); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Salvando...';
+      try {
+        const { error } = await supabase.auth.updateUser({ password: pwd });
+        if (error) throw error;
+        form.hidden = true;
+        successState.hidden = false;
+        subtitleEl.textContent = '';
+        await supabase.auth.signOut();
+        setTimeout(() => { window.location.href = '/entrar/'; }, 1800);
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Salvar nova senha';
+        showError('Erro ao salvar nova senha. Solicite um novo link em /entrar/.');
+      }
+    });
+  </script>
+</body>
+</html>

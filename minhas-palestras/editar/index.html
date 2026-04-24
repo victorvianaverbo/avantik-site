@@ -385,7 +385,7 @@
     async function loadPalestra() {
       if (isNew) {
         // Checar limite do plano
-        const tier = TIERS[speakerProfile.plan] || TIERS.essencial;
+        const tier = TIERS[speakerProfile.plan] || TIERS.profissional;
         const { count } = await supabase
           .from('palestras')
           .select('*', { count: 'exact', head: true })

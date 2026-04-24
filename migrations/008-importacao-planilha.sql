@@ -14,12 +14,15 @@ CREATE TABLE IF NOT EXISTS public.palestra_themes (
 
 ALTER TABLE public.palestra_themes ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Leitura_publica_de_palestra_themes" ON public.palestra_themes;
 CREATE POLICY "Leitura_publica_de_palestra_themes" ON public.palestra_themes
   FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Permitir_vincular_temas_a_palestra" ON public.palestra_themes;
 CREATE POLICY "Permitir_vincular_temas_a_palestra" ON public.palestra_themes
   FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Permitir_delete_vinculo_propria_palestra" ON public.palestra_themes;
 CREATE POLICY "Permitir_delete_vinculo_propria_palestra" ON public.palestra_themes
   FOR DELETE USING (
     palestra_id IN (

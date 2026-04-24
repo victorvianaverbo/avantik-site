@@ -205,7 +205,7 @@
   </footer>
 
   <script type="module">
-import { supabase, formatPriceRange, ESTADOS_BR, getTierBadge, getTierOrder, escapeHtml, formatDuration } from '/lib/supabase.js';
+import { supabase, formatPriceRange, ESTADOS_BR, renderBadges, getTierOrder, escapeHtml, formatDuration } from '/lib/supabase.js';
 
 const PAGE_SIZE = 12;
 let allSpeakers = [];
@@ -266,10 +266,11 @@ document.querySelector('[data-filter="todos"]').addEventListener('click', () => 
 });
 
 // Fetch ALL active speakers with themes (client-side filter for <500 speakers)
+// Usa view `speakers_public` — nao expoe email/phone pra anonimos (LGPD).
 async function fetchAllSpeakers() {
   const { data, error } = await supabase
-    .from('speakers')
-    .select('*, palestras(id, title, slug, price_min, price_max, theme_id, themes!palestras_theme_id_fkey(name, slug))')
+    .from('speakers_public')
+    .select('id, slug, name, city, state, bio, photo_url, plan, rating, has_seal, did_apogeu, active, created_at, palestras!speaker_id(id, title, slug, price_min, price_max, theme_id, themes!palestras_theme_id_fkey(name, slug))')
     .eq('active', true)
     .order('created_at', { ascending: false });
 
@@ -339,7 +340,7 @@ function applyFilters() {
     return true;
   });
 
-  // Sort: destaque first, then profissional, then essencial. Within same tier, by rating desc.
+  // Sort: elite first, then premium, then profissional. Within same tier, by rating desc.
   filteredSpeakers.sort((a, b) => {
     const tierDiff = getTierOrder(a.plan) - getTierOrder(b.plan);
     if (tierDiff !== 0) return tierDiff;
@@ -370,14 +371,14 @@ function renderCard(s) {
 
   const tagsHtml = s.themes.map(t => `<span>${escapeHtml(t.name)}</span>`).join('');
   const location = [s.city, s.state].filter(Boolean).map(v => escapeHtml(v)).join(', ');
-  const badgeHtml = getTierBadge(s.plan);
-  const destaqueClass = s.plan === 'destaque' ? ' speaker-card--destaque' : '';
+  const badgeHtml = renderBadges(s);
+  const eliteClass = s.plan === 'elite' ? ' speaker-card--elite' : '';
   const talksLabel = s.talks_count > 0
     ? `<span class="speaker-card__talks">${s.talks_count} palestra${s.talks_count > 1 ? 's' : ''}</span>`
     : '';
 
   return `
-    <a href="/palestrante/?slug=${escapeHtml(s.slug)}" class="speaker-card${destaqueClass}">
+    <a href="/palestrante/?slug=${escapeHtml(s.slug)}" class="speaker-card${eliteClass}">
       ${photoHtml}
       <div class="speaker-card__body">
         <span class="speaker-card__name">${escapeHtml(s.name)}</span>

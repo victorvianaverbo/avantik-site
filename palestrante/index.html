@@ -761,10 +761,10 @@
 
   <main>
     <!-- Loading state -->
-    <div class="profile-loading" id="profile-loading">
-      <div class="container" style="padding-top:calc(72px + 4rem);text-align:center">
-        <p style="color:var(--color-text-muted)">Carregando perfil...</p>
-      </div>
+    <div class="profile-loading page-loader" id="profile-loading" role="status" aria-live="polite">
+      <div class="page-loader__spinner" aria-hidden="true"></div>
+      <p class="page-loader__brand">Carregando palestrante</p>
+      <p class="page-loader__label">Preparando o perfil…</p>
     </div>
 
     <!-- Not found state -->
@@ -946,7 +946,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, formatPriceRange, formatDuration, getYouTubeEmbed, getTierBadge, TIERS, PALESTRA_FORMATS, escapeHtml, getUser, getUserType } from '/lib/supabase.js';
+    import { supabase, formatPriceRange, formatDuration, getYouTubeEmbed, renderBadges, TIERS, PALESTRA_FORMATS, escapeHtml, getUser, getUserType } from '/lib/supabase.js';
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
@@ -959,9 +959,10 @@
     }
 
     async function loadProfile() {
+      // Usa view `speakers_public` — nao expoe email/phone pra anonimos (LGPD).
       let query = supabase
-        .from('speakers')
-        .select('*, speaker_themes(themes(id, name, slug))')
+        .from('speakers_public')
+        .select('id, auth_id, slug, plan, name, city, state, bio, photo_url, video_url, price_min, price_max, instagram, linkedin, website, active, rating, has_seal, did_apogeu, created_at, speaker_themes!speaker_id(themes(id, name, slug))')
         .eq('active', true);
 
       if (slug) query = query.eq('slug', slug);
@@ -1003,12 +1004,10 @@
       // Info
       document.getElementById('profile-name').textContent = speaker.name;
 
-      // Tier badge
-      const badgeHtml = getTierBadge(speaker.plan);
-      if (badgeHtml) {
-        document.getElementById('profile-name').insertAdjacentHTML('afterend',
-          `<div style="margin-bottom:0.75rem">${badgeHtml}</div>`);
-      }
+      // Badges acumulaveis (Selo Palco + Apogeu + Tier)
+      const badgeHtml = renderBadges(speaker);
+      document.getElementById('profile-name').insertAdjacentHTML('afterend',
+        `<div style="margin-bottom:0.75rem">${badgeHtml}</div>`);
 
       const location = [speaker.city, speaker.state].filter(Boolean).join(', ');
       const locationEl = document.getElementById('profile-location');
@@ -1029,7 +1028,7 @@
       // CTA de contrata\u00e7\u00e3o aponta sempre para /projetos/novo/ - canal oficial.
       // Dados diretos (WhatsApp/email) s\u00f3 aparecem no bloco "Contato direto"
       // quando a proposta j\u00e1 foi aceita.
-      const tier = TIERS[speaker.plan] || TIERS.essencial;
+      const tier = TIERS[speaker.plan] || TIERS.profissional;
 
       // Bio
       if (speaker.bio) {
@@ -1202,7 +1201,7 @@
         const themeIds = themes.map(t => t.id);
         const { data: related } = await supabase
           .from('speaker_themes')
-          .select('speaker_id, speakers(*, speaker_themes(themes(name, slug)))')
+          .select('speaker_id, speakers:speakers_public!speaker_id(id, slug, name, city, state, bio, photo_url, plan, rating, has_seal, did_apogeu, active, speaker_themes!speaker_id(themes(name, slug)))')
           .in('theme_id', themeIds)
           .neq('speaker_id', speaker.id)
           .limit(20);
@@ -1229,8 +1228,8 @@
                 : `<div class="speaker-card__photo speaker-card__photo--placeholder"><span>${escapeHtml(s.name.charAt(0))}</span></div>`;
               const tagsHtml = s.themes.map(t => `<span>${escapeHtml(t.name)}</span>`).join('');
               const loc = [s.city, s.state].filter(Boolean).map(v => escapeHtml(v)).join(', ');
-              const relBadgeHtml = getTierBadge(s.plan);
-              const relDestaqueClass = s.plan === 'destaque' ? ' speaker-card--destaque' : '';
+              const relBadgeHtml = renderBadges(s);
+              const relDestaqueClass = s.plan === 'elite' ? ' speaker-card--elite' : '';
               return `
                 <a href="/palestrante/?slug=${escapeHtml(s.slug)}" class="speaker-card${relDestaqueClass}">
                   ${photoHtml}

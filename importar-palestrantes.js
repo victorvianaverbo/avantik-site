@@ -14,7 +14,7 @@
  * NOTAS:
  *   - A primeira linha do CSV é o cabeçalho (ignorada)
  *   - Temas devem corresponder aos nomes cadastrados no banco (ex: "Liderança;Vendas")
- *   - Se o plano não for informado, usa "essencial"
+ *   - Se o plano não for informado, usa "profissional"
  *   - Palestrantes são criados com active=true
  */
 
@@ -80,7 +80,7 @@ for (const line of rows) {
   }
 
   const slug = generateSlug(nome);
-  const plano = cols[13] || 'essencial';
+  const plano = cols[13] || 'profissional';
   const temasStr = cols[14] || '';
 
   // Verificar slug único

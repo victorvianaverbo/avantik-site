@@ -327,36 +327,48 @@
           <!-- Escolha seu plano -->
           <fieldset class="cadastro-section">
             <legend class="cadastro-section__title">Escolha seu plano</legend>
-            <p class="cadastro-section__hint" style="margin:0 0 1rem;color:var(--color-text-secondary);font-size:0.9375rem;"><strong>15 dias grátis</strong> no plano escolhido. Sem fidelidade, cancele quando quiser.</p>
-            <div class="cadastro-plans cadastro-plans--two" id="plan-selector">
+            <p class="cadastro-section__hint" style="margin:0 0 1rem;color:var(--color-text-secondary);font-size:0.9375rem;">Seu perfil num <strong>banco vivo de palestras</strong> onde contratantes contratam todos os dias. <strong>15 dias grátis</strong> sem fidelidade.</p>
+            <div class="cadastro-plans" id="plan-selector">
               <label class="cadastro-plan">
-                <input type="radio" name="plan" value="profissional" class="cadastro-plan__radio" checked>
-                <div class="cadastro-plan__card cadastro-plan__card--recommended">
-                  <span class="cadastro-plan__badge">Recomendado</span>
+                <input type="radio" name="plan" value="profissional" class="cadastro-plan__radio">
+                <div class="cadastro-plan__card">
                   <span class="cadastro-plan__name">Profissional</span>
-                  <span class="cadastro-plan__price">R$ 67<small>/mes</small></span>
+                  <span class="cadastro-plan__price">R$ 67<small>/mês</small></span>
                   <ul class="cadastro-plan__features">
-                    <li>15 dias grátis</li>
-                    <li>10 fotos, 1 vídeo</li>
-                    <li>Até 99 palestras</li>
+                    <li>Perfil no banco de palestras</li>
+                    <li>1 palestra cadastrada</li>
+                    <li>3 fotos + 1 vídeo</li>
                     <li>WhatsApp visível</li>
-                    <li>Selo verificado</li>
-                    <li>Prioridade na busca</li>
+                    <li>15 dias grátis</li>
                   </ul>
                 </div>
               </label>
               <label class="cadastro-plan">
-                <input type="radio" name="plan" value="destaque" class="cadastro-plan__radio">
-                <div class="cadastro-plan__card">
-                  <span class="cadastro-plan__name">Destaque</span>
-                  <span class="cadastro-plan__price">R$ 147<small>/mes</small></span>
+                <input type="radio" name="plan" value="premium" class="cadastro-plan__radio" checked>
+                <div class="cadastro-plan__card cadastro-plan__card--recommended">
+                  <span class="cadastro-plan__badge">Recomendado</span>
+                  <span class="cadastro-plan__name">Premium</span>
+                  <span class="cadastro-plan__price">R$ 147<small>/mês</small></span>
                   <ul class="cadastro-plan__features">
-                    <li>15 dias grátis</li>
+                    <li>3x mais chances de matching</li>
+                    <li>Até 3 palestras cadastradas</li>
+                    <li>10 fotos + 3 vídeos</li>
+                    <li>Prioridade na busca</li>
+                    <li>Badge Premium no perfil</li>
+                  </ul>
+                </div>
+              </label>
+              <label class="cadastro-plan">
+                <input type="radio" name="plan" value="elite" class="cadastro-plan__radio">
+                <div class="cadastro-plan__card">
+                  <span class="cadastro-plan__name">Elite</span>
+                  <span class="cadastro-plan__price">R$ 297<small>/mês</small></span>
+                  <ul class="cadastro-plan__features">
+                    <li>Cobertura total no banco</li>
+                    <li>Até 10 palestras cadastradas</li>
                     <li>Fotos e vídeos ilimitados</li>
-                    <li>Selo dourado</li>
-                    <li>Topo da busca</li>
-                    <li>Destaque na home</li>
-                    <li>Programa Avantik Pro completo</li>
+                    <li>Topo da busca + destaque na home</li>
+                    <li>Badge dourado Elite</li>
                   </ul>
                 </div>
               </label>
@@ -603,18 +615,19 @@ if (preselectedPlan) {
 
 // Apply limits based on selected plan
 const PLAN_LIMITS = {
-  profissional: { maxPhotos: 10, maxPalestras: 99, maxVideos: 1 },
-  destaque: { maxPhotos: 99, maxPalestras: 999, maxVideos: 99 }
+  profissional: { maxPhotos: 3, maxPalestras: 1, maxVideos: 1 },
+  premium:      { maxPhotos: 10, maxPalestras: 3, maxVideos: 3 },
+  elite:        { maxPhotos: 99, maxPalestras: 10, maxVideos: 99 }
 };
 
 function getSelectedPlan() {
   const selected = document.querySelector('input[name="plan"]:checked')?.value;
-  if (selected === 'profissional' || selected === 'destaque') return selected;
-  return 'profissional';
+  if (['profissional', 'premium', 'elite'].includes(selected)) return selected;
+  return 'premium';
 }
 
 function applyPlanLimits() {
-  // Ambos os planos (profissional e destaque) incluem video, entao nada a esconder.
+  // Os tres planos (Profissional/Premium/Elite) incluem video, entao nada a esconder.
 }
 
 // Listen for plan changes

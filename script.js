@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFAQ();
   initBlogFilter();
   initVideoThumbs();
-  initClientsCarousel();
   initAuthNav();
 });
 
@@ -496,53 +495,8 @@ function initVideoThumbs() {
   });
 }
 
-/* ==========================================
-   CLIENTS CAROUSEL (setas)
-   ========================================== */
-
-function initClientsCarousel() {
-  const track = document.getElementById('clients-track');
-  const prevBtn = document.querySelector('.clients__arrow--prev');
-  const nextBtn = document.querySelector('.clients__arrow--next');
-  if (!track || !prevBtn || !nextBtn) return;
-
-  let pos = 0;
-
-  function getItemWidth() {
-    const logo = track.querySelector('.clients__logo');
-    if (!logo) return 200;
-    const style = getComputedStyle(track);
-    const gap = parseFloat(style.gap) || 24;
-    return logo.offsetWidth + gap;
-  }
-
-  function getVisibleCount() {
-    const viewport = track.parentElement;
-    return Math.floor(viewport.offsetWidth / getItemWidth()) || 1;
-  }
-
-  function getMaxPos() {
-    const total = track.querySelectorAll('.clients__logo').length;
-    return Math.max(0, total - getVisibleCount());
-  }
-
-  function update() {
-    const offset = pos * getItemWidth();
-    track.style.transform = 'translateX(-' + offset + 'px)';
-  }
-
-  nextBtn.addEventListener('click', () => {
-    const max = getMaxPos();
-    pos = pos >= max ? 0 : pos + 1;
-    update();
-  });
-
-  prevBtn.addEventListener('click', () => {
-    const max = getMaxPos();
-    pos = pos <= 0 ? max : pos - 1;
-    update();
-  });
-}
+/* Carrossel de clientes agora roda automaticamente via CSS (scrollClients 60s).
+   Nao precisa mais de JS — setas escondidas via CSS. */
 
 /* ==========================================
    AUTH NAV (estado de login no header)
@@ -590,47 +544,105 @@ async function initAuthNav() {
       location.href = '/';
     };
 
-    // Montar navbar combinando links de todos os papeis do usuario
-    let navHtml = '';
-    let mobileHtml = '';
-
-    if (speaker) {
-      navHtml += `
-        <a href="/minhas-palestras/" class="btn btn--outline btn--sm">Minhas Palestras</a>
-        <a href="/projetos/" class="btn btn--outline btn--sm">Oportunidades</a>
-      `;
-      mobileHtml += `
-        <a href="/minhas-palestras/" class="btn btn--outline">Minhas Palestras</a>
-        <a href="/projetos/" class="btn btn--outline">Oportunidades</a>
-      `;
-    }
-
+    // --- CTA primario visivel na topbar (a acao de maior valor por papel) ---
+    let primaryCta = '';
     if (contractor) {
-      navHtml += `
-        <a href="/meus-projetos/" class="btn btn--outline btn--sm">Meus Projetos</a>
-        <a href="/projetos/novo/" class="btn btn--accent btn--sm">Publicar Oportunidade</a>
-      `;
-      mobileHtml += `
-        <a href="/meus-projetos/" class="btn btn--outline">Meus Projetos</a>
-        <a href="/projetos/novo/" class="btn btn--accent">Publicar Oportunidade</a>
-      `;
+      primaryCta = '<a href="/projetos/novo/" class="btn btn--accent btn--sm">Publicar Oportunidade</a>';
+    } else if (speaker) {
+      primaryCta = `<a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent btn--sm">Meu Perfil</a>`;
     }
 
-    // Se e so palestrante (sem contratante), adicionar link "Meu Perfil" como CTA principal
-    if (speaker && !contractor) {
-      navHtml += `<a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent btn--sm">Meu Perfil</a>`;
-      mobileHtml += `<a href="/palestrante/?slug=${speaker.slug || ''}" class="btn btn--accent">Meu Perfil</a>`;
-    }
+    // --- Dados do avatar ---
+    const displayName = (speaker?.name || contractor?.name || user.email || '').trim();
+    const firstName = displayName.split(/\s+/)[0] || 'Você';
+    const initials = displayName
+      ? displayName.split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase()
+      : (user.email?.[0] || '?').toUpperCase();
+    const photo = speaker?.photo_url && speaker.photo_url !== '/images/avatar-placeholder.svg'
+      ? speaker.photo_url
+      : null;
 
-    // Botao sair
-    if (navHtml) {
-      navHtml += `<button class="btn btn--sm" onclick="window.__avantikLogout()">Sair</button>`;
-    }
+    const avatarHtml = photo
+      ? `<span class="user-menu__avatar user-menu__avatar--photo" style="background-image:url('${photo}')" aria-hidden="true"></span>`
+      : `<span class="user-menu__avatar" aria-hidden="true">${initials}</span>`;
 
-    if (navHtml) {
-      headerActions.innerHTML = navHtml;
-      headerActions.dataset.authState = 'logged';
-      if (mobileActions) mobileActions.innerHTML = mobileHtml;
+    // --- Itens do menu (ordem: acoes do papel, oportunidades, sair) ---
+    const ICON_CAL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+    const ICON_USER = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+    const ICON_FOLDER = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>';
+    const ICON_SEARCH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+    const ICON_LOGOUT = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
+
+    let menuItems = '';
+    if (speaker) {
+      menuItems += `<a href="/palestrante/?slug=${speaker.slug || ''}" class="user-menu__item">${ICON_USER}Meu perfil público</a>`;
+      menuItems += `<a href="/minhas-palestras/" class="user-menu__item">${ICON_CAL}Minhas palestras</a>`;
+    }
+    if (contractor) {
+      menuItems += `<a href="/meus-projetos/" class="user-menu__item">${ICON_FOLDER}Meus projetos</a>`;
+    }
+    menuItems += `<a href="/projetos/" class="user-menu__item">${ICON_SEARCH}Oportunidades</a>`;
+    menuItems += `<div class="user-menu__divider"></div>`;
+    menuItems += `<button type="button" class="user-menu__item user-menu__item--danger" onclick="window.__avantikLogout()">${ICON_LOGOUT}Sair</button>`;
+
+    const safeName = String(firstName).replace(/[<>&"']/g, '');
+    const safeEmail = String(user.email || '').replace(/[<>&"']/g, '');
+
+    const navHtml = `
+      ${primaryCta}
+      <div class="user-menu" id="user-menu">
+        <button class="user-menu__trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Abrir menu do usuário">
+          ${avatarHtml}
+          <span class="user-menu__name">${safeName}</span>
+          <svg class="user-menu__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="user-menu__panel" role="menu">
+          <div class="user-menu__header">
+            <strong>${safeName}</strong>
+            <span>${safeEmail}</span>
+          </div>
+          <div class="user-menu__divider"></div>
+          ${menuItems}
+        </div>
+      </div>
+    `;
+
+    // --- Mobile: mantem empilhado, mas so os itens essenciais + logout ---
+    let mobileHtml = '';
+    if (contractor) {
+      mobileHtml += `<a href="/projetos/novo/" class="btn btn--accent">Publicar Oportunidade</a>`;
+      mobileHtml += `<a href="/meus-projetos/" class="btn btn--outline">Meus Projetos</a>`;
+    }
+    if (speaker) {
+      mobileHtml += `<a href="/palestrante/?slug=${speaker.slug || ''}" class="btn ${contractor ? 'btn--outline' : 'btn--accent'}">Meu Perfil</a>`;
+      mobileHtml += `<a href="/minhas-palestras/" class="btn btn--outline">Minhas Palestras</a>`;
+    }
+    mobileHtml += `<a href="/projetos/" class="btn btn--outline">Oportunidades</a>`;
+    mobileHtml += `<button class="btn" onclick="window.__avantikLogout()">Sair</button>`;
+
+    headerActions.innerHTML = navHtml;
+    headerActions.dataset.authState = 'logged';
+    if (mobileActions) mobileActions.innerHTML = mobileHtml;
+
+    // --- Toggle do dropdown ---
+    const um = document.getElementById('user-menu');
+    if (um) {
+      const trigger = um.querySelector('.user-menu__trigger');
+      const close = () => {
+        um.classList.remove('user-menu--open');
+        trigger.setAttribute('aria-expanded', 'false');
+      };
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = um.classList.toggle('user-menu--open');
+        trigger.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('click', (e) => {
+        if (!um.contains(e.target)) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
     }
   } catch (e) {
     console.error('initAuthNav error:', e);

@@ -193,7 +193,7 @@
     /* Plan picker */
     .plan-picker {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 0.75rem;
       margin-bottom: 1.5rem;
     }
@@ -384,30 +384,44 @@
           <form id="plan-form" novalidate>
             <div class="plan-picker">
               <label class="plan-picker__option">
-                <input type="radio" name="trial-plan" value="profissional" checked>
+                <input type="radio" name="trial-plan" value="profissional">
                 <div class="plan-picker__card">
-                  <span class="plan-picker__badge">Recomendado</span>
                   <div class="plan-picker__name">Profissional</div>
                   <div class="plan-picker__price">R$ 67<small>/mês</small></div>
                   <ul class="plan-picker__features">
-                    <li>10 fotos, 1 vídeo</li>
-                    <li>Até 99 palestras</li>
+                    <li>Perfil no banco de palestras</li>
+                    <li>1 palestra cadastrada</li>
+                    <li>3 fotos + 1 vídeo</li>
                     <li>WhatsApp visível</li>
-                    <li>Selo verificado</li>
                   </ul>
                 </div>
               </label>
 
               <label class="plan-picker__option">
-                <input type="radio" name="trial-plan" value="destaque">
+                <input type="radio" name="trial-plan" value="premium" checked>
                 <div class="plan-picker__card">
-                  <div class="plan-picker__name">Destaque</div>
+                  <span class="plan-picker__badge">Recomendado</span>
+                  <div class="plan-picker__name">Premium</div>
                   <div class="plan-picker__price">R$ 147<small>/mês</small></div>
                   <ul class="plan-picker__features">
+                    <li>3x mais chances de matching</li>
+                    <li>Até 3 palestras cadastradas</li>
+                    <li>10 fotos + 3 vídeos</li>
+                    <li>Prioridade na busca</li>
+                  </ul>
+                </div>
+              </label>
+
+              <label class="plan-picker__option">
+                <input type="radio" name="trial-plan" value="elite">
+                <div class="plan-picker__card">
+                  <div class="plan-picker__name">Elite</div>
+                  <div class="plan-picker__price">R$ 297<small>/mês</small></div>
+                  <ul class="plan-picker__features">
+                    <li>Cobertura total no banco</li>
+                    <li>Até 10 palestras cadastradas</li>
                     <li>Fotos e vídeos ilimitados</li>
-                    <li>Selo dourado</li>
-                    <li>Topo da busca</li>
-                    <li>Destaque na home</li>
+                    <li>Topo da busca + destaque na home</li>
                   </ul>
                 </div>
               </label>
@@ -570,7 +584,7 @@
       hideError(planError);
 
       const selectedPlan = document.querySelector('input[name="trial-plan"]:checked')?.value;
-      if (selectedPlan !== 'profissional' && selectedPlan !== 'destaque') {
+      if (!['profissional', 'premium', 'elite'].includes(selectedPlan)) {
         return showError(planError, 'Escolha um dos planos para continuar.');
       }
       if (!currentSpeaker || !currentEmail || !currentPassword) {

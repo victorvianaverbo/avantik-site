@@ -18,34 +18,16 @@
   <script src="/script.js" defer></script>
 
   <style>
-    /* Hero — bloco GRAFITE (branco + amarelo) */
+    /* Hero — bloco grafite premium (chumbo + dourado) */
     .palestra-hero {
       position: relative;
-      min-height: 70vh;
-      padding: calc(72px + 4rem) 0 4rem;
-      background: var(--color-dark);
-      background-image:
-        radial-gradient(ellipse at 30% 50%, rgba(232, 185, 49, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 20%, rgba(67, 64, 160, 0.07) 0%, transparent 50%);
+      padding: calc(72px + 3rem) 0 4rem;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(232, 185, 49, 0.05) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 80%, rgba(67, 64, 160, 0.06) 0%, transparent 55%),
+        linear-gradient(180deg, #1C1C1E 0%, #26262A 100%);
       color: white;
       overflow: hidden;
-    }
-
-    .palestra-hero__bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      opacity: 0.18;
-      background-size: cover;
-      background-position: center;
-      filter: blur(2px);
-    }
-
-    .palestra-hero__overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(180deg, rgba(28, 28, 30, 0.6) 0%, rgba(28, 28, 30, 0.92) 100%);
     }
 
     .palestra-hero__content {
@@ -54,6 +36,71 @@
       max-width: 900px;
       margin: 0 auto;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Avatar circular estilo rede social (no topo do hero) */
+    .palestra-hero__avatar {
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+      background: var(--color-dark-surface);
+      background-size: cover;
+      background-position: center 20%;
+      margin-bottom: 1.5rem;
+      transition: transform 220ms var(--ease-out), box-shadow 220ms;
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .palestra-hero__avatar {
+        width: 160px;
+        height: 160px;
+      }
+    }
+
+    .palestra-hero__avatar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .palestra-hero__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+    }
+
+    .palestra-hero__speaker-name {
+      font-size: 0.8125rem;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .palestra-hero__speaker-name a {
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+      transition: color 180ms;
+    }
+
+    .palestra-hero__speaker-name a:hover {
+      color: var(--color-accent);
+    }
+
+    .palestra-hero__tags {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .palestra-hero__badge {
@@ -64,7 +111,6 @@
       font-size: 0.8125rem;
       font-weight: 700;
       border-radius: 100px;
-      margin-bottom: 1.5rem;
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
@@ -442,7 +488,7 @@
 
       .palestra-hero {
         min-height: auto;
-        padding: calc(72px + 2rem) 0 2.5rem;
+        padding: 2rem 0 2.5rem;
       }
 
       .palestra-hero__meta {
@@ -706,10 +752,10 @@
 
   <main>
     <!-- Loading -->
-    <div class="palestra-loading" id="palestra-loading">
-      <div class="container">
-        <p style="color:var(--color-text-muted)">Carregando palestra...</p>
-      </div>
+    <div class="palestra-loading page-loader" id="palestra-loading" role="status" aria-live="polite">
+      <div class="page-loader__spinner" aria-hidden="true"></div>
+      <p class="page-loader__brand">Carregando palestra</p>
+      <p class="page-loader__label">Buscando detalhes…</p>
     </div>
 
     <!-- Not found -->
@@ -724,12 +770,15 @@
     <!-- Content -->
     <article id="palestra-content" hidden>
 
-      <!-- HERO -->
+      <!-- HERO — avatar + tema + selo + titulo -->
       <section class="palestra-hero">
-        <div class="palestra-hero__bg" id="hero-bg"></div>
-        <div class="palestra-hero__overlay"></div>
         <div class="palestra-hero__content container">
-          <span class="palestra-hero__badge" id="hero-badge"></span>
+          <a href="#" class="palestra-hero__avatar" id="hero-avatar" aria-label="Ver perfil do palestrante"></a>
+          <p class="palestra-hero__speaker-name">por <a href="#" id="hero-speaker-link"></a></p>
+          <div class="palestra-hero__tags">
+            <span class="palestra-hero__badge" id="hero-badge"></span>
+            <span id="hero-seal-badges"></span>
+          </div>
           <h1 class="palestra-hero__title" id="hero-title"></h1>
           <p class="palestra-hero__subtitle" id="hero-subtitle"></p>
           <div class="palestra-hero__meta" id="hero-meta"></div>
@@ -886,7 +935,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, escapeHtml, formatPriceRange, formatDuration, getYouTubeEmbed, PALESTRA_FORMATS, TIERS, getUser, getUserType } from '/lib/supabase.js';
+    import { supabase, escapeHtml, formatPriceRange, formatDuration, getYouTubeEmbed, PALESTRA_FORMATS, TIERS, getUser, getUserType, renderBadges } from '/lib/supabase.js';
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
@@ -899,9 +948,10 @@
     }
 
     async function loadPalestra() {
+      // Usa view `speakers_public` via embedding — sem expor email/phone.
       let query = supabase
         .from('palestras')
-        .select('*, themes!palestras_theme_id_fkey(name, slug), speakers(*)')
+        .select('*, themes!palestras_theme_id_fkey(name, slug), speakers:speakers_public!speaker_id(id, slug, name, city, state, bio, photo_url, plan, has_seal, did_apogeu, website, rating, created_at, video_url, price_min, price_max)')
         .eq('active', true);
 
       if (slug) query = query.eq('slug', slug);
@@ -925,16 +975,31 @@
         metaDesc.content = palestra.description ? palestra.description.substring(0, 160) : `Palestra de ${speaker.name}`;
       }
 
-      // HERO
-      const heroImage = palestra.image_url || speaker.photo_url;
-      if (heroImage) {
-        document.getElementById('hero-bg').style.backgroundImage = `url('${heroImage}')`;
+      // HERO — avatar do palestrante, tema, selo, titulo
+      const speakerSlugUrl = `/palestrante/?slug=${encodeURIComponent(speaker.slug)}`;
+      const heroAvatar = document.getElementById('hero-avatar');
+      heroAvatar.href = speakerSlugUrl;
+      if (speaker.photo_url) {
+        heroAvatar.innerHTML = `<img src="${escapeHtml(speaker.photo_url)}" alt="${escapeHtml(speaker.name)}">`;
+      } else {
+        heroAvatar.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:2rem;font-family:var(--font-heading);background:linear-gradient(135deg,var(--color-primary),var(--color-primary-light))">${escapeHtml(speaker.name.charAt(0))}</div>`;
       }
+      const heroSpeakerLink = document.getElementById('hero-speaker-link');
+      heroSpeakerLink.href = speakerSlugUrl;
+      heroSpeakerLink.textContent = speaker.name;
 
       if (theme) {
         document.getElementById('hero-badge').textContent = theme.name;
       } else {
         document.getElementById('hero-badge').style.display = 'none';
+      }
+
+      // Selo Palco / Apogeu (so mostra se tiver — nao mostra o badge de tier aqui,
+      // pois ja estamos no contexto da palestra, nao do palestrante)
+      if (speaker.has_seal || speaker.did_apogeu) {
+        document.getElementById('hero-seal-badges').innerHTML =
+          renderBadges({ has_seal: speaker.has_seal, did_apogeu: speaker.did_apogeu, plan: null })
+            .replace(/<span class="badge badge--tier[^<]*<\/span>/, '');
       }
 
       document.getElementById('hero-title').textContent = palestra.title;
@@ -1010,7 +1075,7 @@
       }
       document.getElementById('details-card').innerHTML = detailsItems.join('');
 
-      // SPEAKER
+      // SPEAKER (bloco inferior — bio completa)
       const speakerPhoto = document.getElementById('speaker-photo');
       if (speaker.photo_url) {
         speakerPhoto.innerHTML = `<img src="${escapeHtml(speaker.photo_url)}" alt="${escapeHtml(speaker.name)}">`;
@@ -1019,7 +1084,7 @@
       }
       document.getElementById('speaker-name').textContent = speaker.name;
       document.getElementById('speaker-bio').textContent = speaker.bio || '';
-      document.getElementById('speaker-link').href = `/palestrante/?slug=${speaker.slug}`;
+      document.getElementById('speaker-link').href = speakerSlugUrl;
 
       // VIDEO (palestra video ou fallback para speaker video)
       const videoUrl = palestra.video_url || speaker.video_url;
@@ -1030,7 +1095,7 @@
       }
 
       // CTA
-      const tier = TIERS[speaker.plan] || TIERS.essencial;
+      const tier = TIERS[speaker.plan] || TIERS.profissional;
       const phone = speaker.phone ? speaker.phone.replace(/\D/g, '') : '';
       const msgEncoded = encodeURIComponent(`Ola ${speaker.name}, encontrei sua palestra "${palestra.title}" na Avantik e gostaria de solicitar um orcamento.`);
 

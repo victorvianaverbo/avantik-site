@@ -101,6 +101,13 @@
       display: block;
     }
 
+    .auth-forgot__hint {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
     .auth-submit {
       width: 100%;
       margin-top: 0.5rem;
@@ -197,14 +204,31 @@
           </div>
 
           <div class="auth-field">
-            <label for="password">Senha</label>
+            <label for="password" style="display:flex;justify-content:space-between;align-items:baseline;gap:0.5rem">
+              <span>Senha</span>
+              <a href="#" id="forgot-link" style="font-size:0.8125rem;font-weight:500;color:var(--color-accent);text-decoration:none">Esqueci a senha</a>
+            </label>
             <input type="password" id="password" name="password" required minlength="6" autocomplete="current-password" placeholder="Sua senha">
           </div>
 
           <button type="submit" class="btn btn--accent btn--lg auth-submit" id="submit-btn">Entrar</button>
         </form>
 
-        <div class="auth-links">
+        <!-- Painel "Esqueci a senha" (hidden por default) -->
+        <div id="forgot-panel" class="auth-forgot" hidden>
+          <p class="auth-forgot__hint">Digite seu email e enviaremos um link para redefinir a senha.</p>
+          <form id="forgot-form" novalidate>
+            <div class="auth-field">
+              <label for="forgot-email">Email</label>
+              <input type="email" id="forgot-email" required autocomplete="email" placeholder="seu@email.com">
+            </div>
+            <button type="submit" class="btn btn--accent btn--lg auth-submit" id="forgot-btn">Enviar link</button>
+            <button type="button" id="forgot-cancel" class="btn btn--outline" style="width:100%;margin-top:0.5rem">Voltar</button>
+          </form>
+        </div>
+        <div id="forgot-success" class="auth-error" style="background:#ecfdf5;color:#065f46;border-color:#6ee7b7" hidden></div>
+
+        <div class="auth-links" id="auth-links">
           <p><a href="/primeiro-acesso/">Primeiro acesso? Ative seu perfil</a></p>
           <p style="margin-top:1rem">Não tem conta?</p>
           <a href="/cadastro/">Cadastrar como Palestrante</a><br>
@@ -223,7 +247,7 @@
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegacao</h4>
+          <h4 class="footer__col-title">Navegação</h4>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/projetos/">Oportunidades</a>
@@ -234,8 +258,8 @@
         <div class="footer__col">
           <h4 class="footer__col-title">Legal</h4>
           <nav class="footer__links">
-            <a href="/privacidade/">Politica de Privacidade</a>
-            <a href="/termos/">Termos e Condicoes</a>
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
             <a href="/contrato/">Contrato do Assinante</a>
           </nav>
         </div>
@@ -253,7 +277,7 @@
   </footer>
 
   <script type="module">
-    import { authSignIn, getUser, getUserType } from '/lib/supabase.js';
+    import { authSignIn, getUser, getUserType, supabase } from '/lib/supabase.js';
 
     const form = document.getElementById('login-form');
     const emailInput = document.getElementById('email');
@@ -338,6 +362,60 @@
           showError('Erro ao fazer login. Tente novamente.');
         }
         setLoading(false);
+      }
+    });
+
+    // -------- Esqueci a senha --------
+    const forgotLink = document.getElementById('forgot-link');
+    const forgotPanel = document.getElementById('forgot-panel');
+    const forgotForm = document.getElementById('forgot-form');
+    const forgotEmail = document.getElementById('forgot-email');
+    const forgotBtn = document.getElementById('forgot-btn');
+    const forgotCancel = document.getElementById('forgot-cancel');
+    const forgotSuccess = document.getElementById('forgot-success');
+    const authLinks = document.getElementById('auth-links');
+
+    function openForgot() {
+      hideError();
+      forgotSuccess.hidden = true;
+      form.hidden = true;
+      authLinks.hidden = true;
+      forgotPanel.hidden = false;
+      forgotEmail.value = emailInput.value.trim();
+      setTimeout(() => forgotEmail.focus(), 60);
+    }
+
+    function closeForgot() {
+      forgotPanel.hidden = true;
+      form.hidden = false;
+      authLinks.hidden = false;
+    }
+
+    forgotLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      openForgot();
+    });
+    forgotCancel.addEventListener('click', closeForgot);
+
+    forgotForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = forgotEmail.value.trim();
+      if (!email) return;
+      forgotBtn.disabled = true;
+      forgotBtn.textContent = 'Enviando...';
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/nova-senha/`,
+        });
+        if (error) throw error;
+        forgotPanel.hidden = true;
+        forgotSuccess.textContent = `Se existir uma conta com ${email}, enviamos um link para redefinir a senha. Verifique sua caixa de entrada (e o spam).`;
+        forgotSuccess.hidden = false;
+        authLinks.hidden = false;
+      } catch (err) {
+        forgotBtn.disabled = false;
+        forgotBtn.textContent = 'Enviar link';
+        alert('Não foi possível enviar o link. Tente novamente em alguns minutos.');
       }
     });
   </script>
