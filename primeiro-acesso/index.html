@@ -609,23 +609,23 @@
         const authId = authData.user?.id;
 
         if (authId) {
-          try {
-            await linkSpeakerAuth(currentSpeaker.id, authId);
-          } catch (linkErr) {
-            console.warn('Falha ao vincular auth_id ao speaker', linkErr);
-          }
+          // Vinculacao e critica: se falhar o speaker fica orfao (auth sem
+          // perfil). Nao engolir o erro — deixar bubble-up pro catch externo.
+          await linkSpeakerAuth(currentSpeaker.id, authId);
 
-          // Seta plano escolhido e inicia trial de 15 dias
-          try {
-            await supabase
-              .from('speakers')
-              .update({
-                plan: selectedPlan,
-                trial_started_at: new Date().toISOString(),
-              })
-              .eq('id', currentSpeaker.id);
-          } catch (planErr) {
-            console.warn('Falha ao salvar plano/trial', planErr);
+          // Seta plano escolhido e inicia trial de 15 dias. Como acabamos
+          // de vincular auth_id, a policy "Speakers leem proprio perfil"
+          // ja casa e o UPDATE direto funciona.
+          const { error: planUpdateError } = await supabase
+            .from('speakers')
+            .update({
+              plan: selectedPlan,
+              trial_started_at: new Date().toISOString(),
+            })
+            .eq('id', currentSpeaker.id);
+
+          if (planUpdateError) {
+            console.warn('Falha ao salvar plano/trial', planUpdateError);
           }
         }
 
