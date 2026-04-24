@@ -113,6 +113,31 @@ ul, ol {
   padding-bottom: var(--section-py);
 }
 
+/* Variante escura (chumbo #1C1C1E) com radiais douradas sutis.
+   Usar em paginas logadas/autenticadas pra manter o padrao visual
+   das auth pages (/entrar/, /primeiro-acesso/, etc). */
+.section--dark {
+  background: var(--color-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.section--dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(197, 165, 114, 0.12), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(197, 165, 114, 0.08), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section--dark > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* ==========================================
    BUTTONS
    ========================================== */
