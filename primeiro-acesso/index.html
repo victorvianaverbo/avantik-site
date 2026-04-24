@@ -190,11 +190,17 @@
       color: var(--color-accent);
     }
 
+    /* Quando o passo de escolha de plano esta ativo, alargar o card
+       para caber os 3 planos confortavelmente. */
+    .auth-card:has(#step-plan:not([hidden])) {
+      max-width: 780px;
+    }
+
     /* Plan picker */
     .plan-picker {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
+      gap: 1rem;
       margin-bottom: 1.5rem;
     }
 
@@ -211,12 +217,13 @@
 
     .plan-picker__card {
       position: relative;
-      padding: 1.25rem 1rem;
+      padding: 1.5rem 1.25rem;
       border: 2px solid var(--color-border);
       border-radius: 0.875rem;
       background: var(--color-surface);
       transition: border-color 0.2s, box-shadow 0.2s;
       text-align: center;
+      height: 100%;
     }
 
     .plan-picker__option input:checked + .plan-picker__card {
@@ -282,9 +289,12 @@
       font-weight: 700;
     }
 
+    @media (max-width: 720px) {
+      .plan-picker { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 480px) {
       .auth-card { padding: 1.75rem 1.25rem; border-radius: 1rem; }
-      .plan-picker { grid-template-columns: 1fr; }
     }
   </style>
 </head>
