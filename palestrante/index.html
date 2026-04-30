@@ -1044,13 +1044,10 @@
         document.getElementById('profile-cta-video').hidden = false;
       }
 
-      // Social links - Instagram e LinkedIn ficam ocultos no perfil publico
+      // Social links - Instagram, LinkedIn e Website ficam ocultos no perfil publico
       // (contratante nao pode pular a plataforma e contatar direto). Palestrante
       // acessa suas redes pelo painel admin.
       const socialLinks = [];
-      if (speaker.website) {
-        socialLinks.push(`<a href="${escapeHtml(speaker.website)}" target="_blank" rel="noopener noreferrer" class="profile-social__link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Website</a>`);
-      }
 
       if (socialLinks.length > 0) {
         document.getElementById('profile-social-links').innerHTML = socialLinks.join('');
@@ -1166,21 +1163,6 @@
                   <div class="contact-direct__info">
                     <span class="contact-direct__label">Email</span>
                     <span class="contact-direct__value">${escapeHtml(speaker.email)}</span>
-                  </div>
-                </a>
-              `);
-            }
-
-            if (speaker.website) {
-              let websiteLabel = speaker.website.replace(/^https?:\/\//, '').replace(/\/$/, '');
-              cards.push(`
-                <a href="${escapeHtml(speaker.website)}" target="_blank" rel="noopener noreferrer" class="contact-direct__card">
-                  <div class="contact-direct__icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                  </div>
-                  <div class="contact-direct__info">
-                    <span class="contact-direct__label">Site oficial</span>
-                    <span class="contact-direct__value">${escapeHtml(websiteLabel)}</span>
                   </div>
                 </a>
               `);

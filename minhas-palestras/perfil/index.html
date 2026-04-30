@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Editar Perfil | Avantik</title>
+  <meta name="description" content="Edite seu perfil de palestrante na Avantik.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+
+  <style>
+    .ep {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .ep__form {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 1.25rem;
+      padding: 2rem;
+    }
+
+    .ep-section {
+      border: none;
+      padding: 0;
+      margin: 0 0 2rem;
+    }
+
+    .ep-section__title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      color: var(--color-text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .ep-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 540px) {
+      .ep-grid-2 { grid-template-columns: 1fr; }
+      .ep__form { padding: 1.5rem; }
+    }
+
+    .ep__hint {
+      display: block;
+      font-size: 0.8125rem;
+      color: var(--color-text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    .ep__feedback {
+      padding: 0.875rem 1rem;
+      border-radius: 0.625rem;
+      margin-top: 1rem;
+      font-size: 0.9375rem;
+    }
+    .ep__feedback--ok { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
+    .ep__feedback--err { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    .ep__actions {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .ep__loading { text-align: center; padding: 4rem 2rem; color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo"><img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="header__logo-img"></a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
+        <a href="/sobre/" class="header__link">Sobre</a>
+      </div>
+      <div class="header__actions" id="header-actions"></div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/sobre/" class="header__mobile-link">Sobre</a>
+      <div class="header__mobile-actions"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero section">
+      <div class="container">
+        <span class="page-hero__label">Minhas Palestras</span>
+        <h1 class="page-hero__title">Editar perfil</h1>
+        <p class="page-hero__subtitle">Atualize suas informações públicas e privadas.</p>
+      </div>
+    </section>
+
+    <section class="section section--dark" style="padding-top:0">
+      <div class="container">
+        <div class="ep">
+          <div class="ep__loading" id="loading">Carregando perfil...</div>
+          <form class="ep__form" id="form" hidden>
+
+            <fieldset class="ep-section">
+              <legend class="ep-section__title">Identificação</legend>
+
+              <div class="form-group">
+                <label class="form-label" for="full_name">Nome completo *</label>
+                <input type="text" class="form-input" id="full_name" name="full_name" required>
+                <span class="ep__hint">Usado em contratos e nota fiscal. Não aparece publicamente.</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="name">Nome artístico *</label>
+                <input type="text" class="form-input" id="name" name="name" required>
+                <span class="ep__hint">É este nome que aparece no seu perfil público e nas listagens.</span>
+              </div>
+            </fieldset>
+
+            <fieldset class="ep-section">
+              <legend class="ep-section__title">Contato e localização</legend>
+
+              <div class="form-group">
+                <label class="form-label" for="phone">Telefone</label>
+                <input type="tel" class="form-input" id="phone" name="phone" placeholder="(00) 00000-0000">
+              </div>
+
+              <div class="ep-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="city">Cidade</label>
+                  <input type="text" class="form-input" id="city" name="city">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="state">Estado</label>
+                  <select class="form-input" id="state" name="state">
+                    <option value="">Selecione</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="ep-section">
+              <legend class="ep-section__title">Sobre você</legend>
+
+              <div class="form-group">
+                <label class="form-label" for="bio">Bio</label>
+                <textarea class="form-input" id="bio" name="bio" rows="5" placeholder="Conte sobre sua trajetória..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="photo_url">URL da foto de perfil</label>
+                <input type="url" class="form-input" id="photo_url" name="photo_url" placeholder="https://...">
+                <span class="ep__hint">Para trocar a imagem, suba em outro local e cole o link aqui.</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="video_url">Vídeo (YouTube ou Vimeo)</label>
+                <input type="url" class="form-input" id="video_url" name="video_url" placeholder="https://youtube.com/watch?v=...">
+              </div>
+            </fieldset>
+
+            <fieldset class="ep-section">
+              <legend class="ep-section__title">Faixa de cachê</legend>
+
+              <div class="ep-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="price_min">Mínimo (R$)</label>
+                  <input type="number" class="form-input" id="price_min" name="price_min" min="0" step="100">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="price_max">Máximo (R$)</label>
+                  <input type="number" class="form-input" id="price_max" name="price_max" min="0" step="100">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="ep-section">
+              <legend class="ep-section__title">Redes sociais</legend>
+
+              <div class="form-group">
+                <label class="form-label" for="instagram">Instagram</label>
+                <input type="text" class="form-input" id="instagram" name="instagram" placeholder="@seu_usuario">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="linkedin">LinkedIn</label>
+                <input type="url" class="form-input" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/seu-perfil">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="website">Website</label>
+                <input type="url" class="form-input" id="website" name="website" placeholder="https://seusite.com.br">
+                <span class="ep__hint">Não aparece no perfil público — uso administrativo.</span>
+              </div>
+            </fieldset>
+
+            <div id="feedback" hidden></div>
+
+            <div class="ep__actions">
+              <a href="/minhas-palestras/" class="btn btn--outline">Cancelar</a>
+              <button type="submit" class="btn btn--accent" id="submit-btn">Salvar alterações</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo"><img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="footer__logo-img"></a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegação</h4>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/projetos/">Oportunidades</a>
+            <a href="/sobre/">Sobre</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Privacidade</a>
+            <a href="/termos/">Termos</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { supabase, requireAuth, ESTADOS_BR } from '/lib/supabase.js';
+
+    const auth = await requireAuth('speaker');
+    if (!auth) throw new Error('redirect');
+
+    const speakerProfile = auth.getProfile ? auth.getProfile('speaker') : auth.profile;
+    if (!speakerProfile) {
+      window.location.href = '/';
+      throw new Error('no speaker profile');
+    }
+
+    const loadingEl = document.getElementById('loading');
+    const formEl = document.getElementById('form');
+    const feedbackEl = document.getElementById('feedback');
+    const submitBtn = document.getElementById('submit-btn');
+
+    // Popular UFs
+    const stateSelect = document.getElementById('state');
+    ESTADOS_BR.forEach(uf => {
+      const opt = document.createElement('option');
+      opt.value = uf;
+      opt.textContent = uf;
+      stateSelect.appendChild(opt);
+    });
+
+    // Carrega o registro completo do speaker (RLS permite quando auth_id = uid)
+    const { data: speaker, error: loadError } = await supabase
+      .from('speakers')
+      .select('*')
+      .eq('id', speakerProfile.id)
+      .single();
+
+    if (loadError || !speaker) {
+      loadingEl.textContent = 'Erro ao carregar seus dados. Recarregue a página.';
+      throw loadError || new Error('speaker not found');
+    }
+
+    // Pré-popula form
+    const fields = ['full_name','name','phone','city','state','bio','photo_url','video_url','price_min','price_max','instagram','linkedin','website'];
+    fields.forEach(f => {
+      const el = document.getElementById(f);
+      if (el) el.value = speaker[f] != null ? speaker[f] : '';
+    });
+
+    loadingEl.hidden = true;
+    formEl.hidden = false;
+
+    function showFeedback(kind, msg) {
+      feedbackEl.hidden = false;
+      feedbackEl.className = `ep__feedback ep__feedback--${kind === 'ok' ? 'ok' : 'err'}`;
+      feedbackEl.textContent = msg;
+    }
+
+    formEl.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      feedbackEl.hidden = true;
+
+      const fullName = document.getElementById('full_name').value.trim();
+      const name = document.getElementById('name').value.trim();
+
+      if (!fullName || !name) {
+        showFeedback('err', 'Nome completo e nome artístico são obrigatórios.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Salvando...';
+
+      const payload = {
+        full_name: fullName,
+        name: name,
+        phone: document.getElementById('phone').value.trim() || null,
+        city: document.getElementById('city').value.trim() || null,
+        state: document.getElementById('state').value || null,
+        bio: document.getElementById('bio').value.trim() || null,
+        photo_url: document.getElementById('photo_url').value.trim() || null,
+        video_url: document.getElementById('video_url').value.trim() || null,
+        price_min: parseInt(document.getElementById('price_min').value, 10) || null,
+        price_max: parseInt(document.getElementById('price_max').value, 10) || null,
+        instagram: document.getElementById('instagram').value.trim() || null,
+        linkedin: document.getElementById('linkedin').value.trim() || null,
+        website: document.getElementById('website').value.trim() || null,
+      };
+
+      const { error: updateError } = await supabase
+        .from('speakers')
+        .update(payload)
+        .eq('id', speaker.id);
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Salvar alterações';
+
+      if (updateError) {
+        showFeedback('err', 'Erro ao salvar: ' + updateError.message);
+        return;
+      }
+
+      showFeedback('ok', 'Perfil atualizado com sucesso.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

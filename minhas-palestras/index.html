@@ -296,10 +296,11 @@
         <div class="mp__header">
           <div>
             <strong>${count}</strong> ${count === 1 ? 'palestra cadastrada' : 'palestras cadastradas'}
-            ${limit < 999 ? `<span style="color:var(--color-text-secondary);font-size:0.875rem"> (limite do plano: ${limit})</span>` : ''}
+            ${limit < 999 ? `<span style="color:var(--color-text-secondary-on-dark);font-size:0.875rem"> (limite do plano: ${limit})</span>` : ''}
           </div>
-          <div style="display:flex;gap:0.5rem">
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
             <a href="/palestrante/?slug=${escapeHtml(speakerProfile.slug)}" class="btn btn--outline btn--sm">Ver perfil público</a>
+            <a href="/minhas-palestras/perfil/" class="btn btn--outline btn--sm">Editar perfil</a>
             ${canAddMore
               ? '<a href="/minhas-palestras/nova/" class="btn btn--accent btn--sm">+ Nova palestra</a>'
               : '<button class="btn btn--sm" disabled style="opacity:0.5;cursor:not-allowed">+ Nova palestra</button>'

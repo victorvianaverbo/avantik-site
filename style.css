@@ -27,6 +27,12 @@
   --color-dark-surface: #2A2A2E;
   --color-dark-border: rgba(255, 255, 255, 0.08);
 
+  /* Tokens para uso sobre fundo escuro (.section--dark e similares) */
+  --color-text-on-dark: #F5F5F5;
+  --color-text-secondary-on-dark: #A0A8B5;
+  --color-primary-on-dark: #E8B931;
+  --color-border-on-dark: rgba(255, 255, 255, 0.18);
+
   /* Spacing */
   --section-py: clamp(4rem, 10vw, 8rem);
   --container-px: clamp(1.25rem, 5vw, 2rem);
@@ -118,8 +124,19 @@ ul, ol {
    das auth pages (/entrar/, /primeiro-acesso/, etc). */
 .section--dark {
   background: var(--color-dark);
+  color: var(--color-text-on-dark);
   position: relative;
   overflow: hidden;
+}
+
+.section--dark .btn--outline {
+  color: var(--color-primary-on-dark);
+  border-color: var(--color-border-on-dark);
+}
+
+.section--dark .btn--outline:hover {
+  background: rgba(232, 185, 49, 0.08);
+  border-color: var(--color-primary-on-dark);
 }
 
 .section--dark::before {
