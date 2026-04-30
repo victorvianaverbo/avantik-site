@@ -139,6 +139,19 @@ ul, ol {
   border-color: var(--color-primary-on-dark);
 }
 
+/* Reset cor dentro de superficies claras aninhadas em .section--dark
+   (cards, forms, avisos) — labels e textos voltam ao tom escuro padrao */
+.section--dark .mp-card,
+.section--dark .mp__upgrade-notice,
+.section--dark .mp__empty,
+.section--dark .ep__form,
+.section--dark .form-input,
+.section--dark .form-label,
+.section--dark .auth-card,
+.section--dark .cadastro-section {
+  color: var(--color-text);
+}
+
 .section--dark::before {
   content: '';
   position: absolute;
