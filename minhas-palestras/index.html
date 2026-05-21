@@ -45,6 +45,63 @@
       font-weight: 600;
     }
 
+    .mp__billing {
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .mp__billing--info    { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a8a; }
+    .mp__billing--warn    { background: #fef3c7; border: 1px solid #fcd34d; color: #78350f; }
+    .mp__billing--danger  { background: #fee2e2; border: 1px solid #fca5a5; color: #7f1d1d; }
+    .mp__billing--success { background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; }
+    .mp__billing-text { font-size: 0.9375rem; line-height: 1.4; }
+    .mp__billing-text strong { font-weight: 700; }
+    .mp__billing-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .mp__billing-actions .btn { font-size: 0.875rem; }
+
+    .mp__pay-modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center; justify-content: center;
+      z-index: 1000; padding: 1rem;
+    }
+    .mp__pay-modal-backdrop[open] { display: flex; }
+    .mp__pay-modal {
+      background: var(--color-surface);
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 720px; width: 100%;
+      max-height: 90vh; overflow-y: auto;
+    }
+    .mp__pay-modal h2 { font-family: var(--font-heading); margin: 0 0 0.5rem; font-size: 1.5rem; }
+    .mp__pay-modal-subtitle { color: var(--color-text-secondary); margin-bottom: 1.5rem; }
+    .mp__pay-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .mp__pay-card {
+      border: 2px solid var(--color-border);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .mp__pay-card:hover { border-color: var(--color-accent); transform: translateY(-2px); }
+    .mp__pay-card[disabled] { opacity: 0.5; cursor: not-allowed; }
+    .mp__pay-card-name { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.5rem; }
+    .mp__pay-card-price { font-size: 1.25rem; color: var(--color-accent); font-weight: 700; }
+    .mp__pay-card-price small { font-size: 0.75rem; color: var(--color-text-secondary); font-weight: 500; display: block; margin-top: 0.25rem; }
+    .mp__pay-modal-close { background: none; border: none; color: var(--color-text-secondary); cursor: pointer; font-size: 0.875rem; text-decoration: underline; }
+
     .mp__grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -202,6 +259,7 @@
     <section class="section section--dark" style="padding-top:0">
       <div class="container">
         <div class="mp">
+          <div id="billing-slot"></div>
           <div class="mp__loading" id="loading">Carregando suas palestras...</div>
           <div id="content" hidden></div>
         </div>
@@ -245,7 +303,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, escapeHtml, formatPriceRange, formatDuration, requireAuth, PALESTRA_FORMATS, TIERS } from '/lib/supabase.js';
+    import { supabase, escapeHtml, formatPriceRange, formatDuration, requireAuth, PALESTRA_FORMATS, TIERS, getSubscriptionStatus, startCheckout } from '/lib/supabase.js';
 
     const auth = await requireAuth('speaker');
     if (!auth) throw new Error('redirect');
@@ -261,6 +319,113 @@
     const contentEl = document.getElementById('content');
 
     document.getElementById('hero-title').textContent = `Olá, ${speakerProfile.name}`;
+
+    // ===== Banner de cobranca / billing =====
+    function renderBillingBanner() {
+      const sub = getSubscriptionStatus(speakerProfile);
+      const params = new URLSearchParams(window.location.search);
+      const mpResult = params.get('mp');
+
+      // Feedback pos-retorno do MP
+      if (mpResult === 'success') {
+        return `<div class="mp__billing mp__billing--success">
+          <div class="mp__billing-text">✓ <strong>Pagamento recebido.</strong> Estamos processando sua assinatura — pode levar alguns minutos para aparecer aqui.</div>
+        </div>`;
+      }
+      if (mpResult === 'pending') {
+        return `<div class="mp__billing mp__billing--warn">
+          <div class="mp__billing-text">⏳ <strong>Pagamento pendente.</strong> Assim que o MP confirmar, seu plano será ativado automaticamente.</div>
+        </div>`;
+      }
+      if (mpResult === 'failure') {
+        return `<div class="mp__billing mp__billing--danger">
+          <div class="mp__billing-text">⚠ <strong>Pagamento não concluído.</strong> Você pode tentar novamente abaixo.</div>
+          <div class="mp__billing-actions"><button class="btn btn--accent btn--sm" data-open-pay>Tentar novamente</button></div>
+        </div>`;
+      }
+
+      if (sub.state === 'paid_active') {
+        return ''; // tudo ok, sem banner
+      }
+      if (sub.state === 'paid_expiring') {
+        const d = new Date(sub.paidUntil).toLocaleDateString('pt-BR');
+        return `<div class="mp__billing mp__billing--warn">
+          <div class="mp__billing-text">Seu plano vence em <strong>${sub.daysLeft} dia${sub.daysLeft === 1 ? '' : 's'}</strong> (${d}). Renove para não perder o acesso.</div>
+          <div class="mp__billing-actions"><button class="btn btn--accent btn--sm" data-open-pay>Renovar agora</button></div>
+        </div>`;
+      }
+      if (sub.state === 'trial_active') {
+        return `<div class="mp__billing mp__billing--info">
+          <div class="mp__billing-text">Você está no <strong>trial de 15 dias</strong>. Restam <strong>${sub.daysLeft} dia${sub.daysLeft === 1 ? '' : 's'}</strong>.</div>
+          <div class="mp__billing-actions"><button class="btn btn--outline btn--sm" data-open-pay>Assinar plano anual</button></div>
+        </div>`;
+      }
+      if (sub.state === 'trial_expiring') {
+        return `<div class="mp__billing mp__billing--warn">
+          <div class="mp__billing-text">⚠ Seu trial termina em <strong>${sub.daysLeft} dia${sub.daysLeft === 1 ? '' : 's'}</strong>. Garanta seu plano antes para não perder o acesso.</div>
+          <div class="mp__billing-actions"><button class="btn btn--accent btn--sm" data-open-pay>Assinar agora</button></div>
+        </div>`;
+      }
+      // expired
+      return `<div class="mp__billing mp__billing--danger">
+        <div class="mp__billing-text">⚠ <strong>Seu acesso expirou.</strong> Assine um plano anual para voltar a aparecer no diretório.</div>
+        <div class="mp__billing-actions"><button class="btn btn--accent btn--sm" data-open-pay>Assinar agora</button></div>
+      </div>`;
+    }
+
+    // ===== Modal de pagamento =====
+    function openPayModal() {
+      let modal = document.getElementById('pay-modal');
+      if (modal) { modal.setAttribute('open', ''); return; }
+
+      const cards = Object.entries(TIERS).map(([key, t]) => `
+        <button class="mp__pay-card" data-plan="${key}">
+          <div class="mp__pay-card-name">${t.name}</div>
+          <div class="mp__pay-card-price">${t.installments}x R$ ${t.price}
+            <small>sem juros — total ${t.annualLabel}</small>
+          </div>
+        </button>
+      `).join('');
+
+      const html = `
+        <div class="mp__pay-modal-backdrop" id="pay-modal" open>
+          <div class="mp__pay-modal">
+            <h2>Escolha seu plano anual</h2>
+            <p class="mp__pay-modal-subtitle">12 meses de acesso. Parcele em até 12x sem juros no cartão.</p>
+            <div class="mp__pay-grid">${cards}</div>
+            <div id="pay-error" style="color:#7f1d1d;margin-bottom:1rem;display:none"></div>
+            <button class="mp__pay-modal-close" data-close-pay>Cancelar</button>
+          </div>
+        </div>`;
+      document.body.insertAdjacentHTML('beforeend', html);
+      modal = document.getElementById('pay-modal');
+
+      modal.addEventListener('click', async (e) => {
+        if (e.target.matches('[data-close-pay]') || e.target === modal) {
+          modal.removeAttribute('open');
+          return;
+        }
+        const card = e.target.closest('[data-plan]');
+        if (!card) return;
+        const plan = card.dataset.plan;
+        const errEl = document.getElementById('pay-error');
+        errEl.style.display = 'none';
+        modal.querySelectorAll('[data-plan]').forEach(b => b.setAttribute('disabled', ''));
+        try {
+          await startCheckout(plan); // redireciona; nao volta
+        } catch (err) {
+          errEl.textContent = err.message || 'Erro ao iniciar pagamento.';
+          errEl.style.display = 'block';
+          modal.querySelectorAll('[data-plan]').forEach(b => b.removeAttribute('disabled'));
+        }
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('[data-open-pay]')) openPayModal();
+    });
+
+    document.getElementById('billing-slot').innerHTML = renderBillingBanner();
 
     async function loadPalestras() {
       const { data: palestras, error } = await supabase

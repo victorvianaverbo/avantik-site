@@ -434,11 +434,16 @@ function initFAQ() {
       const isOpen = item.classList.contains('faq__item--open');
 
       // Close all others
-      items.forEach(other => other.classList.remove('faq__item--open'));
+      items.forEach(other => {
+        other.classList.remove('faq__item--open');
+        const q = other.querySelector('.faq__question');
+        if (q) q.setAttribute('aria-expanded', 'false');
+      });
 
       // Toggle current
       if (!isOpen) {
         item.classList.add('faq__item--open');
+        question.setAttribute('aria-expanded', 'true');
       }
     });
   });

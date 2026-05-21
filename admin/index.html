@@ -53,6 +53,13 @@
       margin-bottom: 2rem;
     }
 
+    .admin-section-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      color: var(--color-text);
+      margin: 0 0 1rem;
+    }
+
     .admin-stat {
       background: var(--color-surface);
       border: 1px solid var(--color-border);
@@ -205,8 +212,20 @@
     </div>
 
     <div id="content" hidden>
-      <div class="admin-stats" id="stats"></div>
-      <div id="comissoes-table"></div>
+      <div class="admin-tabs" role="tablist">
+        <button class="admin-tab admin-tab--active" data-tab="dashboard" role="tab">Dashboard</button>
+        <button class="admin-tab" data-tab="comissoes" role="tab">Comissões</button>
+      </div>
+
+      <div id="tab-dashboard" class="admin-tab-panel">
+        <div class="admin-loading" id="dashboard-loading">Carregando métricas...</div>
+        <div id="dashboard-content" hidden></div>
+      </div>
+
+      <div id="tab-comissoes" class="admin-tab-panel" hidden>
+        <div class="admin-loading" id="comissoes-loading">Carregando comissões...</div>
+        <div id="comissoes-content" hidden></div>
+      </div>
     </div>
   </main>
 
@@ -236,8 +255,81 @@
       throw new Error('not admin');
     }
 
-    // Carregar comissoes
+    // Revela conteudo com abas
+    loadingEl.hidden = true;
+    contentEl.hidden = false;
+
+    // ===== Abas =====
+    const tabBtns = document.querySelectorAll('.admin-tab');
+    const dashboardLoaded = { done: false };
+    const comissoesLoaded = { done: false };
+
+    function switchTab(tab) {
+      tabBtns.forEach(b => b.classList.toggle('admin-tab--active', b.dataset.tab === tab));
+      document.getElementById('tab-dashboard').hidden = tab !== 'dashboard';
+      document.getElementById('tab-comissoes').hidden = tab !== 'comissoes';
+      if (tab === 'dashboard' && !dashboardLoaded.done) { dashboardLoaded.done = true; loadDashboard(); }
+      if (tab === 'comissoes' && !comissoesLoaded.done) { comissoesLoaded.done = true; loadCommissions(); }
+    }
+    tabBtns.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+
+    // ===== Dashboard gerencial =====
+    async function loadDashboard() {
+      const dLoading = document.getElementById('dashboard-loading');
+      const dContent = document.getElementById('dashboard-content');
+
+      const { data, error } = await supabase.rpc('admin_dashboard_stats');
+
+      if (error || !data) {
+        dContent.innerHTML = `<p style="color:var(--color-error)">Erro ao carregar métricas: ${escapeHtml(error?.message || 'sem dados')}</p>`;
+        dLoading.hidden = true;
+        dContent.hidden = false;
+        return;
+      }
+
+      const n = (v) => Number(v || 0).toLocaleString('pt-BR');
+      const card = (label, value, accent) =>
+        `<div class="admin-stat${accent ? ' admin-stat--accent' : ''}"><span class="admin-stat__label">${label}</span><span class="admin-stat__value">${value}</span></div>`;
+
+      dContent.innerHTML = `
+        <h2 class="admin-section-title">Palestrantes</h2>
+        <div class="admin-stats">
+          ${card('Total de palestrantes', n(data.speakers_total))}
+          ${card('Perfis ativos', n(data.speakers_active), true)}
+          ${card('Novos (7 dias)', n(data.speakers_new_7d))}
+          ${card('Novos (30 dias)', n(data.speakers_new_30d))}
+        </div>
+
+        <h2 class="admin-section-title">Assinaturas</h2>
+        <div class="admin-stats">
+          ${card('Pagantes ativos', n(data.paid_active), true)}
+          ${card('Em trial (15 dias)', n(data.trial_active))}
+          ${card('Expirados', n(data.expired))}
+        </div>
+        <div class="admin-stats">
+          ${card('Pagantes — Profissional', n(data.paid_profissional))}
+          ${card('Pagantes — Premium', n(data.paid_premium))}
+          ${card('Pagantes — Elite', n(data.paid_elite))}
+        </div>
+
+        <h2 class="admin-section-title">Contratantes & oportunidades</h2>
+        <div class="admin-stats">
+          ${card('Total de contratantes', n(data.contractors_total))}
+          ${card('Novos contratantes (30d)', n(data.contractors_new_30d))}
+          ${card('Projetos abertos', n(data.projects_open))}
+          ${card('Total de projetos', n(data.projects_total))}
+          ${card('Candidaturas', n(data.applications_total))}
+        </div>
+      `;
+      dLoading.hidden = true;
+      dContent.hidden = false;
+    }
+
+    // ===== Comissoes =====
     async function loadCommissions() {
+      const cLoading = document.getElementById('comissoes-loading');
+      const cContent = document.getElementById('comissoes-content');
+
       const { data: commissions, error } = await supabase
         .from('commissions')
         .select(`
@@ -249,9 +341,9 @@
         .order('created_at', { ascending: false });
 
       if (error) {
-        contentEl.innerHTML = `<p style="color:var(--color-error)">Erro ao carregar comissoes: ${escapeHtml(error.message)}</p>`;
-        loadingEl.hidden = true;
-        contentEl.hidden = false;
+        cContent.innerHTML = `<p style="color:var(--color-error)">Erro ao carregar comissoes: ${escapeHtml(error.message)}</p>`;
+        cLoading.hidden = true;
+        cContent.hidden = false;
         return;
       }
 
@@ -311,7 +403,11 @@
           const contractor = c.contractors || {};
           const palestraTitle = c.project_applications?.palestras?.title || '—';
           const data = new Date(c.created_at).toLocaleDateString('pt-BR');
-          const cobranceMsg = encodeURIComponent(`Ola ${speaker.name}, sobre a venda da palestra "${palestraTitle}" pelo valor de R$ ${(c.proposed_price || 0).toLocaleString('pt-BR')}: voce tem uma comissao Avantik de R$ ${(c.commission_amount || 0).toLocaleString('pt-BR')} (30%) a pagar. Segue PIX para quitacao: [INSERIR PIX].`);
+          const isFree = c.tipo === 'palestra_gratis';
+          // Comissao normal: Avantik COBRA o palestrante. Palestra gratis: Avantik PAGA o cache ao palestrante.
+          const cobranceMsg = isFree
+            ? encodeURIComponent(`Ola ${speaker.name}, sobre a palestra "${palestraTitle}": ela faz parte da anuidade do contratante, entao a Avantik vai pagar o seu cache de R$ ${(c.commission_amount || 0).toLocaleString('pt-BR')}. Confirme seus dados de PIX para recebermos.`)
+            : encodeURIComponent(`Ola ${speaker.name}, sobre a venda da palestra "${palestraTitle}" pelo valor de R$ ${(c.proposed_price || 0).toLocaleString('pt-BR')}: voce tem uma comissao Avantik de R$ ${(c.commission_amount || 0).toLocaleString('pt-BR')} (30%) a pagar. Segue PIX para quitacao: [INSERIR PIX].`);
           const phoneDigits = (speaker.phone || '').replace(/\D/g, '');
           const waLink = phoneDigits ? `https://wa.me/${phoneDigits}?text=${cobranceMsg}` : '';
 
@@ -320,9 +416,9 @@
               <td>${data}</td>
               <td class="strong">${escapeHtml(speaker.name || '—')}<br><small style="color:var(--color-text-secondary)">${escapeHtml(speaker.email || '')}<br>${escapeHtml(speaker.phone || '')}</small></td>
               <td>${escapeHtml(contractor.company || contractor.name || '—')}<br><small style="color:var(--color-text-secondary)">${escapeHtml(contractor.email || '')}</small></td>
-              <td>${escapeHtml(palestraTitle)}</td>
+              <td>${escapeHtml(palestraTitle)}${isFree ? '<br><span class="admin-status" style="background:#eef2ff;color:#3730a3">Palestra grátis · Avantik paga o cachê</span>' : ''}</td>
               <td class="strong">R$ ${(c.proposed_price || 0).toLocaleString('pt-BR')}</td>
-              <td class="strong" style="color:var(--color-accent)">R$ ${(c.commission_amount || 0).toLocaleString('pt-BR')}</td>
+              <td class="strong" style="color:var(--color-accent)">R$ ${(c.commission_amount || 0).toLocaleString('pt-BR')}<br><small style="color:var(--color-text-secondary);font-weight:400">${isFree ? 'cachê a pagar' : 'comissão 30%'}</small></td>
               <td><span class="admin-status admin-status--${c.status}">${c.status}</span></td>
               <td>
                 ${c.status === 'pendente' ? `
@@ -337,9 +433,9 @@
         html += `</tbody></table>`;
       }
 
-      contentEl.innerHTML = html;
-      loadingEl.hidden = true;
-      contentEl.hidden = false;
+      cContent.innerHTML = html;
+      cLoading.hidden = true;
+      cContent.hidden = false;
 
       // Bind "Marcar paga"
       document.querySelectorAll('[data-pay]').forEach(btn => {
@@ -364,7 +460,8 @@
       });
     }
 
-    await loadCommissions();
+    // Abre o Dashboard por padrao
+    switchTab('dashboard');
   </script>
 
 </body>

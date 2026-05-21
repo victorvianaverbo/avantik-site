@@ -2,3 +2,10 @@
 .netlify
 .DS_Store
 lighthouse-*.json
+
+# Credenciais e variaveis de ambiente — NUNCA commitar
+.env
+.env.*
+!.env.example
+.mp-credentials.txt
+.mp-plans.json

@@ -1,9 +1,12 @@
 {
-  "name": "avantik-scripts",
+  "name": "avantik",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Scripts utilitarios (importacao de palestrantes/palestras). O site em si e HTML/CSS/JS puro.",
+  "description": "Site Avantik (HTML/CSS/JS puro) + Netlify Functions (checkout MP e webhook) + scripts utilitarios.",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "importar-planilha": "node importar-planilha.js"
   },

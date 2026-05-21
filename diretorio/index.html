@@ -93,6 +93,12 @@
           <input type="text" class="directory-search__input" id="search-input" placeholder="Buscar por nome ou palavra-chave...">
         </div>
 
+        <!-- Campanhas sazonais / datas comemorativas -->
+        <div class="directory-seasonal" id="seasonal-wrap" data-aos="fade-up" data-aos-delay="80" hidden>
+          <span class="directory-seasonal__title">Campanhas &amp; datas comemorativas</span>
+          <div class="directory-seasonal__chips" id="seasonal-filters"></div>
+        </div>
+
         <!-- Filters -->
         <div class="directory-filters" data-aos="fade-up" data-aos-delay="100">
           <button class="directory-filter directory-filter--active" data-filter="todos">Todos</button>
@@ -221,6 +227,24 @@ const loadMoreWrap = document.getElementById('load-more-wrap');
 const loadMoreBtn = document.getElementById('load-more-btn');
 
 let activeTheme = null;
+let allThemes = [];
+let activeCampaignThemes = null; // array de slugs de tema quando uma campanha sazonal esta ativa
+
+// Campanhas sazonais -> mapeadas para temas JA EXISTENTES (match por nome do tema).
+// `month` (1-12) ativa o destaque automatico no mes correspondente; null = sempre visivel.
+const SEASONAL_CAMPAIGNS = [
+  { key: 'janeiro-branco',    label: 'Janeiro Branco',    month: 1,    dot: '#E5E7EB', match: ['saude mental'] },
+  { key: 'dia-das-mulheres',  label: 'Dia das Mulheres',  month: 3,    dot: '#EC4899', match: ['diversidade'] },
+  { key: 'setembro-amarelo',  label: 'Setembro Amarelo',  month: 9,    dot: '#F59E0B', match: ['saude mental'] },
+  { key: 'outubro-rosa',      label: 'Outubro Rosa',      month: 10,   dot: '#EC4899', match: ['saude mental'] },
+  { key: 'novembro-azul',     label: 'Novembro Azul',     month: 11,   dot: '#3B82F6', match: ['saude mental'] },
+  { key: 'consciencia-negra', label: 'Consciência Negra', month: 11,   dot: '#111827', match: ['diversidade'] },
+  { key: 'sipat',             label: 'SIPAT & Segurança', month: null, dot: '#16A34A', match: ['saude mental', 'lideranca'] },
+  { key: 'diversidade-esg',   label: 'Diversidade & ESG', month: null, dot: '#10B981', match: ['diversidade'] },
+];
+
+const DIACRITICS_RE = new RegExp('[\\u0300-\\u036f]', 'g');
+const normalizeTxt = (s) => (s || '').toLowerCase().normalize('NFD').replace(DIACRITICS_RE, '');
 
 // Populate state dropdown
 ESTADOS_BR.forEach(uf => {
@@ -234,6 +258,7 @@ ESTADOS_BR.forEach(uf => {
 async function loadThemeFilters() {
   const { data } = await supabase.from('themes').select('*').order('name');
   if (!data) return;
+  allThemes = data;
   data.forEach(theme => {
     const btn = document.createElement('button');
     btn.className = 'directory-filter';
@@ -243,6 +268,8 @@ async function loadThemeFilters() {
       // Toggle theme filter
       document.querySelectorAll('[data-filter="todos"]').forEach(b => b.classList.remove('directory-filter--active'));
       document.querySelectorAll('[data-theme-slug]').forEach(b => b.classList.remove('directory-filter--active'));
+      document.querySelectorAll('[data-season]').forEach(b => b.classList.remove('directory-season--active'));
+      activeCampaignThemes = null;
 
       if (activeTheme === theme.slug) {
         activeTheme = null;
@@ -257,10 +284,67 @@ async function loadThemeFilters() {
   });
 }
 
+// Resolve os slugs de tema de cada campanha (match por nome) e renderiza os chips.
+function loadSeasonalFilters() {
+  const wrap = document.getElementById('seasonal-wrap');
+  const container = document.getElementById('seasonal-filters');
+  if (!wrap || !container || !allThemes.length) return;
+
+  const currentMonth = new Date().getMonth() + 1;
+
+  // Resolve cada campanha para os slugs de temas existentes que casam pelo nome.
+  const resolved = SEASONAL_CAMPAIGNS.map(c => {
+    const slugs = allThemes
+      .filter(t => c.match.some(m => normalizeTxt(t.name).includes(m)))
+      .map(t => t.slug);
+    return { ...c, slugs };
+  }).filter(c => c.slugs.length > 0);
+
+  if (resolved.length === 0) return;
+
+  // Campanhas do mes atual aparecem primeiro.
+  resolved.sort((a, b) => (b.month === currentMonth ? 1 : 0) - (a.month === currentMonth ? 1 : 0));
+
+  resolved.forEach(c => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'directory-season';
+    if (c.month === currentMonth) btn.classList.add('directory-season--now');
+    btn.dataset.season = c.key;
+    btn.style.setProperty('--season-dot', c.dot);
+    btn.textContent = c.label;
+
+    btn.addEventListener('click', () => {
+      // Limpa selecao de temas normais e do "Todos".
+      document.querySelectorAll('[data-filter="todos"]').forEach(b => b.classList.remove('directory-filter--active'));
+      document.querySelectorAll('[data-theme-slug]').forEach(b => b.classList.remove('directory-filter--active'));
+      activeTheme = null;
+
+      const isActive = btn.classList.contains('directory-season--active');
+      document.querySelectorAll('[data-season]').forEach(b => b.classList.remove('directory-season--active'));
+
+      if (isActive) {
+        activeCampaignThemes = null;
+        document.querySelector('[data-filter="todos"]').classList.add('directory-filter--active');
+      } else {
+        activeCampaignThemes = c.slugs;
+        btn.classList.add('directory-season--active');
+      }
+      applyFilters();
+    });
+
+    container.appendChild(btn);
+  });
+
+  wrap.hidden = false;
+}
+
 // "Todos" button
 document.querySelector('[data-filter="todos"]').addEventListener('click', () => {
   activeTheme = null;
+  activeCampaignThemes = null;
   document.querySelectorAll('.directory-filter').forEach(b => b.classList.remove('directory-filter--active'));
+  document.querySelectorAll('[data-season]').forEach(b => b.classList.remove('directory-season--active'));
   document.querySelector('[data-filter="todos"]').classList.add('directory-filter--active');
   applyFilters();
 });
@@ -322,8 +406,10 @@ function applyFilters() {
       const haystack = `${s.name} ${s.bio || ''} ${s.city || ''} ${s.themes.map(t => t.name).join(' ')}`.toLowerCase();
       if (!haystack.includes(search)) return false;
     }
-    // Theme filter
-    if (activeTheme) {
+    // Theme filter (campanha sazonal tem prioridade sobre tema unico)
+    if (activeCampaignThemes) {
+      if (!s.themes.some(t => activeCampaignThemes.includes(t.slug))) return false;
+    } else if (activeTheme) {
       if (!s.themes.some(t => t.slug === activeTheme)) return false;
     }
     // State filter
@@ -340,8 +426,13 @@ function applyFilters() {
     return true;
   });
 
-  // Sort: elite first, then premium, then profissional. Within same tier, by rating desc.
+  // Ranking: 1) selo de curadoria no topo, 2) quem tem foto acima de quem nao tem,
+  // 3) tier (elite > premium > profissional), 4) rating desc.
   filteredSpeakers.sort((a, b) => {
+    const sealDiff = (b.has_seal ? 1 : 0) - (a.has_seal ? 1 : 0);
+    if (sealDiff !== 0) return sealDiff;
+    const photoDiff = (b.photo_url ? 1 : 0) - (a.photo_url ? 1 : 0);
+    if (photoDiff !== 0) return photoDiff;
     const tierDiff = getTierOrder(a.plan) - getTierOrder(b.plan);
     if (tierDiff !== 0) return tierDiff;
     return (b.rating || 5) - (a.rating || 5);
@@ -425,6 +516,7 @@ function readURLParams() {
 // Init
 readURLParams();
 await loadThemeFilters();
+loadSeasonalFilters();
 await fetchAllSpeakers();
 
 // Highlight active theme pill from URL

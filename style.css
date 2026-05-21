@@ -1695,8 +1695,19 @@ ul, ol {
 .speakers__carousel {
   position: relative;
   width: 100%;
-  overflow: hidden;
   margin-bottom: 2.5rem;
+}
+
+/* Viewport: scroll horizontal nativo (sem barra visivel) */
+.speakers__viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.speakers__viewport::-webkit-scrollbar {
+  display: none;
 }
 
 .speakers__fade {
@@ -1722,17 +1733,38 @@ ul, ol {
   display: flex;
   gap: 1.5rem;
   padding: 1rem 0 2rem;
-  animation: scrollCarousel 45s linear infinite;
   width: max-content;
 }
 
-.speakers__track:hover {
-  animation-play-state: paused;
+/* Setas de navegacao manual */
+.speakers__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s, transform 0.2s;
 }
 
-@keyframes scrollCarousel {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+.speakers__arrow:hover {
+  background: var(--color-muted-bg);
+}
+
+.speakers__arrow--prev { left: 8px; }
+.speakers__arrow--next { right: 8px; }
+
+@media (max-width: 768px) {
+  .speakers__arrow { display: none; }
 }
 
 /* Speaker card */
@@ -3817,10 +3849,26 @@ ul, ol {
   transform: scale(1.12);
 }
 
-/* Selo Palco — dourado com gradient de destaque */
-.badge--selo {
-  background: linear-gradient(135deg, #F5C542, #D4A017);
-  box-shadow: 0 2px 6px rgba(212, 160, 23, 0.35);
+/* Selo Verificado (aprovado pela curadoria) — pill azul com texto fixo */
+.badge-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 100px;
+  background: rgba(29, 155, 240, 0.12);
+  color: #1D9BF0;
+  border: 1px solid rgba(29, 155, 240, 0.35);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badge-seal svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 
 /* Apogeu Graduado — verde esmeralda */
@@ -3910,6 +3958,84 @@ ul, ol {
   background: var(--color-text);
   color: #FFFFFF;
   border-color: transparent;
+}
+
+/* ===== Campanhas sazonais / datas comemorativas ===== */
+.directory-seasonal {
+  margin: 0 auto 1.75rem;
+  text-align: center;
+}
+
+.directory-seasonal__title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.directory-seasonal__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.directory-season {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(232, 185, 49, 0.4);
+  border-radius: 100px;
+  background: rgba(232, 185, 49, 0.08);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 250ms;
+}
+
+.directory-season::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--season-dot, var(--color-accent));
+  flex-shrink: 0;
+}
+
+.directory-season:hover {
+  border-color: var(--color-accent);
+  background: rgba(232, 185, 49, 0.16);
+}
+
+.directory-season--now {
+  border-color: var(--color-accent);
+  background: rgba(232, 185, 49, 0.2);
+  box-shadow: 0 2px 10px rgba(232, 185, 49, 0.25);
+}
+
+.directory-season--now::after {
+  content: 'Em destaque agora';
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--color-accent);
+}
+
+.directory-season--active {
+  background: var(--color-text);
+  color: #FFFFFF;
+  border-color: transparent;
+}
+
+.directory-season--active::after {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .directory-filter select {

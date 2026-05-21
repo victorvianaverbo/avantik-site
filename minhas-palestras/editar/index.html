@@ -440,8 +440,10 @@
       document.getElementById('p_video').value = palestra.video_url || '';
       document.getElementById('p_image').value = palestra.image_url || '';
 
-      // Formato
-      const fmts = palestra.format ? [palestra.format] : [];
+      // Formato — 'hibrido' marca Presencial + Online (modalidade dupla).
+      const fmts = palestra.format === 'hibrido'
+        ? ['presencial', 'online']
+        : (palestra.format ? [palestra.format] : []);
       document.querySelectorAll('input[name="p_format"]').forEach(cb => {
         cb.checked = fmts.includes(cb.value);
       });
@@ -499,7 +501,13 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Salvando...';
 
-      const formatValue = formats[0];
+      // Mapeia a selecao de checkboxes para o valor unico da coluna `format`.
+      // Presencial + Online (ou Hibrido marcado) => 'hibrido'.
+      const hasPresencial = formats.includes('presencial');
+      const hasOnline = formats.includes('online');
+      const formatValue = (formats.includes('hibrido') || (hasPresencial && hasOnline))
+        ? 'hibrido'
+        : (hasOnline ? 'online' : 'presencial');
 
       const payload = {
         title,

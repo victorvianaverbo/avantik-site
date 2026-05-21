@@ -442,7 +442,7 @@
   </footer>
 
   <script type="module">
-import { supabase, escapeHtml, formatPriceRange, requireAuth, authSignOut, EVENT_TYPES } from '/lib/supabase.js';
+import { supabase, escapeHtml, formatPriceRange, requireAuth, authSignOut, EVENT_TYPES, getContractorPlanStatus } from '/lib/supabase.js';
 
 // Auth check
 const auth = await requireAuth('contractor');
@@ -454,6 +454,20 @@ const mainContent = document.getElementById('main-content');
 // Update hero
 document.getElementById('hero-title').textContent = `Olá, ${auth.profile.name || 'Contratante'}`;
 document.getElementById('hero-subtitle').textContent = auth.profile.company || '';
+
+// Saldo de palestras gratis da anuidade (se houver plano ativo)
+(async () => {
+  const { data: me } = await supabase
+    .from('contractors')
+    .select('plan, subscription_paid_until, free_talks_total, free_talks_used')
+    .eq('id', auth.profile.id)
+    .maybeSingle();
+  const status = getContractorPlanStatus(me);
+  const sub = document.getElementById('hero-subtitle');
+  if (status.active) {
+    sub.textContent = `${auth.profile.company || ''}${auth.profile.company ? ' · ' : ''}Anuidade ativa — ${status.freeTalksLeft} de ${status.freeTalksTotal} palestra(s) grátis disponível(is)`;
+  }
+})();
 
 // Fetch projects with application counts
 async function loadProjects() {
@@ -707,17 +721,48 @@ function bindAcceptReject() {
   // Aceitar proposta
   document.querySelectorAll('[data-accept-app]').forEach(btn => {
     btn.addEventListener('click', async () => {
-      if (!confirm('Aceitar esta proposta? Apos confirmar, o contato direto do palestrante sera liberado e a Avantik sera notificada para cobrar a comissao de 30%.')) return;
-
       const appId = btn.dataset.acceptApp;
       const proposedPrice = Number(btn.dataset.price) || 0;
       const speakerId = btn.dataset.speakerId;
+
+      // Verifica se o contratante tem anuidade ativa com palestras gratis disponiveis.
+      let useFree = false;
+      const { data: me } = await supabase
+        .from('contractors')
+        .select('plan, subscription_paid_until, free_talks_total, free_talks_used')
+        .eq('id', auth.profile.id)
+        .maybeSingle();
+      const planStatus = getContractorPlanStatus(me);
+
+      if (planStatus.active && planStatus.freeTalksLeft > 0) {
+        useFree = confirm(
+          `Você tem ${planStatus.freeTalksLeft} palestra(s) grátis na sua anuidade Avantik (a Avantik banca o cachê).\n\n` +
+          `OK = usar 1 palestra grátis nesta contratação (sem comissão de 30%).\n` +
+          `Cancelar = contratação normal (comissão de 30% sobre o cachê).`
+        );
+      } else {
+        if (!confirm('Aceitar esta proposta? Apos confirmar, o contato direto do palestrante sera liberado e a Avantik sera notificada para cobrar a comissao de 30%.')) return;
+      }
 
       btn.disabled = true;
       btn.textContent = 'Aceitando...';
 
       try {
-        // 1. Atualizar candidatura para 'aceita'
+        // Caminho A: usar palestra gratis da anuidade (RPC atomica, sem comissao 30%)
+        if (useFree) {
+          const { error: freeErr } = await supabase.rpc('use_free_talk', { p_application_id: appId });
+          if (freeErr) {
+            console.error('use_free_talk error:', freeErr);
+            alert('Erro ao usar palestra grátis. Tente novamente ou aceite como contratação normal.');
+            btn.disabled = false;
+            btn.textContent = 'Aceitar Proposta';
+            return;
+          }
+          await loadProjects();
+          return;
+        }
+
+        // Caminho B: contratação normal — 1. Atualizar candidatura para 'aceita'
         const { error: updErr } = await supabase
           .from('project_applications')
           .update({ status: 'aceita', accepted_at: new Date().toISOString() })

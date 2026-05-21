@@ -126,7 +126,16 @@
     }
 
     .profile-hero__rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
       color: #F59E0B;
+      line-height: 1;
+    }
+
+    .profile-hero__rating svg {
+      width: 1.05em;
+      height: 1.05em;
     }
 
     .profile-hero__price {
@@ -1022,7 +1031,7 @@
       tagsEl.innerHTML = themes.map(t => `<span>${escapeHtml(t.name)}</span>`).join('');
 
       // Rating & Price
-      document.getElementById('profile-rating').innerHTML = `&#9733; ${speaker.rating || '5.0'}`;
+      document.getElementById('profile-rating').innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.1 6.6.9-4.8 4.7 1.2 6.6L12 18.1 6.1 21.3l1.2-6.6L2.5 9l6.6-.9z"/></svg><span>${speaker.rating || '5.0'}</span>`;
       document.getElementById('profile-price').textContent = formatPriceRange(speaker.price_min, speaker.price_max);
 
       // CTA de contrata\u00e7\u00e3o aponta sempre para /projetos/novo/ - canal oficial.

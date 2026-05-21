@@ -48,6 +48,7 @@
       <div class="header__links" id="nav-links">
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
+        <a href="/para-empresas/" class="header__link">Para Empresas</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
         <a href="/sobre/" class="header__link">Sobre</a>
         <a href="/blog/" class="header__link">Blog</a>
@@ -69,6 +70,7 @@
     <div class="header__mobile" id="mobile-menu">
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/para-empresas/" class="header__mobile-link">Para Empresas</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <a href="/sobre/" class="header__mobile-link">Sobre</a>
       <a href="/blog/" class="header__mobile-link">Blog</a>
@@ -285,7 +287,15 @@
       <div class="speakers__carousel" data-aos="fade-up" data-aos-delay="300">
         <div class="speakers__fade speakers__fade--left"></div>
         <div class="speakers__fade speakers__fade--right"></div>
-        <div class="speakers__track" id="speakers-track"></div>
+        <button type="button" class="speakers__arrow speakers__arrow--prev" id="speakers-prev" aria-label="Ver anteriores">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="speakers__arrow speakers__arrow--next" id="speakers-next" aria-label="Ver próximos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="speakers__viewport" id="speakers-viewport">
+          <div class="speakers__track" id="speakers-track"></div>
+        </div>
       </div>
 
       <div class="container" style="text-align:center">
@@ -631,7 +641,8 @@
         const scored = complete
           .map(s => ({
             ...s,
-            _score: (planRank[s.plan] || 0) * 1000 + (s.bio?.length || 0),
+            // Selo de curadoria no topo, depois tier, depois riqueza da bio.
+            _score: (s.has_seal ? 1 : 0) * 100000 + (planRank[s.plan] || 0) * 1000 + (s.bio?.length || 0),
           }))
           .sort((a, b) => b._score - a._score)
           .slice(0, 6);
@@ -670,6 +681,48 @@
         const firstHalf = scored.map(s => renderCard(s, false)).join('').repeat(repeats);
         const secondHalf = scored.map(s => renderCard(s, true)).join('').repeat(repeats);
         track.innerHTML = firstHalf + secondHalf;
+
+        // Auto-scroll continuo + navegacao manual por setas.
+        // O conteudo e duplicado (firstHalf + secondHalf), entao o loop reinicia
+        // na metade do scrollWidth para dar a sensacao de carrossel infinito.
+        const viewport = document.getElementById('speakers-viewport');
+        const prevBtn = document.getElementById('speakers-prev');
+        const nextBtn = document.getElementById('speakers-next');
+        if (viewport) {
+          let autoOn = true;
+          let resumeTimer;
+          const loopWrap = () => {
+            const half = viewport.scrollWidth / 2;
+            if (half <= 0) return;
+            if (viewport.scrollLeft >= half) viewport.scrollLeft -= half;
+            else if (viewport.scrollLeft <= 0) viewport.scrollLeft += half;
+          };
+          const tick = () => {
+            if (autoOn) { viewport.scrollLeft += 0.5; loopWrap(); }
+            requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+
+          const pauseTemporarily = () => {
+            autoOn = false;
+            clearTimeout(resumeTimer);
+            resumeTimer = setTimeout(() => { autoOn = true; }, 5000);
+          };
+          viewport.addEventListener('mouseenter', () => { autoOn = false; });
+          viewport.addEventListener('mouseleave', () => { autoOn = true; });
+          viewport.addEventListener('touchstart', pauseTemporarily, { passive: true });
+          viewport.addEventListener('wheel', pauseTemporarily, { passive: true });
+
+          const step = (280 + 24) * 2; // dois cards por clique
+          prevBtn?.addEventListener('click', () => {
+            pauseTemporarily();
+            viewport.scrollBy({ left: -step, behavior: 'smooth' });
+          });
+          nextBtn?.addEventListener('click', () => {
+            pauseTemporarily();
+            viewport.scrollBy({ left: step, behavior: 'smooth' });
+          });
+        }
       } catch (err) {
         console.warn('[palestrantes] falha ao carregar:', err);
         document.getElementById('palestrantes')?.remove();
