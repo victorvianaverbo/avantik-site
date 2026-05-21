@@ -50,14 +50,80 @@
       margin: 0 auto;
       line-height: 1.7;
     }
-    /* Preco numa linha so (evita quebrar "12x R$ 167") */
-    .pricing .pricing__price {
-      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      white-space: nowrap;
+    /* ===== PRICING (regras que no /para-palestrantes/ ficam inline) ===== */
+    .pricing__header {
+      text-align: center;
+      margin-bottom: 3.5rem;
     }
-    .pricing .pricing__price small {
+    .pricing__label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1rem;
+    }
+    .pricing__title {
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      color: var(--color-text);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .pricing__subtitle {
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
+      line-height: 1.65;
+      color: var(--color-text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .pricing__name {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-text);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    /* Preco numa linha so + texto secundario pequeno */
+    .pricing__price {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem) !important;
+      white-space: nowrap;
+      text-align: center;
+      display: block;
+      line-height: 1.1;
+    }
+    .pricing__price small {
       white-space: normal;
       margin-left: 0.25rem;
+    }
+    .pricing__period {
+      display: block;
+      text-align: center;
+    }
+    .pricing__features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .pricing__feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+      text-align: left;
+    }
+    .pricing__feature svg {
+      flex-shrink: 0;
+      margin-top: 3px;
+      color: var(--color-accent);
+    }
+    .pricing__cta {
+      width: 100%;
     }
 
     .empresas-note {
