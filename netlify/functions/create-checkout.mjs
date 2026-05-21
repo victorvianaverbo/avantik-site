@@ -159,5 +159,3 @@ function json(data, status = 200) {
     headers: { 'Content-Type': 'application/json' },
   });
 }
-
-export const config = { path: '/.netlify/functions/create-checkout' };

@@ -287,5 +287,3 @@ function safeEqual(a, b) {
   if (a.length !== b.length) return false;
   return crypto.timingSafeEqual(Buffer.from(a, 'hex'), Buffer.from(b, 'hex'));
 }
-
-export const config = { path: '/.netlify/functions/mp-webhook' };
