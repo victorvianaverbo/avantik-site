@@ -35,6 +35,9 @@
 
     .profile { overflow-x: clip; }
 
+    /* Loader como overlay fixo: evita CLS na troca loader -> conteudo */
+    .profile-loading { position: fixed; inset: 0; z-index: 60; background: var(--color-bg); }
+
     /* Reveal discreto no scroll (so quando .js-reveal presente => fallback seguro) */
     .js-reveal .profile section,
     .js-reveal .profile-hero {
@@ -538,7 +541,7 @@
       // Photo
       const photoDiv = document.getElementById('profile-photo');
       if (speaker.photo_url) {
-        photoDiv.innerHTML = `<img src="${cdnImg(speaker.photo_url, 640)}" alt="${escapeHtml(speaker.name)}" width="640" height="800" fetchpriority="high" decoding="async">`;
+        photoDiv.innerHTML = `<img src="${cdnImg(speaker.photo_url, 640)}" alt="${escapeHtml(speaker.name)}" fetchpriority="high" decoding="async">`;
       } else {
         photoDiv.classList.add('profile-hero__photo--placeholder');
         photoDiv.innerHTML = `<span>${escapeHtml(speaker.name.charAt(0))}</span>`;
