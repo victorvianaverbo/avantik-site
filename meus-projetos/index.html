@@ -725,20 +725,20 @@ function bindAcceptReject() {
       const proposedPrice = Number(btn.dataset.price) || 0;
       const speakerId = btn.dataset.speakerId;
 
-      // Verifica se o contratante tem anuidade ativa com palestras gratis disponiveis.
+      // Server decide se cabe palestra gratis (anuidade ativa + saldo + palestrante do grupo
+      // curado da Avantik). O contratante nao sabe quem e elegivel — so aparece a opcao quando cabe.
       let useFree = false;
-      const { data: me } = await supabase
-        .from('contractors')
-        .select('plan, subscription_paid_until, free_talks_total, free_talks_used')
-        .eq('id', auth.profile.id)
-        .maybeSingle();
-      const planStatus = getContractorPlanStatus(me);
+      let canOfferFree = false;
+      try {
+        const { data: offer } = await supabase.rpc('free_talk_offer', { p_application_id: appId });
+        canOfferFree = offer === true;
+      } catch (_) { canOfferFree = false; }
 
-      if (planStatus.active && planStatus.freeTalksLeft > 0) {
+      if (canOfferFree) {
         useFree = confirm(
-          `Você tem ${planStatus.freeTalksLeft} palestra(s) grátis na sua anuidade Avantik (a Avantik banca o cachê).\n\n` +
-          `OK = usar 1 palestra grátis nesta contratação (sem comissão de 30%).\n` +
-          `Cancelar = contratação normal (comissão de 30% sobre o cachê).`
+          'Esta contratação pode entrar como palestra grátis da sua anuidade (a Avantik banca o cachê).\n\n' +
+          'OK = usar 1 palestra grátis (sem comissão de 30%).\n' +
+          'Cancelar = contratação normal (comissão de 30% sobre o cachê).'
         );
       } else {
         if (!confirm('Aceitar esta proposta? Apos confirmar, o contato direto do palestrante sera liberado e a Avantik sera notificada para cobrar a comissao de 30%.')) return;

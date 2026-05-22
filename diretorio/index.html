@@ -93,22 +93,12 @@
           <input type="text" class="directory-search__input" id="search-input" placeholder="Buscar por nome ou palavra-chave...">
         </div>
 
-        <!-- Campanhas sazonais / datas comemorativas -->
-        <div class="directory-seasonal" id="seasonal-wrap" data-aos="fade-up" data-aos-delay="80" hidden>
-          <span class="directory-seasonal__title">Campanhas &amp; datas comemorativas</span>
-          <div class="directory-seasonal__chips" id="seasonal-filters"></div>
-        </div>
-
-        <!-- Filters -->
-        <div class="directory-filters" data-aos="fade-up" data-aos-delay="100">
+        <!-- Controles: Todos + Estado + Faixa de preco -->
+        <div class="directory-filters" data-aos="fade-up" data-aos-delay="80">
           <button class="directory-filter directory-filter--active" data-filter="todos">Todos</button>
-          <!-- Theme pills loaded dynamically from Supabase -->
-          <div id="theme-filters" style="display:contents"></div>
-          <!-- State dropdown -->
           <select class="directory-filter" id="state-filter">
             <option value="">Estado</option>
           </select>
-          <!-- Price range dropdown -->
           <select class="directory-filter" id="price-filter">
             <option value="">Faixa de preço</option>
             <option value="0-5000">Até R$ 5.000</option>
@@ -117,6 +107,15 @@
             <option value="20000-999999">Acima de R$ 20.000</option>
           </select>
         </div>
+
+        <!-- Bloco 1: Campanhas & datas comemorativas -->
+        <div class="directory-seasonal" id="seasonal-wrap" data-aos="fade-up" data-aos-delay="100" hidden>
+          <span class="directory-seasonal__title">Campanhas &amp; datas comemorativas</span>
+          <div class="directory-seasonal__chips" id="seasonal-filters"></div>
+        </div>
+
+        <!-- Blocos 2-4: Mais procurados, Sociedade & valores, Especializados (injetados via JS) -->
+        <div id="theme-groups" data-aos="fade-up" data-aos-delay="120"></div>
 
         <!-- Results grid -->
         <div class="directory-grid" id="results-grid">
@@ -222,25 +221,36 @@ const grid = document.getElementById('results-grid');
 const searchInput = document.getElementById('search-input');
 const stateFilter = document.getElementById('state-filter');
 const priceFilter = document.getElementById('price-filter');
-const themeFiltersDiv = document.getElementById('theme-filters');
+const themeGroupsDiv = document.getElementById('theme-groups');
+
+// Grupos da taxonomia (ordem confirmada). Campanhas sao tratadas a parte (sazonais).
+const THEME_GROUPS = [
+  { categoria: 'mais-procurados', title: 'Temas mais procurados' },
+  { categoria: 'sociedade',       title: 'Sociedade & valores' },
+  { categoria: 'especializados',  title: 'Temas especializados' },
+];
 const loadMoreWrap = document.getElementById('load-more-wrap');
 const loadMoreBtn = document.getElementById('load-more-btn');
 
+const PLACEHOLDER_AVATAR = '/images/avatar-placeholder.svg';
 let activeTheme = null;
 let allThemes = [];
 let activeCampaignThemes = null; // array de slugs de tema quando uma campanha sazonal esta ativa
 
 // Campanhas sazonais -> mapeadas para temas JA EXISTENTES (match por nome do tema).
 // `month` (1-12) ativa o destaque automatico no mes correspondente; null = sempre visivel.
+// Campanhas -> mapeadas DIRETO para slugs de temas canonicos (taxonomia v2).
+// `month` (1-12) destaca a campanha no mes; null = sempre visivel.
 const SEASONAL_CAMPAIGNS = [
-  { key: 'janeiro-branco',    label: 'Janeiro Branco',    month: 1,    dot: '#E5E7EB', match: ['saude mental'] },
-  { key: 'dia-das-mulheres',  label: 'Dia das Mulheres',  month: 3,    dot: '#EC4899', match: ['diversidade'] },
-  { key: 'setembro-amarelo',  label: 'Setembro Amarelo',  month: 9,    dot: '#F59E0B', match: ['saude mental'] },
-  { key: 'outubro-rosa',      label: 'Outubro Rosa',      month: 10,   dot: '#EC4899', match: ['saude mental'] },
-  { key: 'novembro-azul',     label: 'Novembro Azul',     month: 11,   dot: '#3B82F6', match: ['saude mental'] },
-  { key: 'consciencia-negra', label: 'Consciência Negra', month: 11,   dot: '#111827', match: ['diversidade'] },
-  { key: 'sipat',             label: 'SIPAT & Segurança', month: null, dot: '#16A34A', match: ['saude mental', 'lideranca'] },
-  { key: 'diversidade-esg',   label: 'Diversidade & ESG', month: null, dot: '#10B981', match: ['diversidade'] },
+  { key: 'sipat',             label: 'SIPAT',             month: null, dot: '#16A34A', slugs: ['seguranca-do-trabalho'] },
+  { key: 'janeiro-branco',    label: 'Janeiro Branco',    month: 1,    dot: '#E5E7EB', slugs: ['saude-mental'] },
+  { key: 'dia-das-mulheres',  label: 'Dia das Mulheres',  month: 3,    dot: '#EC4899', slugs: ['diversidade-e-inclusao'] },
+  { key: 'dia-das-maes',      label: 'Dia das Mães',      month: 5,    dot: '#F472B6', slugs: ['familia-e-relacoes-humanas'] },
+  { key: 'dia-dos-pais',      label: 'Dia dos Pais',      month: 8,    dot: '#60A5FA', slugs: ['familia-e-relacoes-humanas'] },
+  { key: 'setembro-amarelo',  label: 'Setembro Amarelo',  month: 9,    dot: '#F59E0B', slugs: ['saude-mental'] },
+  { key: 'outubro-rosa',      label: 'Outubro Rosa',      month: 10,   dot: '#EC4899', slugs: ['saude-mental'] },
+  { key: 'novembro-azul',     label: 'Novembro Azul',     month: 11,   dot: '#3B82F6', slugs: ['saude-mental'] },
+  { key: 'consciencia-negra', label: 'Consciência Negra', month: 11,   dot: '#111827', slugs: ['diversidade-e-inclusao'] },
 ];
 
 const DIACRITICS_RE = new RegExp('[\\u0300-\\u036f]', 'g');
@@ -254,33 +264,49 @@ ESTADOS_BR.forEach(uf => {
   stateFilter.appendChild(opt);
 });
 
-// Load themes for filter pills
+// Carrega temas e renderiza chips agrupados por categoria (Mais procurados / Sociedade / Especializados).
 async function loadThemeFilters() {
   const { data } = await supabase.from('themes').select('*').order('name');
   if (!data) return;
   allThemes = data;
-  data.forEach(theme => {
-    const btn = document.createElement('button');
-    btn.className = 'directory-filter';
-    btn.textContent = theme.name;
-    btn.dataset.themeSlug = theme.slug;
-    btn.addEventListener('click', () => {
-      // Toggle theme filter
-      document.querySelectorAll('[data-filter="todos"]').forEach(b => b.classList.remove('directory-filter--active'));
-      document.querySelectorAll('[data-theme-slug]').forEach(b => b.classList.remove('directory-filter--active'));
-      document.querySelectorAll('[data-season]').forEach(b => b.classList.remove('directory-season--active'));
-      activeCampaignThemes = null;
 
-      if (activeTheme === theme.slug) {
-        activeTheme = null;
-        document.querySelector('[data-filter="todos"]').classList.add('directory-filter--active');
-      } else {
-        activeTheme = theme.slug;
-        btn.classList.add('directory-filter--active');
-      }
-      applyFilters();
+  const onThemeClick = (slug, btn) => {
+    document.querySelectorAll('[data-filter="todos"]').forEach(b => b.classList.remove('directory-filter--active'));
+    document.querySelectorAll('[data-theme-slug]').forEach(b => b.classList.remove('directory-filter--active'));
+    document.querySelectorAll('[data-season]').forEach(b => b.classList.remove('directory-season--active'));
+    activeCampaignThemes = null;
+    if (activeTheme === slug) {
+      activeTheme = null;
+      document.querySelector('[data-filter="todos"]').classList.add('directory-filter--active');
+    } else {
+      activeTheme = slug;
+      btn.classList.add('directory-filter--active');
+    }
+    applyFilters();
+  };
+
+  THEME_GROUPS.forEach(group => {
+    const themes = data.filter(t => t.categoria === group.categoria);
+    if (!themes.length) return;
+    const block = document.createElement('div');
+    block.className = 'directory-seasonal';
+    const title = document.createElement('span');
+    title.className = 'directory-seasonal__title';
+    title.textContent = group.title;
+    const chips = document.createElement('div');
+    chips.className = 'directory-seasonal__chips';
+    themes.forEach(theme => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'directory-filter';
+      btn.textContent = theme.name;
+      btn.dataset.themeSlug = theme.slug;
+      btn.addEventListener('click', () => onThemeClick(theme.slug, btn));
+      chips.appendChild(btn);
     });
-    themeFiltersDiv.appendChild(btn);
+    block.appendChild(title);
+    block.appendChild(chips);
+    themeGroupsDiv.appendChild(block);
   });
 }
 
@@ -292,13 +318,11 @@ function loadSeasonalFilters() {
 
   const currentMonth = new Date().getMonth() + 1;
 
-  // Resolve cada campanha para os slugs de temas existentes que casam pelo nome.
-  const resolved = SEASONAL_CAMPAIGNS.map(c => {
-    const slugs = allThemes
-      .filter(t => c.match.some(m => normalizeTxt(t.name).includes(m)))
-      .map(t => t.slug);
-    return { ...c, slugs };
-  }).filter(c => c.slugs.length > 0);
+  // Mantem so as campanhas cujos temas-alvo existem no banco.
+  const known = new Set(allThemes.map(t => t.slug));
+  const resolved = SEASONAL_CAMPAIGNS
+    .map(c => ({ ...c, slugs: c.slugs.filter(sl => known.has(sl)) }))
+    .filter(c => c.slugs.length > 0);
 
   if (resolved.length === 0) return;
 
@@ -354,8 +378,10 @@ document.querySelector('[data-filter="todos"]').addEventListener('click', () => 
 async function fetchAllSpeakers() {
   const { data, error } = await supabase
     .from('speakers_public')
-    .select('id, slug, name, city, state, bio, photo_url, plan, rating, has_seal, did_apogeu, active, created_at, palestras!speaker_id(id, title, slug, price_min, price_max, theme_id, themes!palestras_theme_id_fkey(name, slug))')
+    .select('id, slug, name, city, state, bio, photo_url, plan, rating, has_seal, did_apogeu, active, created_at, speaker_themes!speaker_id(themes(name, slug, categoria)), palestras!speaker_id(id, title, slug, price_min, price_max, theme_id, themes!palestras_theme_id_fkey(name, slug, categoria))')
     .eq('active', true)
+    .not('photo_url', 'is', null)
+    .neq('photo_url', PLACEHOLDER_AVATAR)
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -363,13 +389,16 @@ async function fetchAllSpeakers() {
     return;
   }
 
-  allSpeakers = (data || []).map(s => {
+  allSpeakers = (data || []).filter(s => s.photo_url && s.photo_url !== PLACEHOLDER_AVATAR).map(s => {
     const talks = (s.palestras || []).filter(Boolean);
-    // Derivar temas a partir das palestras (cada palestra tem 1 tema)
+    // Temas: fonte de verdade = speaker_themes (taxonomia v2); fallback = palestras.theme_id.
     const themesMap = new Map();
-    talks.forEach(t => {
-      if (t.themes) themesMap.set(t.themes.slug, t.themes);
+    (s.speaker_themes || []).forEach(st => {
+      if (st.themes) themesMap.set(st.themes.slug, st.themes);
     });
+    if (themesMap.size === 0) {
+      talks.forEach(t => { if (t.themes) themesMap.set(t.themes.slug, t.themes); });
+    }
     const themes = [...themesMap.values()];
 
     // Derivar preco a partir das palestras
@@ -456,11 +485,10 @@ function renderResults() {
 }
 
 function renderCard(s) {
-  const photoHtml = s.photo_url
-    ? `<div class="speaker-card__photo"><img src="${escapeHtml(s.photo_url)}" alt="${escapeHtml(s.name)}" loading="lazy"></div>`
-    : `<div class="speaker-card__photo speaker-card__photo--placeholder"><span>${escapeHtml(s.name.charAt(0))}</span></div>`;
+  const photoHtml = `<div class="speaker-card__photo"><img src="${escapeHtml(s.photo_url)}" alt="${escapeHtml(s.name)}" loading="lazy"></div>`;
 
-  const tagsHtml = s.themes.map(t => `<span>${escapeHtml(t.name)}</span>`).join('');
+  // Mostra ate 3 temas no card
+  const tagsHtml = s.themes.slice(0, 3).map(t => `<span>${escapeHtml(t.name)}</span>`).join('');
   const location = [s.city, s.state].filter(Boolean).map(v => escapeHtml(v)).join(', ');
   const badgeHtml = renderBadges(s);
   const eliteClass = s.plan === 'elite' ? ' speaker-card--elite' : '';
