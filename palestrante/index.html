@@ -20,9 +20,7 @@
   <!-- FONTS: DM Serif Display + DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/dmserifdisplay/v17/-nFnOHM81r4j6k0gjAW3mujVU2B2G_Bx0g.woff2">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css?v=20260521">
   <script src="/script.js" defer></script>
@@ -245,16 +243,10 @@
     /* ---------- Responsivo ---------- */
     @media (max-width: 860px) {
       .profile-hero__grid { grid-template-columns: 1fr; gap: 2rem; }
-      .profile-hero__photo-wrap { position: static; max-width: 260px; margin: 0 auto; }
+      .profile-hero__photo-wrap { position: static; max-width: 280px; }
       .profile-hero__photo { aspect-ratio: 1 / 1; }
-      .profile-hero__info { text-align: center; }
-      .profile-hero__tags, .profile-hero__meta, .profile-hero__actions { justify-content: center; }
       .profile-bio .container { grid-template-columns: 1fr; }
       .profile-bio__title { position: static; }
-    }
-    @media (max-width: 520px) {
-      .profile-stats__grid { gap: 1.25rem; }
-      .profile-hero__actions .btn { width: 100%; }
     }
 
   </style>
@@ -489,7 +481,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, formatPriceRange, formatDuration, getYouTubeEmbed, renderBadges, TIERS, PALESTRA_FORMATS, escapeHtml, getUser, getUserType, cdnImg } from '/lib/supabase.js';
+    import { supabase, formatPriceRange, formatDuration, getYouTubeEmbed, renderBadges, TIERS, PALESTRA_FORMATS, escapeHtml, getUser, getUserType } from '/lib/supabase.js';
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
@@ -538,7 +530,7 @@
       // Photo
       const photoDiv = document.getElementById('profile-photo');
       if (speaker.photo_url) {
-        photoDiv.innerHTML = `<img src="${escapeHtml(speaker.photo_url)}" alt="${escapeHtml(speaker.name)}" fetchpriority="high" decoding="async">`;
+        photoDiv.innerHTML = `<img src="${escapeHtml(speaker.photo_url)}" alt="${escapeHtml(speaker.name)}">`;
       } else {
         photoDiv.classList.add('profile-hero__photo--placeholder');
         photoDiv.innerHTML = `<span>${escapeHtml(speaker.name.charAt(0))}</span>`;
@@ -749,7 +741,7 @@
             const relatedGrid = document.getElementById('related-grid');
             relatedGrid.innerHTML = unique.map(s => {
               const photoHtml = s.photo_url
-                ? `<div class="speaker-card__photo"><img src="${cdnImg(s.photo_url, 360)}" alt="${escapeHtml(s.name)}" loading="lazy" decoding="async"></div>`
+                ? `<div class="speaker-card__photo"><img src="${escapeHtml(s.photo_url)}" alt="${escapeHtml(s.name)}" loading="lazy"></div>`
                 : `<div class="speaker-card__photo speaker-card__photo--placeholder"><span>${escapeHtml(s.name.charAt(0))}</span></div>`;
               const tagsHtml = s.themes.map(t => `<span>${escapeHtml(t.name)}</span>`).join('');
               const loc = [s.city, s.state].filter(Boolean).map(v => escapeHtml(v)).join(', ');
