@@ -691,14 +691,18 @@
         if (viewport) {
           let autoOn = true;
           let resumeTimer;
-          const loopWrap = () => {
-            const half = viewport.scrollWidth / 2;
-            if (half <= 0) return;
-            if (viewport.scrollLeft >= half) viewport.scrollLeft -= half;
-            else if (viewport.scrollLeft <= 0) viewport.scrollLeft += half;
-          };
+          // Acumulador float proprio: o navegador trunca scrollLeft fracionario,
+          // entao NAO podemos ler scrollLeft de volta (ficaria preso no zero).
+          let pos = 0;
+          const speed = 0.6;
+          const sync = () => { pos = viewport.scrollLeft; };
           const tick = () => {
-            if (autoOn) { viewport.scrollLeft += 0.5; loopWrap(); }
+            if (autoOn) {
+              const half = viewport.scrollWidth / 2;
+              pos += speed;
+              if (half > 0 && pos >= half) pos -= half;
+              viewport.scrollLeft = pos;
+            }
             requestAnimationFrame(tick);
           };
           requestAnimationFrame(tick);
@@ -706,12 +710,13 @@
           const pauseTemporarily = () => {
             autoOn = false;
             clearTimeout(resumeTimer);
-            resumeTimer = setTimeout(() => { autoOn = true; }, 5000);
+            resumeTimer = setTimeout(() => { sync(); autoOn = true; }, 5000);
           };
           viewport.addEventListener('mouseenter', () => { autoOn = false; });
-          viewport.addEventListener('mouseleave', () => { autoOn = true; });
+          viewport.addEventListener('mouseleave', () => { sync(); autoOn = true; });
           viewport.addEventListener('touchstart', pauseTemporarily, { passive: true });
           viewport.addEventListener('wheel', pauseTemporarily, { passive: true });
+          viewport.addEventListener('scroll', () => { if (!autoOn) sync(); }, { passive: true });
 
           const step = (280 + 24) * 2; // dois cards por clique
           prevBtn?.addEventListener('click', () => {
