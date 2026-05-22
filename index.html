@@ -611,7 +611,7 @@
     // ---------- Carrossel de palestrantes ----------
     lazyLoadSection('#palestrantes', async () => {
       try {
-        const { supabase, escapeHtml, formatPriceRange, renderBadges } = await import('/lib/supabase.js');
+        const { supabase, escapeHtml, formatPriceRange, renderBadges, cdnImg } = await import('/lib/supabase.js');
 
         const PLACEHOLDER_AVATAR = '/images/avatar-placeholder.svg';
         const speakersSection = document.getElementById('palestrantes');
@@ -659,7 +659,7 @@
           const badgesHtml = renderBadges(s);
           return `
             <a href="/palestrante/?slug=${encodeURIComponent(s.slug)}" class="speakers__card"${cloneAttrs}>
-              <div class="speakers__avatar" style="background-image:url('${escapeHtml(s.photo_url)}')"></div>
+              <div class="speakers__avatar" style="background-image:url('${cdnImg(s.photo_url, 320)}')"></div>
               <div class="speakers__info">
                 <span class="speakers__name">${escapeHtml(s.name)}</span>
                 ${badgesHtml}

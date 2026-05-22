@@ -20,7 +20,8 @@
   <!-- FONTS: DM Serif Display + DM Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
 
@@ -210,7 +211,7 @@
   </footer>
 
   <script type="module">
-import { supabase, formatPriceRange, ESTADOS_BR, renderBadges, getTierOrder, escapeHtml, formatDuration } from '/lib/supabase.js';
+import { supabase, formatPriceRange, ESTADOS_BR, renderBadges, getTierOrder, escapeHtml, formatDuration, cdnImg } from '/lib/supabase.js';
 
 const PAGE_SIZE = 12;
 let allSpeakers = [];
@@ -484,7 +485,7 @@ function renderResults() {
 }
 
 function renderCard(s) {
-  const photoHtml = `<div class="speaker-card__photo"><img src="${escapeHtml(s.photo_url)}" alt="${escapeHtml(s.name)}" loading="lazy"></div>`;
+  const photoHtml = `<div class="speaker-card__photo"><img src="${cdnImg(s.photo_url, 360)}" alt="${escapeHtml(s.name)}" loading="lazy" decoding="async"></div>`;
 
   // Mostra ate 3 temas no card
   const tagsHtml = s.themes.slice(0, 3).map(t => `<span>${escapeHtml(t.name)}</span>`).join('');

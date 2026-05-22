@@ -12,7 +12,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css?v=20260521">
   <script src="/script.js" defer></script>
@@ -223,6 +224,12 @@
       .palestra-about .palestra-section__title { position: static; }
       .palestra-speaker__card { grid-template-columns: 1fr; text-align: center; justify-items: center; }
       .palestra-cta__form-row { grid-template-columns: 1fr; }
+      /* divisor vertical do card de detalhes nao faz sentido quando as colunas empilham */
+      .palestra-details__card > div + div::before { display: none; }
+      .palestra-details__card > div { padding: 1rem 0; }
+    }
+    @media (max-width: 520px) {
+      .palestra-hero__cta, .palestra-cta__button { width: 100%; justify-content: center; }
     }
 
   </style>
@@ -444,7 +451,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, escapeHtml, formatPriceRange, formatDuration, getYouTubeEmbed, PALESTRA_FORMATS, TIERS, getUser, getUserType, renderBadges } from '/lib/supabase.js';
+    import { supabase, escapeHtml, formatPriceRange, formatDuration, getYouTubeEmbed, PALESTRA_FORMATS, TIERS, getUser, getUserType, renderBadges, cdnImg } from '/lib/supabase.js';
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
@@ -491,7 +498,7 @@
       const heroAvatar = document.getElementById('hero-avatar');
       heroAvatar.href = speakerSlugUrl;
       if (speaker.photo_url) {
-        heroAvatar.innerHTML = `<img src="${escapeHtml(speaker.photo_url)}" alt="${escapeHtml(speaker.name)}">`;
+        heroAvatar.innerHTML = `<img src="${cdnImg(speaker.photo_url, 140)}" alt="${escapeHtml(speaker.name)}" width="140" height="140" fetchpriority="high" decoding="async">`;
       } else {
         heroAvatar.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#FFFFFF;font-size:2rem;font-family:var(--font-heading);background:linear-gradient(135deg,var(--color-primary),var(--color-primary-light))">${escapeHtml(speaker.name.charAt(0))}</div>`;
       }
@@ -589,7 +596,7 @@
       // SPEAKER (bloco inferior — bio completa)
       const speakerPhoto = document.getElementById('speaker-photo');
       if (speaker.photo_url) {
-        speakerPhoto.innerHTML = `<img src="${escapeHtml(speaker.photo_url)}" alt="${escapeHtml(speaker.name)}">`;
+        speakerPhoto.innerHTML = `<img src="${cdnImg(speaker.photo_url, 320)}" alt="${escapeHtml(speaker.name)}" width="320" height="320" loading="lazy" decoding="async">`;
       } else {
         speakerPhoto.innerHTML = `<div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-primary),var(--color-primary-light));display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:3rem;font-family:var(--font-heading)">${escapeHtml(speaker.name.charAt(0))}</div>`;
       }
