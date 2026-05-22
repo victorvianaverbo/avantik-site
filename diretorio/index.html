@@ -419,6 +419,7 @@ async function fetchAllSpeakers() {
       talks_count: talks.length,
       derived_price_min: derivedPriceMin,
       derived_price_max: derivedPriceMax,
+      _rand: Math.random(),   // ordem aleatoria estavel durante a sessao
     };
   });
 
@@ -456,16 +457,13 @@ function applyFilters() {
     return true;
   });
 
-  // Ranking: 1) selo de curadoria no topo, 2) quem tem foto acima de quem nao tem,
-  // 3) tier (elite > premium > profissional), 4) rating desc.
+  // Ranking: selo de curadoria sempre primeiro; dentro de cada grupo, ordem
+  // ALEATORIA (estavel na sessao) — o topo varia a cada carregamento, sem ficar
+  // sempre os mesmos palestrantes.
   filteredSpeakers.sort((a, b) => {
     const sealDiff = (b.has_seal ? 1 : 0) - (a.has_seal ? 1 : 0);
     if (sealDiff !== 0) return sealDiff;
-    const photoDiff = (b.photo_url ? 1 : 0) - (a.photo_url ? 1 : 0);
-    if (photoDiff !== 0) return photoDiff;
-    const tierDiff = getTierOrder(a.plan) - getTierOrder(b.plan);
-    if (tierDiff !== 0) return tierDiff;
-    return (b.rating || 5) - (a.rating || 5);
+    return a._rand - b._rand;
   });
 
   displayCount = PAGE_SIZE;
