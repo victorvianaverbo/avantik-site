@@ -622,11 +622,11 @@
           .from('speakers_public')
           .select('slug, name, bio, plan, has_seal, did_apogeu, rating, price_min, price_max, photo_url, palestras!speaker_id(themes!palestras_theme_id_fkey(name))')
           .eq('active', true)
+          .eq('has_seal', true)
           .not('bio', 'is', null)
           .not('photo_url', 'is', null)
           .neq('photo_url', PLACEHOLDER_AVATAR)
-          .order('rating', { ascending: false })
-          .limit(40);
+          .limit(60);
 
         const complete = (data || []).filter(s =>
           s.photo_url && s.photo_url !== PLACEHOLDER_AVATAR && s.bio
@@ -637,15 +637,12 @@
           return;
         }
 
-        const planRank = { elite: 3, premium: 2, profissional: 1 };
-        const scored = complete
-          .map(s => ({
-            ...s,
-            // Selo de curadoria no topo, depois tier, depois riqueza da bio.
-            _score: (s.has_seal ? 1 : 0) * 100000 + (planRank[s.plan] || 0) * 1000 + (s.bio?.length || 0),
-          }))
-          .sort((a, b) => b._score - a._score)
-          .slice(0, 6);
+        // Embaralha (Fisher-Yates) e pega 6 — sempre entre os com selo, variando a cada carregamento.
+        for (let i = complete.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [complete[i], complete[j]] = [complete[j], complete[i]];
+        }
+        const scored = complete.slice(0, 6);
 
         const renderCard = (s, isClone) => {
           const themeNames = new Set();
@@ -772,39 +769,50 @@
       const DEFAULT_ICON = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
       const svgBody = (size, key) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[key] || DEFAULT_ICON}</svg>`;
 
-      try {
-        const { supabase, escapeHtml } = await import('/lib/supabase.js');
-        const { data, error } = await supabase.rpc('get_theme_speaker_counts');
-        if (error) throw error;
+      // Grade curada: campanhas/datas comemorativas (ocasiao) + temas mais procurados.
+      const CAMPAIGNS = [
+        { key: 'dia-das-maes',      name: 'Dia das Mães',      icon: 'heart',   month: 5 },
+        { key: 'sipat',             name: 'SIPAT',             icon: 'hardhat', month: null },
+        { key: 'janeiro-branco',    name: 'Janeiro Branco',    icon: 'brain',   month: 1 },
+        { key: 'dia-das-mulheres',  name: 'Dia das Mulheres',  icon: 'venus',   month: 3 },
+        { key: 'dia-dos-pais',      name: 'Dia dos Pais',      icon: 'user',    month: 8 },
+        { key: 'setembro-amarelo',  name: 'Setembro Amarelo',  icon: 'ribbon',  month: 9 },
+        { key: 'outubro-rosa',      name: 'Outubro Rosa',      icon: 'ribbon',  month: 10 },
+        { key: 'novembro-azul',     name: 'Novembro Azul',     icon: 'ribbon',  month: 11 },
+        { key: 'consciencia-negra', name: 'Consciência Negra', icon: 'users',   month: 11 },
+      ];
+      const TEMAS = [
+        { slug: 'vendas',           name: 'Vendas',           icon: 'trending-up' },
+        { slug: 'lideranca',        name: 'Liderança',        icon: 'target' },
+        { slug: 'comunicacao',      name: 'Comunicação',      icon: 'message-circle' },
+        { slug: 'motivacional',     name: 'Motivacional',     icon: 'rocket' },
+        { slug: 'alta-performance', name: 'Alta Performance', icon: 'zap' },
+      ];
 
-        const withSpeakers = (data || []).filter(t => Number(t.speaker_count) > 0);
-        if (withSpeakers.length === 0) {
-          categoriesSection?.remove();
-          return;
-        }
+      const cards = [
+        ...CAMPAIGNS.map(c => ({ href: `/diretorio/?campanha=${c.key}`, icon: c.icon, name: c.name, tag: 'Ocasião', month: c.month })),
+        ...TEMAS.map(t => ({ href: `/diretorio/?tema=${t.slug}`, icon: t.icon, name: t.name, tag: 'Tema' })),
+      ];
+      // Campanha do mes atual vai para o card em destaque
+      const mNow = new Date().getMonth() + 1;
+      const fIdx = cards.findIndex(c => c.month === mNow);
+      if (fIdx > 0) { const [f] = cards.splice(fIdx, 1); cards.unshift(f); }
 
-        const top = withSpeakers.slice(0, 13); // 1 em destaque + ate 12 regulares
-        categoriesGrid.innerHTML = top.map((t, i) => {
-          const isFeatured = i === 0;
-          const cardMod = isFeatured ? ' categories__card--featured' : '';
-          const iconMod = isFeatured ? ' categories__icon--lg' : '';
-          const nameMod = isFeatured ? ' categories__name--lg' : '';
-          const deco = isFeatured ? '<div class="categories__card-deco"></div>' : '';
-          const n = Number(t.speaker_count);
-          const label = `${n} palestrante${n === 1 ? '' : 's'}`;
-          return `
-            <a href="/diretorio/?tema=${encodeURIComponent(t.slug)}" class="categories__card${cardMod}">
-              <span class="categories__icon${iconMod}">${svgBody(isFeatured ? 40 : 24, t.icon)}</span>
-              ${deco}
-              <span class="categories__name${nameMod}">${escapeHtml(t.name)}</span>
-              <span class="categories__count">${label}</span>
-            </a>`;
-        }).join('');
-        categoriesGrid.removeAttribute('aria-busy');
-      } catch (err) {
-        console.warn('[categorias] falha ao carregar temas:', err);
-        categoriesSection?.remove();
-      }
+      categoriesGrid.innerHTML = cards.map((c, i) => {
+        const isFeatured = i === 0;
+        const cardMod = isFeatured ? ' categories__card--featured' : '';
+        const iconMod = isFeatured ? ' categories__icon--lg' : '';
+        const nameMod = isFeatured ? ' categories__name--lg' : '';
+        const deco = isFeatured ? '<div class="categories__card-deco"></div>' : '';
+        return `
+          <a href="${c.href}" class="categories__card${cardMod}">
+            <span class="categories__icon${iconMod}">${svgBody(isFeatured ? 40 : 24, c.icon)}</span>
+            ${deco}
+            <span class="categories__name${nameMod}">${c.name}</span>
+            <span class="categories__count">${c.tag}</span>
+          </a>`;
+      }).join('');
+      categoriesGrid.removeAttribute('aria-busy');
     });
   })();
   </script>

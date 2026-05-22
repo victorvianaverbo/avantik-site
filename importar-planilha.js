@@ -313,8 +313,9 @@ for (const row of palestrasRows) {
   };
 
   const baseSlug = slugify(title);
-  const { data: existingSlugs } = await supabase.from('palestras').select('id, slug').eq('speaker_id', sid).like('slug', `${baseSlug}%`);
-  const existing = existingSlugs?.find(s => s.slug === baseSlug);
+  // Upsert: ja existe palestra DESTE palestrante com esse slug?
+  const { data: mine } = await supabase.from('palestras').select('id, slug').eq('speaker_id', sid).eq('slug', baseSlug);
+  const existing = mine?.[0];
 
   if (existing) {
     const { error: updErr } = await supabase.from('palestras').update(palestraPayload).eq('id', existing.id);
@@ -324,8 +325,11 @@ for (const row of palestrasRows) {
     console.log(`[palestra] UPD "${title}" / ${speakerName} [${slugs.join(', ') || 'sem tema'}]`);
     palUpd++;
   } else {
+    // Slug unico GLOBALMENTE (a pagina /palestra/ busca por slug global)
+    const { data: globalSlugs } = await supabase.from('palestras').select('slug').like('slug', `${baseSlug}%`);
+    const taken = new Set((globalSlugs || []).map(s => s.slug));
     let slug = baseSlug;
-    if (existingSlugs && existingSlugs.some(s => s.slug === baseSlug)) { let i = 2; while (existingSlugs.some(s => s.slug === `${baseSlug}-${i}`)) i++; slug = `${baseSlug}-${i}`; }
+    if (taken.has(slug)) { let i = 2; while (taken.has(`${baseSlug}-${i}`)) i++; slug = `${baseSlug}-${i}`; }
     const { data: ins, error: palErr } = await supabase.from('palestras').insert({ ...palestraPayload, slug }).select('id').single();
     if (palErr) { console.log(`[palestra] ERRO "${title}": ${palErr.message}`); palSkip++; continue; }
     if (themeObjs.length) await supabase.from('palestra_themes').insert(themeObjs.map(t => ({ palestra_id: ins.id, theme_id: t.id })));

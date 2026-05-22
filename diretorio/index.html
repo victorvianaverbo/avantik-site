@@ -236,6 +236,7 @@ const PLACEHOLDER_AVATAR = '/images/avatar-placeholder.svg';
 let activeTheme = null;
 let allThemes = [];
 let activeCampaignThemes = null; // array de slugs de tema quando uma campanha sazonal esta ativa
+let activeCampaignKey = null;    // key da campanha vinda de ?campanha= (para realcar o chip)
 
 // Campanhas sazonais -> mapeadas para temas JA EXISTENTES (match por nome do tema).
 // `month` (1-12) ativa o destaque automatico no mes correspondente; null = sempre visivel.
@@ -536,8 +537,14 @@ function readURLParams() {
   const params = new URLSearchParams(window.location.search);
   const tema = params.get('tema');
   const q = params.get('q');
+  const campanha = params.get('campanha');
 
-  if (tema) activeTheme = tema;
+  if (campanha) {
+    const c = SEASONAL_CAMPAIGNS.find(x => x.key === campanha);
+    if (c) { activeCampaignThemes = c.slugs; activeCampaignKey = campanha; }
+  } else if (tema) {
+    activeTheme = tema;
+  }
   if (q) searchInput.value = q;
 }
 
@@ -552,6 +559,12 @@ if (activeTheme) {
   document.querySelector('[data-filter="todos"]').classList.remove('directory-filter--active');
   const pill = document.querySelector(`[data-theme-slug="${activeTheme}"]`);
   if (pill) pill.classList.add('directory-filter--active');
+}
+// Highlight active campaign chip from ?campanha=
+if (activeCampaignKey) {
+  document.querySelector('[data-filter="todos"]').classList.remove('directory-filter--active');
+  const chip = document.querySelector(`[data-season="${activeCampaignKey}"]`);
+  if (chip) chip.classList.add('directory-season--active');
 }
   </script>
 

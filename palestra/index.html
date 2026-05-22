@@ -466,7 +466,9 @@
       if (slug) query = query.eq('slug', slug);
       else query = query.eq('id', id);
 
-      const { data: palestra, error } = await query.single();
+      // Busca tolerante: se houver slug repetido, pega a 1ª em vez de quebrar (.single() erra com >1 linha).
+      const { data: rows, error } = await query.order('created_at', { ascending: true }).limit(1);
+      const palestra = rows && rows[0];
 
       if (error || !palestra || !palestra.speakers) {
         document.getElementById('palestra-loading').hidden = true;
