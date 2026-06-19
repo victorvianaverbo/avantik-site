@@ -344,8 +344,6 @@ function render(program, mentor) {
 
     ${mentor ? '' : mentorsGridHtml(program)}
 
-    ${faqHtml(program)}
-
     <section class="program-cta program-cta--offer">
       <canvas class="program-cta__plexus" aria-hidden="true"></canvas>
       <div class="container">
@@ -364,7 +362,9 @@ function render(program, mentor) {
           ${program.oferta ? `<p class="program-cta__garantia">${escapeHtml(program.oferta.garantia)}</p>` : ''}
         </div>
       </div>
-    </section>`;
+    </section>
+
+    ${faqHtml(program)}`;
 
   initPlexus(app.querySelector('.program-hero__plexus'), program.theme.primary);
   initPlexus(app.querySelector('.program-cta__plexus'), program.theme.primary);
