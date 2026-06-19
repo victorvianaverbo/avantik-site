@@ -274,7 +274,7 @@ function faqHtml(program) {
     </div>`).join('');
   if (!items) return '';
   return `
-    <section class="academy-section" id="faq">
+    <section class="academy-section program-faq-dark" id="faq">
       <div class="container">
         <span class="academy-eyebrow">Perguntas frequentes</span>
         <h2 class="academy-title">Ainda em dúvida?</h2>

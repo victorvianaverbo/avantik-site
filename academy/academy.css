@@ -60,10 +60,10 @@
 
 /* Reserva o espaço do conteúdo renderizado por JS (anti-CLS): o rodapé já
    nasce abaixo da dobra, então a injeção do template não empurra nada visível.
-   Fundo escuro = blend com o hero enquanto carrega (sem flash branco). */
+   SEM background dark aqui — as seções transparentes (aprender/mentores/faq)
+   herdam o fundo claro da página; só o hero/CTA têm fundo escuro próprio. */
 #programa-app {
   min-height: 100vh;
-  background: var(--academy-dark);
 }
 
 /* ---------- utilitários ---------- */
@@ -701,6 +701,16 @@
 .faq-item.is-open .faq-item__a { grid-template-rows: 1fr; }
 .faq-item__a-inner { overflow: hidden; }
 .faq-item__a p { margin: 0; padding: 0 0.25rem 1.25rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+/* FAQ escuro — funde com o CTA escuro logo abaixo (transição contínua) */
+.program-faq-dark {
+  background: var(--academy-dark);
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+.program-faq-dark .academy-title { color: #fff; }
+.program-faq-dark .faq-item { border-bottom-color: rgba(255, 255, 255, 0.14); }
+.program-faq-dark .faq-item__q { color: #fff; }
+.program-faq-dark .faq-item__a p { color: rgba(255, 255, 255, 0.7); }
 
 /* hover-reveal label nos cards de mentor (grade genérica) */
 .mentor-mini__cta {
