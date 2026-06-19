@@ -2769,10 +2769,25 @@ ul, ol {
    ========================================== */
 
 .footer {
+  position: relative;
+  overflow: hidden;
+  /* mesma identidade visual do hero Avantik (dark + radiais dourado/indigo) */
   background: var(--color-dark);
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(232, 185, 49, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 25%, rgba(67, 64, 160, 0.10) 0%, transparent 55%);
   padding: clamp(4rem, 8vw, 6rem) 0 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: none;
 }
+/* fio dourado no topo do rodapé (acabamento premium) */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 185, 49, 0.5), transparent);
+}
+.footer > .container { position: relative; }
 
 .footer p {
   font-size: 0.8125rem;
@@ -2821,20 +2836,23 @@ ul, ol {
 }
 
 .footer__socials a {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.55);
   transition: background 300ms, color 300ms;
 }
 
 .footer__socials a:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #FFFFFF;
+  background: rgba(232, 185, 49, 0.12);
+  border-color: rgba(232, 185, 49, 0.5);
+  color: var(--color-accent);
+  transform: translateY(-2px);
 }
 
 .footer__socials a:focus-visible {
@@ -2849,11 +2867,11 @@ ul, ol {
 /* Columns */
 .footer__col-title {
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
   margin-bottom: 1.25rem;
   line-height: 1;
 }

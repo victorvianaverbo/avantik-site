@@ -1,0 +1,131 @@
+/* ── Seu Evento Pronto ─────────────────────────────── */
+
+.sep-hero {
+  padding: clamp(5rem, 10vw, 8rem) 0 clamp(2rem, 4vw, 3rem);
+  position: relative;
+  overflow: hidden;
+  /* mesma identidade visual do hero da home Avantik */
+  background: var(--color-dark, #1C1C1E);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(232, 185, 49, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(67, 64, 160, 0.08) 0%, transparent 50%);
+  text-align: center;
+}
+.sep-hero__eyebrow {
+  display: inline-block;
+  font: 600 .75rem/1 var(--font-body, 'DM Sans', sans-serif);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--color-accent, #E8B931);
+  margin-bottom: 1rem;
+}
+.sep-hero__title {
+  font: 400 clamp(2rem, 5vw, 3.2rem)/1.15 var(--font-heading, 'DM Serif Display', serif);
+  color: #fff;
+  max-width: 700px;
+  margin: 0 auto .75rem;
+}
+.sep-hero__title em { font-style: italic; color: var(--color-accent, #E8B931); }
+.sep-hero__sub {
+  font-size: clamp(.95rem, 1.2vw, 1.1rem);
+  color: rgba(255,255,255,.65);
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* ── Hub grid ────────────────────────────────────── */
+.sep-grid-section { padding: clamp(3rem, 6vw, 5rem) 0; }
+.sep-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.sep-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  transition: transform .25s var(--ease-out, ease), box-shadow .25s var(--ease-out, ease);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.sep-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+.sep-card__img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+.sep-card__body { padding: 1rem 1.25rem 1.25rem; }
+.sep-card__tag {
+  display: inline-block;
+  font: 600 .65rem/1 var(--font-body, 'DM Sans', sans-serif);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: .3em .7em;
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: .5rem;
+}
+.sep-card__title {
+  font: 400 1.15rem/1.3 var(--font-heading, 'DM Serif Display', serif);
+  margin: 0;
+}
+.sep-card__count {
+  font-size: .8rem;
+  color: rgba(0,0,0,.5);
+  margin-top: .35rem;
+}
+
+/* ── Programa page ───────────────────────────────── */
+.sep-programa-hero {
+  padding: clamp(5rem, 10vw, 7rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+  text-align: center;
+}
+.sep-programa-hero__title {
+  font: 400 clamp(1.6rem, 4vw, 2.6rem)/1.2 var(--font-heading, 'DM Serif Display', serif);
+  color: #fff;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.sep-programa-hero__back {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .85rem;
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: color .2s;
+}
+.sep-programa-hero__back:hover { color: #fff; }
+
+.sep-slides {
+  padding: 0 0 clamp(3rem, 6vw, 5rem);
+  background: var(--color-surface-dark, #0c0a1d);
+}
+.sep-slides__list {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sep-slides__img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sep-cta-section {
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+  text-align: center;
+  background: var(--color-surface-dark, #0c0a1d);
+}
+.sep-cta-section__text {
+  font-size: clamp(.95rem, 1.2vw, 1.1rem);
+  color: rgba(255,255,255,.65);
+  margin-bottom: 1.25rem;
+}
