@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empreender | Avantik Academy</title>
+  <meta name="description" content="Programa Empreender da Avantik Academy: aulas gravadas e mentoria ao vivo com mentores da coleção Foco em Resultados.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link href="/lib/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=20260521">
+  <link rel="stylesheet" href="/academy/academy.css?v=20260618">
+  <link rel="modulepreload" href="/academy/data.js">
+  <link rel="modulepreload" href="/academy/academy-programa.js">
+  <link rel="preload" as="font" type="font/woff" crossorigin href="/academy/assets/fonts/Metropolis-Black.woff">
+  <script src="/lib/aos.js" defer></script>
+  <script src="/script.js" defer></script>
+</head>
+<body data-program="empreender">
+
+  <header class="header" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="header__logo-img" width="150" height="40">
+      </a>
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
+        <a href="/academy/" class="header__link header__link--active">Academy</a>
+        <a href="/seu-evento-pronto/" class="header__link">Seu Evento Pronto</a>
+        <a href="/para-empresas/" class="header__link">Para Empresas</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+      </div>
+      <div class="header__actions" id="header-actions">
+        <a href="/entrar/" class="btn btn--outline btn--sm">Entrar</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/seu-evento-pronto/" class="header__mobile-link">Seu Evento Pronto</a>
+      <a href="/para-empresas/" class="header__mobile-link">Para Empresas</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <div class="header__mobile-actions">
+        <a href="/entrar/" class="btn btn--outline">Entrar</a>
+        <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="programa-app"><!-- renderizado por academy-programa.js --></main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo">
+            <img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="footer__logo-img" width="150" height="44">
+          </a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Navegação</h4>
+          <nav class="footer__links">
+            <a href="/academy/">Academy</a>
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/sobre/">Sobre</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Legal</h4>
+          <nav class="footer__links">
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+        <div class="footer__col">
+          <h4 class="footer__col-title">Contato</h4>
+          <div class="footer__contact">
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
+            <a href="https://wa.me/5531993861408" target="_blank" rel="noopener noreferrer" class="footer__whatsapp">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 Avantik. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/academy/academy-programa.js"></script>
+</body>
+</html>

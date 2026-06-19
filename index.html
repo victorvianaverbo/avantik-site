@@ -33,6 +33,21 @@
 
   <link rel="stylesheet" href="/style.css?v=20260521">
 
+  <style>
+    /* SOBRE A AVANTIK (incorporado da pagina /sobre/) */
+    .about-home__grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+    .about-home__label { display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1.25rem; position: relative; padding-left: 2rem; }
+    .about-home__label::before { content: ''; position: absolute; left: 0; top: 50%; width: 1.25rem; height: 2px; background: var(--color-accent); }
+    .about-home__title { font-size: clamp(1.6rem, 3.6vw, 2.5rem); color: var(--color-text); margin-bottom: 1.25rem; }
+    .about-home__text { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: 1.1rem; }
+    .about-home__text:last-child { margin-bottom: 0; }
+    .about-home__numbers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .about-home__numbers li { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1rem; padding: 1.5rem; text-align: center; }
+    .about-home__num { display: block; font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--color-primary); line-height: 1; }
+    .about-home__numbers span { display: block; margin-top: 0.4rem; font-size: 0.85rem; color: var(--color-text-secondary); }
+    @media (max-width: 820px) { .about-home__grid { grid-template-columns: 1fr; } }
+  </style>
+
   <script src="/lib/aos.js" defer></script>
   <script src="/script.js" defer></script>
 </head>
@@ -48,10 +63,10 @@
       <div class="header__links" id="nav-links">
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
+        <a href="/academy/" class="header__link">Academy</a>
+        <a href="/seu-evento-pronto/" class="header__link">Seu Evento Pronto</a>
         <a href="/para-empresas/" class="header__link">Para Empresas</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
-        <a href="/sobre/" class="header__link">Sobre</a>
-        <a href="/blog/" class="header__link">Blog</a>
       </div>
 
       <div class="header__actions" id="header-actions">
@@ -70,10 +85,10 @@
     <div class="header__mobile" id="mobile-menu">
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/seu-evento-pronto/" class="header__mobile-link">Seu Evento Pronto</a>
       <a href="/para-empresas/" class="header__mobile-link">Para Empresas</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
-      <a href="/sobre/" class="header__mobile-link">Sobre</a>
-      <a href="/blog/" class="header__mobile-link">Blog</a>
       <div class="header__mobile-actions">
         <a href="/entrar/" class="btn btn--outline">Entrar</a>
         <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
@@ -352,6 +367,26 @@
             <h3 class="why__card-title">Comunidade ativa de palestrantes</h3>
             <p class="why__card-text">Troca de experiências, networking e oportunidades compartilhadas entre profissionais que vivem de palco.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE A AVANTIK (incorporado da pagina /sobre/) -->
+    <section class="section about-home" id="sobre">
+      <div class="container">
+        <div class="about-home__grid">
+          <div class="about-home__content" data-aos="fade-right">
+            <span class="about-home__label">Sobre a Avantik</span>
+            <h2 class="about-home__title">Conectamos quem transforma a quem precisa ser transformado</h2>
+            <p class="about-home__text">Acreditamos que todo evento merece o palestrante certo. Não o mais famoso, não o mais caro, o certo. Aquele que fala a língua do seu público, entende o contexto da sua empresa e entrega resultado real.</p>
+            <p class="about-home__text">Por isso criamos a Avantik: uma plataforma onde empresas encontram, comparam e contratam palestrantes com transparência total e processo simples, sempre com respeito pela carreira de quem vive de palco.</p>
+          </div>
+          <ul class="about-home__numbers" data-aos="fade-left" data-aos-delay="120">
+            <li><strong class="about-home__num" data-count-to="200">0</strong><span>palestrantes cadastrados</span></li>
+            <li><strong class="about-home__num" data-count-to="500">0</strong><span>eventos realizados</span></li>
+            <li><strong class="about-home__num" data-count-to="50">0</strong><span>temas disponíveis</span></li>
+            <li><strong class="about-home__num" data-count-to="25">0</strong><span>empresas parceiras</span></li>
+          </ul>
         </div>
       </div>
     </section>
