@@ -1,4 +1,4 @@
-# Copy - Avantik Homepage
+﻿# Copy - Avantik Homepage
 
 ## SEO
 - Title: Avantik | Encontre o Palestrante Certo para Seu Evento
@@ -106,6 +106,6 @@
 - Tagline: Apogeu do Palestrante
 - Links Rapidos: Encontrar Palestrantes, Para Palestrantes, Sobre, Blog, Contato
 - Legal: Politica de Privacidade, Termos e Condicoes, Contrato do Assinante
-- Contato: (31) 99386-1408, contato@avantik.com.br
+- Contato: (31) 99218-5328, contato@avantik.com.br
 - Redes Sociais: Instagram (@apogeudopalestrante), Facebook, YouTube, WhatsApp
 - Copyright: 2025 Avantik. Todos os direitos reservados.

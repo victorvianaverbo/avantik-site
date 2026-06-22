@@ -136,6 +136,7 @@ function mentorCardHtml(mentor) {
         </div>
       </div>
       <p class="mentor-card__bio">${escapeHtml(mentor.bio)}</p>
+      ${mentor.conexao ? `<p class="mentor-card__conexao">${escapeHtml(mentor.conexao)}</p>` : ''}
     </div>`;
 }
 
@@ -315,7 +316,7 @@ function render(program, mentor) {
         <div class="program-hero__grid">
           <div>
             <img class="program-hero__colecao" src="${cdnImg(COLECAO_LOGO, 440)}" alt="${escapeHtml(COLECAO_NOME)}" width="220" height="56" loading="eager">
-            <span class="academy-eyebrow program-hero__kicker">Avantik Academy · ${escapeHtml(program.brand || program.nome)}</span>
+            <span class="academy-eyebrow program-hero__kicker">Avantik Academy · ${escapeHtml(program.brand || program.nome)}${mentor ? ` com ${escapeHtml(mentor.nome)}` : ''}</span>
             <h1 class="program-hero__title">${escapeHtml(program.brand || program.nome)}</h1>
             <p class="program-hero__tagline">${escapeHtml(program.tagline)}</p>
             ${program.heroSub ? `<p class="program-hero__sub">${escapeHtml(program.heroSub)}</p>` : ''}

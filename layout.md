@@ -1,4 +1,4 @@
-# Layout Specification - Avantik Homepage
+﻿# Layout Specification - Avantik Homepage
 
 > Especificacao completa de diretor de arte para todas as secoes da homepage.
 > Cada secao contem valores exatos, pixel por pixel, para implementacao sem margem de interpretacao.
@@ -995,7 +995,7 @@
 - Logo: "Avantik" + "Apogeu do Palestrante"
 - Links Rapidos: Encontrar Palestrantes, Para Palestrantes, Sobre, Blog, Contato
 - Legal: Politica de Privacidade, Termos e Condicoes, Contrato do Assinante
-- Contato: (31) 99386-1408, contato@avantik.com.br
+- Contato: (31) 99218-5328, contato@avantik.com.br
 - Redes Sociais: Instagram (@apogeudopalestrante), Facebook, YouTube, WhatsApp
 - Copyright: 2025 Avantik. Todos os direitos reservados.
 
@@ -1052,8 +1052,8 @@
 - **Telefone:**
   - display: flex, align-items: center, gap: 0.5rem
   - Icone phone SVG: 16x16, stroke rgba(255,255,255,0.5)
-  - "(31) 99386-1408": font-size 0.9375rem, color rgba(255,255,255,0.6)
-  - Link tel: href="tel:+5531993861408"
+  - "(31) 99218-5328": font-size 0.9375rem, color rgba(255,255,255,0.6)
+  - Link tel: href="tel:+5531992185328"
   - Hover: color #FFFFFF
   - margin-bottom: 0.5rem
 - **Email:**
@@ -1071,7 +1071,7 @@
   - Icone WhatsApp SVG: 16x16, fill #25D366
   - "Fale pelo WhatsApp": font-size 0.8125rem, weight 600, color #25D366
   - Hover: background rgba(37,211,102,0.18), border-color rgba(37,211,102,0.3)
-  - Link: href="https://wa.me/5531993861408"
+  - Link: href="https://wa.me/5531992185328"
 
 **Barra inferior (copyright):**
 - margin-top: 2rem

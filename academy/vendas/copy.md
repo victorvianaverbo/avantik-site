@@ -1,26 +1,33 @@
 # Copy - Programa Vendas
 
-> Público: profissionais e empreendedores (B2C). Tom: premium e sofisticado.
+> Público: vendedores, gestores comerciais e empreendedores (B2C). Tom: premium e sofisticado.
 > Sem emojis. Preço: R$ 197 (12x de R$ 19,70).
+> Fonte: livro "Propulsão em Vendas — Uma imersão para superar limites".
 
 ## Hero
-- Eyebrow: Avantik Academy · Programa
-- Headline: Vendas
+- Eyebrow: Avantik Academy · Propulsão em Vendas (+ "com {mentor}" quando acessado por um mentor)
+- Headline: Propulsão em Vendas
 - Tagline: Venda com método, não com sorte.
-- Subheadline (apoio): Vendedor que depende de inspiração tem mês bom e mês ruim. Vendedor com processo tem receita previsível. Este programa transforma talento em sistema que vende todo mês.
-- Oferta: de R$ 197 por 12x de R$ 19,70 (R$ 197 à vista)
+- Subheadline (apoio): Vendedor que depende de inspiração tem mês bom e mês ruim. Quem trata venda como processo tem receita previsível. Este programa vai da investigação do cliente ao fechamento e ao pós-venda, e transforma talento em sistema que vende todo mês.
+- Oferta: 12x de R$ 197,00 (R$ 197 à vista, 12x de R$ 19,70)
 - CTA: Quero o programa
 
 ## Seção: O problema
 - Título: Vender no improviso é montanha-russa de faturamento.
-- Conteúdo: Pipeline vazio, objeção que derruba a venda, cliente que some depois da primeira compra. Sem processo, cada negociação recomeça do zero. Aqui você aprende a construir um caminho de vendas que se repete e escala.
+- Conteúdo: Pipeline vazio, abordagem que não conecta, objeção que derruba a venda e cliente que some depois da primeira compra. Sem processo, cada negociação recomeça do zero. Aqui você aprende a investigar o cliente, conduzir a venda e fidelizar, num caminho que se repete e escala.
 
 ## Seção: O que você vai aprender
 - Título: Conteúdo direto ao resultado.
-- Item: Processo de vendas previsível e replicável.
-- Item: Negociação e tratamento de objeções sem desconto desnecessário.
-- Item: Prospecção e construção de pipeline constante.
-- Item: Relacionamento e recompra para o cliente voltar e indicar.
+- Item: Vendas como processo: investigação e perfis de cliente.
+- Item: Comunicação, storytelling e estado emocional na venda.
+- Item: Negociação, objeções e fechamento.
+- Item: Pós-venda, fidelização e recompra.
+
+## Seção: O livro que deu origem ao programa
+- Propulsão em Vendas · Uma imersão para superar limites
+- Descrição: Propulsão em Vendas é uma imersão nas ferramentas das melhores equipes comerciais do país. Do processo de investigação do cliente às técnicas de comunicação, negociação e pós-venda, é o que separa vender por sorte de vender por método.
+- Temas: Processo de vendas e investigação do cliente · Comunicação, perfis e storytelling na venda · Negociação, objeções e fechamento · Pós-venda, fidelização e produtividade
+- Prefácio por Paulo Mariottini · Convidado especial Daniel Morato
 
 ## Seção: Formato
 - Título: Como você aprende.
@@ -28,9 +35,9 @@
 - Mentoria mensal ao vivo: Encontros por Zoom com o mentor para revisar suas negociações reais.
 - Certificado e comunidade: Reconhecimento da sua evolução e uma rede de vendedores para trocar estratégia.
 
-## Seção: Mentor
-- Título: Vendas de quem fecha de verdade.
-- Conteúdo: O programa é conduzido por um mentor com resultado real em vendas e negociação. Ao acessar pelo link de um mentor, é o método dele que guia o seu processo.
+## Seção: Mentor (estado ?mentor=)
+- Quando acessado pelo link de um mentor, o hero destaca o card "Seu mentor neste programa" com nome, tema, bio e uma linha de conexão com o programa.
+- Roberto Justus: Negociação e construção de marca aplicadas a vender com método e previsibilidade.
 
 ## Oferta
 - Título: Comece a vender com previsibilidade agora.
@@ -39,12 +46,12 @@
 
 ## FAQ
 - Pergunta: Funciona para qualquer produto ou serviço?
-  Resposta: Sim. O processo de prospecção, negociação e relacionamento se adapta ao que você vende.
+  Resposta: Sim. O processo de investigação, negociação e pós-venda se adapta ao que você vende.
 - Pergunta: Sou novo em vendas, dá conta?
-  Resposta: Dá. O programa parte do essencial e te leva a um método estruturado, passo a passo.
+  Resposta: Dá. O programa parte do essencial, vendas como processo, e te leva passo a passo até a fidelização.
 - Pergunta: Quanto tempo leva para concluir?
   Resposta: Você avança no seu ritmo. As aulas ficam disponíveis e as mentorias acontecem todo mês.
 
 ## CTA final
 - Título: Troque a sorte por um sistema que vende.
-- CTA: Quero o programa por 12x de R$ 19,70
+- CTA: Quero o programa
