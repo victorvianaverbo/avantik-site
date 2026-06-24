@@ -161,6 +161,53 @@ function problemaHtml(program) {
     </section>`;
 }
 
+/**
+ * Seção-assinatura "O método": trilha vertical numerada das etapas reais do
+ * programa (data-driven via program.metodo). Só renderiza se o programa definir.
+ */
+function metodoHtml(program) {
+  const m = program.metodo;
+  if (!m || !Array.isArray(m.etapas) || !m.etapas.length) return '';
+  const steps = m.etapas.map((s, i) => `
+    <li class="program-metodo__step" data-aos="fade-up" data-aos-delay="${i * 70}">
+      <span class="program-metodo__num">${String(i + 1).padStart(2, '0')}</span>
+      <div class="program-metodo__body">
+        <h3 class="program-metodo__t">${escapeHtml(s.t)}</h3>
+        <p class="program-metodo__d">${escapeHtml(s.d)}</p>
+      </div>
+    </li>`).join('');
+  return `
+    <section class="academy-section program-metodo" id="metodo">
+      <div class="container">
+        <span class="academy-eyebrow">${escapeHtml(m.eyebrow || 'O método')}</span>
+        <h2 class="academy-title">${escapeHtml(m.titulo || '')}</h2>
+        ${m.intro ? `<p class="academy-lead program-metodo__intro">${escapeHtml(m.intro)}</p>` : ''}
+        <ol class="program-metodo__track">${steps}</ol>
+      </div>
+    </section>`;
+}
+
+/**
+ * Faixa de provas numéricas (banda escura temática, data-driven via program.stats).
+ * Os números têm respaldo no livro do programa. Só renderiza se definido.
+ */
+function statsHtml(program) {
+  const s = program.stats;
+  if (!s || !Array.isArray(s.itens) || !s.itens.length) return '';
+  const items = s.itens.map((it, i) => `
+    <div class="program-stats__item" data-aos="fade-up" data-aos-delay="${i * 110}">
+      <span class="program-stats__num">${escapeHtml(it.num)}</span>
+      <span class="program-stats__label">${escapeHtml(it.label)}</span>
+    </div>`).join('');
+  return `
+    <section class="program-stats" id="stats">
+      <div class="container">
+        ${s.eyebrow ? `<span class="academy-eyebrow program-stats__eyebrow">${escapeHtml(s.eyebrow)}</span>` : ''}
+        <div class="program-stats__grid">${items}</div>
+      </div>
+    </section>`;
+}
+
 function learnHtml(program) {
   const rows = (program.aprende || []).map((t, i) => `
     <div class="program-learn__row" data-aos="fade-up" data-aos-delay="${i * 80}">
@@ -226,8 +273,9 @@ function livroHtml(program) {
   const l = program.livro;
   if (!l || !program.mockup) return '';
   const temas = (l.temas || []).map((t) => `<li>${escapeHtml(t)}</li>`).join('');
+  const convidadoLabel = l.convidadoFem ? 'Convidada especial' : 'Convidado especial';
   const autores = (l.prefacio || l.convidado)
-    ? `<p class="program-livro__autores">${l.prefacio ? `Prefácio por <strong>${escapeHtml(l.prefacio)}</strong>` : ''}${l.prefacio && l.convidado ? ' · ' : ''}${l.convidado ? `Convidado especial <strong>${escapeHtml(l.convidado)}</strong>` : ''}</p>`
+    ? `<p class="program-livro__autores">${l.prefacio ? `Prefácio por <strong>${escapeHtml(l.prefacio)}</strong>` : ''}${l.prefacio && l.convidado ? ' · ' : ''}${l.convidado ? `${convidadoLabel} <strong>${escapeHtml(l.convidado)}</strong>` : ''}</p>`
     : '';
   return `
     <section class="academy-section program-livro" id="livro">
@@ -335,13 +383,15 @@ function render(program, mentor) {
 
     ${problemaHtml(program)}
 
+    ${statsHtml(program)}
+
+    ${metodoHtml(program)}
+
     ${livroHtml(program)}
 
     ${learnHtml(program)}
 
     ${formatoHtml()}
-
-    ${autoresHtml(program)}
 
     ${mentor ? '' : mentorsGridHtml(program)}
 

@@ -887,6 +887,158 @@
 }
 
 /* =========================================================
+   SEÇÃO: O MÉTODO (trilha vertical numerada — etapas do programa)
+   ========================================================= */
+.program-metodo { background: var(--color-bg); }
+.program-metodo__intro { margin: 1rem 0 0; max-width: 60ch; }
+.program-metodo__track {
+  list-style: none;
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  padding: 0;
+  position: relative;
+  max-width: 780px;
+}
+/* trilho vertical com fade na cor da marca */
+.program-metodo__track::before {
+  content: "";
+  position: absolute;
+  left: 27px;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--academy-primary),
+    color-mix(in srgb, var(--academy-primary) 8%, transparent)
+  );
+}
+.program-metodo__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  padding: 0.85rem 0;
+}
+.program-metodo__num {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--academy-display);
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--academy-on-primary);
+  background: var(--academy-primary);
+  box-shadow:
+    0 0 0 6px var(--color-bg),
+    0 10px 22px color-mix(in srgb, var(--academy-primary) 30%, transparent);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.program-metodo__body { padding-top: 0.15rem; }
+.program-metodo__t {
+  margin: 0.4rem 0 0.3rem;
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  font-weight: 700;
+  color: var(--color-text);
+  transition: color 0.2s ease;
+}
+.program-metodo__d {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 56ch;
+}
+.program-metodo__step:hover .program-metodo__num {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 0 6px var(--color-bg),
+    0 14px 30px color-mix(in srgb, var(--academy-primary) 45%, transparent);
+}
+.program-metodo__step:hover .program-metodo__t { color: var(--academy-primary); }
+@media (max-width: 640px) {
+  .program-metodo__step { grid-template-columns: 46px 1fr; }
+  .program-metodo__num { width: 46px; height: 46px; font-size: 1rem; }
+  .program-metodo__track::before { left: 22px; }
+}
+
+/* =========================================================
+   SEÇÃO: STATS (faixa escura de provas numéricas)
+   ========================================================= */
+.program-stats {
+  position: relative;
+  overflow: hidden;
+  background: var(--academy-dark);
+  color: #fff;
+  padding: clamp(2.75rem, 6vw, 4.75rem) 0;
+  text-align: center;
+}
+.program-stats::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 80% at 50% -10%, color-mix(in srgb, var(--academy-primary) 30%, transparent), transparent 60%),
+    radial-gradient(55% 70% at 100% 120%, color-mix(in srgb, var(--academy-accent) 20%, transparent), transparent 55%);
+}
+.program-stats > .container { position: relative; z-index: 1; }
+.program-stats__eyebrow {
+  color: var(--academy-primary);
+  justify-content: center;
+}
+.program-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+}
+.program-stats__item {
+  position: relative;
+  padding: 0 0.5rem;
+}
+.program-stats__item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 64%;
+  background: rgba(255, 255, 255, 0.12);
+}
+.program-stats__num {
+  display: block;
+  font-family: var(--academy-display);
+  font-weight: 900;
+  font-size: clamp(2.8rem, 7vw, 4.6rem);
+  line-height: 1;
+  color: var(--academy-primary);
+  text-shadow: 0 0 32px color-mix(in srgb, var(--academy-primary) 40%, transparent);
+}
+.program-stats__label {
+  display: block;
+  margin: 0.7rem auto 0;
+  max-width: 22ch;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.45;
+  font-size: 0.98rem;
+}
+@media (max-width: 680px) {
+  .program-stats__grid { grid-template-columns: 1fr; gap: 1.75rem; }
+  .program-stats__item:not(:last-child)::after {
+    right: 50%;
+    top: auto;
+    bottom: -0.9rem;
+    transform: translateX(50%);
+    width: 48px;
+    height: 1px;
+  }
+}
+
+/* =========================================================
    SEÇÃO: AUTORES (banner full-width no meio da página)
    ========================================================= */
 .program-autores {
