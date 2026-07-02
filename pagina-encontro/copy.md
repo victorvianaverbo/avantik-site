@@ -18,7 +18,7 @@
   - Por que falar bem não paga suas contas, e o que realmente paga
   - Bastidor real, números reais e a visão prática de quem faz acontecer
 - **Dados do evento (destaque visual, próximo ao CTA):**
-  - Data: 08 de julho de 2026 (terça-feira), 19h às 22h
+  - Data: 08 de julho de 2026 (quarta-feira), 19h às 22h
   - Local: Auditório Ademicon | Av. José Maria Alckmin, 952, Belvedere, Belo Horizonte - MG
   - Vagas limitadas ao espaço presencial
 - **CTA:** GARANTIR MINHA VAGA - 2º LOTE R$ 127
@@ -129,7 +129,7 @@ O ingresso dá acesso à noite completa: palestra, atividades práticas, coffee 
 
 ## Seção: Informações Práticas
 
-- **Data e horário:** 08 de julho de 2026 (terça-feira). Credenciamento a partir das 18h45. Evento das 19h às 22h.
+- **Data e horário:** 08 de julho de 2026 (quarta-feira). Credenciamento a partir das 18h45. Evento das 19h às 22h.
 - **Local:** Auditório Ademicon — Av. José Maria Alckmin, 952, Belvedere, Belo Horizonte - MG.
 - **Vestimenta:** Sem preocupação. A maioria vem direto do trabalho.
 - **Pagamento:** Parcele em até 12x. Dados criptografados e compra segura pela Sympla.

@@ -333,7 +333,7 @@ Mapeamento: `--bg:#F6F4F1` (marfim), `--surface:#FFFFFF`, `--muted-bg:#FBFAF8`,
 ### Conteúdo (exato da copy)
 - Eyebrow: `08` + `Informações práticas`
 - Linhas do bilhete:
-  - `Data e horário` → `08 de julho de 2026 (terça-feira). Credenciamento a partir das 18h45. Evento das 19h às 22h.`
+  - `Data e horário` → `08 de julho de 2026 (quarta-feira). Credenciamento a partir das 18h45. Evento das 19h às 22h.`
   - `Local` → `Auditório Ademicon — Av. José Maria Alckmin, 952, Belvedere, Belo Horizonte - MG.`
   - `Vestimenta` → `Sem preocupação. A maioria vem direto do trabalho.`
   - `Pagamento` → `Parcele em até 12x. Dados criptografados e compra segura pela Sympla.`
