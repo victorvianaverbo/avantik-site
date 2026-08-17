@@ -135,7 +135,8 @@ export default async (req) => {
   if (!mpRes.ok) {
     const errBody = await mpRes.text();
     console.error('MP preference creation failed', mpRes.status, errBody);
-    return json({ error: 'mp_failed', detail: errBody.slice(0, 500) }, 502);
+    // Nao devolver o corpo do erro do MP ao cliente (evita vazar detalhe interno).
+    return json({ error: 'mp_failed' }, 502);
   }
 
   const preference = await mpRes.json();

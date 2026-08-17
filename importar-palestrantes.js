@@ -21,8 +21,12 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { readFileSync } from 'fs';
 
-const SUPABASE_URL = 'https://ajokzpjguhfxxudteetr.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqb2t6cGpndWhmeHh1ZHRlZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MjQ1NTQsImV4cCI6MjA5MDQwMDU1NH0.TG-ASfMGgNY4BoHsFQx8TQ-4HPVsdbGEu4zJuFAeiNg';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ajokzpjguhfxxudteetr.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_ANON_KEY;
+if (!SUPABASE_KEY) {
+  console.error('Defina SUPABASE_SERVICE_ROLE (ou SUPABASE_ANON_KEY) no ambiente antes de rodar.');
+  process.exit(1);
+}
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 

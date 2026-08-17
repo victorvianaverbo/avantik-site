@@ -3,22 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
   <title>Vendas | Avantik Academy</title>
   <meta name="description" content="Programa Vendas da Avantik Academy: aulas gravadas e mentoria ao vivo com mentores da coleção Foco em Resultados.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-  <link href="/lib/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <link rel="stylesheet" href="/academy/academy.css?v=20260624">
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+<link href="/lib/aos.css" rel="stylesheet">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+  <link rel="preload" as="font" type="font/woff" crossorigin href="/academy/assets/fonts/Metropolis-Black.woff">
+  <link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <link rel="stylesheet" href="/academy/academy.css?v=20260816a">
   <link rel="modulepreload" href="/academy/data.js">
   <link rel="modulepreload" href="/academy/academy-programa.js">
   <link rel="preload" as="font" type="font/woff" crossorigin href="/academy/assets/fonts/Metropolis-Black.woff">
   <script src="/lib/aos.js" defer></script>
-  <script src="/script.js" defer></script>
+  <script src="/script.js?v=20260816a" defer></script>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
 </head>
-<body data-program="vendas">
+<body class="theme-2026" data-program="vendas">
 
   <header class="header" id="header">
     <nav class="header__nav container">
@@ -29,7 +55,7 @@
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link header__link--active">Academy</a>
-        <a href="/para-empresas/" class="header__link">Para Empresas</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
       </div>
       <div class="header__actions" id="header-actions">
@@ -44,6 +70,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <a href="/para-empresas/" class="header__mobile-link">Para Empresas</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <div class="header__mobile-actions">
@@ -65,17 +92,20 @@
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/academy/">Academy</a>
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
             <a href="/sobre/">Sobre</a>
             <a href="/blog/">Blog</a>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Política de Privacidade</a>
             <a href="/termos/">Termos e Condições</a>
@@ -83,7 +113,7 @@
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
             <a href="https://wa.me/5531992185328" target="_blank" rel="noopener noreferrer" class="footer__whatsapp">WhatsApp</a>

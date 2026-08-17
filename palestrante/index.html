@@ -4,6 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
+
   <title>Palestrante | Avantik</title>
   <meta name="description" content="Veja o perfil completo do palestrante, vídeo e solicite orçamento diretamente na Avantik.">
 
@@ -17,18 +38,20 @@
   <link rel="canonical" href="https://avantik-plataforma.netlify.app/palestrante/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <!-- FONTS: DM Serif Display + DM Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <script src="/script.js" defer></script>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     /* ==========================================
-       PERFIL DO PALESTRANTE — Editorial premium
-       Paleta: grafite #1C1C1E · dourado #E8B931 · off-white #FAFAF9
+       PERFIL DO PALESTRANTE — Editorial noir
+       Paleta: grafite #101113/#141518/#1A1B1E · dourado champanhe #CBA35C/#E3C078
+       Texto #F0ECE3 · banda creme #F4F0E7 na bio
        ========================================== */
 
     .profile { overflow-x: clip; }
@@ -43,19 +66,24 @@
     .js-reveal .profile section.is-visible,
     .js-reveal .profile-hero.is-visible { opacity: 1; transform: none; }
 
-    /* Eyebrow compartilhado dos titulos */
+    /* Eyebrow compartilhado dos titulos — fio dourado de 36px + caixa alta espaçada */
     .profile-bio__title::before,
     .profile-talks__title::before,
     .profile-video__title::before,
     .profile-related__title::before,
     .profile-contact-direct__title::before {
-      display: block;
+      display: block; width: max-content; max-width: 100%;
       font-family: var(--font-body);
-      font-size: .75rem; font-weight: 700;
-      letter-spacing: .18em; text-transform: uppercase;
+      font-size: .75rem; font-weight: 500;
+      letter-spacing: .28em; text-transform: uppercase;
       color: var(--color-accent);
-      margin-bottom: .85rem;
+      margin-bottom: .95rem; padding-left: 3rem;
+      background-image: linear-gradient(var(--color-accent), var(--color-accent));
+      background-repeat: no-repeat; background-size: 2.25rem 1px; background-position: 0 50%;
     }
+    /* Títulos centralizados: o fio acompanha o texto */
+    .profile-related__title::before,
+    .profile-contact-direct__title::before { margin-left: auto; margin-right: auto; }
     .profile-bio__title::before { content: 'Quem é'; }
     .profile-talks__title::before { content: 'Repertório'; }
     .profile-video__title::before { content: 'Em cena'; }
@@ -75,16 +103,16 @@
     .profile-hero {
       position: relative;
       padding: calc(72px + clamp(2.5rem, 7vw, 5rem)) 0 clamp(3rem, 6vw, 5rem);
-      background: var(--color-dark);
-      background-image:
-        radial-gradient(120% 80% at 12% 0%, rgba(232, 185, 49, .10) 0%, transparent 55%),
-        radial-gradient(90% 70% at 100% 25%, rgba(67, 64, 160, .14) 0%, transparent 55%);
-      color: #fff;
+      background:
+        radial-gradient(120% 80% at 12% 0%, rgba(227, 179, 65, .12) 0%, transparent 55%),
+        radial-gradient(90% 70% at 100% 25%, rgba(227, 179, 65, .05) 0%, transparent 55%),
+        linear-gradient(175deg, #26272A 0%, #232427 100%);
+      color: var(--color-text);
       overflow: hidden;
     }
     .profile-hero::after {
       content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(232, 185, 49, .45), transparent);
+      background: linear-gradient(90deg, transparent, rgba(227, 179, 65, .45), transparent);
     }
     .profile-hero__grid {
       display: grid;
@@ -95,145 +123,163 @@
     .profile-hero__photo-wrap { position: sticky; top: calc(72px + 1.5rem); }
     .profile-hero__photo {
       position: relative; aspect-ratio: 4 / 5; width: 100%;
-      border-radius: 1.25rem; overflow: hidden;
-      background: rgba(255, 255, 255, .05);
-      box-shadow: 0 34px 70px -28px rgba(0, 0, 0, .7);
+      border-radius: var(--radius-md); overflow: hidden;
+      background: #26272A;
+      box-shadow: 0 34px 70px -28px rgba(0, 0, 0, .8);
     }
     .profile-hero__photo::after {
-      content: ''; position: absolute; inset: 0; border-radius: 1.25rem;
-      border: 1px solid rgba(232, 185, 49, .45); pointer-events: none;
+      content: ''; position: absolute; inset: 0; border-radius: var(--radius-md);
+      border: 1px solid rgba(227, 179, 65, .38); pointer-events: none;
     }
     .profile-hero__photo img { width: 100%; height: 100%; object-fit: cover; }
     .profile-hero__photo--placeholder {
       display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+      background: linear-gradient(170deg, #2B2C2F, #232427);
     }
     .profile-hero__photo--placeholder span {
-      font-family: var(--font-heading); font-size: 5rem; color: rgba(255, 255, 255, .35);
+      font-family: var(--font-heading); font-size: 5rem; color: rgba(227, 179, 65, .5);
     }
 
     .profile-hero__info { min-width: 0; }
     .profile-hero__eyebrow {
-      font-size: .8125rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--color-accent); margin-bottom: 1.1rem;
+      width: max-content; max-width: 100%;
+      font-size: .75rem; font-weight: 500; letter-spacing: .28em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 1.1rem; padding-left: 3rem;
+      background-image: linear-gradient(var(--color-accent), var(--color-accent));
+      background-repeat: no-repeat; background-size: 2.25rem 1px; background-position: 0 50%;
     }
     .profile-hero__eyebrow[hidden] { display: none; }
     .profile-hero__name {
-      font-family: var(--font-heading); font-weight: 400; color: #fff;
+      font-family: var(--font-heading); font-weight: 400; color: var(--color-text);
       line-height: 1.04; letter-spacing: -.015em;
       font-size: clamp(2.4rem, 6vw, 4.25rem); margin-bottom: 1rem;
     }
     .profile-hero__info .badges { margin-bottom: 1.25rem; }
     .profile-hero__tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .5rem; }
     .profile-hero__tags span {
-      font-size: .75rem; font-weight: 600; letter-spacing: .02em; padding: .4rem .9rem;
-      border: 1px solid rgba(255, 255, 255, .2); border-radius: 100px; color: rgba(255, 255, 255, .85);
+      font-size: .75rem; font-weight: 500; letter-spacing: .06em; padding: .4rem .9rem;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .14); border-radius: 100px; color: var(--color-text-secondary);
     }
     .profile-hero__meta {
       display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
       margin: 1.75rem 0 2rem; padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, .14);
-      font-size: 1.0625rem; font-weight: 600;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      font-size: 1.0625rem; font-weight: 500;
     }
     .profile-hero__rating { display: inline-flex; align-items: center; gap: .4rem; color: var(--color-accent); line-height: 1; }
     .profile-hero__rating svg { width: 1.05em; height: 1.05em; }
-    .profile-hero__price { color: rgba(255, 255, 255, .9); }
+    .profile-hero__price { color: var(--color-text); }
     .profile-hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .profile-hero .btn--accent { background: var(--color-accent); color: var(--color-dark); border-color: var(--color-accent); }
-    .profile-hero .btn--accent:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); color: var(--color-dark); }
-    .profile-hero .btn--outline-dark { color: #fff; border-color: rgba(255, 255, 255, .4); background: transparent; }
-    .profile-hero .btn--outline-dark:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .profile-hero .btn--accent { background: linear-gradient(120deg, #ECC35C, #E3B341); color: #232323; border-color: transparent; box-shadow: 0 8px 28px rgba(227, 179, 65, .22); }
+    .profile-hero .btn--accent:hover { filter: brightness(1.06); border-color: transparent; color: #232323; box-shadow: 0 10px 34px rgba(227, 179, 65, .38); }
+    .profile-hero .btn--outline-dark { color: var(--color-text); border: 1.5px solid rgba(255, 255, 255, .22); background: transparent; }
+    /* background explicito no hover: o .btn--outline-dark:hover do style.css ainda
+       aplica rgba(26,26,46,.04) — residuo do navy antigo, que escurecia o botao
+       em vez de destacar. Aqui o hover vira um veu dourado. */
+    .profile-hero .btn--outline-dark:hover { border-color: rgba(227, 179, 65, .6); color: var(--color-accent-hover); background: rgba(227, 179, 65, .08); }
 
     /* ---------- STATS (figuras inline) ---------- */
-    .profile-stats { background: var(--color-bg); border-bottom: 1px solid var(--color-border); padding: clamp(2rem, 4vw, 3rem) 0 !important; }
+    .profile-stats { background: var(--color-bg); border-bottom: 1px solid rgba(35, 35, 35, .07); padding: clamp(2rem, 4vw, 3rem) 0 !important; }
     .profile-stats__grid { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(1.5rem, 5vw, 4rem); }
     .profile-stats__item { position: relative; text-align: center; padding: 0 clamp(1rem, 3vw, 2rem); }
     .profile-stats__item + .profile-stats__item::before {
-      content: ''; position: absolute; left: 0; top: 12%; bottom: 12%; width: 1px; background: var(--color-border);
+      content: ''; position: absolute; left: 0; top: 12%; bottom: 12%; width: 1px; background: rgba(35, 35, 35, .08);
     }
     .profile-stats__value { display: block; font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 2.75rem); color: var(--color-text); line-height: 1; }
-    .profile-stats__label { display: block; margin-top: .55rem; font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--color-text-secondary); }
+    .profile-stats__label { display: block; margin-top: .55rem; font-size: .72rem; text-transform: uppercase; letter-spacing: .18em; color: var(--color-text-muted); }
 
-    /* ---------- BIO (2 colunas editorial) ---------- */
-    .profile-bio { background: var(--color-bg); }
+    /* ---------- BIO (banda creme, 2 colunas editorial) ---------- */
+    .profile-bio {
+      background: linear-gradient(180deg, #FBF7EE, #EDE7D9);
+      border-top: 1px solid rgba(158, 123, 62, .3);
+      border-bottom: 1px solid rgba(158, 123, 62, .2);
+    }
     .profile-bio .container {
       display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
       gap: clamp(2rem, 5vw, 4rem); align-items: start; max-width: 1100px;
     }
-    .profile-bio__title { position: sticky; top: calc(72px + 1.5rem); margin: 0; }
+    .profile-bio__title { position: sticky; top: calc(72px + 1.5rem); margin: 0; color: var(--color-on-cream); }
+    .profile-bio__title::before {
+      color: var(--color-gold-deep);
+      background-image: linear-gradient(var(--color-gold-deep), var(--color-gold-deep));
+    }
     .profile-bio__text {
-      font-size: clamp(1.0625rem, 1.4vw, 1.1875rem); line-height: 1.85;
-      color: var(--color-text-secondary); white-space: pre-line; max-width: 62ch;
+      font-size: clamp(1.0625rem, 1.4vw, 1.1875rem); line-height: 1.85; font-weight: 300;
+      color: var(--color-on-cream-secondary); white-space: pre-line; max-width: 62ch;
     }
 
-    /* ---------- PALESTRAS (grafite) ---------- */
+    /* ---------- PALESTRAS (banda grafite) ---------- */
     .profile-talks {
-      background: var(--color-dark);
-      background-image: radial-gradient(100% 80% at 100% 0%, rgba(232, 185, 49, .08) 0%, transparent 55%);
+      background:
+        radial-gradient(100% 80% at 100% 0%, rgba(227, 179, 65, .08) 0%, transparent 55%),
+        linear-gradient(180deg, #232427, #232427);
     }
-    .profile-talks__title { color: #fff; margin-bottom: clamp(2rem, 4vw, 3rem); }
+    .profile-talks__title { color: var(--color-text); margin-bottom: clamp(2rem, 4vw, 3rem); }
     .profile-talks__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
     .profile-talk-card {
-      background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .12);
-      border-radius: 1.1rem; padding: 1.75rem;
+      background: linear-gradient(170deg, #2B2C2F, #232427); border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: var(--radius-md); padding: 1.75rem;
       transition: transform .3s var(--ease-out), border-color .3s, box-shadow .3s, background .3s;
     }
     .profile-talk-card:hover {
-      transform: translateY(-4px); border-color: rgba(232, 185, 49, .6);
-      background: rgba(255, 255, 255, .06); box-shadow: 0 26px 44px -26px rgba(0, 0, 0, .75);
+      transform: translateY(-4px); border-color: rgba(227, 179, 65, .45);
+      box-shadow: 0 26px 44px -26px rgba(0, 0, 0, .8);
     }
-    .profile-talk-card__theme { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--color-accent); margin-bottom: .85rem; }
-    .profile-talk-card__title { font-family: var(--font-heading); font-weight: 400; font-size: 1.3rem; line-height: 1.2; color: #fff; margin-bottom: .85rem; }
-    .profile-talk-card__meta { display: flex; flex-wrap: wrap; gap: .5rem; font-size: .8125rem; color: rgba(255, 255, 255, .6); margin-bottom: 1rem; }
-    .profile-talk-card__meta-item:not(:first-child)::before { content: '·'; margin-right: .5rem; color: rgba(255, 255, 255, .4); }
+    .profile-talk-card__theme { display: inline-block; font-size: .7rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--color-accent); margin-bottom: .85rem; }
+    .profile-talk-card__title { font-family: var(--font-heading); font-weight: 400; font-size: 1.3rem; line-height: 1.2; color: var(--color-text); margin-bottom: .85rem; }
+    .profile-talk-card__meta { display: flex; flex-wrap: wrap; gap: .5rem; font-size: .8125rem; color: var(--color-text-muted); margin-bottom: 1rem; }
+    .profile-talk-card__meta-item:not(:first-child)::before { content: '·'; margin-right: .5rem; color: rgba(227, 179, 65, .55); }
     .profile-talk-card__price { display: block; font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-accent); margin-bottom: .85rem; }
-    .profile-talk-card__desc { font-size: .9rem; line-height: 1.65; color: rgba(255, 255, 255, .65); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .profile-talk-card__desc { font-size: .9rem; line-height: 1.65; font-weight: 300; color: var(--color-text-secondary); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
     /* ---------- VIDEO ---------- */
     .profile-video { background: var(--color-bg); }
     .profile-video__title { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
     .profile-video__wrap {
       position: relative; max-width: 880px; aspect-ratio: 16 / 9;
-      border-radius: 1rem; overflow: hidden; background: #000;
-      box-shadow: 0 34px 60px -32px rgba(0, 0, 0, .45);
+      border-radius: var(--radius-md); overflow: hidden; background: #000;
+      box-shadow: 0 34px 60px -30px rgba(0, 0, 0, .8);
     }
-    .profile-video__wrap::after { content: ''; position: absolute; inset: 0; border-radius: 1rem; border: 1px solid rgba(232, 185, 49, .4); pointer-events: none; }
+    .profile-video__wrap::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius-md); border: 1px solid rgba(227, 179, 65, .35); pointer-events: none; }
     .profile-video__wrap iframe { width: 100%; height: 100%; border: 0; }
 
     /* ---------- SOCIAL (mantido, discreto) ---------- */
     .profile-social { background: var(--color-bg); padding-top: 0 !important; }
     .profile-social__links { display: flex; gap: .75rem; flex-wrap: wrap; }
-    .profile-social__link { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.1rem; border: 1px solid var(--color-border); border-radius: .6rem; color: var(--color-text-secondary); font-size: .9rem; font-weight: 500; transition: .2s; }
-    .profile-social__link:hover { color: var(--color-accent); border-color: var(--color-accent); }
+    .profile-social__link { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.1rem; border: 1px solid rgba(35, 35, 35, .1); border-radius: var(--radius-xs); color: var(--color-text-secondary); font-size: .9rem; font-weight: 500; transition: .2s; }
+    .profile-social__link:hover { color: var(--color-accent-hover); border-color: rgba(227, 179, 65, .5); }
 
     /* ---------- CONTATO DIRETO ---------- */
-    .profile-contact-direct { background: var(--color-surface); border-top: 1px solid var(--color-border); }
+    .profile-contact-direct { background: #232427; border-top: 1px solid rgba(255, 255, 255, .07); }
     .profile-contact-direct__header { text-align: center; margin-bottom: 2.5rem; }
     .profile-contact-direct__title { margin-bottom: .5rem; }
-    .profile-contact-direct__title::before { content: 'Liberado'; text-align: center; }
-    .profile-contact-direct__subtitle { color: var(--color-text-secondary); font-size: .95rem; max-width: 48ch; margin: 0 auto; }
+    .profile-contact-direct__title::before { content: 'Liberado'; }
+    .profile-contact-direct__subtitle { color: var(--color-text-secondary); font-size: .95rem; font-weight: 300; max-width: 48ch; margin: 0 auto; }
     .contact-direct__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; max-width: 760px; margin: 0 auto; }
-    .contact-direct__card { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 1rem; text-decoration: none; transition: .25s; }
-    .contact-direct__card:hover { border-color: var(--color-accent); transform: translateY(-3px); box-shadow: 0 16px 30px -18px rgba(0, 0, 0, .25); }
-    .contact-direct__icon { width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(232, 185, 49, .14); color: var(--color-accent); }
+    .contact-direct__card { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: linear-gradient(170deg, #2B2C2F, #232427); border: 1px solid rgba(255, 255, 255, .08); border-radius: var(--radius-sm); text-decoration: none; transition: .25s; }
+    .contact-direct__card:hover { border-color: rgba(227, 179, 65, .45); transform: translateY(-3px); box-shadow: 0 18px 34px -20px rgba(0, 0, 0, .8); }
+    .contact-direct__icon { width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(227, 179, 65, .12); border: 1px solid rgba(227, 179, 65, .25); color: var(--color-accent); }
     .contact-direct__info { min-width: 0; }
     .contact-direct__label { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--color-text-muted); margin-bottom: .2rem; }
     .contact-direct__value { display: block; font-weight: 600; color: var(--color-text); font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* ---------- CTA ---------- */
+    /* ---------- CTA (grafite com brilho dourado) ---------- */
     .profile-cta {
-      background: var(--color-accent);
-      background-image: radial-gradient(90% 80% at 85% 12%, rgba(255, 255, 255, .22) 0%, transparent 55%);
+      background:
+        radial-gradient(800px 400px at 50% 0%, rgba(227, 179, 65, .12), transparent 65%),
+        linear-gradient(180deg, #26272A, #232427);
+      border-top: 1px solid rgba(227, 179, 65, .2);
     }
     .profile-cta__card {
-      max-width: 640px; margin: 0 auto; background: #fff; border-radius: 1.5rem;
-      padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem); text-align: center;
-      box-shadow: 0 34px 64px -28px rgba(28, 28, 30, .4);
+      max-width: 720px; margin: 0 auto; background: none; border-radius: 0;
+      padding: clamp(.5rem, 2vw, 1.5rem) 0; text-align: center;
+      box-shadow: none;
     }
-    .profile-cta__title { font-family: var(--font-heading); font-size: clamp(1.6rem, 3vw, 2.25rem); color: var(--color-dark); margin-bottom: 1rem; }
-    .profile-cta__text { color: var(--color-text-secondary); margin-bottom: 2rem; line-height: 1.7; }
-    .profile-cta .btn--accent { background: var(--color-dark); color: var(--color-accent); border-color: var(--color-dark); }
-    .profile-cta .btn--accent:hover { background: #0f0f11; color: #fff; border-color: #0f0f11; }
+    .profile-cta__title { font-family: var(--font-heading); font-weight: 400; font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.12; color: var(--color-text); margin-bottom: 1rem; }
+    .profile-cta__text { color: var(--color-text-secondary); font-weight: 300; margin-bottom: 2rem; line-height: 1.7; }
+    .profile-cta .btn--accent { background: linear-gradient(120deg, #ECC35C, #E3B341); color: #232323; border-color: transparent; box-shadow: 0 8px 28px rgba(227, 179, 65, .25); }
+    .profile-cta .btn--accent:hover { filter: brightness(1.06); color: #232323; border-color: transparent; box-shadow: 0 10px 34px rgba(227, 179, 65, .4); }
 
     /* ---------- RELATED ---------- */
     .profile-related { background: var(--color-bg); }
@@ -250,8 +296,9 @@
     }
 
   </style>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
 </head>
-<body>
+<body class="theme-2026">
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -264,6 +311,7 @@
         <a href="/diretorio/" class="header__link header__link--active">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
       </div>
 
@@ -284,6 +332,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <div class="header__mobile-actions">
         <a href="/entrar/" class="btn btn--outline">Entrar</a>
@@ -431,10 +480,13 @@
 
         <!-- Coluna 2: Navegação -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
             <a href="/sobre/">Sobre</a>
             <a href="/blog/">Blog</a>
           </nav>
@@ -442,7 +494,7 @@
 
         <!-- Coluna 3: Legal -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Política de Privacidade</a>
             <a href="/termos/">Termos e Condições</a>
@@ -452,7 +504,7 @@
 
         <!-- Coluna 4: Contato -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="tel:+5531992185328" class="footer__contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -479,7 +531,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, formatPriceRange, formatDuration, getYouTubeEmbed, renderBadges, TIERS, PALESTRA_FORMATS, escapeHtml, getUser, getUserType } from '/lib/supabase.js';
+    import { supabase, formatPriceRange, formatDuration, getYouTubeEmbed, renderBadges, TIERS, PALESTRA_FORMATS, escapeHtml, getUser, getUserType } from '/lib/supabase.js?v=20260816a';
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
@@ -495,7 +547,7 @@
       // Usa view `speakers_public` — nao expoe email/phone pra anonimos (LGPD).
       let query = supabase
         .from('speakers_public')
-        .select('id, auth_id, slug, plan, name, city, state, bio, photo_url, video_url, price_min, price_max, instagram, linkedin, website, active, rating, has_seal, did_apogeu, created_at, speaker_themes!speaker_id(themes(id, name, slug))')
+        .select('id, auth_id, slug, plan, name, city, state, bio, photo_url, video_url, price_min, price_max, instagram, linkedin, website, active, rating, has_seal, did_apogeu, public_sector_ready, created_at, speaker_themes!speaker_id(themes(id, name, slug))')
         .eq('active', true);
 
       if (slug) query = query.eq('slug', slug);
@@ -522,6 +574,20 @@
 
       // Update page title and meta
       document.title = `${speaker.name} | Palestrante - Avantik`;
+
+      // ViewContent: o contratante abriu a ficha de um palestrante. E o sinal
+      // que alimenta remarketing e publico semelhante. Disparado aqui (e nao
+      // no load) porque so agora existe o nome do palestrante.
+      try {
+        if (typeof window.track === 'function') {
+          window.track('ViewContent', {
+            content_type: 'product',
+            content_ids: [speaker.slug],
+            content_name: speaker.name,
+            content_category: 'palestrante',
+          });
+        }
+      } catch (e) { /* tracking nunca derruba a pagina */ }
       const metaDesc = document.querySelector('meta[name="description"]');
       if (metaDesc) metaDesc.content = `${speaker.name} - palestrante de ${themes.map(t => t.name).join(', ')}. Veja perfil, vídeo e solicite orçamento na Avantik.`;
 
@@ -716,7 +782,7 @@
         const themeIds = themes.map(t => t.id);
         const { data: related } = await supabase
           .from('speaker_themes')
-          .select('speaker_id, speakers:speakers_public!speaker_id(id, slug, name, city, state, bio, photo_url, plan, rating, has_seal, did_apogeu, active, speaker_themes!speaker_id(themes(name, slug)))')
+          .select('speaker_id, speakers:speakers_public!speaker_id(id, slug, name, city, state, bio, photo_url, plan, rating, has_seal, did_apogeu, public_sector_ready, active, speaker_themes!speaker_id(themes(name, slug)))')
           .in('theme_id', themeIds)
           .neq('speaker_id', speaker.id)
           .limit(20);

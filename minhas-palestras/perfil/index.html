@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -8,12 +8,14 @@
   <meta name="description" content="Edite seu perfil de palestrante na Avantik.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <script src="/script.js" defer></script>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     .ep {
@@ -22,9 +24,9 @@
     }
 
     .ep__form {
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1.25rem;
+      border-radius: var(--radius-md);
       padding: 2rem;
     }
 
@@ -43,6 +45,30 @@
       border-bottom: 1px solid var(--color-border);
     }
 
+    /* Campos sobre superficie escura.
+       color-scheme: dark faz a UA desenhar o autofill do Chrome, os spinners do
+       <input type="number"> e o painel nativo do <select> em tema escuro. */
+    .ep__form .form-input {
+      background: #FFFFFF;
+      color: var(--color-text);
+      color-scheme: light;
+      border-radius: var(--radius-xs);
+    }
+
+    .ep__form .form-input::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .ep__form select.form-input option {
+      background: #FFFFFF;
+      color: var(--color-text);
+    }
+
+    .ep__form .form-label {
+      color: var(--color-text);
+      font-weight: 500;
+    }
+
     .ep-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -57,18 +83,18 @@
     .ep__hint {
       display: block;
       font-size: 0.8125rem;
-      color: var(--color-text-secondary);
+      color: var(--color-text-muted);
       margin-top: 0.25rem;
     }
 
     .ep__feedback {
       padding: 0.875rem 1rem;
-      border-radius: 0.625rem;
+      border-radius: var(--radius-xs);
       margin-top: 1rem;
       font-size: 0.9375rem;
     }
-    .ep__feedback--ok { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
-    .ep__feedback--err { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+    .ep__feedback--ok { background: rgba(16, 185, 129, 0.12); color: #6EE7B7; border: 1px solid rgba(16, 185, 129, 0.28); }
+    .ep__feedback--err { background: rgba(239, 68, 68, 0.12); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.28); }
 
     .ep__actions {
       display: flex;
@@ -81,7 +107,7 @@
     .ep__loading { text-align: center; padding: 4rem 2rem; color: var(--color-text-secondary); }
   </style>
 </head>
-<body>
+<body class="theme-2026">
 
   <header class="header" id="header">
     <nav class="header__nav container">
@@ -90,6 +116,7 @@
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
       </div>
       <div class="header__actions" id="header-actions"></div>
       <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -98,6 +125,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <div class="header__mobile-actions"></div>
     </div>
   </header>
@@ -175,6 +203,26 @@
               </div>
             </fieldset>
 
+            <!-- Vertical Setor Publico. O checkbox declara INTERESSE; o selo
+                 (public_sector_ready) e concedido pela curadoria e o trigger da
+                 migration 022 impede que seja setado daqui. -->
+            <fieldset class="ep-section">
+              <legend class="ep-section__title">Atuação</legend>
+
+              <div class="form-group" id="sp-interest-wrap">
+                <label for="public_sector_interest" style="display:flex;gap:0.65rem;align-items:flex-start;cursor:pointer;">
+                  <input type="checkbox" id="public_sector_interest" name="public_sector_interest" style="margin-top:0.2rem;flex-shrink:0;">
+                  <span>Quero atuar no <strong>setor público</strong> — prefeituras, câmaras, órgãos e associações.</span>
+                </label>
+                <span class="ep__hint">Nosso time valida documentação e notório saber antes de habilitar o selo. <a href="/setor-publico/">Como funciona</a>.</span>
+              </div>
+
+              <div class="form-group" id="sp-ready-wrap" hidden>
+                <p style="margin:0;font-weight:600;">Você está habilitado na vertical Setor Público.</p>
+                <span class="ep__hint">Seu perfil exibe o selo e aparece no filtro de Atuação do diretório. Para sair da vertical, fale com nosso time.</span>
+              </div>
+            </fieldset>
+
             <fieldset class="ep-section">
               <legend class="ep-section__title">Faixa de cachê</legend>
 
@@ -228,7 +276,7 @@
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/projetos/">Oportunidades</a>
@@ -236,14 +284,14 @@
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Privacidade</a>
             <a href="/termos/">Termos</a>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
           </div>
@@ -256,7 +304,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, requireAuth, ESTADOS_BR } from '/lib/supabase.js';
+    import { supabase, requireAuth, ESTADOS_BR } from '/lib/supabase.js?v=20260816a';
 
     const auth = await requireAuth('speaker');
     if (!auth) throw new Error('redirect');
@@ -300,6 +348,18 @@
       if (el) el.value = speaker[f] != null ? speaker[f] : '';
     });
 
+    // Checkbox nao usa .value, entao fica fora do loop acima.
+    const spInterest = document.getElementById('public_sector_interest');
+    if (spInterest) spInterest.checked = !!speaker.public_sector_interest;
+    // Ja habilitado pela curadoria: mostra o estado em vez do checkbox, pra nao
+    // sugerir que desmarcar remove o selo (o trigger da 022 bloquearia mesmo).
+    if (speaker.public_sector_ready) {
+      const w1 = document.getElementById('sp-interest-wrap');
+      const w2 = document.getElementById('sp-ready-wrap');
+      if (w1) w1.hidden = true;
+      if (w2) w2.hidden = false;
+    }
+
     loadingEl.hidden = true;
     formEl.hidden = false;
 
@@ -338,6 +398,9 @@
         instagram: document.getElementById('instagram').value.trim() || null,
         linkedin: document.getElementById('linkedin').value.trim() || null,
         website: document.getElementById('website').value.trim() || null,
+        // So a intencao. public_sector_ready nunca vai no payload — o trigger
+        // da migration 022 rejeita o UPDATE se ele mudar por aqui.
+        public_sector_interest: document.getElementById('public_sector_interest').checked,
       };
 
       const { error: updateError } = await supabase

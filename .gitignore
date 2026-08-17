@@ -10,3 +10,6 @@ lighthouse-*.json
 !.env.example
 .mp-credentials.txt
 .mp-plans.json
+
+# Relatorios de medicao (Lighthouse) — lixo de trabalho
+lh-*.json

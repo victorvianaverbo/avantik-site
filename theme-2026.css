@@ -1,0 +1,2107 @@
+/* ==========================================================
+   THEME 2026 — identidade creme & dourado (Avantik)
+   Creme #FBF7EE + grafite #232427 + dourado #E3B341
+   Bricolage Grotesque (títulos) + Instrument Sans (texto)
+
+   Carregado APENAS pelas páginas com <body class="theme-2026">,
+   sempre DEPOIS do style.css. Nenhuma regra aqui afeta páginas
+   sem a classe — hoje só a home usa este tema.
+   ========================================================== */
+
+/* ---------- 0. Fontes auto-hospedadas ---------- */
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/bricolage-grotesque-400-800-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/bricolage-grotesque-400-800-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/instrument-sans-400-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/instrument-sans-400-700-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---------- 1. Tokens ---------- */
+
+body.theme-2026 {
+  --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Instrument Sans', system-ui, sans-serif;
+
+  /* Paleta */
+  --av-cream: #FBF7EE;
+  --av-white: #FFFFFF;
+  --av-ink: #232323;
+  --av-ink-2: #5c564a;
+  --av-ink-3: #6b6558;
+  --av-ink-4: #8a8272;
+  --av-gold: #E3B341;
+  --av-gold-hi: #ecc35c;
+  /* Dourado de TEXTO. #A08432 dava 3.36:1 sobre o creme — reprova no AA para
+     texto pequeno (4.5:1). Este da 4.71 no creme e 5.04 no branco. */
+  --av-gold-deep: #856C24;
+  /* Dourado dos numeros decorativos grandes (>=24px bold): o AA cobra so 3:1,
+     entao aqui cabe um tom mais luminoso — 3.36 no creme, 3.60 no branco. */
+  --av-gold-num: #A08432;
+  --av-gold-soft: #e6cf94;
+  --av-dark: #232427;
+  --av-dark-2: #1d1e21;
+  --av-dark-3: #1b1c1e;
+  --av-dark-card: #2b2c2f;
+  --av-dark-card-2: #26272a;
+  --av-on-dark: #f5f2ea;
+  --av-on-dark-2: #a9a49a;
+  --av-on-dark-3: #9b968b;
+  --av-line: #eadfc6;
+  --av-line-2: #eee4cd;
+
+  /* Vertical Setor Publico: chumbo azulado. Diferencia a vertical sem
+     introduzir uma segunda cor de marca — o dourado continua sendo o acento.
+     Contrastes medidos (creme #FBF7EE / chumbo #1E2229):
+       slate-700 no creme  8.91:1   slate-500 no creme  5.68:1
+       slate-300 no 900    7.15:1   --av-gold no 900    8.20:1
+     Ou seja: o kicker dourado continua legivel dentro da banda chumbo, e o
+     texto secundario passa no AA nos dois fundos. */
+  --sp-slate-900: #1E2229;   /* fundo das bandas escuras da vertical */
+  --sp-slate-800: #262B33;   /* card sobre a banda chumbo */
+  --sp-slate-700: #3A4049;   /* bordas, filetes e icones sobre creme */
+  --sp-slate-500: #5B636F;   /* texto secundario sobre creme */
+  --sp-slate-300: #A8AEB8;   /* texto secundario sobre a banda chumbo */
+  --sp-slate-tint: rgba(58, 64, 73, 0.06);   /* chip/fundo sutil sobre creme */
+  --sp-slate-line: rgba(255, 255, 255, 0.10);
+
+  /* Tokens compartilhados do style.css, remapeados */
+  --color-bg: var(--av-cream);
+  --color-text: var(--av-ink);
+  --color-text-secondary: var(--av-ink-3);
+  --color-text-muted: var(--av-ink-4);
+  --color-primary: var(--av-gold-deep);
+  --color-primary-light: var(--av-gold);
+  --color-accent: var(--av-gold);
+  --color-accent-hover: var(--av-gold-hi);
+  --color-accent-light: rgba(227, 179, 65, 0.14);
+  --color-surface: var(--av-white);
+  --color-border: var(--av-line-2);
+  --color-muted-bg: rgba(227, 179, 65, 0.08);
+  --color-dark: var(--av-dark);
+  --color-dark-surface: var(--av-dark-card);
+  --color-dark-border: rgba(255, 255, 255, 0.08);
+
+  --radius-xs: 99px;
+  --radius-sm: 99px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+
+  --container-max: 1240px;
+  --section-py: clamp(3.5rem, 7vw, 5rem);
+
+  /* Dourado usado como TEXTO (rotulos, kickers). Sobre creme/branco precisa ser
+     o tom profundo; as bandas escuras redefinem para o dourado claro. */
+  --av-eyebrow: var(--av-gold-deep);
+
+  background: var(--av-cream);
+  color: var(--av-ink);
+  font-family: var(--font-body);
+}
+
+body.theme-2026 h1,
+body.theme-2026 h2,
+body.theme-2026 h3,
+body.theme-2026 h4 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+body.theme-2026 ::selection {
+  background: rgba(227, 179, 65, 0.4);
+  color: var(--av-ink);
+}
+
+body.theme-2026 :focus-visible {
+  outline: 2px solid var(--av-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- 2. Botões ---------- */
+
+.theme-2026 .btn {
+  font-family: var(--font-body);
+  font-weight: 700;
+  border-radius: 99px;
+  letter-spacing: 0;
+}
+
+.theme-2026 .btn--accent {
+  background: var(--av-gold);
+  color: var(--av-ink);
+  border: 1.5px solid var(--av-gold);
+  box-shadow: 0 10px 30px rgba(227, 179, 65, 0.22);
+}
+
+.theme-2026 .btn--accent:hover {
+  background: var(--av-gold-hi);
+  border-color: var(--av-gold-hi);
+  color: var(--av-ink);
+  box-shadow: 0 14px 36px rgba(227, 179, 65, 0.32);
+}
+
+.theme-2026 .btn--outline {
+  background: transparent;
+  color: var(--av-ink);
+  border: 1.5px solid var(--av-line);
+}
+
+.theme-2026 .btn--outline:hover {
+  border-color: var(--av-gold);
+  background: rgba(227, 179, 65, 0.08);
+}
+
+.theme-2026 .btn--outline-dark {
+  background: transparent;
+  color: var(--av-on-dark);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+.theme-2026 .btn--outline-dark:hover {
+  border-color: var(--av-gold);
+  background: rgba(227, 179, 65, 0.1);
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .btn--lg {
+  font-size: 1.03125rem;
+  padding: 1.0625rem 1.9375rem;
+}
+
+.theme-2026 .btn--sm {
+  font-size: 0.875rem;
+  padding: 0.625rem 1.25rem;
+}
+
+/* ---------- 3. Header ---------- */
+
+/* Com o corpo do site em creme, o header transparente (texto e logo brancos)
+   sumiria em qualquer pagina de topo claro — artigos do blog, 404, programas da
+   Academy. Por isso o padrao agora e solido, e ele so volta a ser transparente
+   quando existe uma banda escura logo abaixo dele. */
+.theme-2026 .header {
+  background: rgba(29, 30, 33, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.theme-2026:has(.hm-hero, .page-hero, .auth-page, .academy-hero, .sep-hero, .sep-programa-hero, .profile-hero, .palestra-hero)
+  .header:not(.header--scrolled):not(.header--solid) {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.theme-2026 .header--scrolled,
+.theme-2026 .header--solid {
+  background: rgba(29, 30, 33, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 24px rgba(0, 0, 0, 0.35);
+}
+
+.theme-2026 .header__nav {
+  height: 76px;
+}
+
+.theme-2026 .header__logo-img,
+.theme-2026 .header--scrolled .header__logo-img {
+  filter: brightness(0) invert(1);
+}
+
+.theme-2026 .header__link,
+.theme-2026 .header--scrolled .header__link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #b6b2a8;
+}
+
+.theme-2026 .header__link:hover,
+.theme-2026 .header--scrolled .header__link:hover {
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .header__link::after {
+  background: var(--av-gold);
+}
+
+.theme-2026 .header .btn--outline,
+.theme-2026 .header--scrolled .btn--outline {
+  color: var(--av-on-dark);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: transparent;
+}
+
+.theme-2026 .header .btn--outline:hover,
+.theme-2026 .header--scrolled .btn--outline:hover {
+  border-color: var(--av-gold);
+  background: rgba(227, 179, 65, 0.1);
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .header .btn--accent,
+.theme-2026 .header--scrolled .btn--accent {
+  background: var(--av-gold);
+  color: var(--av-ink);
+  border: 1.5px solid var(--av-gold);
+  box-shadow: none;
+}
+
+.theme-2026 .header .btn--accent:hover,
+.theme-2026 .header--scrolled .btn--accent:hover {
+  background: var(--av-gold-hi);
+  border-color: var(--av-gold-hi);
+  color: var(--av-ink);
+}
+
+.theme-2026 .header .btn:not(.btn--accent):not(.btn--outline),
+.theme-2026 .header--scrolled .btn:not(.btn--accent):not(.btn--outline) {
+  color: var(--av-on-dark);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+}
+
+.theme-2026 .header__burger span {
+  background: var(--av-on-dark);
+}
+
+/* Menu mobile */
+.theme-2026 .header__mobile {
+  background: var(--av-dark-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.theme-2026 .header__mobile-link {
+  color: var(--av-on-dark);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.theme-2026 .header__mobile-link:hover {
+  color: var(--av-gold);
+}
+
+/* Dropdown do usuário logado sobre o header escuro */
+.theme-2026 .user-menu__panel {
+  background: var(--av-dark-card);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-2026 .user-menu__name,
+.theme-2026 .user-menu__header strong,
+.theme-2026 .user-menu__item {
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .user-menu__header span {
+  color: var(--av-on-dark-3);
+}
+
+/* ---------- 4. Blocos de seção ---------- */
+
+.theme-2026 .hm-band {
+  background: var(--av-cream);
+}
+
+.theme-2026 .hm-band--dark {
+  background: var(--av-dark);
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .hm-band--white {
+  background: var(--av-white);
+  border-top: 1px solid var(--av-line-2);
+  border-bottom: 1px solid var(--av-line-2);
+}
+
+.theme-2026 .hm-eyebrow {
+  display: block;
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: var(--av-gold-deep);
+  text-transform: uppercase;
+}
+
+.theme-2026 .hm-band--dark .hm-eyebrow {
+  color: var(--av-gold-soft);
+}
+
+.theme-2026 .hm-title {
+  font-size: clamp(1.75rem, 4.4vw, 2.125rem);
+  line-height: 1.15;
+  color: var(--av-ink);
+  margin: 0.625rem 0 0;
+}
+
+.theme-2026 .hm-band--dark .hm-title {
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .hm-lead {
+  color: var(--av-ink-3);
+  font-size: 0.96875rem;
+  line-height: 1.6;
+  margin: 0.5rem 0 0;
+}
+
+/* Irma da regra do .hm-title acima: como o .hm-lead fixa a cor em --av-ink-3
+   em vez de resolver var(--color-text-secondary), ele NAO acompanha os tokens
+   que a banda escura redefine. Ficava em 2.76:1 dentro de .hm-band--dark. */
+.theme-2026 .hm-band--dark .hm-lead {
+  color: var(--av-on-dark-2);
+}
+
+.theme-2026 .hm-link {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--av-ink);
+  border-bottom: 2px solid var(--av-gold);
+  white-space: nowrap;
+  padding-bottom: 2px;
+  transition: color 0.25s;
+}
+
+.theme-2026 .hm-link:hover {
+  color: var(--av-gold-deep);
+}
+
+/* ---------- 5. Hero ---------- */
+
+.theme-2026 .hm-hero {
+  position: relative;
+  background: linear-gradient(180deg, var(--av-dark), var(--av-dark-2));
+  overflow: hidden;
+}
+
+.theme-2026 .hm-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 700px 460px at 82% 8%, rgba(227, 179, 65, 0.12), transparent 65%);
+  pointer-events: none;
+}
+
+.theme-2026 .hm-hero__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding-top: calc(76px + clamp(2rem, 5vw, 3.75rem));
+  padding-bottom: clamp(2.75rem, 6vw, 3.25rem);
+}
+
+.theme-2026 .hm-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(227, 179, 65, 0.35);
+  border-radius: 99px;
+  padding: 0.4375rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--av-gold-soft);
+}
+
+.theme-2026 .hm-hero__badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--av-gold);
+}
+
+.theme-2026 .hm-hero__title {
+  font-size: clamp(2.75rem, 6.4vw, 4.125rem);
+  line-height: 1.02;
+  color: #f7f4ec;
+  margin: 1.375rem 0 0;
+}
+
+.theme-2026 .hm-hero__title em {
+  font-style: normal;
+  color: var(--av-gold);
+}
+
+.theme-2026 .hero__tabs {
+  display: flex;
+  gap: 0.625rem;
+  margin: 1.125rem 0 0;
+  border-bottom: none;
+}
+
+.theme-2026 .hero__tab {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #c9c4b8;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 99px;
+  padding: 0.4375rem 1.125rem;
+  white-space: nowrap;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+
+.theme-2026 .hero__tab::after {
+  content: none;
+}
+
+.theme-2026 .hero__tab:hover {
+  border-color: rgba(227, 179, 65, 0.6);
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .hero__tab--active {
+  background: var(--av-gold);
+  border-color: var(--av-gold);
+  color: var(--av-ink);
+  font-weight: 700;
+}
+
+.theme-2026 .hero__subtitle {
+  font-size: 1.15625rem;
+  line-height: 1.55;
+  color: var(--av-on-dark-2);
+  max-width: 470px;
+  margin: 1.25rem 0 0;
+}
+
+.theme-2026 .hm-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  align-items: center;
+  margin-top: 1.75rem;
+}
+
+.theme-2026 .hm-hero__stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2.25rem;
+  font-size: 0.875rem;
+  color: #8f8b81;
+}
+
+.theme-2026 .hm-hero__stat b {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.625rem;
+  color: var(--av-gold);
+  line-height: 1.1;
+}
+
+/* Coluna visual do hero */
+.theme-2026 .hm-hero__visual {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.25rem;
+  padding: 1rem 0;
+}
+
+.theme-2026 .hm-mock {
+  width: 270px;
+  max-width: 100%;
+  background: var(--av-dark-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  animation: hmFloat 8s ease-in-out infinite;
+}
+
+.theme-2026 .hm-mock__media {
+  position: relative;
+  height: 210px;
+  background: linear-gradient(150deg, #34353a, #232427);
+}
+
+.theme-2026 .hm-mock__media svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.theme-2026 .hm-mock__flags {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 0.375rem;
+}
+
+.theme-2026 .hm-mock__flags span {
+  background: rgba(24, 24, 26, 0.85);
+  color: var(--av-gold-soft);
+  font-size: 0.71875rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: 99px;
+}
+
+.theme-2026 .hm-mock__body {
+  padding: 1rem 1.125rem;
+}
+
+.theme-2026 .hm-mock__name {
+  color: var(--av-on-dark);
+  font-size: 1.03125rem;
+  font-weight: 700;
+}
+
+.theme-2026 .hm-mock__role {
+  color: var(--av-on-dark-3);
+  font-size: 0.8125rem;
+  margin-top: 2px;
+}
+
+.theme-2026 .hm-mock__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+}
+
+.theme-2026 .hm-mock__tags span {
+  border: 1px solid rgba(227, 179, 65, 0.35);
+  color: #d9d4c8;
+  font-size: 0.71875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: 99px;
+}
+
+.theme-2026 .hm-mock__foot {
+  margin-top: 0.875rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-2026 .hm-mock__rating {
+  color: var(--av-gold);
+  font-size: 0.875rem;
+}
+
+.theme-2026 .hm-mock__rating b {
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .hm-mock__price {
+  color: #d9d4c8;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.theme-2026 .hm-mock-note {
+  align-self: flex-start;
+  max-width: 250px;
+  background: var(--av-dark-card-2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 0.875rem 1.125rem;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+  animation: hmFloat2 7s ease-in-out 0.5s infinite;
+}
+
+.theme-2026 .hm-mock-note__title {
+  font-size: 0.75rem;
+  color: #8f8b81;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.08em;
+}
+
+.theme-2026 .hm-mock-note__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.theme-2026 .hm-mock-note__tags a {
+  background: rgba(227, 179, 65, 0.14);
+  color: var(--av-gold-soft);
+  font-size: 0.78125rem;
+  font-weight: 700;
+  padding: 0.375rem 0.75rem;
+  border-radius: 99px;
+  transition: background 0.25s, color 0.25s;
+}
+
+.theme-2026 .hm-mock-note__tags a:hover {
+  background: rgba(227, 179, 65, 0.28);
+  color: #fff;
+}
+
+@keyframes hmFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes hmFloat2 {
+  0%, 100% { transform: translateY(-8px); }
+  50%      { transform: translateY(4px); }
+}
+
+/* ---------- 6. Como funciona ---------- */
+
+.theme-2026 .hm-how {
+  padding-top: clamp(3rem, 6vw, 4rem);
+  padding-bottom: clamp(2.75rem, 6vw, 3.5rem);
+}
+
+.theme-2026 .hm-how__header {
+  text-align: center;
+}
+
+.theme-2026 .hm-how__header .hm-title {
+  font-size: clamp(1.875rem, 5vw, 2.375rem);
+}
+
+.theme-2026 .how__tabs {
+  display: inline-flex;
+  justify-content: center;
+  background: var(--av-white);
+  border: 1.5px solid var(--av-line);
+  border-radius: 99px;
+  padding: 5px;
+  margin: 1.25rem 0 0;
+}
+
+.theme-2026 .how__tabs::after {
+  content: none;
+}
+
+.theme-2026 .hm-how__switch {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.theme-2026 .how__tab {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--av-ink-3);
+  padding: 0.5625rem 1.375rem;
+  border-radius: 99px;
+  white-space: nowrap;
+  transition: background 0.25s, color 0.25s;
+}
+
+.theme-2026 .how__tab::after {
+  content: none;
+}
+
+.theme-2026 .how__tab:hover {
+  color: var(--av-ink);
+}
+
+.theme-2026 .how__tab--active,
+.theme-2026 .how__tab--active:hover {
+  background: var(--av-ink);
+  color: var(--av-gold);
+  font-weight: 700;
+}
+
+.theme-2026 .hm-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.theme-2026 .hm-step {
+  background: var(--av-white);
+  border: 1px solid var(--av-line-2);
+  border-radius: 20px;
+  padding: 1.75rem;
+}
+
+.theme-2026 .hm-step__n {
+  font-family: var(--font-heading);
+  font-size: 2.125rem;
+  font-weight: 800;
+  color: var(--av-gold-num);
+  line-height: 1;
+}
+
+.theme-2026 .hm-step__title {
+  font-size: 1.1875rem;
+  font-weight: 700;
+  color: var(--av-ink);
+  margin: 0.75rem 0 0.5rem;
+}
+
+.theme-2026 .hm-step__text {
+  color: var(--av-ink-3);
+  font-size: 0.90625rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- 7. Categorias ---------- */
+
+.theme-2026 .hm-cats {
+  padding-top: 0;
+  padding-bottom: clamp(2.75rem, 6vw, 3.5rem);
+}
+
+.theme-2026 .hm-cats__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.25rem;
+}
+
+.theme-2026 .hm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.375rem;
+}
+
+.theme-2026 .hm-chip {
+  background: var(--av-white);
+  border: 1.5px solid var(--av-line);
+  border-radius: 14px;
+  padding: 0.75rem 1.125rem;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.theme-2026 .hm-chip:hover {
+  border-color: var(--av-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(160, 132, 50, 0.1);
+}
+
+.theme-2026 .hm-chip b {
+  font-size: 0.90625rem;
+  font-weight: 700;
+  color: var(--av-ink);
+}
+
+.theme-2026 .hm-chip span {
+  font-size: 0.71875rem;
+  color: var(--av-gold-deep);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.theme-2026 .hm-chip--featured {
+  background: var(--av-ink);
+  border-color: var(--av-ink);
+}
+
+.theme-2026 .hm-chip--featured b { color: var(--av-on-dark); }
+.theme-2026 .hm-chip--featured span { color: var(--av-gold); }
+
+/* ---------- 8. Palestrantes em destaque ---------- */
+
+.theme-2026 .speakers {
+  background: var(--av-cream);
+  padding-top: 0;
+  padding-bottom: clamp(2.75rem, 6vw, 3.5rem);
+}
+
+.theme-2026 .speakers__header {
+  text-align: left;
+  margin-bottom: 1.375rem;
+}
+
+.theme-2026 .speakers__label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  color: var(--av-gold-deep);
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.theme-2026 .speakers__title {
+  font-size: clamp(1.75rem, 4.4vw, 2.125rem);
+  color: var(--av-ink);
+  margin: 0.625rem 0 0;
+}
+
+.theme-2026 .speakers__subtitle {
+  margin: 0.5rem 0 0;
+  max-width: 620px;
+  font-size: 0.96875rem;
+  color: var(--av-ink-3);
+}
+
+.theme-2026 .speakers__fade--left {
+  background: linear-gradient(to right, var(--av-cream) 0%, transparent 100%);
+}
+
+.theme-2026 .speakers__fade--right {
+  background: linear-gradient(to left, var(--av-cream) 0%, transparent 100%);
+}
+
+.theme-2026 .speakers__arrow {
+  background: var(--av-white);
+  border: 1.5px solid var(--av-line);
+  color: var(--av-ink);
+  box-shadow: 0 6px 18px rgba(160, 132, 50, 0.12);
+}
+
+.theme-2026 .speakers__arrow:hover {
+  background: var(--av-white);
+  border-color: var(--av-gold);
+  color: var(--av-gold-deep);
+}
+
+.theme-2026 .speakers__card {
+  background: var(--av-white);
+  border: 1px solid var(--av-line-2);
+  border-radius: 20px;
+}
+
+.theme-2026 .speakers__card:hover {
+  border-color: var(--av-gold);
+  box-shadow: 0 18px 40px rgba(160, 132, 50, 0.14);
+}
+
+.theme-2026 .speakers__name {
+  font-size: 1.03125rem;
+  color: var(--av-ink);
+}
+
+.theme-2026 .speakers__tags span {
+  background: transparent;
+  border: 1px solid rgba(227, 179, 65, 0.45);
+  color: var(--av-ink-3);
+  font-size: 0.71875rem;
+}
+
+.theme-2026 .speakers__bottom {
+  border-top-color: var(--av-line-2);
+}
+
+.theme-2026 .speakers__rating {
+  color: var(--av-gold-num);
+}
+
+.theme-2026 .speakers__price {
+  color: var(--av-ink);
+  font-weight: 700;
+}
+
+/* ---------- 9. Diferenciais ---------- */
+
+.theme-2026 .hm-why {
+  padding-top: clamp(3rem, 6vw, 3.5rem);
+  padding-bottom: clamp(3rem, 6vw, 3.5rem);
+}
+
+.theme-2026 .hm-why .hm-title {
+  max-width: 640px;
+  margin-bottom: 1.625rem;
+}
+
+.theme-2026 .hm-why__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.125rem;
+}
+
+.theme-2026 .hm-why__card {
+  background: var(--av-dark-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.5rem;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.theme-2026 .hm-why__card:hover {
+  border-color: rgba(227, 179, 65, 0.5);
+  transform: translateY(-4px);
+}
+
+.theme-2026 .hm-why__n {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--av-gold);
+  line-height: 1;
+}
+
+.theme-2026 .hm-why__title {
+  color: var(--av-on-dark);
+  font-size: 1.03125rem;
+  font-weight: 700;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.theme-2026 .hm-why__text {
+  color: var(--av-on-dark-3);
+  font-size: 0.84375rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ---------- 10. Sobre ---------- */
+
+.theme-2026 .hm-about {
+  padding-top: clamp(3rem, 6vw, 3.75rem);
+  padding-bottom: clamp(3rem, 6vw, 3.75rem);
+}
+
+.theme-2026 .hm-about__grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.theme-2026 .hm-about__title {
+  font-size: clamp(1.75rem, 4.4vw, 2.125rem);
+  line-height: 1.15;
+  margin: 0.625rem 0 1rem;
+}
+
+.theme-2026 .hm-about__text {
+  color: var(--av-ink-2);
+  font-size: 0.96875rem;
+  line-height: 1.65;
+  margin: 0 0 0.875rem;
+}
+
+.theme-2026 .hm-about__text:last-child {
+  margin-bottom: 0;
+}
+
+.theme-2026 .hm-about__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.theme-2026 .hm-about__stat {
+  background: var(--av-white);
+  border: 1px solid var(--av-line-2);
+  border-radius: 18px;
+  padding: 1.375rem;
+}
+
+.theme-2026 .hm-about__num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--av-ink);
+  line-height: 1;
+}
+
+.theme-2026 .hm-about__stat span {
+  display: block;
+  color: var(--av-ink-4);
+  font-size: 0.84375rem;
+  margin-top: 0.25rem;
+}
+
+/* ---------- 11. Depoimentos ---------- */
+
+.theme-2026 .hm-videos {
+  padding-top: 0;
+  padding-bottom: clamp(3rem, 6vw, 3.5rem);
+}
+
+.theme-2026 .hm-videos__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.125rem;
+  margin-top: 1.375rem;
+}
+
+.theme-2026 .hm-video {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--av-line-2);
+  height: 210px;
+  background: #efe8d6;
+  cursor: pointer;
+}
+
+.theme-2026 .hm-video img,
+.theme-2026 .hm-video iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  display: block;
+}
+
+.theme-2026 .hm-video__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: rgba(24, 24, 26, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--av-gold);
+  transition: transform 0.25s, background 0.25s;
+}
+
+.theme-2026 .hm-video:hover .hm-video__play {
+  transform: scale(1.1);
+  background: rgba(24, 24, 26, 0.95);
+}
+
+/* ---------- 12. Clientes ---------- */
+
+.theme-2026 .clients {
+  background: var(--av-white);
+  border-top: 1px solid var(--av-line-2);
+  border-bottom: 1px solid var(--av-line-2);
+  padding: clamp(1.375rem, 2.4vw, 2.25rem) 0;
+  overflow: hidden;
+}
+
+.theme-2026 .clients__title {
+  font-family: var(--font-body);
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  color: var(--av-gold-deep);
+  margin-bottom: 1rem;
+}
+
+.theme-2026 .clients__viewport {
+  overflow: hidden;
+}
+
+.theme-2026 .clients__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 3.4vw, 3.75rem);
+  width: max-content;
+  animation: scrollClients 45s linear infinite;
+}
+
+.theme-2026 .clients__logo {
+  flex: 0 0 auto;
+  height: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 0;
+}
+
+.theme-2026 .clients__logo:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* O comp do Design usava 34px fixos, o que fica minusculo num monitor largo.
+   Aqui a altura acompanha a largura da tela: 30px no celular, ~45px a 1440px. */
+.theme-2026 .clients__logo img {
+  height: clamp(30px, 3.1vw, 48px);
+  max-height: none;
+  width: auto;
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition: filter 0.35s, opacity 0.35s;
+}
+
+.theme-2026 .clients__logo:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+/* ---------- 13. CTA final ---------- */
+
+.theme-2026 .hm-cta {
+  text-align: center;
+  padding-top: clamp(3.25rem, 7vw, 4rem);
+  padding-bottom: clamp(3.25rem, 7vw, 4rem);
+}
+
+.theme-2026 .hm-cta__title {
+  font-size: clamp(2rem, 5.4vw, 2.5rem);
+  color: var(--av-on-dark);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.theme-2026 .hm-cta__title span {
+  color: var(--av-gold);
+}
+
+.theme-2026 .hm-cta__text {
+  color: var(--av-on-dark-2);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  margin: 1rem auto 0;
+  max-width: 560px;
+}
+
+.theme-2026 .hm-cta__actions {
+  margin-top: 1.75rem;
+}
+
+.theme-2026 .hm-cta__alt {
+  display: inline-block;
+  margin-top: 1.125rem;
+  font-size: 0.90625rem;
+  color: var(--av-on-dark-2);
+  border-bottom: 1px solid rgba(227, 179, 65, 0.5);
+  padding-bottom: 2px;
+  transition: color 0.25s;
+}
+
+.theme-2026 .hm-cta__alt:hover {
+  color: var(--av-gold);
+}
+
+/* ---------- 14. Footer ---------- */
+
+.theme-2026 .footer {
+  background: var(--av-dark-3);
+  background-image: none;
+  padding: clamp(2.75rem, 6vw, 3.5rem) 0 1.5rem;
+}
+
+.theme-2026 .footer::before {
+  background: linear-gradient(90deg, transparent, rgba(227, 179, 65, 0.45), transparent);
+}
+
+.theme-2026 .footer__grid {
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+.theme-2026 .footer__desc {
+  color: #8f8b81;
+  font-size: 0.84375rem;
+  max-width: 240px;
+}
+
+.theme-2026 .footer__col-title {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--av-on-dark);
+  margin-bottom: 0.75rem;
+}
+
+.theme-2026 .footer__links {
+  gap: 0.625rem;
+}
+
+.theme-2026 .footer__links a,
+.theme-2026 .footer__contact-item {
+  font-size: 0.84375rem;
+  color: var(--av-on-dark-2);
+}
+
+.theme-2026 .footer__links a::after {
+  background: var(--av-gold);
+}
+
+.theme-2026 .footer__links a:hover,
+.theme-2026 .footer__contact-item:hover {
+  color: var(--av-on-dark);
+}
+
+.theme-2026 .footer__socials a:hover {
+  background: rgba(227, 179, 65, 0.14);
+  border-color: rgba(227, 179, 65, 0.5);
+  color: var(--av-gold);
+}
+
+.theme-2026 .footer p {
+  color: #6b675e;
+  font-size: 0.78125rem;
+}
+
+.theme-2026 .footer__made {
+  color: #6b675e;
+  font-size: 0.78125rem;
+}
+
+/* ---------- 14b. Paginas internas ----------
+   O style.css e os <style> das paginas internas sao dirigidos por tokens, entao
+   a maior parte ja acompanha a paleta nova. O que sobra aqui sao os pontos em
+   que a superficie continua escura (heros de pagina, paginas de auth, bandas de
+   perfil/palestra) e o texto precisa voltar a ser claro. */
+
+/* Page hero (topo escuro compartilhado pelas subpaginas) */
+.theme-2026 .page-hero {
+  background: linear-gradient(180deg, var(--av-dark), var(--av-dark-2));
+  background-image:
+    linear-gradient(180deg, var(--av-dark), var(--av-dark-2)),
+    radial-gradient(ellipse 700px 460px at 78% 12%, rgba(227, 179, 65, 0.12), transparent 65%);
+  background-blend-mode: normal, screen;
+  padding-top: calc(76px + clamp(2.5rem, 7vw, 4.5rem));
+  padding-bottom: clamp(2.5rem, 7vw, 4.5rem);
+}
+
+/* Bandas que continuam escuras: em vez de perseguir cada titulo e paragrafo,
+   os tokens de texto sao redefinidos no proprio bloco. Como custom properties
+   sao herdadas, todo descendente que resolve var(--color-text) passa a receber
+   o tom claro — inclusive regras de CSS de pagina que nao conhecemos aqui. */
+.theme-2026 .page-hero,
+.theme-2026 .auth-page,
+.theme-2026 .hm-band--dark,
+.theme-2026 .cta-about__card,
+.theme-2026 .academy-hero,
+.theme-2026 .academy-mentor,
+.theme-2026 .program-hero,
+.theme-2026 .program-cta,
+.theme-2026 .program-stats,
+.theme-2026 .program-faq-dark,
+.theme-2026 .sep-hero,
+.theme-2026 .sep-programa-hero,
+.theme-2026 .sep-cta-section,
+.theme-2026 .profile-hero,
+.theme-2026 .profile-cta,
+.theme-2026 .profile-talks,
+.theme-2026 .profile-contact-direct,
+.theme-2026 .palestra-hero,
+.theme-2026 .palestra-cta,
+.theme-2026 .palestra-speaker,
+.theme-2026 .palestra-contact-direct,
+.theme-2026 .footer {
+  --color-text: var(--av-on-dark);
+  --color-text-secondary: var(--av-on-dark-2);
+  --color-text-muted: var(--av-on-dark-3);
+  --color-on-cream: var(--av-on-dark);
+  --color-on-cream-secondary: var(--av-on-dark-2);
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --av-eyebrow: var(--av-gold);
+}
+
+/* O dourado #E3B341 e um tom de superficie: como texto sobre creme ou branco ele
+   fica em ~1.9:1 de contraste. Rotulos, kickers e tags passam a usar o dourado
+   profundo (~4.4:1); dentro das bandas escuras acima o token volta ao claro. */
+.theme-2026 [class*="__label"],
+.theme-2026 [class*="__tag"],
+.theme-2026 [class*="__kicker"],
+.theme-2026 [class*="eyebrow"],
+.theme-2026 .pricing__price,
+.theme-2026 .speakers__label,
+.theme-2026 .clients__title {
+  color: var(--av-eyebrow);
+}
+
+.theme-2026 [class*="__label"]::before,
+.theme-2026 [class*="eyebrow"]::before {
+  background: var(--av-eyebrow);
+}
+
+/* Excecoes: chips que ja tem fundo proprio (a cor da marca do programa),
+   onde o dourado de texto perderia o contraste. */
+.theme-2026 .sep-card__tag {
+  color: #1B1A17;
+}
+
+.theme-2026 .cadastro-plan__price {
+  color: var(--av-gold-deep);
+}
+
+/* Paginas legais (termos, privacidade, contrato): titulos e links em dourado
+   claro sobre creme ficavam em ~1.6:1. */
+.theme-2026 .article__content h3,
+.theme-2026 .article__content a {
+  color: var(--av-gold-deep);
+}
+
+/* Card de palestrante (diretorio, perfil e relacionados): as tags em dourado
+   base e a nota em ambar ficavam em ~2:1 sobre o card branco. */
+.theme-2026 .speaker-card__tags span {
+  background: rgba(227, 179, 65, 0.12);
+  color: var(--av-gold-deep);
+}
+
+.theme-2026 .speaker-card__rating {
+  /* ambar escurecido: 4.63 no creme, 4.95 no branco (AA texto pequeno) */
+  color: #9C6405;
+}
+
+.theme-2026 .page-hero__label,
+.theme-2026 .page-hero .section__label,
+.theme-2026 .page-hero__trust-number {
+  color: var(--av-gold);
+}
+
+.theme-2026 .page-hero__label::before {
+  background: var(--av-gold);
+}
+
+/* .btn--outline nasce com cor de texto escura (feito para fundo claro). Dentro
+   de qualquer banda escura ele fica ilegivel — medido em 1.01:1 numa
+   .hm-band--dark antes desta regra existir. A lista abaixo acompanha a lista de
+   bandas escuras la de cima; ao acrescentar uma banda escura nova, inclua aqui
+   tambem se ela puder conter botao outline. */
+.theme-2026 .page-hero .btn--outline,
+.theme-2026 .page-hero .btn--outline-dark,
+.theme-2026 .hm-band--dark .btn--outline,
+.theme-2026 .hm-band--dark .btn--outline-dark,
+.theme-2026 .auth-page .btn--outline,
+.theme-2026 .auth-page .btn--outline-dark {
+  color: var(--av-on-dark);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.theme-2026 .page-hero .btn--outline:hover,
+.theme-2026 .page-hero .btn--outline-dark:hover,
+.theme-2026 .hm-band--dark .btn--outline:hover,
+.theme-2026 .hm-band--dark .btn--outline-dark:hover,
+.theme-2026 .auth-page .btn--outline:hover,
+.theme-2026 .auth-page .btn--outline-dark:hover {
+  background: rgba(227, 179, 65, 0.12);
+  border-color: var(--av-gold);
+  color: var(--av-on-dark);
+}
+
+/* Paginas de autenticacao (seguem escuras) */
+.theme-2026 .auth-page {
+  background: linear-gradient(180deg, var(--av-dark), var(--av-dark-2));
+}
+
+.theme-2026 .auth-card {
+  border-radius: 20px;
+}
+
+.theme-2026 .auth-card .form-input {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--av-on-dark);
+  color-scheme: dark;
+}
+
+.theme-2026 .auth-card .form-input::placeholder {
+  color: var(--av-on-dark-3);
+}
+
+/* Areas logadas (projetos, minhas palestras, meus projetos): na identidade nova
+   elas seguem o mesmo creme do diretorio, com cards brancos. O grafite fica
+   reservado para o page-hero no topo e para o rodape. */
+.theme-2026 .section--dark {
+  background: var(--av-cream);
+  color: var(--av-ink);
+}
+
+.theme-2026 .section--dark::before {
+  content: none;
+}
+
+.theme-2026 .section--dark h1,
+.theme-2026 .section--dark h2,
+.theme-2026 .section--dark h3 {
+  color: var(--av-ink);
+}
+
+.theme-2026 .section--dark p,
+.theme-2026 .section--dark label,
+.theme-2026 .section--dark .form-label {
+  color: var(--av-ink-3);
+}
+
+.theme-2026 .section--dark .btn--outline {
+  color: var(--av-ink);
+  border-color: var(--av-line);
+}
+
+.theme-2026 .section--dark .btn--outline:hover {
+  border-color: var(--av-gold);
+  background: rgba(227, 179, 65, 0.08);
+}
+
+/* CTA dos planos: texto branco sobre o dourado novo nao tem contraste */
+.theme-2026 .pricing__cta {
+  background: var(--av-gold);
+  color: var(--av-ink);
+  border-radius: 99px;
+  font-weight: 700;
+}
+
+.theme-2026 .pricing__cta:hover {
+  background: var(--av-gold-hi);
+  box-shadow: 0 10px 28px rgba(227, 179, 65, 0.3);
+}
+
+/* Cartoes das paginas internas seguem o raio da identidade nova */
+.theme-2026 .pricing__card,
+.theme-2026 .benefits__card,
+.theme-2026 .testimonials__card,
+.theme-2026 .blog-card,
+.theme-2026 .project-card,
+.theme-2026 .my-project-card,
+.theme-2026 .mp-card,
+.theme-2026 .program-card,
+.theme-2026 .sep-card,
+.theme-2026 .about-pillars__card,
+.theme-2026 .cadastro-plan__card,
+.theme-2026 .speaker-card {
+  border-radius: 20px;
+}
+
+/* FAQ */
+.theme-2026 .faq__question {
+  color: var(--av-ink);
+  font-weight: 600;
+}
+
+.theme-2026 .faq__answer {
+  color: var(--av-ink-3);
+}
+
+/* ---------- 15. Reveals (AOS) ---------- */
+
+body.theme-2026 [data-aos='fade-up']    { transform: translate3d(0, 26px, 0); }
+body.theme-2026 [data-aos='fade-down']  { transform: translate3d(0, -26px, 0); }
+body.theme-2026 [data-aos='fade-left']  { transform: translate3d(34px, 0, 0); }
+body.theme-2026 [data-aos='fade-right'] { transform: translate3d(-34px, 0, 0); }
+body.theme-2026 [data-aos^='zoom']      { transform: scale(0.97); }
+
+@media (max-width: 900px) {
+  /* No mobile os 100px horizontais do AOS estouram o viewport */
+  body.theme-2026 [data-aos='fade-left'],
+  body.theme-2026 [data-aos='fade-right'],
+  body.theme-2026 [data-aos='fade-up'],
+  body.theme-2026 [data-aos='fade-down'] { transform: translate3d(0, 22px, 0); }
+}
+
+body.theme-2026 [data-aos].aos-animate       { transform: translate3d(0, 0, 0); }
+body.theme-2026 [data-aos^='zoom'].aos-animate { transform: scale(1); }
+
+/* ---------- 16. Responsivo ---------- */
+
+@media (max-width: 1080px) {
+  .theme-2026 .hm-why__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* O menu completo so cabe a partir de ~1025px: abaixo disso vai para o burger.
+   (O style.css corta em 960px, largura em que os 5 links + 2 botoes estouram.) */
+@media (max-width: 1024px) {
+  .theme-2026 .header__links,
+  .theme-2026 .header__actions {
+    display: none;
+  }
+
+  .theme-2026 .header__burger {
+    display: flex;
+  }
+}
+
+/* Faixa apertada logo acima do corte: reduz respiros para caber sem quebrar */
+@media (min-width: 1025px) and (max-width: 1160px) {
+  .theme-2026 .header__nav { gap: 0.75rem; }
+  .theme-2026 .header__links { gap: 0.875rem; }
+  .theme-2026 .header__link { font-size: 0.8125rem; }
+  .theme-2026 .header__actions { margin-left: 0.5rem; gap: 0.5rem; }
+  .theme-2026 .header .btn--sm { font-size: 0.78125rem; padding: 0.5625rem 0.9375rem; }
+}
+
+@media (max-width: 960px) {
+  /* Reafirma o colapso do rodape: a regra de 4 colunas acima tem
+     especificidade maior que as media queries do style.css. */
+  .theme-2026 .footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  .theme-2026 .hm-hero__grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+    padding-top: calc(76px + 2.25rem);
+  }
+
+  .theme-2026 .hm-hero__visual {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .theme-2026 .hm-mock-note {
+    align-self: center;
+  }
+
+  .theme-2026 .hm-about__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .theme-2026 .hm-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-2026 .hm-cats__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .theme-2026 .hm-videos__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-2026 .hm-video {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .theme-2026 .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .theme-2026 .hm-hero__stats {
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .theme-2026 .hero__subtitle {
+    font-size: 1.0625rem;
+  }
+
+  .theme-2026 .hm-hero__ctas .btn {
+    width: 100%;
+  }
+
+  .theme-2026 .hm-why__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-2026 .hm-about__stats {
+    gap: 0.75rem;
+  }
+
+  .theme-2026 .hm-about__stat {
+    padding: 1.125rem;
+  }
+
+  .theme-2026 .how__tabs {
+    width: 100%;
+  }
+
+  .theme-2026 .how__tab {
+    flex: 1;
+    padding: 0.5625rem 0.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .theme-2026 .hm-mock {
+    width: 100%;
+  }
+}
+
+/* ---------- 16b. Correcoes de layout em telas muito estreitas (<=400px) ----------
+   Nao sao ajustes de cor: sao dois estouros reais medidos a 320px. */
+
+/* O .btn nasce com white-space: nowrap, entao um rotulo longo ("Explorar todos
+   os palestrantes") empurrava 3px alem da viewport. Abaixo de 400px o botao
+   pode quebrar em duas linhas em vez de estourar. */
+@media (max-width: 400px) {
+  .theme-2026 .btn {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .theme-2026 .btn--lg {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Blowout classico de grid: item com min-width:auto nao encolhe abaixo do
+   min-content do conteudo, e o painel de filtros esticava a pagina 21px a 320px.
+   O .directory__main ao lado ja tinha min-width: 0; o aside nao tinha. */
+.theme-2026 .filters-panel {
+  min-width: 0;
+}
+
+/* ---------- 17. Movimento reduzido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-2026 .hm-mock,
+  .theme-2026 .hm-mock-note,
+  .theme-2026 .clients__track {
+    animation: none;
+  }
+}
+
+/* ---------- 18. Vertical Setor Publico — dobras da home ---------- */
+/* A antiga landing /setor-publico/ virou o banco de palestrantes da vertical;
+   a argumentacao de recrutamento foi condensada em duas dobras da home. O CSS
+   que era inline naquela pagina nao existe mais, por isso ele vive aqui.
+
+   A dobra chumbo usa `.hm-band--dark` + `.sp-band--slate`: a primeira ja esta
+   nas listas das secoes 14 e 15 (tokens de texto claro e .btn--outline
+   legivel), a segunda troca SO o fundo. Nenhuma lista precisou ser editada. */
+
+.theme-2026 .sp-band--slate {
+  background: var(--sp-slate-900);
+}
+
+.theme-2026 .hm-sp__head {
+  max-width: 46rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+/* Numeros do mercado */
+.theme-2026 .hm-sp__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.theme-2026 .hm-sp__stat {
+  border-left: 2px solid rgba(255, 255, 255, 0.18);
+  padding-left: 1.25rem;
+}
+
+.theme-2026 .hm-sp__stat p {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Dourado base (nao o de texto): 8.20:1 sobre o chumbo, medido na secao 2. */
+.theme-2026 .hm-sp__num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1;
+  color: var(--av-gold);
+  margin-bottom: 0.5rem;
+}
+
+/* As tres portas de entrada */
+.theme-2026 .hm-sp__doors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.theme-2026 .hm-sp__door {
+  background: var(--sp-slate-800);
+  border: 1px solid var(--sp-slate-line);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+}
+
+.theme-2026 .hm-sp__lei {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(227, 179, 65, 0.14);
+  color: var(--av-gold);
+  padding: 0.3rem 0.6rem;
+  border-radius: 99px;
+  margin-bottom: 0.9rem;
+}
+
+.theme-2026 .hm-sp__door h3 {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  margin: 0 0 0.6rem;
+  color: var(--color-text);
+}
+
+.theme-2026 .hm-sp__door p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.theme-2026 .hm-sp__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+}
+
+/* A dobra do embaixador saiu da home em 16/08 — o Alexandre Mansur virou a
+   figura do banner em /setor-publico/ (secao 19). As classes .hm-sp-amb*
+   foram removidas junto; nao ha mais nada no site que as use. */
+
+/* Media queries repetidas aqui de proposito: seletor de 2 classes vence media
+   query de 1 classe do style.css (armadilha da secao 16). */
+@media (max-width: 900px) {
+  .theme-2026 .hm-sp__doors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .theme-2026 .hm-sp__stats,
+  .theme-2026 .hm-sp__doors {
+    grid-template-columns: 1fr;
+  }
+  .theme-2026 .hm-sp__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Reserva de altura dos grupos de filtro (CLS).
+
+   O painel monta em duas etapas: o HTML entrega busca/estado/preco e o JS
+   injeta os grupos de tema depois da query. Sem reserva, a `.filters-help` no
+   pe do painel desce de uma vez quando os grupos chegam — medido 0.052 de CLS
+   no desktop.
+
+   O `:empty` vale SO enquanto o container nao tem filhos, entao a reserva
+   desaparece no instante em que o JS preenche: nao sobra espaco morto depois.
+   As alturas sao as medidas com os grupos abertos (padrao do desktop); o
+   /diretorio/ tem 49 temas contra 21 do banco, dai a diferenca. */
+.theme-2026 #theme-groups:empty {
+  min-height: 1077px;
+}
+
+.theme-2026.sp-directory #theme-groups:empty {
+  min-height: 612px;
+}
+
+/* Abaixo de 900px os <details> nascem recolhidos (groupsOpenByDefault), entao
+   o painel montado tem so a altura dos 3 summaries. */
+@media (max-width: 900px) {
+  .theme-2026 #theme-groups:empty,
+  .theme-2026.sp-directory #theme-groups:empty {
+    min-height: 123px;
+  }
+}
+
+/* Chip de filtro ATIVO — correcao de um bug de contraste que vinha da migracao
+   noir -> 2026 e afeta o /diretorio/ em producao.
+
+   O style.css pinta o chip ativo com `background: var(--color-text)` +
+   `color: var(--color-on-cream)`. No noir isso era claro sobre escuro e
+   funcionava. No tema 2026 --color-text virou #232323 (escuro), mas
+   --color-on-cream NAO e remapeado em body.theme-2026 — segue valendo o
+   #1C1D20 do :root do style.css. Resultado medido: 1.07:1, ou seja, o rotulo
+   do chip selecionado fica invisivel. Aqui so a cor do texto e corrigida; o
+   fundo escuro do estado ativo continua igual. */
+.theme-2026 .directory-filter--active,
+.theme-2026 .directory-season--active,
+.theme-2026 .directory-season--active::after {
+  color: var(--av-on-dark);
+}
+
+/* ---------- 19. Banco da vertical (/setor-publico/) ---------- */
+/* Mesmo layout, cards e grid do /diretorio/. A vertical se distingue trocando
+   o ACENTO de dourado para chumbo — so isso. Escopado em .sp-directory, entao
+   o /diretorio/ nao e afetado por nada daqui. */
+
+/* O .directory-hero ja nasce escuro no style.css (gradiente preto + dourado).
+   Aqui o gradiente vira chumbo e os tokens de texto sao redefinidos no proprio
+   bloco, como manda a regra das bandas escuras: o style.css pinta o subtitulo
+   com --color-text-secondary, que fora deste bloco resolveria para o cinza de
+   fundo claro e ficaria ilegivel sobre o escuro. */
+.theme-2026.sp-directory .directory-hero {
+  background:
+    radial-gradient(900px 400px at 80% -20%, rgba(168, 174, 184, 0.16), transparent 60%),
+    linear-gradient(135deg, var(--sp-slate-800) 0%, var(--sp-slate-900) 100%);
+  border-color: rgba(255, 255, 255, 0.14);
+  --color-text: var(--av-on-dark);
+  --color-text-secondary: var(--av-on-dark-2);
+  --color-text-muted: var(--av-on-dark-3);
+  --av-eyebrow: var(--sp-slate-300);
+}
+
+/* O marcador decorativo e o "A" dourado da marca; na vertical vira chumbo claro. */
+.theme-2026.sp-directory .directory-hero::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23A8AEB8' stroke-width='3' stroke-linejoin='round'%3E%3Cpath d='M14 82 L42 24 L70 82'/%3E%3Cpath d='M40 82 L62 38 L84 82'/%3E%3C/svg%3E");
+  opacity: 0.28;
+}
+
+/* O style.css usa --color-primary no titulo, que e o dourado de TEXTO: mede
+   3.6:1 sobre este fundo e reprova no AA. Claro sobre chumbo passa folgado. */
+.theme-2026.sp-directory .directory-hero__title {
+  color: var(--av-on-dark);
+}
+
+/* 7.15:1 sobre o chumbo (medido na secao 2). */
+.theme-2026.sp-directory .directory-hero__eyebrow {
+  color: var(--sp-slate-300);
+}
+
+/* ----- Banner com o embaixador -----
+   O Alexandre Mansur saiu da home e virou a figura deste banner. A foto e um
+   PNG com alpha (fundo removido), entao ela encosta direto no gradiente
+   chumbo, sem moldura. */
+
+/* O "A" decorativo do /diretorio/ ocupa exatamente este canto — a figura toma
+   o lugar dele. Manter os dois deixaria o ornamento aparecendo atras da perna. */
+.theme-2026.sp-directory .sp-hero::after {
+  display: none;
+}
+
+.theme-2026.sp-directory .sp-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: end;
+  padding-bottom: 0;   /* a figura encosta na base; o texto repoe o respiro */
+}
+
+.theme-2026.sp-directory .sp-hero__text {
+  padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.theme-2026.sp-directory .sp-hero__amb {
+  position: relative;
+  margin: 0;
+  align-self: end;
+}
+
+/* Sem border-radius e sem fundo: a silhueta recortada e a forma. A sombra
+   projetada segue o contorno do alpha e e o que descola a figura do gradiente. */
+.theme-2026.sp-directory .sp-hero__amb-photo {
+  display: block;
+  height: clamp(200px, 23vw, 300px);
+  width: auto;
+  filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.42));
+}
+
+.theme-2026.sp-directory .sp-hero__amb-tag {
+  position: absolute;
+  left: 50%;
+  bottom: 0.9rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  text-align: center;
+  padding: 0.4rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(20, 23, 28, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.theme-2026.sp-directory .sp-hero__amb-tag strong {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--av-on-dark);
+  line-height: 1.25;
+}
+
+.theme-2026.sp-directory .sp-hero__amb-tag span {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--sp-slate-300);
+}
+
+/* Faixa intermediaria: o painel de filtros come 24vw da largura, entao entre
+   860 e 1280px a coluna do hero encolhe mais rapido que a viewport. Com a
+   altura de 23vw a figura passava a ocupar MAIS espaco que o texto (medido:
+   texto 256px contra foto 310px a 1100px). Aqui ela cede primeiro. */
+@media (max-width: 1280px) {
+  .theme-2026.sp-directory .sp-hero__amb-photo {
+    height: clamp(170px, 17vw, 215px);
+  }
+  /* O selo tem largura de texto (nowrap), entao nao encolhe junto com a foto:
+     sem isto ele cobre a figura inteira de ponta a ponta. */
+  .theme-2026.sp-directory .sp-hero__amb-tag {
+    padding: 0.3rem 0.6rem;
+    bottom: 0.6rem;
+    border-radius: 10px;
+  }
+  .theme-2026.sp-directory .sp-hero__amb-tag strong {
+    font-size: 0.75rem;
+  }
+  .theme-2026.sp-directory .sp-hero__amb-tag span {
+    font-size: 0.5625rem;
+  }
+}
+
+/* Abaixo de 860px o layout ja colapsou para uma coluna: lado a lado o titulo
+   ficaria com 2 palavras por linha. A figura desce para o pe do banner,
+   alinhada a direita e ancorada na base — mantem o rosto do embaixador no
+   mobile sem espremer o texto. */
+@media (max-width: 860px) {
+  .theme-2026.sp-directory .sp-hero {
+    grid-template-columns: 1fr;
+    padding-bottom: 0;
+  }
+  .theme-2026.sp-directory .sp-hero__text {
+    padding-bottom: 0;
+  }
+  .theme-2026.sp-directory .sp-hero__amb {
+    justify-self: end;
+    margin-top: 0.75rem;
+  }
+  .theme-2026.sp-directory .sp-hero__amb-photo {
+    height: 150px;
+  }
+  .theme-2026.sp-directory .sp-hero__amb-tag {
+    bottom: 0.5rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .theme-2026.sp-directory .sp-hero__amb-tag strong {
+    font-size: 0.6875rem;
+  }
+  .theme-2026.sp-directory .sp-hero__amb-tag span {
+    font-size: 0.5rem;
+  }
+}
+
+/* ----- Painel de filtros: acentos em chumbo ----- */
+.theme-2026.sp-directory .filter-group__title svg {
+  color: var(--sp-slate-700);
+}
+
+.theme-2026.sp-directory .filters-panel__clear:hover {
+  color: var(--sp-slate-700);
+}
+
+.theme-2026.sp-directory .filters-field__select:focus {
+  border-color: var(--sp-slate-700);
+  box-shadow: 0 0 0 3px var(--sp-slate-tint);
+}
+
+.theme-2026.sp-directory .filters-panel .directory-filter--active {
+  background: var(--sp-slate-700);
+  color: var(--av-on-dark);
+  border-color: transparent;
+}
+
+/* Chips de campanha: o dourado do style.css (rgba 203,163,92) vira chumbo. */
+.theme-2026.sp-directory .filters-panel .directory-season {
+  border-color: rgba(58, 64, 73, 0.28);
+  background: var(--sp-slate-tint);
+  color: var(--av-ink);
+}
+
+.theme-2026.sp-directory .filters-panel .directory-season:hover {
+  border-color: var(--sp-slate-700);
+  background: rgba(58, 64, 73, 0.12);
+}
+
+.theme-2026.sp-directory .filters-panel .directory-season--now {
+  border-color: var(--sp-slate-700);
+  background: rgba(58, 64, 73, 0.14);
+  box-shadow: none;
+}
+
+.theme-2026.sp-directory .filters-panel .directory-season--active {
+  background: var(--sp-slate-700);
+  color: var(--av-on-dark);
+  border-color: transparent;
+}
+
+/* Caixa de apoio: fundo e icone em chumbo. O CTA continua dourado — o dourado
+   segue sendo o acento de acao da marca, em toda a plataforma. */
+.theme-2026.sp-directory .filters-help {
+  background: var(--sp-slate-tint);
+  border-color: rgba(58, 64, 73, 0.22);
+}
+
+.theme-2026.sp-directory .filters-help__icon {
+  background: rgba(58, 64, 73, 0.12);
+  color: var(--sp-slate-700);
+}
+
+/* Ponte do /diretorio/ para o banco da vertical (dentro do grupo "Atuacao").
+   Fica fora do escopo .sp-directory de proposito: mora no /diretorio/. */
+.theme-2026 .filter-group__link {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--sp-slate-700);
+  text-decoration: none;
+}
+
+.theme-2026 .filter-group__link:hover {
+  text-decoration: underline;
+}
+
+/* Saida para quem chegou aqui como palestrante, nao como contratante. */
+.theme-2026.sp-directory .sp-dir-note {
+  margin: 2.5rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--av-line-2);
+  font-size: 0.9375rem;
+  color: var(--av-ink-3);
+  text-align: center;
+}
+
+.theme-2026.sp-directory .sp-dir-note a {
+  color: var(--sp-slate-700);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.theme-2026.sp-directory .sp-dir-note a:hover {
+  text-decoration: underline;
+}

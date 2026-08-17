@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -10,13 +10,14 @@
   <link rel="canonical" href="https://avantik-plataforma.netlify.app/meus-projetos/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <!-- FONTS: DM Serif Display + DM Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <script src="/script.js" defer></script>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     .my-projects {
@@ -59,15 +60,16 @@
     .my-projects__empty {
       text-align: center;
       padding: 4rem 2rem;
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1.25rem;
+      border-radius: var(--radius-md);
     }
 
     .my-projects__empty-icon {
       width: 64px;
       height: 64px;
       background: var(--color-muted-bg);
+      border: 1px solid rgba(227, 179, 65, 0.22);
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
@@ -76,7 +78,7 @@
     }
 
     .my-projects__empty-icon svg {
-      color: var(--color-text-secondary);
+      color: var(--color-accent);
     }
 
     .my-projects__empty-title {
@@ -94,11 +96,16 @@
 
     /* Project card */
     .my-project-card {
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1.25rem;
+      border-radius: var(--radius-md);
       padding: 1.75rem;
       margin-bottom: 1.25rem;
+      transition: border-color 0.25s var(--ease-out);
+    }
+
+    .my-project-card:hover {
+      border-color: rgba(227, 179, 65, 0.28);
     }
 
     .my-project-card__header {
@@ -134,22 +141,26 @@
 
     .my-project-card__status {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
       font-weight: 600;
-      padding: 0.25rem 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
       border-radius: 100px;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
     .my-project-card__status--aberto {
-      background: #ecfdf5;
-      color: #065f46;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      color: #6EE7B7;
     }
 
     .my-project-card__status--encerrado {
       background: var(--color-muted-bg);
-      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
     }
 
     .my-project-card__meta {
@@ -212,23 +223,38 @@
     }
 
     .my-project-card__apps-title {
-      font-weight: 600;
-      font-size: 0.9375rem;
-      color: var(--color-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-accent);
       margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .my-project-card__apps-title::before {
+      content: '';
+      width: 36px;
+      height: 1px;
+      background: var(--color-accent);
+      opacity: 0.6;
+      flex-shrink: 0;
     }
 
     .my-project-card__apps-empty {
       font-size: 0.875rem;
-      color: var(--color-text-secondary);
+      color: var(--color-text-muted);
       font-style: italic;
     }
 
     /* Application card */
     .application-card {
       background: var(--color-muted-bg);
+      border: 1px solid rgba(35, 35, 35, 0.07);
       padding: 1.25rem;
-      border-radius: 0.75rem;
+      border-radius: var(--radius-sm);
       margin-bottom: 0.75rem;
     }
 
@@ -296,8 +322,7 @@
 
     .application-card__date {
       font-size: 0.75rem;
-      color: var(--color-text-secondary);
-      opacity: 0.7;
+      color: var(--color-text-muted);
     }
 
     /* Loading */
@@ -342,7 +367,7 @@
     }
   </style>
 </head>
-<body>
+<body class="theme-2026">
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -352,6 +377,7 @@
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
       </div>
       <div class="header__actions" id="header-actions">
@@ -364,6 +390,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <div class="header__mobile-actions">
         <a href="/entrar/" class="btn btn--outline">Entrar</a>
@@ -412,16 +439,19 @@
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/projetos/">Oportunidades</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
             <a href="/sobre/">Sobre</a>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Política de Privacidade</a>
             <a href="/termos/">Termos e Condições</a>
@@ -429,7 +459,7 @@
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
           </div>
@@ -442,7 +472,7 @@
   </footer>
 
   <script type="module">
-import { supabase, escapeHtml, formatPriceRange, requireAuth, authSignOut, EVENT_TYPES, getContractorPlanStatus } from '/lib/supabase.js';
+import { supabase, escapeHtml, formatPriceRange, requireAuth, authSignOut, EVENT_TYPES, getContractorPlanStatus } from '/lib/supabase.js?v=20260816a';
 
 // Auth check
 const auth = await requireAuth('contractor');
@@ -570,7 +600,7 @@ async function loadProjects() {
             contactParts.push(`<a href="https://wa.me/${phoneDigits}" target="_blank" rel="noopener">WhatsApp: ${escapeHtml(speaker.phone)}</a>`);
           }
           if (contactParts.length) {
-            contactHtml = `<div class="application-card__contact" style="background:#ecfdf5;padding:0.75rem;border-radius:0.5rem;margin-top:0.75rem"><strong>Contato direto liberado:</strong><br>${contactParts.join('<br>')}</div>`;
+            contactHtml = `<div class="application-card__contact" style="background:rgba(16,185,129,0.10);border:1px solid rgba(16,185,129,0.24);color:#A7F3D0;padding:0.75rem;border-radius:var(--radius-sm);margin-top:0.75rem"><strong>Contato direto liberado:</strong><br>${contactParts.join('<br>')}</div>`;
           }
         }
 
@@ -594,9 +624,9 @@ async function loadProjects() {
             </div>
           `;
         } else if (isAccepted) {
-          actionsHtml = `<div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:#ecfdf5;color:#065f46;border-radius:0.5rem;font-size:0.8125rem;font-weight:600">PROPOSTA ACEITA — Avantik foi notificada para gerar a comissao</div>`;
+          actionsHtml = `<div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.28);color:#6EE7B7;border-radius:var(--radius-sm);font-size:0.8125rem;font-weight:600">PROPOSTA ACEITA — Avantik foi notificada para gerar a comissao</div>`;
         } else if (isRejected) {
-          actionsHtml = `<div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:var(--color-muted-bg);color:var(--color-text-secondary);border-radius:0.5rem;font-size:0.8125rem">Proposta rejeitada</div>`;
+          actionsHtml = `<div style="margin-top:0.75rem;padding:0.5rem 0.75rem;background:var(--color-muted-bg);border:1px solid var(--color-border);color:var(--color-text-muted);border-radius:var(--radius-sm);font-size:0.8125rem">Proposta rejeitada</div>`;
         }
 
         return `

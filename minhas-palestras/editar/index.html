@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -8,27 +8,29 @@
   <meta name="description" content="Edite os dados da sua palestra na Avantik.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <script src="/script.js" defer></script>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     .pal-form {
       max-width: 720px;
       margin: 0 auto;
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1.5rem;
+      border-radius: var(--radius-md);
       padding: 2.5rem;
     }
 
     @media (max-width: 640px) {
       .pal-form {
         padding: 1.5rem 1.25rem;
-        border-radius: 1rem;
+        border-radius: var(--radius-sm);
       }
     }
 
@@ -38,7 +40,7 @@
 
     .pal-form__label {
       display: block;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 0.9375rem;
       margin-bottom: 0.5rem;
       color: var(--color-text);
@@ -50,16 +52,29 @@
       margin-top: 0.375rem;
     }
 
+    /* color-scheme: dark faz a UA desenhar o autofill do Chrome, os spinners do
+       <input type="number"> e o painel nativo do <select> em tema escuro. */
     .pal-form__input,
     .pal-form__select,
     .pal-form__textarea {
       width: 100%;
       padding: 0.75rem 1rem;
       border: 1px solid var(--color-border);
-      border-radius: 0.625rem;
-      background: var(--color-surface);
+      border-radius: var(--radius-xs);
+      background: #FFFFFF;
+      color-scheme: light;
       font-family: inherit;
       font-size: 0.9375rem;
+      color: var(--color-text);
+    }
+
+    .pal-form__input::placeholder,
+    .pal-form__textarea::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .pal-form__select option {
+      background: #FFFFFF;
       color: var(--color-text);
     }
 
@@ -114,25 +129,33 @@
       gap: 0.375rem;
       cursor: pointer;
       font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      min-height: 40px;
+    }
+
+    .pal-form__checkbox-label input {
+      accent-color: var(--color-accent);
     }
 
     .pal-form__feedback {
       padding: 0.75rem 1rem;
-      border-radius: 0.625rem;
+      border-radius: var(--radius-xs);
       font-size: 0.875rem;
       margin-bottom: 1rem;
       display: none;
     }
 
     .pal-form__feedback--error {
-      background: #fef2f2;
-      color: #991b1b;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.28);
+      color: #FCA5A5;
       display: block;
     }
 
     .pal-form__feedback--success {
-      background: #ecfdf5;
-      color: #065f46;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      color: #6EE7B7;
       display: block;
     }
 
@@ -144,21 +167,23 @@
 
     .pal-form__delete {
       background: none;
-      border: 1px solid #fca5a5;
-      color: #991b1b;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #FCA5A5;
       padding: 0.625rem 1rem;
-      border-radius: 0.625rem;
+      border-radius: var(--radius-xs);
       cursor: pointer;
       font-size: 0.875rem;
       margin-left: auto;
+      transition: background 0.2s, border-color 0.2s;
     }
 
     .pal-form__delete:hover {
-      background: #fef2f2;
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.55);
     }
   </style>
 </head>
-<body>
+<body class="theme-2026">
 
   <header class="header" id="header">
     <nav class="header__nav container">
@@ -167,6 +192,7 @@
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
       </div>
       <div class="header__actions" id="header-actions"></div>
       <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -175,6 +201,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <div class="header__mobile-actions"></div>
     </div>
   </header>
@@ -292,21 +319,21 @@
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/projetos/">Oportunidades</a>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Privacidade</a>
             <a href="/termos/">Termos</a>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
           </div>
@@ -319,7 +346,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, requireAuth, generatePalestraSlug, ensureUniqueSlug, TIERS, escapeHtml } from '/lib/supabase.js';
+    import { supabase, requireAuth, generatePalestraSlug, ensureUniqueSlug, TIERS, escapeHtml } from '/lib/supabase.js?v=20260816a';
 
     const auth = await requireAuth('speaker');
     if (!auth) throw new Error('redirect');

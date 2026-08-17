@@ -1,8 +1,29 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
 
   <title>Oportunidade | Avantik</title>
   <meta name="description" content="Veja detalhes destá oportunidade para palestrantes e candidate-se diretamente pela plataforma Avantik.">
@@ -10,28 +31,29 @@
   <link rel="canonical" href="https://avantik-plataforma.netlify.app/projetos/ver/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <!-- FONTS: DM Serif Display + DM Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <script src="/script.js" defer></script>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     .project-detail {
       max-width: 800px;
       margin: 0 auto;
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1.5rem;
+      border-radius: var(--radius-md);
       padding: 2.5rem;
     }
 
     @media (max-width: 640px) {
       .project-detail {
         padding: 1.5rem 1.25rem;
-        border-radius: 1rem;
+        border-radius: var(--radius-sm);
       }
     }
 
@@ -52,21 +74,25 @@
 
     .project-detail__status {
       display: inline-block;
-      font-size: 0.8125rem;
+      font-size: 0.6875rem;
       font-weight: 600;
-      padding: 0.3rem 0.875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.875rem;
       border-radius: 100px;
       margin-bottom: 1rem;
     }
 
     .project-detail__status--aberto {
-      background: #ecfdf5;
-      color: #065f46;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      color: #6EE7B7;
     }
 
     .project-detail__status--encerrado {
       background: var(--color-muted-bg);
-      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
     }
 
     .project-detail__title {
@@ -113,12 +139,15 @@
 
     .project-detail__theme {
       display: inline-block;
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      padding: 0.3rem 0.875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.875rem;
       border-radius: 100px;
       background: var(--color-accent-light);
-      color: var(--color-accent);
+      border: 1px solid rgba(227, 179, 65, 0.22);
+      color: var(--color-accent-hover);
       margin-bottom: 2rem;
     }
 
@@ -138,9 +167,10 @@
 
     /* Application form */
     .project-apply {
-      background: var(--color-surface);
+      background: #121316;
       border: 1px solid var(--color-border);
-      border-radius: 1.25rem;
+      border-top: 1px solid rgba(227, 179, 65, 0.28);
+      border-radius: var(--radius-md);
       padding: 2rem;
       margin-top: 3rem;
     }
@@ -159,31 +189,42 @@
 
     .project-apply__field label {
       display: block;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 0.875rem;
       margin-bottom: 0.5rem;
       color: var(--color-text);
     }
 
+    /* color-scheme: dark faz a UA desenhar o autofill do Chrome e o painel
+       nativo do <select> em tema escuro. Sem isso o preenchimento automatico
+       pinta o campo de azul-claro sobre o card escuro. */
     .project-apply__field input,
+    .project-apply__field select,
     .project-apply__field textarea {
       width: 100%;
       padding: 0.75rem 1rem;
       border: 1px solid var(--color-border);
-      border-radius: 0.625rem;
+      border-radius: var(--radius-xs);
       font-family: inherit;
       font-size: 0.9375rem;
       color: var(--color-text);
-      background: var(--color-surface);
+      background: #FFFFFF;
+      color-scheme: light;
       transition: border-color 0.2s, outline-color 0.2s;
     }
 
     .project-apply__field input::placeholder,
     .project-apply__field textarea::placeholder {
-      color: var(--color-text-secondary);
+      color: var(--color-text-muted);
+    }
+
+    .project-apply__field select option {
+      background: #FFFFFF;
+      color: var(--color-text);
     }
 
     .project-apply__field input:focus,
+    .project-apply__field select:focus,
     .project-apply__field textarea:focus {
       border-color: var(--color-accent);
       outline: 2px solid var(--color-accent);
@@ -209,10 +250,11 @@
 
     .project-apply__error {
       display: none;
-      background: #fef2f2;
-      color: #991b1b;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.28);
+      color: #FCA5A5;
       padding: 0.75rem 1rem;
-      border-radius: 0.625rem;
+      border-radius: var(--radius-xs);
       font-size: 0.875rem;
       margin-bottom: 1.25rem;
       line-height: 1.4;
@@ -235,7 +277,8 @@
     .project-apply__success-icon {
       width: 48px;
       height: 48px;
-      background: #ecfdf5;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.28);
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
@@ -263,7 +306,7 @@
       background: var(--color-muted-bg);
       border: 1px solid var(--color-border);
       padding: 1.5rem;
-      border-radius: 1rem;
+      border-radius: var(--radius-sm);
       text-align: center;
       margin-top: 3rem;
       color: var(--color-text-secondary);
@@ -272,30 +315,31 @@
     }
 
     .project-banner--applied {
-      background: #ecfdf5;
-      border: 1px solid #bbf7d0;
+      background: rgba(16, 185, 129, 0.10);
+      border: 1px solid rgba(16, 185, 129, 0.28);
       padding: 1.5rem;
-      border-radius: 1rem;
+      border-radius: var(--radius-sm);
       text-align: center;
       margin-top: 3rem;
-      color: #065f46;
+      color: #6EE7B7;
       font-size: 0.9375rem;
       line-height: 1.5;
     }
 
     .project-banner--login {
       background: var(--color-accent-light);
-      border: 1px solid rgba(232, 185, 49, 0.2);
+      border: 1px solid rgba(227, 179, 65, 0.28);
       padding: 1.5rem;
-      border-radius: 1rem;
+      border-radius: var(--radius-sm);
       text-align: center;
       margin-top: 3rem;
+      color: var(--color-text-secondary);
       font-size: 0.9375rem;
       line-height: 1.5;
     }
 
     .project-banner--login a {
-      color: var(--color-accent);
+      color: var(--color-accent-hover);
       font-weight: 600;
       text-decoration: none;
     }
@@ -354,8 +398,9 @@
       }
     }
   </style>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
 </head>
-<body>
+<body class="theme-2026">
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -364,6 +409,7 @@
       <div class="header__links" id="nav-links">
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
         <a href="/projetos/" class="header__link header__link--active">Oportunidades</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
       </div>
@@ -376,6 +422,7 @@
     <div class="header__mobile" id="mobile-menu">
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <div class="header__mobile-actions">
@@ -440,16 +487,19 @@
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/projetos/">Oportunidades</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
             <a href="/sobre/">Sobre</a>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Política de Privacidade</a>
             <a href="/termos/">Termos e Condições</a>
@@ -457,7 +507,7 @@
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
           </div>
@@ -470,7 +520,7 @@
   </footer>
 
   <script type="module">
-import { supabase, escapeHtml, formatPriceRange, getUser, getUserType, EVENT_TYPES } from '/lib/supabase.js';
+import { supabase, escapeHtml, formatPriceRange, getUser, getUserType, EVENT_TYPES } from '/lib/supabase.js?v=20260816a';
 
 const loadingState = document.getElementById('loading-state');
 const notfoundState = document.getElementById('notfound-state');

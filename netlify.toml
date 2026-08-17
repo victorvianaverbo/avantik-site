@@ -15,6 +15,145 @@
 [images]
   remote_images = ["https://.*"]
 
+# ============================================================
+# Bloqueio de arquivos internos (nao devem ser servidos na web).
+# Retornam 404 real. NAO afeta paginas legitimas (academy/*/index.html,
+# blog, etc.) — bloqueia so os fontes .md/.sql/.js de manutencao.
+# ============================================================
+[[redirects]]
+  from = "/migrations/*"
+  to = "/404.html"
+  status = 404
+  force = true
+# Paginas aposentadas guardadas para consulta (o repo nao esta sob git).
+# Ex.: setor-publico-recrutamento.html, a landing que precedeu o banco da vertical.
+[[redirects]]
+  from = "/_arquivo/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/.agent/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/.claude/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/importar-planilha.js"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/importar-palestrantes.js"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/atualizar-midias.js"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/corrigir-slugs-palestras.js"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/DATABASE_SETUP.sql"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/MP_SETUP.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/AGENTS.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/copy.md"
+  to = "/404.html"
+  status = 404
+  force = true
+# Ferramenta de manutencao (patch do menu em todos os HTMLs), nao e do site
+[[redirects]]
+  from = "/patch-header-setor-publico.mjs"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/layout.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/modelo-palestrantes.csv"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/seu-evento-pronto/download-slides.ps1"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/copy.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/layout.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/layout-programa.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/empreender/copy.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/gestao/copy.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/inteligencia-emocional/copy.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/lideranca/copy.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/oratoria/copy.md"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/academy/vendas/copy.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Redirect www → apex
 [[redirects]]
   from = "https://www.avantik.com.br/*"
@@ -39,6 +178,22 @@
   status = 301
   force = true
 
+# Eventos presenciais: os slugs curtos que as LPs tinham no dominio antigo
+# continuam resolvendo, agora dentro do namespace /eventos/. Cobre link digitado
+# a mao e material que circulou com a forma curta.
+[[redirects]]
+  from = "/eventos/lideranca"
+  to = "/eventos/lideranca-extraordinaria/"
+  status = 301
+[[redirects]]
+  from = "/eventos/oratoria"
+  to = "/eventos/oratoria-e-persuasao/"
+  status = 301
+[[redirects]]
+  from = "/eventos/inteligencia-emocional"
+  to = "/eventos/inteligencia-emocional-e-neurociencia/"
+  status = 301
+
 # Headers de seguranca
 [[headers]]
   for = "/*"
@@ -46,7 +201,15 @@
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; frame-src https://www.youtube.com; connect-src 'self' https://*.supabase.co https://img.youtube.com; media-src 'self'"
+    # connect.facebook.net (script-src) e www.facebook.com (connect-src) sao do
+    # Meta Pixel das LPs em /eventos/*: o snippet carrega fbevents.js do primeiro
+    # e o fbevents moderno manda parte dos eventos por fetch/sendBeacon pro
+    # segundo. NAO REMOVA sem desligar o tracking antes — o sintoma de remover e
+    # "Refused to load" no console e evento sumindo do Events Manager, sem erro
+    # visivel pro usuario.
+    # Escopar isso so em /eventos/* nao funciona: multiplas politicas CSP sao
+    # aplicadas em INTERSECAO, e a regra for="/*" tambem casa /eventos/*.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.jsdelivr.net https://esm.sh https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; frame-src https://www.youtube.com; connect-src 'self' https://*.supabase.co https://img.youtube.com https://www.facebook.com; media-src 'self'"
 
 # Cache para assets estaticos (sem immutable para CSS/JS sem versionamento)
 [[headers]]
@@ -66,6 +229,17 @@
 
 [[headers]]
   for = "*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.woff"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Fontes auto-hospedadas (nomes versionados pelo proprio arquivo)
+[[headers]]
+  for = "/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 

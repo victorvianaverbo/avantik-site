@@ -1,8 +1,29 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
   <title>Blog | Avantik - Dicas para palestrantes e empresas</title>
   <meta name="description" content="Artigos sobre como contratar palestrantes, organizar eventos e crescer como palestrante profissional. Dicas, tendências e guias práticos.">
   <meta property="og:title" content="Blog | Avantik">
@@ -12,13 +33,16 @@
   <meta name="twitter:card" content="summary">
   <link rel="canonical" href="https://avantik-plataforma.netlify.app/blog/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <link href="/lib/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=20260521">
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+<link href="/lib/aos.css" rel="stylesheet">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+  <link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
   <script src="/lib/aos.js" defer></script>
-  <script src="/script.js" defer></script>
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     /* ==========================================
@@ -34,13 +58,13 @@
     .page-hero__label {
       display: inline-block;
       font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
+      font-weight: 500;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--color-accent);
       margin-bottom: 1.5rem;
       position: relative;
-      padding-left: 2rem;
+      padding-left: 3rem;
     }
 
     .page-hero__label::before {
@@ -48,21 +72,22 @@
       position: absolute;
       left: 0;
       top: 50%;
-      width: 1.25rem;
-      height: 2px;
+      width: 36px;
+      height: 1px;
       background: var(--color-accent);
     }
 
     .page-hero__title {
       font-size: clamp(2rem, 5vw, 3.5rem);
-      color: #FFFFFF;
+      color: var(--color-text);
       max-width: 800px;
       margin: 0 auto 1.5rem;
     }
 
     .page-hero__subtitle {
       font-size: clamp(1rem, 2vw, 1.125rem);
-      color: rgba(255, 255, 255, 0.6);
+      font-weight: 300;
+      color: var(--color-text-secondary);
       max-width: 640px;
       margin: 0 auto;
       line-height: 1.7;
@@ -84,27 +109,31 @@
       background: transparent;
       border: 1px solid var(--color-border);
       border-radius: 100px;
-      padding: 0.5rem 1.25rem;
+      padding: 0.6rem 1.25rem;
       font-family: var(--font-body);
       font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--color-text);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+      color: var(--color-text-secondary);
       cursor: pointer;
       transition: all 300ms var(--ease-out);
     }
 
     .blog-grid__filter:hover {
-      border-color: var(--color-text);
+      border-color: rgba(227, 179, 65, 0.45);
+      color: var(--color-accent-hover);
     }
 
     .blog-grid__filter--active {
-      background: var(--color-text);
-      color: #FFFFFF;
+      background: linear-gradient(120deg, #ECC35C, #E3B341);
+      color: #232323;
       border-color: transparent;
     }
 
     .blog-grid__filter--active:hover {
       border-color: transparent;
+      color: #232323;
     }
 
     /* ==========================================
@@ -136,10 +165,10 @@
     .blog-card {
       display: flex;
       flex-direction: column;
-      border-radius: 1.25rem;
+      border-radius: var(--radius-md);
       overflow: hidden;
       border: 1px solid var(--color-border);
-      background: var(--color-surface);
+      background: #FFFFFF;
       text-decoration: none;
       color: inherit;
       transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out), border-color 300ms;
@@ -147,8 +176,8 @@
 
     .blog-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-      border-color: transparent;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      border-color: rgba(227, 179, 65, 0.35);
     }
 
     .blog-card[hidden] {
@@ -161,27 +190,31 @@
       position: relative;
     }
 
-    /* Gradient placeholder backgrounds - editorial/muted */
-    .blog-card:nth-child(20n+1) .blog-card__image { background: linear-gradient(135deg, rgba(67, 64, 160, 0.12) 0%, rgba(232, 106, 51, 0.08) 100%); }
-    .blog-card:nth-child(20n+2) .blog-card__image { background: linear-gradient(135deg, rgba(232, 106, 51, 0.10) 0%, rgba(67, 64, 160, 0.06) 100%); }
-    .blog-card:nth-child(20n+3) .blog-card__image { background: linear-gradient(160deg, rgba(67, 64, 160, 0.08) 0%, rgba(45, 43, 110, 0.14) 100%); }
-    .blog-card:nth-child(20n+4) .blog-card__image { background: linear-gradient(145deg, rgba(232, 106, 51, 0.06) 0%, rgba(67, 64, 160, 0.10) 100%); }
-    .blog-card:nth-child(20n+5) .blog-card__image { background: linear-gradient(120deg, rgba(45, 43, 110, 0.10) 0%, rgba(232, 106, 51, 0.12) 100%); }
-    .blog-card:nth-child(20n+6) .blog-card__image { background: linear-gradient(135deg, rgba(232, 106, 51, 0.12) 0%, rgba(45, 43, 110, 0.08) 100%); }
-    .blog-card:nth-child(20n+7) .blog-card__image { background: linear-gradient(150deg, rgba(67, 64, 160, 0.10) 0%, rgba(232, 106, 51, 0.06) 100%); }
-    .blog-card:nth-child(20n+8) .blog-card__image { background: linear-gradient(130deg, rgba(45, 43, 110, 0.06) 0%, rgba(67, 64, 160, 0.12) 100%); }
-    .blog-card:nth-child(20n+9) .blog-card__image { background: linear-gradient(170deg, rgba(232, 106, 51, 0.08) 0%, rgba(45, 43, 110, 0.10) 100%); }
-    .blog-card:nth-child(20n+10) .blog-card__image { background: linear-gradient(140deg, rgba(67, 64, 160, 0.14) 0%, rgba(232, 106, 51, 0.06) 100%); }
-    .blog-card:nth-child(20n+11) .blog-card__image { background: linear-gradient(125deg, rgba(232, 106, 51, 0.10) 0%, rgba(67, 64, 160, 0.12) 100%); }
-    .blog-card:nth-child(20n+12) .blog-card__image { background: linear-gradient(155deg, rgba(45, 43, 110, 0.12) 0%, rgba(232, 106, 51, 0.08) 100%); }
-    .blog-card:nth-child(20n+13) .blog-card__image { background: linear-gradient(135deg, rgba(67, 64, 160, 0.06) 0%, rgba(45, 43, 110, 0.14) 100%); }
-    .blog-card:nth-child(20n+14) .blog-card__image { background: linear-gradient(165deg, rgba(232, 106, 51, 0.12) 0%, rgba(67, 64, 160, 0.08) 100%); }
-    .blog-card:nth-child(20n+15) .blog-card__image { background: linear-gradient(110deg, rgba(45, 43, 110, 0.08) 0%, rgba(232, 106, 51, 0.14) 100%); }
-    .blog-card:nth-child(20n+16) .blog-card__image { background: linear-gradient(145deg, rgba(67, 64, 160, 0.12) 0%, rgba(45, 43, 110, 0.06) 100%); }
-    .blog-card:nth-child(20n+17) .blog-card__image { background: linear-gradient(135deg, rgba(232, 106, 51, 0.08) 0%, rgba(67, 64, 160, 0.14) 100%); }
-    .blog-card:nth-child(20n+18) .blog-card__image { background: linear-gradient(160deg, rgba(45, 43, 110, 0.14) 0%, rgba(232, 106, 51, 0.06) 100%); }
-    .blog-card:nth-child(20n+19) .blog-card__image { background: linear-gradient(120deg, rgba(67, 64, 160, 0.08) 0%, rgba(232, 106, 51, 0.10) 100%); }
-    .blog-card:nth-child(20n+20) .blog-card__image { background: linear-gradient(150deg, rgba(232, 106, 51, 0.14) 0%, rgba(45, 43, 110, 0.10) 100%); }
+    /* Placeholders em grafite + dourado: variacao sutil de angulo e intensidade */
+    .blog-card__image {
+      border-bottom: 1px solid rgba(227, 179, 65, 0.16);
+    }
+
+    .blog-card:nth-child(20n+1) .blog-card__image { background: linear-gradient(135deg, rgba(227, 179, 65, 0.38) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+2) .blog-card__image { background: linear-gradient(135deg, rgba(227, 192, 120, 0.24) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+3) .blog-card__image { background: linear-gradient(160deg, rgba(227, 179, 65, 0.19) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+4) .blog-card__image { background: linear-gradient(145deg, rgba(158, 123, 62, 0.42) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+5) .blog-card__image { background: linear-gradient(120deg, rgba(227, 192, 120, 0.34) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+6) .blog-card__image { background: linear-gradient(135deg, rgba(227, 179, 65, 0.29) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+7) .blog-card__image { background: linear-gradient(150deg, rgba(158, 123, 62, 0.24) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+8) .blog-card__image { background: linear-gradient(130deg, rgba(227, 179, 65, 0.42) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+9) .blog-card__image { background: linear-gradient(170deg, rgba(227, 192, 120, 0.19) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+10) .blog-card__image { background: linear-gradient(140deg, rgba(227, 179, 65, 0.34) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+11) .blog-card__image { background: linear-gradient(125deg, rgba(158, 123, 62, 0.38) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+12) .blog-card__image { background: linear-gradient(155deg, rgba(227, 192, 120, 0.29) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+13) .blog-card__image { background: linear-gradient(135deg, rgba(227, 179, 65, 0.22) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+14) .blog-card__image { background: linear-gradient(165deg, rgba(227, 192, 120, 0.38) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+15) .blog-card__image { background: linear-gradient(110deg, rgba(158, 123, 62, 0.34) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+16) .blog-card__image { background: linear-gradient(145deg, rgba(227, 179, 65, 0.26) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+17) .blog-card__image { background: linear-gradient(135deg, rgba(227, 192, 120, 0.42) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+18) .blog-card__image { background: linear-gradient(160deg, rgba(158, 123, 62, 0.29) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+19) .blog-card__image { background: linear-gradient(120deg, rgba(227, 179, 65, 0.36) 0%, #F4ECDA 100%); }
+    .blog-card:nth-child(20n+20) .blog-card__image { background: linear-gradient(150deg, rgba(227, 192, 120, 0.22) 0%, #F4ECDA 100%); }
 
     .blog-card__body {
       padding: 1.5rem;
@@ -193,8 +226,8 @@
     .blog-card__tag {
       display: inline-block;
       font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      font-weight: 500;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--color-accent);
       margin-bottom: 0.75rem;
@@ -221,14 +254,14 @@
       align-items: center;
       justify-content: space-between;
       font-size: 0.75rem;
-      color: var(--color-text-secondary);
-      opacity: 0.7;
+      color: var(--color-text-muted);
       padding-top: 1rem;
       border-top: 1px solid var(--color-border);
     }
   </style>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
 </head>
-<body>
+<body class="theme-2026">
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -241,6 +274,7 @@
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
       </div>
 
@@ -261,6 +295,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <div class="header__mobile-actions">
         <a href="/entrar/" class="btn btn--outline">Entrar</a>
@@ -605,10 +640,13 @@
 
         <!-- Coluna 2: Navegação -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
             <a href="/sobre/">Sobre</a>
             <a href="/blog/">Blog</a>
           </nav>
@@ -616,7 +654,7 @@
 
         <!-- Coluna 3: Legal -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Política de Privacidade</a>
             <a href="/termos/">Termos e Condições</a>

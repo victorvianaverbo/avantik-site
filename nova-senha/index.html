@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,10 +7,13 @@
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=20260521">
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
 
   <style>
     .auth-page {
@@ -27,33 +30,44 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 30%, rgba(197, 165, 114, 0.12), transparent 55%),
-        radial-gradient(circle at 80% 70%, rgba(197, 165, 114, 0.08), transparent 50%);
+        radial-gradient(circle at 20% 30%, rgba(227, 179, 65, 0.12), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(227, 179, 65, 0.08), transparent 50%);
       pointer-events: none;
     }
     .auth-card {
       position: relative;
       width: 100%;
       max-width: 440px;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 1.25rem;
+      background: linear-gradient(170deg, #2B2C2F, #232427);
+      border: 1px solid rgba(227, 179, 65, 0.22);
+      border-radius: var(--radius-md);
       padding: 2.5rem;
-      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
     }
-    .auth-card__title { font-family: var(--font-heading); font-size: 1.75rem; line-height: 1.15; margin-bottom: 0.5rem; }
+    .auth-card__title { font-family: var(--font-heading); font-weight: 400; font-size: 1.75rem; line-height: 1.15; margin-bottom: 0.5rem; color: var(--color-text); }
+    .auth-card__title::before { content: ''; display: block; width: 36px; height: 1px; margin-bottom: 1.25rem; background: linear-gradient(90deg, var(--color-accent), transparent); }
     .auth-card__subtitle { color: var(--color-text-secondary); margin-bottom: 1.5rem; font-size: 0.9375rem; }
     .auth-field { margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.375rem; }
-    .auth-field label { font-size: 0.875rem; font-weight: 500; color: var(--color-text); }
-    .auth-field input { padding: 0.875rem 1rem; border: 1.5px solid var(--color-border); border-radius: 0.625rem; font-size: 1rem; font-family: inherit; }
-    .auth-field input:focus { outline: 2px solid var(--color-accent); outline-offset: -1px; border-color: transparent; }
-    .auth-error { display: none; background: #fef2f2; color: #991b1b; padding: 0.75rem 1rem; border-radius: 0.625rem; font-size: 0.875rem; margin-bottom: 1.25rem; line-height: 1.4; }
+    .auth-field label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-secondary); }
+    .auth-field input { padding: 0.875rem 1rem; min-height: 44px; border: 1px solid var(--color-border); border-radius: var(--radius-xs); font-size: 1rem; font-family: inherit; color: var(--color-text); background: rgba(255, 255, 255, 0.03); }
+    .auth-field input::placeholder { color: var(--color-text-muted); }
+    .auth-field input:focus { outline: 2px solid var(--color-accent); outline-offset: -1px; border-color: transparent; background: rgba(255, 255, 255, 0.05); }
+    /* Autofill do Chrome pinta o input de branco — forcar o tom noir */
+    .auth-field input:-webkit-autofill,
+    .auth-field input:-webkit-autofill:hover,
+    .auth-field input:-webkit-autofill:focus {
+      -webkit-text-fill-color: var(--color-text);
+      caret-color: var(--color-text);
+      box-shadow: 0 0 0 1000px #2B2C2F inset;
+      transition: background-color 9999s ease-in-out 0s;
+    }
+    .auth-error { display: none; background: rgba(239, 68, 68, 0.12); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.35); padding: 0.75rem 1rem; border-radius: var(--radius-xs); font-size: 0.875rem; margin-bottom: 1.25rem; line-height: 1.4; }
     .auth-error--visible { display: block; }
-    .auth-success { background: #ecfdf5; color: #065f46; padding: 0.75rem 1rem; border-radius: 0.625rem; font-size: 0.875rem; margin-bottom: 1.25rem; line-height: 1.4; }
+    .auth-success { background: rgba(16, 185, 129, 0.12); color: #6EE7B7; border: 1px solid rgba(16, 185, 129, 0.35); padding: 0.75rem 1rem; border-radius: var(--radius-xs); font-size: 0.875rem; margin-bottom: 1.25rem; line-height: 1.4; }
     .auth-submit { width: 100%; margin-top: 0.5rem; min-height: 48px; }
   </style>
 </head>
-<body>
+<body class="theme-2026">
   <header class="header" id="header">
     <nav class="header__nav container">
       <a href="/" class="header__logo">
@@ -97,7 +111,7 @@
   </main>
 
   <script type="module">
-    import { supabase } from '/lib/supabase.js';
+    import { supabase } from '/lib/supabase.js?v=20260816a';
 
     const loadingState = document.getElementById('loading-state');
     const form = document.getElementById('pwd-form');

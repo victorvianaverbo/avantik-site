@@ -1,8 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
 
   <title>Avantik | Encontre o Palestrante Certo para Seu Evento</title>
   <meta name="description" content="Plataforma que conecta empresas aos melhores palestrantes do Brasil. Filtre por tema, preço e avaliação. SIPAT, liderança, vendas, motivacional e mais.">
@@ -18,40 +39,25 @@
   <link rel="canonical" href="https://avantik-plataforma.netlify.app/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <!-- FONTS: DM Serif Display + DM Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Preload da fonte LCP (DM Serif Display, subset latin) -->
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/dmserifdisplay/v17/-nFnOHM81r4j6k0gjAW3mujVU2B2G_Bx0g.woff2">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
   <!-- DNS prefetch para thumbnails e embeds do YouTube (seção de depoimentos) -->
   <link rel="dns-prefetch" href="//img.youtube.com">
   <link rel="dns-prefetch" href="//www.youtube.com">
 
   <link href="/lib/aos.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="/style.css?v=20260521">
-
-  <style>
-    /* SOBRE A AVANTIK (incorporado da pagina /sobre/) */
-    .about-home__grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-    .about-home__label { display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1.25rem; position: relative; padding-left: 2rem; }
-    .about-home__label::before { content: ''; position: absolute; left: 0; top: 50%; width: 1.25rem; height: 2px; background: var(--color-accent); }
-    .about-home__title { font-size: clamp(1.6rem, 3.6vw, 2.5rem); color: var(--color-text); margin-bottom: 1.25rem; }
-    .about-home__text { color: var(--color-text-secondary); line-height: 1.75; margin-bottom: 1.1rem; }
-    .about-home__text:last-child { margin-bottom: 0; }
-    .about-home__numbers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .about-home__numbers li { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 1rem; padding: 1.5rem; text-align: center; }
-    .about-home__num { display: block; font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--color-primary); line-height: 1; }
-    .about-home__numbers span { display: block; margin-top: 0.4rem; font-size: 0.85rem; color: var(--color-text-secondary); }
-    @media (max-width: 820px) { .about-home__grid { grid-template-columns: 1fr; } }
-  </style>
+  <!-- Fontes auto-hospedadas do tema 2026: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+  <link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
 
   <script src="/lib/aos.js" defer></script>
-  <script src="/script.js" defer></script>
+  <script src="/script.js?v=20260816a" defer></script>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
 </head>
-<body>
+<body class="theme-2026">
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -64,7 +70,7 @@
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link">Academy</a>
-        <a href="/para-empresas/" class="header__link">Para Empresas</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
       </div>
 
@@ -85,6 +91,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <a href="/para-empresas/" class="header__mobile-link">Para Empresas</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <div class="header__mobile-actions">
@@ -96,17 +103,14 @@
 
   <main>
 
-    <!-- HERO: Split Assimetrico + Headline >150px + Selective Color + Hover Lift -->
-    <section class="hero">
-      <div class="hero__grid container">
+    <!-- HERO -->
+    <section class="hm-hero">
+      <div class="hm-hero__grid container">
 
-        <div class="hero__content">
-          <span class="hero__eyebrow">Plataforma de Palestrantes</span>
+        <div class="hm-hero__content">
+          <span class="hm-hero__badge">Banco de Palestrantes</span>
 
-          <h1 class="hero__title">
-            <span class="hero__title-line">O palestrante</span>
-            <span class="hero__title-accent">certo.</span>
-          </h1>
+          <h1 class="hm-hero__title">O palestrante <em>certo.</em></h1>
 
           <div class="hero__tabs" role="tablist">
             <button class="hero__tab hero__tab--active" role="tab" aria-selected="true" data-hero-tab="empresa">Para seu evento</button>
@@ -120,184 +124,141 @@
             Leve sua carreira a novos palcos. Ganhe visibilidade, receba propostas e foque no que faz de melhor.
           </p>
 
-          <div class="hero__ctas">
+          <div class="hm-hero__ctas">
             <a href="/diretorio/" class="btn btn--accent btn--lg">Buscar Palestrantes</a>
             <a href="/para-palestrantes/" class="btn btn--outline-dark btn--lg">Sou Palestrante</a>
           </div>
 
-          <div class="hero__trust">
-            <div class="hero__trust-item">
-              <span class="hero__trust-number">+200</span>
-              <span class="hero__trust-label">palestrantes</span>
-            </div>
-            <span class="hero__trust-divider"></span>
-            <div class="hero__trust-item">
-              <span class="hero__trust-number">+500</span>
-              <span class="hero__trust-label">eventos</span>
-            </div>
-            <span class="hero__trust-divider"></span>
-            <div class="hero__trust-item">
-              <span class="hero__trust-number">+50</span>
-              <span class="hero__trust-label">temas</span>
-            </div>
+          <div class="hm-hero__stats">
+            <div class="hm-hero__stat"><b>+200</b>palestrantes</div>
+            <div class="hm-hero__stat"><b>+500</b>eventos</div>
+            <div class="hm-hero__stat"><b>+50</b>temas</div>
           </div>
         </div>
 
-        <div class="hero__visual" aria-hidden="true">
-          <div class="hero__blob hero__blob--1"></div>
-          <div class="hero__blob hero__blob--2"></div>
-
-          <div class="hero__card hero__card--back">
-            <div class="hero__card-avatar hero__card-avatar--alt"></div>
-            <div class="hero__card-name-placeholder"></div>
-            <div class="hero__card-tags">
-              <span>Vendas</span>
-              <span>Motivacional</span>
+        <div class="hm-hero__visual">
+          <!-- Mockup ilustrativo do card de palestrante na plataforma -->
+          <div class="hm-mock" aria-hidden="true">
+            <div class="hm-mock__media">
+              <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <defs>
+                  <linearGradient id="hmMockBg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#3b3c42"/>
+                    <stop offset="100%" stop-color="#232427"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="320" fill="url(#hmMockBg)"/>
+                <circle cx="200" cy="126" r="52" fill="#E3B341" opacity="0.85"/>
+                <path d="M94 320 C 94 244, 146 212, 200 212 C 254 212, 306 244, 306 320 Z" fill="#E3B341" opacity="0.85"/>
+              </svg>
+              <div class="hm-mock__flags"><span>Vendas</span><span>Motivacional</span></div>
+            </div>
+            <div class="hm-mock__body">
+              <div class="hm-mock__name">Ana Mendes</div>
+              <div class="hm-mock__role">Palestrante de Liderança</div>
+              <div class="hm-mock__tags"><span>Liderança</span><span>SIPAT</span><span>Gestão</span></div>
+              <div class="hm-mock__foot">
+                <span class="hm-mock__rating">&#9733;&#9733;&#9733;&#9733;&#9733; <b>4.9</b></span>
+                <span class="hm-mock__price">R$ 5k&ndash;10k</span>
+              </div>
             </div>
           </div>
 
-          <div class="hero__card hero__card--front">
-            <div class="hero__card-avatar"></div>
-            <div class="hero__card-info">
-              <span class="hero__card-name">Ana Mendes</span>
-              <span class="hero__card-role">Palestrante de Liderança</span>
-            </div>
-            <div class="hero__card-tags">
-              <span>Liderança</span>
-              <span>SIPAT</span>
-              <span>Gestão</span>
-            </div>
-            <div class="hero__card-bottom">
-              <span class="hero__card-rating">&#9733;&#9733;&#9733;&#9733;&#9733; 4.9</span>
-              <span class="hero__card-price">R$ 5k-10k</span>
+          <div class="hm-mock-note">
+            <div class="hm-mock-note__title">OCASIÕES EM ALTA</div>
+            <div class="hm-mock-note__tags">
+              <a href="/diretorio/?campanha=sipat">SIPAT</a>
+              <a href="/diretorio/?campanha=dia-das-mulheres">Dia da Mulher</a>
+              <a href="/diretorio/?campanha=outubro-rosa">Outubro Rosa</a>
             </div>
           </div>
-
-          <div class="hero__float-tag hero__float-tag--1">SIPAT</div>
-          <div class="hero__float-tag hero__float-tag--2">Dia da Mulher</div>
-          <div class="hero__float-tag hero__float-tag--3">Outubro Rosa</div>
         </div>
 
       </div>
     </section>
 
-    <!-- COMO FUNCIONA: Contained Center + Tabs + Stagger -->
-    <section class="how section" id="como-funciona">
+    <!-- COMO FUNCIONA -->
+    <section class="hm-how" id="como-funciona">
       <div class="container">
-        <div class="how__header">
-          <span class="how__label" data-aos="fade-up">Simples e direto</span>
-          <h2 class="how__title" data-aos="fade-up" data-aos-delay="80">Como funciona</h2>
+        <div class="hm-how__header">
+          <span class="hm-eyebrow" data-aos="fade-up">Simples e direto</span>
+          <h2 class="hm-title" data-aos="fade-up" data-aos-delay="80">Como funciona</h2>
         </div>
 
-        <div class="how__tabs" role="tablist" data-aos="fade-up" data-aos-delay="160">
-          <button class="how__tab how__tab--active" role="tab" aria-selected="true" data-how-tab="empresa">Para Empresas</button>
-          <button class="how__tab" role="tab" aria-selected="false" data-how-tab="palestrante">Para Palestrantes</button>
+        <div class="hm-how__switch">
+          <div class="how__tabs" role="tablist" data-aos="fade-up" data-aos-delay="140">
+            <button class="how__tab how__tab--active" role="tab" aria-selected="true" data-how-tab="empresa">Para Empresas</button>
+            <button class="how__tab" role="tab" aria-selected="false" data-how-tab="palestrante">Para Palestrantes</button>
+          </div>
         </div>
 
         <div class="how__content how__content--active" id="how-empresa" role="tabpanel">
-          <div class="how__steps">
-            <article class="how__step" data-aos="fade-up" data-aos-delay="240">
-              <div class="how__step-number-wrap">
-                <span class="how__step-number">01</span>
-                <span class="how__step-line"></span>
-              </div>
-              <div class="how__step-body">
-                <h3 class="how__step-title">Busque por tema ou ocasião</h3>
-                <p class="how__step-text">SIPAT, Dia da Mulher, Outubro Rosa, vendas, liderança. Filtre entre dezenas de temas e encontre exatamente o que seu evento precisa.</p>
-              </div>
+          <div class="hm-steps">
+            <article class="hm-step" data-aos="fade-up">
+              <div class="hm-step__n">01</div>
+              <h3 class="hm-step__title">Busque por tema ou ocasião</h3>
+              <p class="hm-step__text">SIPAT, Dia da Mulher, Outubro Rosa, vendas, liderança. Filtre entre dezenas de temas e encontre exatamente o que seu evento precisa.</p>
             </article>
-
-            <article class="how__step" data-aos="fade-up" data-aos-delay="380">
-              <div class="how__step-number-wrap">
-                <span class="how__step-number">02</span>
-                <span class="how__step-line"></span>
-              </div>
-              <div class="how__step-body">
-                <h3 class="how__step-title">Compare perfis e avaliações</h3>
-                <p class="how__step-text">Veja bio, vídeos, depoimentos e faixa de preço de cada palestrante. Tudo em um só lugar, sem ligar para agências.</p>
-              </div>
+            <article class="hm-step" data-aos="fade-up" data-aos-delay="80">
+              <div class="hm-step__n">02</div>
+              <h3 class="hm-step__title">Compare perfis e avaliações</h3>
+              <p class="hm-step__text">Veja bio, vídeos, depoimentos e faixa de preço de cada palestrante. Tudo em um só lugar, sem ligar para agências.</p>
             </article>
-
-            <article class="how__step" data-aos="fade-up" data-aos-delay="520">
-              <div class="how__step-number-wrap">
-                <span class="how__step-number">03</span>
-              </div>
-              <div class="how__step-body">
-                <h3 class="how__step-title">Solicite orçamento direto</h3>
-                <p class="how__step-text">Envie sua proposta pela plataforma e receba a resposta do palestrante em até 48 horas.</p>
-              </div>
+            <article class="hm-step" data-aos="fade-up" data-aos-delay="160">
+              <div class="hm-step__n">03</div>
+              <h3 class="hm-step__title">Solicite orçamento direto</h3>
+              <p class="hm-step__text">Envie sua proposta pela plataforma e receba a resposta do palestrante em até 48 horas.</p>
             </article>
           </div>
         </div>
 
         <div class="how__content" id="how-palestrante" role="tabpanel" hidden>
-          <div class="how__steps">
-            <article class="how__step" data-aos="fade-up" data-aos-delay="240">
-              <div class="how__step-number-wrap">
-                <span class="how__step-number">01</span>
-                <span class="how__step-line"></span>
-              </div>
-              <div class="how__step-body">
-                <h3 class="how__step-title">Crie seu perfil profissional</h3>
-                <p class="how__step-text">Monte uma vitrine completa: bio, fotos, vídeos, temas de palestra e faixa de preço. Seu portfólio digital em minutos.</p>
-              </div>
+          <div class="hm-steps">
+            <article class="hm-step">
+              <div class="hm-step__n">01</div>
+              <h3 class="hm-step__title">Crie seu perfil profissional</h3>
+              <p class="hm-step__text">Monte uma vitrine completa: bio, fotos, vídeos, temas de palestra e faixa de preço. Seu portfólio digital em minutos.</p>
             </article>
-
-            <article class="how__step" data-aos="fade-up" data-aos-delay="380">
-              <div class="how__step-number-wrap">
-                <span class="how__step-number">02</span>
-                <span class="how__step-line"></span>
-              </div>
-              <div class="how__step-body">
-                <h3 class="how__step-title">Seja encontrado por quem contrata</h3>
-                <p class="how__step-text">Empresas de todo o Brasil buscam palestrantes na nossa plataforma. Apareça para os decisores certos, na hora certa.</p>
-              </div>
+            <article class="hm-step">
+              <div class="hm-step__n">02</div>
+              <h3 class="hm-step__title">Seja encontrado por quem contrata</h3>
+              <p class="hm-step__text">Empresas de todo o Brasil buscam palestrantes na nossa plataforma. Apareça para os decisores certos, na hora certa.</p>
             </article>
-
-            <article class="how__step" data-aos="fade-up" data-aos-delay="520">
-              <div class="how__step-number-wrap">
-                <span class="how__step-number">03</span>
-              </div>
-              <div class="how__step-body">
-                <h3 class="how__step-title">Receba propostas e feche contratos</h3>
-                <p class="how__step-text">Propostas chegam direto no seu e-mail. Você decide quais aceitar. Sem comissão sobre o cachê.</p>
-              </div>
+            <article class="hm-step">
+              <div class="hm-step__n">03</div>
+              <h3 class="hm-step__title">Receba propostas e feche contratos</h3>
+              <p class="hm-step__text">Propostas chegam direto no seu e-mail. Você decide quais aceitar.</p>
             </article>
           </div>
         </div>
-
       </div>
     </section>
 
-    <!-- CATEGORIAS DE TEMAS: Bento Box + Hover Glow + Wave Stagger -->
-    <section class="categories section" id="categorias">
+    <!-- CATEGORIAS -->
+    <section class="hm-cats" id="categorias">
       <div class="container">
-        <div class="categories__header">
-          <span class="categories__label" data-aos="fade-up">Explore por tema</span>
-          <h2 class="categories__title" data-aos="fade-up" data-aos-delay="80">Encontre por tema ou ocasião</h2>
-          <p class="categories__subtitle" data-aos="fade-up" data-aos-delay="160">Dezenas de categorias para conectar você ao palestrante certo</p>
+        <span class="hm-eyebrow" data-aos="fade-up">Explore por tema</span>
+        <div class="hm-cats__head" data-aos="fade-up" data-aos-delay="80">
+          <h2 class="hm-title">Encontre por tema ou ocasião</h2>
+          <a href="/diretorio/" class="hm-link">Ver todas as categorias &rarr;</a>
         </div>
+        <p class="hm-lead">Dezenas de categorias para conectar você ao palestrante certo</p>
 
-        <div class="categories__grid" id="categories-grid" aria-busy="true"></div>
-
-        <a href="/diretorio/" class="categories__cta" data-aos="fade-up" data-aos-delay="200">
-          Ver todas as categorias
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
+        <div class="hm-chips" id="categories-grid" aria-busy="true"></div>
       </div>
     </section>
 
-    <!-- PALESTRANTES EM DESTAQUE: Carousel Infinite + Hover Lift -->
-    <section class="speakers section" id="palestrantes">
+    <!-- PALESTRANTES EM DESTAQUE -->
+    <section class="speakers" id="palestrantes">
       <div class="container">
         <div class="speakers__header">
           <span class="speakers__label" data-aos="fade-up">Quem está na plataforma</span>
           <h2 class="speakers__title" data-aos="fade-up" data-aos-delay="80">Conheça quem está movendo palcos</h2>
-          <p class="speakers__subtitle" data-aos="fade-up" data-aos-delay="160">Palestrantes verificados e avaliados pela comunidade Avantik</p>
+          <p class="speakers__subtitle" data-aos="fade-up" data-aos-delay="140">Palestrantes verificados e avaliados pela comunidade Avantik</p>
         </div>
       </div>
 
-      <div class="speakers__carousel" data-aos="fade-up" data-aos-delay="300">
+      <div class="speakers__carousel" data-aos="fade-up" data-aos-delay="150">
         <div class="speakers__fade speakers__fade--left"></div>
         <div class="speakers__fade speakers__fade--right"></div>
         <button type="button" class="speakers__arrow speakers__arrow--prev" id="speakers-prev" aria-label="Ver anteriores">
@@ -312,243 +273,243 @@
       </div>
 
       <div class="container" style="text-align:center">
-        <a href="/diretorio/" class="btn btn--accent btn--lg" data-aos="fade-up" data-aos-delay="500">Explorar todos os palestrantes</a>
+        <a href="/diretorio/" class="btn btn--accent btn--lg" data-aos="fade-up" data-aos-delay="200">Explorar todos os palestrantes</a>
       </div>
     </section>
 
-    <!-- POR QUE A AVANTIK: Broken Grid + Counter Animation -->
-    <section class="why section" id="diferenciais">
+    <!-- DIFERENCIAIS -->
+    <section class="hm-band--dark" id="diferenciais">
+      <div class="hm-why container">
+        <span class="hm-eyebrow" data-aos="fade-up">Diferenciais</span>
+        <h2 class="hm-title" data-aos="fade-up" data-aos-delay="80">Por que mais de 200 palestrantes escolheram a Avantik</h2>
+
+        <div class="hm-why__grid">
+          <article class="hm-why__card" data-aos="fade-up">
+            <div class="hm-why__n">+200</div>
+            <h3 class="hm-why__title">Visibilidade real, não promessa</h3>
+            <p class="hm-why__text">Investimos em tráfego e marketing para que seu perfil seja encontrado por quem realmente contrata.</p>
+          </article>
+          <article class="hm-why__card" data-aos="fade-up" data-aos-delay="80">
+            <div class="hm-why__n">4</div>
+            <h3 class="hm-why__title">Programa de Desenvolvimento</h3>
+            <p class="hm-why__text">Nosso programa exclusivo desenvolve sua carreira nos 4 pilares: Conteúdo, Performance, Apresentação e Posicionamento.</p>
+          </article>
+          <article class="hm-why__card" data-aos="fade-up" data-aos-delay="160">
+            <div class="hm-why__n">15</div>
+            <h3 class="hm-why__title">Dias grátis para testar</h3>
+            <p class="hm-why__text">Monte o perfil, publique suas palestras e veja o movimento antes de decidir. Cancele antes do fim do teste e não paga nada.</p>
+          </article>
+          <article class="hm-why__card" data-aos="fade-up" data-aos-delay="240">
+            <div class="hm-why__n">+50</div>
+            <h3 class="hm-why__title">Comunidade ativa de palestrantes</h3>
+            <p class="hm-why__text">Troca de experiências, networking e oportunidades compartilhadas entre profissionais que vivem de palco.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE A AVANTIK -->
+    <section class="hm-about" id="sobre">
       <div class="container">
-        <div class="why__header">
-          <span class="why__label" data-aos="fade-up">Diferenciais</span>
-          <h2 class="why__title" data-aos="fade-up" data-aos-delay="80">Por que mais de 200 palestrantes escolheram a Avantik</h2>
-        </div>
+        <div class="hm-about__grid">
+          <div data-aos="fade-right">
+            <span class="hm-eyebrow">Sobre a Avantik</span>
+            <h2 class="hm-about__title">Conectamos quem transforma a quem precisa ser transformado</h2>
+            <p class="hm-about__text">Acreditamos que todo evento merece o palestrante certo. Não o mais famoso, não o mais caro, o certo. Aquele que fala a língua do seu público, entende o contexto da sua empresa e entrega resultado real.</p>
+            <p class="hm-about__text">Por isso criamos a Avantik: uma plataforma onde empresas encontram, comparam e contratam palestrantes com transparência total e processo simples, sempre com respeito pela carreira de quem vive de palco.</p>
+          </div>
 
-        <div class="why__grid">
-          <!-- SVG decorativo (linha tracejada) - desktop only -->
-          <svg class="why__deco-line" width="100%" height="100%" viewBox="0 0 1000 500" fill="none" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M100,120 C300,80 400,200 500,180 S700,280 900,200" stroke="#E2E8F0" stroke-width="1" stroke-dasharray="8 4" fill="none"/>
-          </svg>
-
-          <article class="why__card why__card--1" data-aos="fade-up">
-            <span class="why__number" data-count-to="200" data-count-prefix="+">+200</span>
-            <div class="why__icon-wrap">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-            <h3 class="why__card-title">Visibilidade real, não promessa</h3>
-            <p class="why__card-text">Investimos em tráfego e marketing para que seu perfil seja encontrado por quem realmente contrata.</p>
-          </article>
-
-          <article class="why__card why__card--2" data-aos="fade-up" data-aos-delay="150">
-            <span class="why__number" data-count-to="4">4</span>
-            <div class="why__icon-wrap">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-            </div>
-            <h3 class="why__card-title">Programa de Desenvolvimento</h3>
-            <p class="why__card-text">Nosso programa exclusivo desenvolve sua carreira nos 4 pilares: Conteúdo, Performance, Apresentação e Posicionamento.</p>
-          </article>
-
-          <article class="why__card why__card--3" data-aos="fade-up" data-aos-delay="300">
-            <span class="why__number" data-count-to="100" data-count-suffix="%">100%</span>
-            <div class="why__icon-wrap">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <h3 class="why__card-title">Sem comissão sobre o cachê</h3>
-            <p class="why__card-text">Diferente de agências tradicionais, não ficamos com parte do seu cachê. Você recebe 100% do valor contratado.</p>
-          </article>
-
-          <article class="why__card why__card--4" data-aos="fade-up" data-aos-delay="450">
-            <span class="why__number" data-count-to="50" data-count-prefix="+">+50</span>
-            <div class="why__icon-wrap">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <h3 class="why__card-title">Comunidade ativa de palestrantes</h3>
-            <p class="why__card-text">Troca de experiências, networking e oportunidades compartilhadas entre profissionais que vivem de palco.</p>
-          </article>
+          <div class="hm-about__stats" data-aos="fade-left" data-aos-delay="120">
+            <div class="hm-about__stat"><strong class="hm-about__num" data-count-to="200">0</strong><span>palestrantes cadastrados</span></div>
+            <div class="hm-about__stat"><strong class="hm-about__num" data-count-to="500">0</strong><span>eventos realizados</span></div>
+            <div class="hm-about__stat"><strong class="hm-about__num" data-count-to="50">0</strong><span>temas disponíveis</span></div>
+            <div class="hm-about__stat"><strong class="hm-about__num" data-count-to="25">0</strong><span>empresas parceiras</span></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SOBRE A AVANTIK (incorporado da pagina /sobre/) -->
-    <section class="section about-home" id="sobre">
+    <!-- ============ VERTICAL SETOR PÚBLICO ============
+         Condensa a antiga landing /setor-publico/ (que virou o banco de
+         palestrantes da vertical). Fala com o PALESTRANTE: é a mesma proposta
+         de recrutamento, em duas dobras.
+
+         A banda usa `.hm-band--dark` JUNTO com o modificador `.sp-band--slate`
+         de propósito: `.hm-band--dark` já está na lista do theme-2026.css que
+         redefine --color-text/-secondary/--av-eyebrow localmente, então o
+         modificador só troca o background e a dobra herda todo o tratamento de
+         texto claro sem editar nenhuma lista do tema.
+
+         Posição: entre #sobre e #depoimentos, ambos creme — o ritmo fica
+         creme → chumbo → creme. Depois de #diferenciais fundiria com a outra
+         banda escura (#232427 e #1E2229 são quase indistinguíveis). -->
+    <section class="hm-band--dark sp-band--slate section hm-sp" id="setor-publico">
       <div class="container">
-        <div class="about-home__grid">
-          <div class="about-home__content" data-aos="fade-right">
-            <span class="about-home__label">Sobre a Avantik</span>
-            <h2 class="about-home__title">Conectamos quem transforma a quem precisa ser transformado</h2>
-            <p class="about-home__text">Acreditamos que todo evento merece o palestrante certo. Não o mais famoso, não o mais caro, o certo. Aquele que fala a língua do seu público, entende o contexto da sua empresa e entrega resultado real.</p>
-            <p class="about-home__text">Por isso criamos a Avantik: uma plataforma onde empresas encontram, comparam e contratam palestrantes com transparência total e processo simples, sempre com respeito pela carreira de quem vive de palco.</p>
-          </div>
-          <ul class="about-home__numbers" data-aos="fade-left" data-aos-delay="120">
-            <li><strong class="about-home__num" data-count-to="200">0</strong><span>palestrantes cadastrados</span></li>
-            <li><strong class="about-home__num" data-count-to="500">0</strong><span>eventos realizados</span></li>
-            <li><strong class="about-home__num" data-count-to="50">0</strong><span>temas disponíveis</span></li>
-            <li><strong class="about-home__num" data-count-to="25">0</strong><span>empresas parceiras</span></li>
-          </ul>
+
+        <div class="hm-sp__head">
+          <span class="hm-eyebrow" data-aos="fade-up">Vertical Setor Público</span>
+          <h2 class="hm-title" data-aos="fade-up" data-aos-delay="80">O poder público contrata palestra o ano inteiro. Quase nenhum palestrante sabe entrar.</h2>
+          <p class="hm-lead" data-aos="fade-up" data-aos-delay="140">
+            Não é sorte nem indicação. É um processo com regra escrita, prazo definido e uma porta legal
+            que existe justamente para quem tem notório saber.
+          </p>
         </div>
+
+        <div class="hm-sp__stats">
+          <div class="hm-sp__stat" data-aos="fade-up">
+            <span class="hm-sp__num">5.570</span>
+            <p>municípios, mais 26 estados e o Distrito Federal. Cada prefeitura, câmara e autarquia tem sua própria rubrica de capacitação.</p>
+          </div>
+          <div class="hm-sp__stat" data-aos="fade-up" data-aos-delay="80">
+            <span class="hm-sp__num">Anual</span>
+            <p>o orçamento é aprovado com um ano de antecedência. Quem já está mapeado em outubro entra na programação do ano seguinte.</p>
+          </div>
+          <div class="hm-sp__stat" data-aos="fade-up" data-aos-delay="160">
+            <span class="hm-sp__num">Datas fixas</span>
+            <p>Semana do Servidor, SIPAT do órgão, Setembro Amarelo, Outubro Rosa. São compromissos de agenda, não impulso de compra.</p>
+          </div>
+        </div>
+
+        <div class="hm-sp__doors">
+          <article class="hm-sp__door" data-aos="fade-up">
+            <span class="hm-sp__lei">Art. 74, III</span>
+            <h3>Inexigibilidade por notória especialização</h3>
+            <p>Sem licitação e sem concorrer com ninguém: a lei reconhece que não faz sentido leiloar quem vai falar. É o caminho principal de quem tem trajetória comprovável.</p>
+          </article>
+          <article class="hm-sp__door" data-aos="fade-up" data-aos-delay="80">
+            <span class="hm-sp__lei">Art. 75, II</span>
+            <h3>Dispensa por valor</h3>
+            <p>Cachês dentro do teto anual definido em lei dispensam licitação. É o caminho mais rápido e a porta de entrada mais comum.</p>
+          </article>
+          <article class="hm-sp__door" data-aos="fade-up" data-aos-delay="160">
+            <span class="hm-sp__lei">Pregão / Ata</span>
+            <h3>Via produtora ou organizadora</h3>
+            <p>O órgão contrata a empresa de eventos e você entra como parte do serviço dela. Quem enfrenta o processo é a produtora.</p>
+          </article>
+        </div>
+
+        <div class="hm-sp__actions" data-aos="fade-up">
+          <a href="/para-palestrantes/#planos" class="btn btn--accent btn--lg">Entrar na vertical</a>
+          <a href="/setor-publico/" class="btn btn--outline btn--lg">Ver quem já está habilitado</a>
+        </div>
+
       </div>
     </section>
 
-    <!-- DEPOIMENTOS: Video Immersive + Spotlight -->
-    <section class="social section" id="depoimentos">
-      <div class="social__wrapper">
-        <div class="social__deco-circle" aria-hidden="true"></div>
-        <div class="social__deco-circle social__deco-circle--2" aria-hidden="true"></div>
+    <!-- O embaixador saiu daqui em 16/08: virou a figura do banner do banco da
+         vertical, em /setor-publico/. Na home ficou só a dobra de argumento. -->
 
-        <div class="container">
-          <div class="social__header">
-            <span class="social__label" data-aos="fade-up">Depoimentos</span>
-            <h2 class="social__title" data-aos="fade-up" data-aos-delay="80">O que dizem sobre a <span class="social__title-accent">Avantik</span></h2>
-          </div>
-
-          <!-- Video Showcase: Spotlight layout -->
-          <div class="social__showcase" data-aos="fade-up" data-aos-delay="200">
-            <!-- Video principal grande -->
-            <div class="social__main-video">
-              <div class="social__main-video-inner">
-                <div class="social__video-wrap">
-                  <iframe id="social-featured-iframe" src="https://www.youtube.com/embed/_OAmNYjwZ7Q" title="Depoimento" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                </div>
-              </div>
-              <!-- Brilho decorativo atras do vídeo -->
-              <div class="social__main-glow" aria-hidden="true"></div>
-            </div>
-
-            <!-- Sidebar com thumbnails verticais -->
-            <div class="social__sidebar">
-              <button class="social__thumb social__thumb--active" data-vídeo="https://www.youtube.com/embed/_OAmNYjwZ7Q" aria-label="Depoimento 1">
-                <img src="https://img.youtube.com/vi/_OAmNYjwZ7Q/mqdefault.jpg" alt="Depoimento 1" loading="lazy" width="320" height="180">
-                <div class="social__thumb-overlay">
-                  <svg class="social__thumb-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </div>
-                <div class="social__thumb-bar"></div>
-              </button>
-              <button class="social__thumb" data-vídeo="https://www.youtube.com/embed/-ARRAU8UwqA" aria-label="Depoimento 2">
-                <img src="https://img.youtube.com/vi/-ARRAU8UwqA/mqdefault.jpg" alt="Depoimento 2" loading="lazy" width="320" height="180">
-                <div class="social__thumb-overlay">
-                  <svg class="social__thumb-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </div>
-                <div class="social__thumb-bar"></div>
-              </button>
-              <button class="social__thumb" data-vídeo="https://www.youtube.com/embed/bCaSSGe6qFo" aria-label="Depoimento 3">
-                <img src="https://img.youtube.com/vi/bCaSSGe6qFo/mqdefault.jpg" alt="Depoimento 3" loading="lazy" width="320" height="180">
-                <div class="social__thumb-overlay">
-                  <svg class="social__thumb-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </div>
-                <div class="social__thumb-bar"></div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CLIENTES & PARCEIROS: Carrossel com setas -->
-    <section class="clients section">
+    <!-- DEPOIMENTOS -->
+    <section class="hm-videos" id="depoimentos">
       <div class="container">
-        <div class="clients__header" data-aos="fade-up">
-          <div class="clients__icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
-          </div>
-          <h2 class="clients__title">CLIENTES E PARCEIROS</h2>
-        </div>
+        <span class="hm-eyebrow" data-aos="fade-up">Depoimentos</span>
+        <h2 class="hm-title" data-aos="fade-up" data-aos-delay="80">O que dizem sobre a Avantik</h2>
 
-        <div class="clients__carousel" data-aos="fade-up" data-aos-delay="150">
-          <button class="clients__arrow clients__arrow--prev" aria-label="Anterior">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        <div class="hm-videos__grid" data-aos="fade-up" data-aos-delay="140">
+          <button type="button" class="hm-video" data-video-id="_OAmNYjwZ7Q" aria-label="Assistir depoimento 1">
+            <img src="https://img.youtube.com/vi/_OAmNYjwZ7Q/mqdefault.jpg" alt="" loading="lazy" width="320" height="180">
+            <span class="hm-video__play" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </span>
           </button>
-
-          <div class="clients__viewport">
-            <div class="clients__track" id="clients-track">
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/3bf.png&w=240&q=80&fm=webp" alt="3BF" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/abco.png&w=240&q=80&fm=webp" alt="ABCO" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/araujo.png&w=240&q=80&fm=webp" alt="Araujo" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/contabilidade.png&w=240&q=80&fm=webp" alt="Contabilidade AV" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/crie.png&w=240&q=80&fm=webp" alt="Crie" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/direcional.png&w=240&q=80&fm=webp" alt="Direcional" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/empreender.png&w=240&q=80&fm=webp" alt="Empreender" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/gofree.png&w=240&q=80&fm=webp" alt="GoFree" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/illustrar.png&w=240&q=80&fm=webp" alt="Illustrar" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/invista.png&w=240&q=80&fm=webp" alt="Invista" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/observatrio.png&w=240&q=80&fm=webp" alt="Observatório" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/ourominas.png&w=240&q=80&fm=webp" alt="Ourominas" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/permuto.png&w=240&q=80&fm=webp" alt="Permuto" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/prefeitura-contagem.png&w=240&q=80&fm=webp" alt="Prefeitura de Contagem" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/royal.png&w=240&q=80&fm=webp" alt="Royal" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/sbt.png&w=240&q=80&fm=webp" alt="SBT" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tambasa.png&w=240&q=80&fm=webp" alt="Tambasa" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/trokz.png&w=240&q=80&fm=webp" alt="Trokz" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tv.png&w=240&q=80&fm=webp" alt="TV" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/adm.png&w=240&q=80&fm=webp" alt="ADM" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/unisv.png&w=240&q=80&fm=webp" alt="UNISV" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/via-permuta.png&w=240&q=80&fm=webp" alt="Via Permuta" loading="lazy" width="120" height="80"></div>
-
-              <!-- Segunda metade duplicada (aria-hidden) para loop seamless da animacao -->
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/3bf.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/abco.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/araujo.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/contabilidade.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/crie.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/direcional.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/empreender.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/gofree.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/illustrar.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/invista.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/observatrio.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/ourominas.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/permuto.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/prefeitura-contagem.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/royal.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/sbt.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tambasa.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/trokz.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tv.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/adm.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/unisv.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-              <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/via-permuta.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
-            </div>
-          </div>
-
-          <button class="clients__arrow clients__arrow--next" aria-label="Próximo">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <button type="button" class="hm-video" data-video-id="-ARRAU8UwqA" aria-label="Assistir depoimento 2">
+            <img src="https://img.youtube.com/vi/-ARRAU8UwqA/mqdefault.jpg" alt="" loading="lazy" width="320" height="180">
+            <span class="hm-video__play" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </span>
+          </button>
+          <button type="button" class="hm-video" data-video-id="bCaSSGe6qFo" aria-label="Assistir depoimento 3">
+            <img src="https://img.youtube.com/vi/bCaSSGe6qFo/mqdefault.jpg" alt="" loading="lazy" width="320" height="180">
+            <span class="hm-video__play" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </span>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- CTA FINAL: Single Focus + Breathing -->
-    <section class="cta-final section" id="cta-final">
-      <div class="container">
-        <div class="cta-final__card" data-aos="zoom-in">
-          <!-- Particulas decorativas -->
-          <div class="cta-final__particle cta-final__particle--1" aria-hidden="true"></div>
-          <div class="cta-final__particle cta-final__particle--2" aria-hidden="true"></div>
-          <div class="cta-final__particle cta-final__particle--3" aria-hidden="true"></div>
-          <div class="cta-final__particle cta-final__particle--4" aria-hidden="true"></div>
+    <!-- CLIENTES E PARCEIROS -->
+    <section class="clients">
+      <h2 class="clients__title">CLIENTES E PARCEIROS</h2>
+      <div class="clients__viewport">
+        <div class="clients__track" id="clients-track">
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/3bf.png&w=240&q=80&fm=webp" alt="3BF" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/abco.png&w=240&q=80&fm=webp" alt="ABCO" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/araujo.png&w=240&q=80&fm=webp" alt="Araujo" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/contabilidade.png&w=240&q=80&fm=webp" alt="Contabilidade AV" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/crie.png&w=240&q=80&fm=webp" alt="Crie" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/direcional.png&w=240&q=80&fm=webp" alt="Direcional" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/empreender.png&w=240&q=80&fm=webp" alt="Empreender" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/gofree.png&w=240&q=80&fm=webp" alt="GoFree" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/illustrar.png&w=240&q=80&fm=webp" alt="Illustrar" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/invista.png&w=240&q=80&fm=webp" alt="Invista" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/observatrio.png&w=240&q=80&fm=webp" alt="Observatório" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/ourominas.png&w=240&q=80&fm=webp" alt="Ourominas" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/permuto.png&w=240&q=80&fm=webp" alt="Permuto" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/prefeitura-contagem.png&w=240&q=80&fm=webp" alt="Prefeitura de Contagem" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/royal.png&w=240&q=80&fm=webp" alt="Royal" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/sbt.png&w=240&q=80&fm=webp" alt="SBT" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tambasa.png&w=240&q=80&fm=webp" alt="Tambasa" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/trokz.png&w=240&q=80&fm=webp" alt="Trokz" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tv.png&w=240&q=80&fm=webp" alt="TV" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/adm.png&w=240&q=80&fm=webp" alt="ADM" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/unisv.png&w=240&q=80&fm=webp" alt="UNISV" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/via-permuta.png&w=240&q=80&fm=webp" alt="Via Permuta" loading="lazy" width="120" height="80"></div>
 
-          <div class="cta-final__tabs" role="tablist">
-            <button class="cta-final__tab cta-final__tab--active" role="tab" aria-selected="true" data-cta-tab="empresa">Para Empresas</button>
-            <button class="cta-final__tab" role="tab" aria-selected="false" data-cta-tab="palestrante">Para Palestrantes</button>
-          </div>
-
-          <div class="cta-final__content cta-final__content--active" id="cta-empresa" role="tabpanel">
-            <h2 class="cta-final__title">Seu próximo evento merece o palestrante certo</h2>
-            <p class="cta-final__text">Busque entre centenas de profissionais qualificados. Filtre por tema, preço e avaliação. Comece gratuitamente.</p>
-            <a href="/diretorio/" class="btn btn--accent cta-final__btn">Buscar Palestrantes Agora</a>
-          </div>
-
-          <div class="cta-final__content" id="cta-palestrante" role="tabpanel" hidden>
-            <h2 class="cta-final__title">Sua carreira merece mais palcos</h2>
-            <p class="cta-final__text">Cadastre seu perfil e seja encontrado por empresas de todo o Brasil. Plano gratuito disponível.</p>
-            <a href="/cadastro/" class="btn btn--accent cta-final__btn">Criar Meu Perfil</a>
-          </div>
+          <!-- Segunda metade duplicada (aria-hidden) para loop seamless da animacao -->
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/3bf.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/abco.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/araujo.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/contabilidade.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/crie.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/direcional.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/empreender.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/gofree.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/illustrar.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/invista.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/observatrio.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/ourominas.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/permuto.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/prefeitura-contagem.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/royal.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/sbt.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tambasa.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/trokz.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/tv.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/adm.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/unisv.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
+          <div class="clients__logo" aria-hidden="true"><img src="/.netlify/images?url=/clientes-pareceiros-avantik/via-permuta.png&w=240&q=80&fm=webp" alt="" loading="lazy" width="120" height="80"></div>
         </div>
       </div>
     </section>
 
+    <!-- CTA FINAL -->
+    <section class="hm-band--dark" id="cta-final">
+      <div class="hm-cta container">
+        <h2 class="hm-cta__title" data-aos="fade-up">Seu próximo evento merece <span>o palestrante certo</span></h2>
+        <p class="hm-cta__text" data-aos="fade-up" data-aos-delay="80">Busque entre centenas de profissionais qualificados. Filtre por tema, preço e avaliação. Comece gratuitamente.</p>
+        <div class="hm-cta__actions" data-aos="fade-up" data-aos-delay="140">
+          <a href="/diretorio/" class="btn btn--accent btn--lg">Buscar Palestrantes Agora</a>
+        </div>
+        <a href="/cadastro/" class="hm-cta__alt" data-aos="fade-up" data-aos-delay="200">É palestrante? Crie seu perfil gratuitamente</a>
+      </div>
+    </section>
+
+
+    <!-- Ponte para o hub de eventos presenciais (migrado do Apogeu em 2026-08-11) -->
+    <section class="hm-band hm-band--white section ev-ponte">
+      <div class="container" style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:space-between;">
+        <div style="flex:1 1 22rem;min-width:0;">
+          <span class="ev-ponte__kicker" style="display:block;font-size:0.75rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:0.6rem;">Eventos presenciais</span>
+          <h2 style="font-family:var(--font-heading);font-size:clamp(1.4rem,3vw,1.875rem);line-height:1.2;letter-spacing:-0.015em;margin:0 0 0.5rem;">Seis imersões presenciais em Belo Horizonte</h2>
+          <p style="margin:0;color:var(--av-ink-3);line-height:1.6;max-width:46ch;">Uma imersão para cada livro da Coleção Foco em Resultados, de setembro a novembro de 2026, com os autores no palco.</p>
+        </div>
+        <a href="/eventos/" class="btn btn--accent">Ver a agenda</a>
+      </div>
+    </section>
   </main>
 
-  <!-- FOOTER: Balanced + Selective Color -->
+  <!-- FOOTER -->
   <footer class="footer" id="footer">
     <div class="container">
       <div class="footer__grid">
@@ -573,10 +534,13 @@
 
         <!-- Coluna 2: Navegação -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
             <a href="/sobre/">Sobre</a>
             <a href="/blog/">Blog</a>
           </nav>
@@ -584,7 +548,7 @@
 
         <!-- Coluna 3: Legal -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Política de Privacidade</a>
             <a href="/termos/">Termos e Condições</a>
@@ -594,7 +558,7 @@
 
         <!-- Coluna 4: Contato -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="tel:+5531992185328" class="footer__contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -641,10 +605,20 @@
       io.observe(el);
     }
 
+    // ---------- Depoimentos: facade do YouTube (so carrega o iframe no clique) ----------
+    document.querySelectorAll('.hm-video').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.videoId;
+        if (!id || btn.dataset.loaded) return;
+        btn.dataset.loaded = '1';
+        btn.innerHTML = '<iframe src="https://www.youtube.com/embed/' + encodeURIComponent(id) + '?autoplay=1" title="Depoimento" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+      });
+    });
+
     // ---------- Carrossel de palestrantes ----------
     lazyLoadSection('#palestrantes', async () => {
       try {
-        const { supabase, escapeHtml, formatPriceRange, renderBadges, cdnImg } = await import('/lib/supabase.js');
+        const { supabase, escapeHtml, formatPriceRange, renderBadges, cdnImg } = await import('/lib/supabase.js?v=20260816a');
 
         const PLACEHOLDER_AVATAR = '/images/avatar-placeholder.svg';
         const speakersSection = document.getElementById('palestrantes');
@@ -653,7 +627,7 @@
 
         const { data, error } = await supabase
           .from('speakers_public')
-          .select('slug, name, bio, plan, has_seal, did_apogeu, rating, price_min, price_max, photo_url, palestras!speaker_id(themes!palestras_theme_id_fkey(name))')
+          .select('slug, name, bio, plan, has_seal, did_apogeu, public_sector_ready, rating, price_min, price_max, photo_url, palestras!speaker_id(themes!palestras_theme_id_fkey(name))')
           .eq('active', true)
           .eq('has_seal', true)
           .not('bio', 'is', null)
@@ -764,89 +738,53 @@
       }
     });
 
-    // ---------- Categorias (temas dinamicos da home) ----------
-    lazyLoadSection('#categorias', async () => {
-      const categoriesGrid = document.getElementById('categories-grid');
-      const categoriesSection = document.getElementById('categorias');
-      if (!categoriesGrid) return;
-
-      const ICONS = {
-        'hardhat':        '<path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/><path d="M10 15V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v9"/><path d="M4 15V9a6 6 0 0 1 6-6h0"/><path d="M14 3a6 6 0 0 1 6 6v6"/>',
-        'flag':           '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
-        'trending-up':    '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
-        'rocket':         '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
-        'heart':          '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
-        'message-circle': '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
-        'brain':          '<circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><path d="M8 3.5A7 7 0 0 1 12 2"/>',
-        'users':          '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-        'settings':       '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
-        'briefcase':      '<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
-        'lightbulb':      '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
-        'cpu':            '<rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>',
-        'book':           '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
-        'user-check':     '<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/>',
-        'target':         '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
-        'eye':            '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
-        'dollar-sign':    '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
-        'building':       '<rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/>',
-        'user':           '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
-        'scale':          '<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>',
-        'megaphone':      '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
-        'share-2':        '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
-        'star':           '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
-        'mic':            '<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>',
-        'zap':            '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
-        'venus':          '<circle cx="12" cy="9" r="5"/><line x1="12" y1="14" x2="12" y2="22"/><line x1="9" y1="18" x2="15" y2="18"/>',
-        'ribbon':         '<path d="M12 2a4 4 0 0 0-4 4c0 2 1 3.5 2.5 5L12 13l1.5-2C15 9.5 16 8 16 6a4 4 0 0 0-4-4z"/><path d="M8.5 14.5C5 16.5 3 19 3 22h18c0-3-2-5.5-5.5-7.5"/><path d="M12 13v9"/>',
-      };
-      const DEFAULT_ICON = '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>';
-      const svgBody = (size, key) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[key] || DEFAULT_ICON}</svg>`;
+    // ---------- Categorias (chips de tema/ocasiao) ----------
+    (function renderCategorias() {
+      const grid = document.getElementById('categories-grid');
+      if (!grid) return;
 
       // Grade curada: campanhas/datas comemorativas (ocasiao) + temas mais procurados.
       const CAMPAIGNS = [
-        { key: 'dia-das-maes',      name: 'Dia das Mães',      icon: 'heart',   month: 5 },
-        { key: 'sipat',             name: 'SIPAT',             icon: 'hardhat', month: null },
-        { key: 'janeiro-branco',    name: 'Janeiro Branco',    icon: 'brain',   month: 1 },
-        { key: 'dia-das-mulheres',  name: 'Dia das Mulheres',  icon: 'venus',   month: 3 },
-        { key: 'dia-dos-pais',      name: 'Dia dos Pais',      icon: 'user',    month: 8 },
-        { key: 'setembro-amarelo',  name: 'Setembro Amarelo',  icon: 'ribbon',  month: 9 },
-        { key: 'outubro-rosa',      name: 'Outubro Rosa',      icon: 'ribbon',  month: 10 },
-        { key: 'novembro-azul',     name: 'Novembro Azul',     icon: 'ribbon',  month: 11 },
-        { key: 'consciencia-negra', name: 'Consciência Negra', icon: 'users',   month: 11 },
+        { key: 'dia-das-maes',      name: 'Dia das Mães',      month: 5 },
+        { key: 'sipat',             name: 'SIPAT',             month: null },
+        { key: 'janeiro-branco',    name: 'Janeiro Branco',    month: 1 },
+        { key: 'dia-das-mulheres',  name: 'Dia das Mulheres',  month: 3 },
+        { key: 'dia-dos-pais',      name: 'Dia dos Pais',      month: 8 },
+        { key: 'setembro-amarelo',  name: 'Setembro Amarelo',  month: 9 },
+        { key: 'outubro-rosa',      name: 'Outubro Rosa',      month: 10 },
+        { key: 'novembro-azul',     name: 'Novembro Azul',     month: 11 },
+        { key: 'consciencia-negra', name: 'Consciência Negra', month: 11 },
       ];
       const TEMAS = [
-        { slug: 'vendas',           name: 'Vendas',           icon: 'trending-up' },
-        { slug: 'lideranca',        name: 'Liderança',        icon: 'target' },
-        { slug: 'comunicacao',      name: 'Comunicação',      icon: 'message-circle' },
-        { slug: 'motivacional',     name: 'Motivacional',     icon: 'rocket' },
-        { slug: 'alta-performance', name: 'Alta Performance', icon: 'zap' },
+        { slug: 'vendas',           name: 'Vendas' },
+        { slug: 'lideranca',        name: 'Liderança' },
+        { slug: 'comunicacao',      name: 'Comunicação' },
+        { slug: 'motivacional',     name: 'Motivacional' },
+        { slug: 'alta-performance', name: 'Alta Performance' },
       ];
 
-      const cards = [
-        ...CAMPAIGNS.map(c => ({ href: `/diretorio/?campanha=${c.key}`, icon: c.icon, name: c.name, tag: 'Ocasião', month: c.month })),
-        ...TEMAS.map(t => ({ href: `/diretorio/?tema=${t.slug}`, icon: t.icon, name: t.name, tag: 'Tema' })),
+      const chips = [
+        ...CAMPAIGNS.map(c => ({ href: `/diretorio/?campanha=${c.key}`, name: c.name, tag: 'Ocasião', month: c.month })),
+        ...TEMAS.map(t => ({ href: `/diretorio/?tema=${t.slug}`, name: t.name, tag: 'Tema' })),
       ];
-      // Campanha do mes atual vai para o card em destaque
+
+      // Campanha do mes atual abre a lista, em destaque.
+      // So ha destaque quando existe campanha do mes — fora disso a grade fica neutra.
       const mNow = new Date().getMonth() + 1;
-      const fIdx = cards.findIndex(c => c.month === mNow);
-      if (fIdx > 0) { const [f] = cards.splice(fIdx, 1); cards.unshift(f); }
+      const fIdx = chips.findIndex(c => c.month === mNow);
+      let temDestaque = false;
+      if (fIdx >= 0) {
+        const [f] = chips.splice(fIdx, 1);
+        chips.unshift(f);
+        temDestaque = true;
+      }
 
-      categoriesGrid.innerHTML = cards.map((c, i) => {
-        const isFeatured = i === 0;
-        const cardMod = isFeatured ? ' categories__card--featured' : '';
-        const iconMod = isFeatured ? ' categories__icon--lg' : '';
-        const nameMod = isFeatured ? ' categories__name--lg' : '';
-        const deco = isFeatured ? '<div class="categories__card-deco"></div>' : '';
-        return `
-          <a href="${c.href}" class="categories__card${cardMod}">
-            <span class="categories__icon${iconMod}">${svgBody(isFeatured ? 40 : 24, c.icon)}</span>
-            ${deco}
-            <span class="categories__name${nameMod}">${c.name}</span>
-            <span class="categories__count">${c.tag}</span>
-          </a>`;
-      }).join('');
-      categoriesGrid.removeAttribute('aria-busy');
-    });
+      grid.innerHTML = chips.map((c, i) => `
+        <a href="${c.href}" class="hm-chip${temDestaque && i === 0 ? ' hm-chip--featured' : ''}">
+          <b>${c.name}</b><span>${c.tag}</span>
+        </a>`).join('');
+      grid.removeAttribute('aria-busy');
+    })();
   })();
   </script>
 

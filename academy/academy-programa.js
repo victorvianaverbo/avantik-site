@@ -249,6 +249,34 @@ function formatoHtml() {
     </section>`;
 }
 
+/**
+ * Bloco "este tema tem edição presencial".
+ *
+ * Fica logo depois do Formato (aulas gravadas + Zoom) de proposito: e ali que
+ * a objecao "eu queria presencial" aparece, e ainda antes do CTA de compra —
+ * funciona como alternativa, nao como fuga do checkout.
+ *
+ * CONDICIONAL: `gestao` e o unico dos 6 programas sem edicao presencial.
+ * Sem esta guarda a pagina dele ganharia um link para undefined.
+ */
+function presencialHtml(program) {
+  const ev = program.evento;
+  if (!ev) return '';
+  return `
+    <section class="academy-section program-presencial" id="presencial">
+      <div class="container">
+        <span class="academy-eyebrow">Também presencial</span>
+        <h2 class="academy-title">Prefere este tema num dia inteiro de sala?</h2>
+        <p class="academy-lead">
+          ${escapeHtml(program.brand || program.nome)} tem edição presencial em
+          ${escapeHtml(ev.local)}, com os autores do livro no palco.
+          <strong>${escapeHtml(ev.dataLabel)}</strong>.
+        </p>
+        <a href="${escapeHtml(ev.url)}" class="btn btn--academy">Ver o evento presencial</a>
+      </div>
+    </section>`;
+}
+
 function mentorsGridHtml(program) {
   const mentores = program.mentores || [];
   if (!mentores.length) return '';
@@ -389,9 +417,13 @@ function render(program, mentor) {
 
     ${livroHtml(program)}
 
+    ${autoresHtml(program)}
+
     ${learnHtml(program)}
 
     ${formatoHtml()}
+
+    ${presencialHtml(program)}
 
     ${mentor ? '' : mentorsGridHtml(program)}
 

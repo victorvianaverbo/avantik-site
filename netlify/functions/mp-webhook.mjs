@@ -48,7 +48,11 @@ export default async (req) => {
     return new Response('invalid json', { status: 400 });
   }
 
-  // 2. Valida assinatura x-signature (so se MP_WEBHOOK_SECRET estiver configurado)
+  // 2. Valida assinatura x-signature.
+  // Enquanto MP_WEBHOOK_SECRET nao estiver setado no ambiente, a validacao e
+  // pulada (o webhook continua seguro contra forja porque re-consulta o pagamento
+  // na API do MP abaixo). Assim que o secret for configurado no Netlify, a
+  // validacao de origem passa a ser exigida automaticamente — sem novo deploy.
   // Formato do header: "ts=<timestamp>,v1=<hex>"
   // Manifest assinado: "id:<data.id>;request-id:<x-request-id>;ts:<timestamp>;"
   if (MP_SECRET) {

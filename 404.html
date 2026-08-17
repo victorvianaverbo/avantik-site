@@ -1,19 +1,56 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
   <title>Página não encontrada | Avantik</title>
   <meta name="description" content="A página que você procura não existe ou foi movida.">
   <meta name="robots" content="noindex">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=20260521">
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+
+  <style>
+    /* Fio dourado do kicker "Erro 404" (identidade noir) */
+    main section > div > p:first-child::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 1px;
+      margin: 0 auto 1rem;
+      background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    }
+  </style>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
 </head>
-<body>
+<body class="theme-2026">
   <header class="header" id="header">
     <nav class="header__nav container">
       <a href="/" class="header__logo">
@@ -23,14 +60,14 @@
   </header>
 
   <main>
-    <section style="min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:6rem 1.5rem 4rem;background:linear-gradient(180deg,#1C1C1E 0%,#26262A 100%);color:#fff;text-align:center;">
+    <section style="min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:6rem 1.5rem 4rem;background:linear-gradient(180deg,#101113 0%,#16171A 100%);color:var(--color-text);text-align:center;">
       <div style="max-width:560px">
-        <p style="font-size:0.75rem;font-weight:600;letter-spacing:0.2em;color:var(--color-accent);text-transform:uppercase;margin-bottom:1rem">Erro 404</p>
-        <h1 style="font-family:var(--font-heading);font-size:clamp(2.5rem,6vw,4rem);line-height:1.1;margin-bottom:1rem">Página não encontrada</h1>
-        <p style="font-size:1.0625rem;color:rgba(255,255,255,0.7);margin-bottom:2.5rem;line-height:1.5">O link que você acessou não existe ou foi movido. Mas a gente te ajuda a continuar.</p>
+        <p style="font-size:0.75rem;font-weight:500;letter-spacing:0.28em;color:var(--color-accent);text-transform:uppercase;margin-bottom:1rem">Erro 404</p>
+        <h1 style="font-family:var(--font-heading);font-weight:400;font-size:clamp(2.5rem,6vw,4rem);line-height:1.1;color:var(--color-text);margin-bottom:1rem">Página não encontrada</h1>
+        <p style="font-size:1.0625rem;color:var(--color-text-secondary);margin-bottom:2.5rem;line-height:1.6">O link que você acessou não existe ou foi movido. Mas a gente te ajuda a continuar.</p>
         <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap">
           <a href="/" class="btn btn--accent btn--lg">Voltar para a home</a>
-          <a href="/diretorio/" class="btn btn--outline btn--lg" style="color:#fff;border-color:rgba(255,255,255,0.3)">Ver palestrantes</a>
+          <a href="/diretorio/" class="btn btn--outline btn--lg" style="color:var(--color-accent);border-color:rgba(203,163,92,0.4)">Ver palestrantes</a>
         </div>
       </div>
     </section>

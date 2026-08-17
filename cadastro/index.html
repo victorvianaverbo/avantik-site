@@ -4,6 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
+
   <title>Cadastro de Palestrante | Avantik</title>
   <meta name="description" content="Cadastre-se como palestrante na Avantik. Preencha seus dados e comece a receber propostas de empresas de todo o Brasil.">
 
@@ -16,22 +37,23 @@
   <link rel="canonical" href="https://avantik-plataforma.netlify.app/cadastro/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <!-- FONTS: DM Serif Display + DM Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
   <link href="/lib/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/css/intlTelInput.css">
 
-  <link rel="stylesheet" href="/style.css?v=20260521">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+  <link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
 
   <script src="/lib/aos.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/intlTelInput.min.js" defer></script>
-  <script src="/script.js" defer></script>
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     .cadastro-form {
@@ -45,14 +67,98 @@
       margin-bottom: 2.5rem;
     }
 
+    /* Campos do formulario em superficie noir (style.css nao define fundo) */
+    .form-label {
+      color: var(--color-text-secondary);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .form-input {
+      min-height: 44px;
+      color: var(--color-text);
+      background: rgba(35, 35, 35, 0.03);
+      border-radius: var(--radius-xs);
+    }
+
+    .form-input::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    .form-input:focus {
+      background: rgba(35, 35, 35, 0.05);
+      border-color: var(--color-accent);
+    }
+
+    select.form-input option {
+      background: #FFFFFF;
+      color: var(--color-text);
+    }
+
+    /* Autofill do Chrome pinta o input de branco — forcar o tom noir */
+    .form-input:-webkit-autofill,
+    .form-input:-webkit-autofill:hover,
+    .form-input:-webkit-autofill:focus {
+      -webkit-text-fill-color: var(--color-text);
+      caret-color: var(--color-text);
+      box-shadow: 0 0 0 1000px #FFFFFF inset;
+      transition: background-color 9999s ease-in-out 0s;
+    }
+
+    /* intl-tel-input: o CSS do CDN e claro por padrao */
+    .iti__selected-flag,
+    .iti__selected-country,
+    .iti__selected-country-primary {
+      color: var(--color-text);
+    }
+
+    .iti__selected-flag:hover,
+    .iti__selected-country:hover {
+      background: rgba(35, 35, 35, 0.06);
+    }
+
+    .iti__country-list,
+    .iti__dropdown-content {
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      color: var(--color-text);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+    }
+
+    .iti__country {
+      color: var(--color-text);
+    }
+
+    .iti__country.iti__highlight,
+    .iti__country:hover {
+      background: rgba(227, 179, 65, 0.14);
+    }
+
+    .iti__dial-code {
+      color: var(--color-text-muted);
+    }
+
+    .iti__divider {
+      border-bottom-color: var(--color-border);
+    }
+
+    .iti__search-input {
+      background: rgba(35, 35, 35, 0.04);
+      color: var(--color-text);
+      border-bottom: 1px solid var(--color-border);
+    }
+
     .cadastro-section__title {
-      font-family: var(--font-body);
-      font-size: 1.125rem;
-      font-weight: 700;
+      font-family: var(--font-heading);
+      font-size: 1.375rem;
+      font-weight: 500;
       color: var(--color-text);
       margin-bottom: 1.5rem;
       padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid rgba(227, 179, 65, 0.25);
     }
 
     .cadastro-themes {
@@ -80,8 +186,8 @@
     }
 
     .cadastro-theme-pill--selected {
-      background: var(--color-accent);
-      color: #FFFFFF;
+      background: var(--noir-gold-grad, linear-gradient(120deg, #ECC35C, #E3B341));
+      color: #232323;
       border-color: var(--color-accent);
     }
 
@@ -101,7 +207,7 @@
       position: relative;
       width: 80px;
       height: 80px;
-      border-radius: 0.75rem;
+      border-radius: var(--radius-sm);
       overflow: hidden;
       border: 1px solid var(--color-border);
     }
@@ -153,22 +259,24 @@
     }
 
     .cadastro-plan__card {
-      border: 2px solid var(--color-border);
-      border-radius: 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
       padding: 1.5rem;
       cursor: pointer;
-      transition: border-color 250ms, box-shadow 250ms;
+      transition: border-color 250ms, box-shadow 250ms, background 250ms;
       position: relative;
       text-align: center;
+      height: 100%;
     }
 
     .cadastro-plan__card:hover {
-      border-color: var(--color-text-muted);
+      border-color: rgba(227, 179, 65, 0.45);
     }
 
     .cadastro-plan__radio:checked + .cadastro-plan__card {
       border-color: var(--color-accent);
-      box-shadow: 0 0 0 1px var(--color-accent), 0 4px 16px rgba(232,185,49,0.1);
+      box-shadow: 0 0 0 1px var(--color-accent), 0 12px 32px rgba(0, 0, 0, 0.45);
     }
 
     .cadastro-plan__badge {
@@ -176,10 +284,12 @@
       top: -10px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--color-accent);
-      color: #fff;
+      background: var(--noir-gold-grad, linear-gradient(120deg, #ECC35C, #E3B341));
+      color: #232323;
       font-size: 0.6875rem;
       font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       padding: 0.2rem 0.75rem;
       border-radius: 100px;
       white-space: nowrap;
@@ -187,8 +297,9 @@
 
     .cadastro-plan__name {
       display: block;
-      font-size: 1.125rem;
-      font-weight: 700;
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 500;
       color: var(--color-text);
       margin-bottom: 0.25rem;
     }
@@ -197,7 +308,7 @@
       display: block;
       font-family: var(--font-heading);
       font-size: 1.75rem;
-      color: var(--color-accent);
+      color: var(--color-accent-hover);
       margin-bottom: 1rem;
     }
 
@@ -251,7 +362,10 @@
     }
 
     .cadastro-success__title {
+      font-family: var(--font-heading);
+      font-weight: 400;
       font-size: 1.75rem;
+      color: var(--color-text);
       margin-bottom: 0.75rem;
     }
 
@@ -262,8 +376,9 @@
       line-height: 1.65;
     }
   </style>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
 </head>
-<body>
+<body class="theme-2026">
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -275,6 +390,7 @@
       <div class="header__links" id="nav-links">
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
         <a href="/para-palestrantes/" class="header__link header__link--active">Para Palestrantes</a>
       </div>
 
@@ -294,6 +410,7 @@
     <div class="header__mobile" id="mobile-menu">
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <div class="header__mobile-actions">
@@ -447,8 +564,25 @@
             </div>
           </fieldset>
 
+          <!-- Vertical Setor Publico: intencao autodeclarada. Quem habilita o
+               selo publico (public_sector_ready) e a curadoria — ver migration 022. -->
+          <fieldset class="cadastro-section" id="atuacao-section">
+            <legend class="cadastro-section__title">Onde você quer atuar</legend>
+
+            <div class="form-group">
+              <label class="cadastro-check" for="public_sector_interest" style="display:flex;gap:0.65rem;align-items:flex-start;cursor:pointer;">
+                <input type="checkbox" id="public_sector_interest" name="public_sector_interest" style="margin-top:0.2rem;flex-shrink:0;">
+                <span>Quero atuar no <strong>setor público</strong> — prefeituras, câmaras, órgãos e associações.</span>
+              </label>
+              <span class="form-hint" style="display:block;margin-top:0.5rem;font-size:0.875rem;color:var(--color-text-secondary);line-height:1.5">
+                Marcando isso você entra na fila da vertical. Nosso time valida sua documentação e seu notório saber antes de habilitar o selo — e te orienta no que estiver faltando.
+                <a href="/setor-publico/">Entenda como funciona</a>.
+              </span>
+            </div>
+          </fieldset>
+
           <!-- Secao removida: palestras serao cadastradas em /minhas-palestras/ -->
-          <div style="background:var(--color-muted-bg);border-radius:0.75rem;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.9375rem;color:var(--color-text-secondary);line-height:1.5">
+          <div style="background:var(--color-muted-bg);border:1px solid var(--color-border);border-left:2px solid var(--color-accent);border-radius:var(--radius-sm);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.9375rem;color:var(--color-text-secondary);line-height:1.5">
             Após criar sua conta, você poderá cadastrar suas palestras no painel <strong>Minhas Palestras</strong>. Cada palestra cadastrada ganha automaticamente uma página de vendas.
           </div>
 
@@ -520,10 +654,13 @@
 
         <!-- Coluna 2: Navegação -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
             <a href="/sobre/">Sobre</a>
             <a href="/blog/">Blog</a>
           </nav>
@@ -531,7 +668,7 @@
 
         <!-- Coluna 3: Legal -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Política de Privacidade</a>
             <a href="/termos/">Termos e Condições</a>
@@ -541,7 +678,7 @@
 
         <!-- Coluna 4: Contato -->
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="tel:+5531992185328" class="footer__contact-item">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -568,7 +705,7 @@
   </footer>
 
   <script type="module">
-import { supabase, generateSlug, generatePalestraSlug, ensureUniqueSlug, ESTADOS_BR, authSignUp, findSpeakerByEmail, linkSpeakerAuth, getUser, getUserType } from '/lib/supabase.js';
+import { supabase, generateSlug, generatePalestraSlug, ensureUniqueSlug, ESTADOS_BR, authSignUp, findSpeakerByEmail, linkSpeakerAuth, getUser, getUserType } from '/lib/supabase.js?v=20260816a';
 
 // Verificar estado de login
 const currentUser = await getUser();
@@ -616,6 +753,16 @@ const preselectedPlan = urlParams.get('plano');
 if (preselectedPlan) {
   const radio = document.querySelector(`input[name="plan"][value="${preselectedPlan}"]`);
   if (radio) radio.checked = true;
+}
+
+// Chegou de /setor-publico/ -> ja marca a intencao e leva o olho ate la
+if (urlParams.get('vertical') === 'setor-publico') {
+  const chk = document.getElementById('public_sector_interest');
+  if (chk) {
+    chk.checked = true;
+    const sec = document.getElementById('atuacao-section');
+    if (sec) setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'center' }), 350);
+  }
 }
 
 // Apply limits based on selected plan
@@ -798,6 +945,7 @@ form.addEventListener('submit', async (e) => {
         instagram: document.getElementById('instagram').value.trim() || null,
         linkedin: document.getElementById('linkedin').value.trim() || null,
         website: document.getElementById('website').value.trim() || null,
+        public_sector_interest: document.getElementById('public_sector_interest').checked,
       })
       .select()
       .single();
@@ -807,6 +955,19 @@ form.addEventListener('submit', async (e) => {
     // Palestras serao cadastradas em /minhas-palestras/ apos o cadastro
 
     // 6. Show success
+    // CompleteRegistration: conta de palestrante criada. E a conversao de
+    // fundo de funil da plataforma — dispara so aqui, depois do insert dar
+    // certo, nunca no submit do formulario.
+    try {
+      if (typeof window.track === 'function') {
+        window.track('CompleteRegistration', {
+          content_name: 'Cadastro de palestrante',
+          status: 'trial',
+          plano: getSelectedPlan(),
+        }, { em: email, ph: phone, fn: nome });
+      }
+    } catch (e) { /* tracking nunca derruba a pagina */ }
+
     form.hidden = true;
     successDiv.hidden = false;
     document.getElementById('profile-link').href = '/palestrante/?slug=' + speaker.slug;

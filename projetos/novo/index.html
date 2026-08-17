@@ -1,8 +1,29 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
 
   <title>Publicar Oportunidade | Avantik</title>
   <meta name="description" content="Publique uma oportunidade e receba candidaturas de palestrantes qualificados. SIPAT, treinamentos, workshops, palestras corporativas e mais.">
@@ -10,13 +31,14 @@
   <link rel="canonical" href="https://avantik-plataforma.netlify.app/projetos/novo/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <!-- FONTS: DM Serif Display + DM Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <script src="/script.js" defer></script>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     .new-project {
@@ -25,9 +47,9 @@
     }
 
     .new-project__form {
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1.5rem;
+      border-radius: var(--radius-md);
       padding: 2.5rem;
     }
 
@@ -46,6 +68,7 @@
       font-size: 1.25rem;
       font-weight: 400;
       color: var(--color-text);
+      letter-spacing: 0.01em;
       margin-bottom: 1.25rem;
       display: block;
       width: 100%;
@@ -59,29 +82,39 @@
 
     .new-project__field label {
       display: block;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 0.875rem;
       margin-bottom: 0.5rem;
       color: var(--color-text);
     }
 
+    /* color-scheme: dark faz a UA desenhar o icone do date-picker, o painel de
+       calendario e o autofill do Chrome em tema escuro. Sem isso o indicador do
+       <input type="date"> e o preenchimento automatico ficam pretos/brancos
+       sobre o campo #101113 — praticamente invisiveis. */
     .new-project__field input,
     .new-project__field select,
     .new-project__field textarea {
       width: 100%;
       padding: 0.75rem 1rem;
       border: 1px solid var(--color-border);
-      border-radius: 0.625rem;
+      border-radius: var(--radius-xs);
       font-family: inherit;
       font-size: 0.9375rem;
       color: var(--color-text);
-      background: var(--color-surface);
+      background: #FFFFFF;
+      color-scheme: light;
       transition: border-color 0.2s, outline-color 0.2s;
     }
 
     .new-project__field input::placeholder,
     .new-project__field textarea::placeholder {
-      color: var(--color-text-secondary);
+      color: var(--color-text-muted);
+    }
+
+    .new-project__field select option {
+      background: #FFFFFF;
+      color: var(--color-text);
     }
 
     .new-project__field input:focus,
@@ -112,10 +145,10 @@
     }
 
     .new-project__theme-pill {
-      padding: 0.4rem 0.875rem;
+      padding: 0.45rem 0.875rem;
       border: 1px solid var(--color-border);
       border-radius: 100px;
-      background: var(--color-surface);
+      background: var(--color-muted-bg);
       color: var(--color-text-secondary);
       font-family: inherit;
       font-size: 0.8125rem;
@@ -130,13 +163,13 @@
     }
 
     .new-project__theme-pill--active {
-      background: var(--color-accent);
+      background: linear-gradient(120deg, #ECC35C, #E3B341);
       border-color: var(--color-accent);
-      color: #fff;
+      color: #232323;
     }
 
     .new-project__theme-pill--active:hover {
-      color: #fff;
+      color: #232323;
     }
 
     /* Error / Success */
@@ -144,20 +177,22 @@
     .new-project__success {
       display: none;
       padding: 0.75rem 1rem;
-      border-radius: 0.625rem;
+      border-radius: var(--radius-xs);
       font-size: 0.875rem;
       margin-bottom: 1.25rem;
       line-height: 1.4;
     }
 
     .new-project__error {
-      background: #fef2f2;
-      color: #991b1b;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.28);
+      color: #FCA5A5;
     }
 
     .new-project__success {
-      background: #ecfdf5;
-      color: #065f46;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      color: #6EE7B7;
     }
 
     .new-project__error--visible,
@@ -191,7 +226,8 @@
     .new-project__done-icon {
       width: 64px;
       height: 64px;
-      background: #ecfdf5;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.28);
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
@@ -226,7 +262,7 @@
     @media (max-width: 480px) {
       .new-project__form {
         padding: 1.75rem 1.25rem;
-        border-radius: 1rem;
+        border-radius: var(--radius-sm);
       }
 
       .new-project__row {
@@ -234,8 +270,9 @@
       }
     }
   </style>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
 </head>
-<body>
+<body class="theme-2026">
 
   <!-- HEADER -->
   <header class="header" id="header">
@@ -245,6 +282,7 @@
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
         <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
       </div>
       <div class="header__actions" id="header-actions">
@@ -257,6 +295,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
       <div class="header__mobile-actions">
         <a href="/entrar/" class="btn btn--outline">Entrar</a>
@@ -337,8 +376,8 @@
                   </div>
                 </div>
 
-                <div style="background:var(--color-muted-bg);border-radius:0.625rem;padding:1rem 1.25rem;margin-top:1rem;font-size:0.875rem;color:var(--color-text-secondary);line-height:1.5">
-                  <strong style="color:var(--color-text)">Privacidade:</strong> O nome da sua empresa fica oculto na vitrine pública. Os palestrantes verão apenas o tema, descrição e prazo. Após você aceitar uma proposta, o nome da empresa e o contato são revelados ao palestrante escolhido.
+                <div style="background:var(--color-muted-bg);border:1px solid rgba(203,163,92,0.22);border-left:2px solid var(--color-accent);border-radius:var(--radius-xs);padding:1rem 1.25rem;margin-top:1rem;font-size:0.875rem;color:var(--color-text-secondary);line-height:1.5">
+                  <strong style="color:var(--color-accent-hover)">Privacidade:</strong> O nome da sua empresa fica oculto na vitrine pública. Os palestrantes verão apenas o tema, descrição e prazo. Após você aceitar uma proposta, o nome da empresa e o contato são revelados ao palestrante escolhido.
                 </div>
               </fieldset>
 
@@ -395,16 +434,19 @@
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/projetos/">Oportunidades</a>
             <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
             <a href="/sobre/">Sobre</a>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Política de Privacidade</a>
             <a href="/termos/">Termos e Condições</a>
@@ -412,7 +454,7 @@
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
           </div>
@@ -425,7 +467,7 @@
   </footer>
 
   <script type="module">
-import { supabase, escapeHtml, requireAuth, EVENT_TYPES } from '/lib/supabase.js';
+import { supabase, escapeHtml, requireAuth, EVENT_TYPES } from '/lib/supabase.js?v=20260816a';
 
 // Auth check
 const auth = await requireAuth('contractor');

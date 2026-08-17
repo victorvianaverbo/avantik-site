@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empreenday | Imersão | Avantik</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="description" content="Empreenday — um dia inteiro, presencial, para sair da ideia e construir um negócio que se sustenta. 14 de novembro de 2026, com os autores da Coleção Foco em Resultados." />
+  <meta property="og:title" content="Empreenday | Evento Presencial" />
+  <meta property="og:description" content="Da ideia ao negócio que se sustenta. Um dia de imersão presencial sobre empreender com método. 14 de novembro de 2026, 9h às 18h. Com os autores da Coleção Foco em Resultados." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://avantikpalestras.com.br/eventos/empreenday/" />
+  <link rel="canonical" href="https://avantikpalestras.com.br/eventos/empreenday/" />
+
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
+<!-- Fontes auto-hospedadas da Avantik (Google Fonts e proibido no projeto) -->
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="preload" as="font" type="font/woff" crossorigin href="/academy/assets/fonts/Metropolis-Black.woff">
+<link rel="dns-prefetch" href="//connect.facebook.net">
+<link rel="dns-prefetch" href="//ajokzpjguhfxxudteetr.supabase.co">
+
+  <!-- CSS crítico inline (above-the-fold: base + hero). Tokens --evento-* = cor do programa (só no hero). -->
+  <style>
+:root {
+  --brasa-300:#E6CF94; --brasa-400:#ECC35C; --brasa-500:#E3B341; --brasa-600:#856C24; --brasa-700:#6E5A1E;
+  --grafite-950:#1B1C1E; --grafite-900:#1D1E21; --grafite-800:#2B2C2F; --grafite-700:#5C564A; --grafite-500:#6B6558; --grafite-400:#6B6558;
+  --marfim:#FBF7EE; --areia:#EEE4CD; --nevoa:#A9A49A; --bronze:#A08432;
+  --brasa-grad:linear-gradient(135deg,#ECC35C,#E3B341 50%,#A08432);
+  /* Cor do programa (Empreenday) — usada SÓ no hero/banner. Resto do site = brasa. */
+  --evento-primary:#00A900;
+  --evento-accent:#00F900;
+  --evento-dark:#070C08;
+  --evento-glow:rgba(0,169,0,0.16);
+  --bg:           var(--marfim);
+  --surface:      #FFFFFF;
+  --muted-bg:     #FFFDF8;
+  --text:         #232323;
+  --text-2:       var(--grafite-700);
+  --text-muted:   var(--grafite-500);
+  --primary:      var(--brasa-600);
+  --accent:       var(--brasa-500);
+  --accent-hover: var(--brasa-600);
+  --accent-soft:  rgba(227, 179, 65, 0.14);
+  --border:       var(--areia);
+  --dark-2:       var(--grafite-900);
+  --dark-3:       var(--grafite-950);
+  --on-dark:      #F5F2EA;
+  --on-dark-2:    var(--nevoa);
+  --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body:    'Instrument Sans', system-ui, sans-serif;
+  --font-label:   'Instrument Sans', system-ui, sans-serif;
+  --maxw: 1200px;
+  --wrap: 760px;
+  --pad: clamp(1.25rem, 5vw, 2rem);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.0625rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+em { font-style: italic; }
+.hero {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding: clamp(6rem, 12vw, 9rem) var(--pad) clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
+  background: var(--evento-dark);
+  color: var(--on-dark);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(80% 60% at 12% -10%, color-mix(in srgb, var(--evento-primary) 38%, transparent), transparent 60%),
+    radial-gradient(70% 60% at 100% 110%, color-mix(in srgb, var(--evento-accent) 26%, transparent), transparent 55%);
+  pointer-events: none;
+}
+.hero__plexus {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.hero__colecao {
+  display: block;
+  flex-shrink: 0;
+  width: clamp(150px, 20vw, 200px);
+  aspect-ratio: 395 / 110;
+  object-fit: cover;
+  object-position: center;
+  margin: 0 auto clamp(1.1rem, 2.5vw, 1.5rem);
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+.hero__wordmark {
+  font-family: 'Metropolis', var(--font-heading), system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(2.6rem, 7.5vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  margin: 0 0 clamp(0.9rem, 2.5vw, 1.4rem);
+  color: var(--evento-wordmark);
+  text-shadow: 0 0 36px color-mix(in srgb, var(--evento-wordmark) 45%, transparent);
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 220px;
+  z-index: 0;
+  background: radial-gradient(60% 100% at 50% 100%, var(--evento-glow), transparent 75%);
+  pointer-events: none;
+}
+.hero__grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 3.5rem);
+  align-items: center;
+}
+.hero__main { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--nevoa);
+  margin-bottom: clamp(0.9rem, 2vw, 1.2rem);
+}
+.kicker__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--evento-primary); flex-shrink: 0; }
+.kicker__sep { width: 1px; height: 0.85rem; background: rgba(255,255,255,0.2); }
+.kicker__ed { color: var(--accent); letter-spacing: 0.16em; }
+@media (prefers-reduced-motion: no-preference) {
+  .is-loaded .kicker__dot { animation: dotPulse 2.4s ease-out infinite; }
+}
+@keyframes dotPulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--evento-primary) 50%, transparent); }
+  70%  { box-shadow: 0 0 0 8px color-mix(in srgb, var(--evento-primary) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--evento-primary) 0%, transparent); }
+}
+.hero__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4.2vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+  max-width: 22ch;
+}
+.hero__title span { display: block; }
+.hero__title em {
+  font-style: normal;
+  color: var(--accent);
+  position: relative;
+}
+.hero__title em::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0.08em;
+  width: 100%; height: 0.09em;
+  background: var(--evento-primary);
+  opacity: 0.85;
+}
+.hero__sub {
+  max-width: 46ch;
+  margin: clamp(1.4rem, 3vw, 2rem) auto 0;
+  font-size: clamp(1.05rem, 1rem + 0.4vw, 1.28rem);
+  color: var(--nevoa);
+  line-height: 1.55;
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: clamp(1.8rem, 4vw, 2.6rem);
+}
+.hero__micro {
+  margin-top: 1.3rem;
+  font-family: var(--font-label);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--grafite-400);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 999px;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.4s var(--ease-spring),
+              box-shadow 0.4s var(--ease-out),
+              background-color 0.3s, color 0.3s;
+}
+.btn--primary {
+  background: var(--brasa-grad);
+  color: #fff;
+  padding: 0.95rem 1.6rem;
+  box-shadow: 0 12px 32px rgba(217, 100, 26, 0.32);
+}
+.btn--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(217, 100, 26, 0.42);
+}
+.btn--ghost {
+  position: relative;
+  color: var(--brasa-400);
+  padding: 0.95rem 0.2rem;
+  font-weight: 500;
+  background: none;
+}
+.btn--ghost::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0.55rem;
+  width: 100%; height: 2px;
+  background: var(--brasa-500);
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-out);
+}
+.btn--ghost:hover::after { transform: scaleX(1); }
+.hero__aside {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.5rem;
+  padding: clamp(2rem, 4vw, 2.8rem) clamp(1.6rem, 4vw, 2.6rem);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45), 0 0 50px var(--evento-glow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+.hero__aside::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: clamp(120px, 45%, 260px);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--evento-primary), transparent);
+  opacity: 0.85;
+}
+.aside__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--nevoa);
+  margin-bottom: 1.8rem;
+}
+.aside__label::before,
+.aside__label::after {
+  content: "";
+  width: 1.6rem;
+  height: 2px;
+  background: var(--evento-primary);
+  flex-shrink: 0;
+}
+.hero__book {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: -0.3rem auto 1.7rem;
+}
+.hero__book::before {
+  content: "";
+  position: absolute;
+  inset: -18% -8% -4%;
+  z-index: 0;
+  background: radial-gradient(58% 58% at 50% 46%, var(--evento-glow), transparent 72%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+.hero__book img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  filter: drop-shadow(0 20px 38px rgba(0,0,0,0.55));
+}
+.evlist { list-style: none; display: flex; flex-direction: column; }
+.evrow {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  align-items: baseline;
+  gap: 1.2rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: left;
+}
+.evrow__k {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--grafite-400);
+}
+.evrow__v {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.22rem, 2.16vw, 1.53rem);
+  line-height: 1.15;
+  color: var(--on-dark);
+}
+.evrow__mut { font-family: var(--font-body); font-weight: 400; font-size: 0.85rem; color: var(--nevoa); white-space: nowrap; }
+.aside__foot {
+  margin-top: 1.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--grafite-400);
+  text-align: center;
+}
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.4rem, 3vw, 2.4rem);
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--grafite-400);
+}
+.scroll-cue__rail {
+  width: 1px;
+  height: 2.6rem;
+  background: linear-gradient(to bottom, var(--evento-primary), transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .is-loaded .scroll-cue__rail { animation: cueDrop 2s var(--ease-out) infinite; transform-origin: top; }
+}
+@keyframes cueDrop { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+@media (max-width: 880px) { .scroll-cue { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { transform: translateY(18px); }
+  .is-loaded .reveal { animation: revealUp 0.7s var(--ease-out) forwards; }
+  .reveal[data-delay="1"] { animation-delay: 0.05s; }
+  .reveal[data-delay="2"] { animation-delay: 0.12s; }
+  .reveal[data-delay="3"] { animation-delay: 0.20s; }
+  .reveal[data-delay="4"] { animation-delay: 0.28s; }
+  .reveal[data-delay="5"] { animation-delay: 0.40s; }
+  .reveal[data-delay="6"] { animation-delay: 0.52s; }
+  .reveal[data-delay="7"] { animation-delay: 0.62s; }
+}
+@keyframes revealUp { to { transform: translateY(0); } }
+@media (max-width: 540px) {
+  .hero { padding-top: clamp(4rem, 14vw, 6rem); padding-bottom: 3.5rem; }
+  .hero__wordmark { font-size: clamp(1.5rem, 7.4vw, 2.4rem); }
+  .hero__title { font-size: clamp(2.16rem, 10.4vw, 2.88rem); }
+  .hero__sub { font-size: 1.02rem; }
+  .kicker { gap: 0.5rem; font-size: 0.64rem; letter-spacing: 0.14em; }
+  .kicker__ed { letter-spacing: 0.1em; }
+  .hero__actions { flex-direction: column; align-items: stretch; width: 100%; }
+  .btn--primary, .btn--ghost { width: 100%; }
+  .hero__aside { padding: 1.6rem 1.2rem; }
+  .hero__book img { max-width: 210px; }
+  .evrow { grid-template-columns: 1fr; gap: 0.2rem; padding: 0.95rem 0; }
+  .evrow__v { font-size: 1.3rem; }
+  .evrow__mut { white-space: normal; }
+  .pullquote { font-size: clamp(1.45rem, 6.8vw, 1.79rem); }
+}
+  
+/* barra de marca da LP (adicionada na migracao para o dominio Avantik) */
+.lp-brand{position:absolute;top:clamp(1rem,3vw,1.75rem);left:50%;transform:translateX(-50%);z-index:20;display:block;line-height:0;opacity:.92;transition:opacity .25s}
+.lp-brand:hover{opacity:1}
+.lp-brand img{height:clamp(28px,4vw,35px);width:auto;display:block}
+/* Metropolis: fonte dos 6 manuais, usada so no wordmark do hero. */
+@font-face {
+  font-family: 'Metropolis';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/academy/assets/fonts/Metropolis-Black.woff') format('woff');
+}
+</style>
+  <!-- CSS completo async + fallback -->
+  <link rel="stylesheet" href="/eventos/evento.css?v=20260816a" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="/eventos/evento.css?v=20260816a" /></noscript>
+</head>
+<body style="--evento-dark:#070C08;--evento-wordmark:var(--evento-primary);--evento-primary:#00A900;--evento-accent:#00D900;--evento-glow:rgba(0,169,0,0.12)">
+  <!-- Barra minima: so o logo. LP de conversao nao leva menu (link de nav vaza
+       clique), mas precisa ancorar a marca no dominio. -->
+  <a class="lp-brand" href="/" aria-label="Avantik — página inicial">
+    <img src="/.netlify/images?url=/images/logo.png&w=260&q=85&fm=webp"
+         alt="Avantik" width="130" height="35" loading="eager">
+  </a>
+
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <canvas class="hero__plexus" data-plexus="hero" data-color="#00A900" aria-hidden="true"></canvas>
+      <div class="hero__grid">
+
+        <div class="hero__main">
+          <img class="hero__colecao reveal" data-delay="1"
+               src="/.netlify/images?url=/academy/assets/colecao-foco-em-resultados.png&w=440&fm=webp&q=85"
+               alt="Coleção Foco em Resultados" width="220" height="56" loading="eager" decoding="async">
+          <p class="kicker reveal" data-delay="1">
+            <span class="kicker__dot" aria-hidden="true"></span>
+            Empreenday
+            <span class="kicker__sep" aria-hidden="true"></span>
+            <span class="kicker__ed">Imersão</span>
+          </p>
+
+          <p class="hero__wordmark reveal" data-delay="2">Empreenday</p>
+
+          <h1 class="hero__title">
+            <span class="reveal" data-delay="2">Da ideia ao</span>
+            <span class="reveal" data-delay="3"><em>negócio</em></span>
+            <span class="reveal" data-delay="4">que se sustenta.</span>
+          </h1>
+
+          <p class="hero__sub reveal" data-delay="5">
+            A ideia raramente é o problema. O difícil é sustentar a decisão quando
+            ouvem "você é doida, vai trocar o certo pelo duvidoso", definir o cliente
+            ideal e dar ao negócio um motivo para existir. Aqui você troca o achismo
+            por método, ao lado de quem já saiu do zero.
+          </p>
+
+          <div class="hero__actions reveal" data-delay="6">
+            <a class="btn btn--primary" href="#inscrever" data-cta>
+              Garantir minha vaga
+            </a>
+            <a class="btn btn--ghost" href="#verdade">Por que esse dia</a>
+          </div>
+
+          <p class="hero__micro reveal" data-delay="7">
+            14 de novembro, 9h às 18h · Belo Horizonte · Vagas limitadas ao espaço presencial.
+          </p>
+        </div>
+
+        <!-- Card do evento: livro em destaque + dados (vidro escuro) -->
+        <aside class="hero__aside reveal" data-delay="5">
+          <figure class="hero__book">
+            <img src="/.netlify/images?url=/images/eventos/livros/empreenday.webp&w=500&fm=webp&q=82"
+                 srcset="/.netlify/images?url=/images/eventos/livros/empreenday.webp&w=360&fm=webp&q=82 360w, /.netlify/images?url=/images/eventos/livros/empreenday.webp&w=500&fm=webp&q=82 500w"
+                 sizes="(max-width:540px) 210px, 250px"
+                 width="250" height="250" alt="Livro Empreenday — Coleção Foco em Resultados" loading="lazy" decoding="async" />
+          </figure>
+          <p class="aside__label">O evento</p>
+          <ul class="evlist">
+            <li class="evrow">
+              <span class="evrow__k">Data</span>
+              <span class="evrow__v">14 nov 2026 <span class="evrow__mut">· sábado</span></span>
+            </li>
+            <li class="evrow">
+              <span class="evrow__k">Horário</span>
+              <span class="evrow__v">9h às 18h <span class="evrow__mut">· credenciamento 8h30</span></span>
+            </li>
+            <li class="evrow">
+              <span class="evrow__k">Local</span>
+              <span class="evrow__v">Belo Horizonte <span class="evrow__mut">· local a definir</span></span>
+            </li>
+          </ul>
+          <p class="aside__foot">Coleção Foco em Resultados · Avantik</p>
+        </aside>
+
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true">
+        <span>Role</span>
+        <span class="scroll-cue__rail"></span>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 01 :: A VERDADE ============ -->
+    <section class="pergunta" id="verdade">
+      <div class="pergunta__inner">
+
+        <div class="pergunta__head">
+          <div class="section-mark">
+            <span class="section-mark__num">01</span>
+            <span class="section-mark__label">A verdade que ninguém te conta</span>
+          </div>
+
+          <blockquote class="pullquote">
+            <span class="pullquote__mark" aria-hidden="true">“</span>
+            A ideia não é o difícil. O difícil é o que vem <em>depois</em>.
+          </blockquote>
+        </div>
+
+        <div class="pergunta__body">
+          <p data-reveal>
+            Você decide empreender e a primeira reação ao redor costuma ser "não
+            investe tanto nisso, você nem sabe se vai dar certo". Some a isso o caixa
+            que não fecha e o cliente que reclama de tudo e some sem voltar.
+          </p>
+          <p data-reveal>
+            Some a compra por impulso que esvazia a conta, a precificação feita no
+            escuro e o negócio que nasce sem um motivo claro para existir. Sem
+            <strong>método</strong>, cada mês recomeça do zero e a decisão de
+            empreender vira refém da coragem de aguentar mais um dia.
+          </p>
+          <p data-reveal>
+            A maioria dos negócios não morre por falta de ideia. Morre por falta de
+            método. E é isso que separa quem desiste de quem constrói: caminho, não
+            talento.
+          </p>
+          <p class="pergunta__highlight" data-reveal>
+            Sua ideia pode continuar no papel esperando o momento certo, ou pode virar
+            um negócio que se sustenta. A decisão é sua.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 02 :: O QUE VOCÊ VAI LEVAR ============ -->
+    <section class="levar" id="levar">
+      <div class="levar__head">
+        <p class="eyebrow" data-reveal><span class="eyebrow__num">02</span> O que você vai levar desse dia</p>
+        <h2 class="levar__title" data-reveal>Não é sobre ter a ideia. É sobre fazer ela de pé.</h2>
+        <p class="levar__intro" data-reveal>
+          Nada de frase motivacional. É bastidor real de quem já saiu do zero,
+          transformado num método que você aplica na segunda-feira. Um dia inteiro
+          da decisão de empreender ao negócio com propósito:
+        </p>
+      </div>
+
+      <ol class="levar__list">
+        <li class="levar__item" data-reveal style="--i:0">
+          <span class="levar__num">01</span>
+          <p class="levar__text">Como <b class="k">sustentar a decisão</b> de empreender mesmo sem apoio ao redor e parar de se comparar com quem largou na frente</p>
+        </li>
+        <li class="levar__item" data-reveal style="--i:1">
+          <span class="levar__num">02</span>
+          <p class="levar__text">Definir com clareza quem é o seu <b class="k">cliente ideal</b>: para quem você resolve um problema real e por que ele escolhe justamente você</p>
+        </li>
+        <li class="levar__item" data-reveal style="--i:2">
+          <span class="levar__num">03</span>
+          <p class="levar__text"><b class="k">Precificar sem medo</b>: cobrar o que o seu trabalho vale, sem viver de desconto nem esvaziar a própria margem</p>
+        </li>
+        <li class="levar__item" data-reveal style="--i:3">
+          <span class="levar__num">04</span>
+          <p class="levar__text">Transformar cliente em <b class="k">fã que indica</b>: a experiência e o atendimento que geram recompra e recomendação espontânea</p>
+        </li>
+        <li class="levar__item" data-reveal style="--i:4">
+          <span class="levar__num">05</span>
+          <p class="levar__text">Usar a <b class="k">criatividade</b> como motor da inovação: ideia somada a ação para resolver problemas reais do mercado</p>
+        </li>
+        <li class="levar__item levar__item--segredo" data-reveal style="--i:5">
+          <span class="levar__num">06</span>
+          <p class="levar__text">Dar ao negócio um <b class="k">propósito</b>, criar valor compartilhado e validar a ideia antes de montar o plano</p>
+        </li>
+      </ol>
+
+      <p class="levar__close" data-reveal>
+        Se você já abriu, esse dia mostra onde o negócio está perdendo dinheiro.
+        Se ainda está decidindo, te poupa anos de tentativa e erro.
+      </p>
+    </section>
+
+    <!-- ============ SEÇÃO 03 :: PROGRAMAÇÃO (timeline dark) ============ -->
+    <section class="prog section--dark" id="programacao">
+      <div class="prog__head">
+        <p class="eyebrow eyebrow--gold" data-reveal><span class="eyebrow__num">03</span> Programação</p>
+        <h2 class="prog__title" data-reveal>Um dia inteiro de método, prática e conexão</h2>
+        <p class="prog__intro" data-reveal>
+          Da abertura ao networking final: conteúdo aplicável, simulações reais e contatos que valem a pena.
+        </p>
+      </div>
+
+      <div class="tl" id="timeline">
+        <span class="tl__fill" aria-hidden="true"></span>
+
+        <div class="tl__item" data-reveal style="--i:0">
+          <span class="tl__time">08h30 <small>às 09h00</small></span>
+          <span class="tl__node tl__node--social" aria-hidden="true"></span>
+          <div class="tl__content">
+            <h3 class="tl__name">Credenciamento e Welcome Coffee</h3>
+            <p class="tl__desc">Recepção, ambientação e as primeiras conexões do dia.</p>
+          </div>
+        </div>
+
+        <div class="tl__item" data-reveal style="--i:1">
+          <span class="tl__time">09h00 <small>às 10h40</small></span>
+          <span class="tl__node" aria-hidden="true"></span>
+          <div class="tl__content">
+            <h3 class="tl__name">Decidir e Sustentar a Decisão de Empreender</h3>
+            <p class="tl__desc">Como tomar a decisão de empreender e sustentá-la mesmo sem apoio: entender o medo de quem te ama e parar de se comparar com quem largou na frente.</p>
+          </div>
+        </div>
+
+        <div class="tl__item" data-reveal style="--i:2">
+          <span class="tl__time">10h40 <small>às 12h30</small></span>
+          <span class="tl__node" aria-hidden="true"></span>
+          <div class="tl__content">
+            <h3 class="tl__name">Cliente Ideal, Precificação e Fidelização</h3>
+            <p class="tl__desc">Definir para quem você resolve um problema real, precificar sem medo e transformar cliente em fã que indica.</p>
+          </div>
+        </div>
+
+        <div class="tl__item" data-reveal style="--i:3">
+          <span class="tl__time">12h30 <small>às 14h00</small></span>
+          <span class="tl__node tl__node--social" aria-hidden="true"></span>
+          <div class="tl__content">
+            <h3 class="tl__name">Almoço e Networking</h3>
+            <p class="tl__desc">Pausa para recarregar e trocar experiências com outros empreendedores.</p>
+          </div>
+        </div>
+
+        <div class="tl__item" data-reveal style="--i:4">
+          <span class="tl__time">14h00 <small>às 15h40</small></span>
+          <span class="tl__node" aria-hidden="true"></span>
+          <div class="tl__content">
+            <h3 class="tl__name">Criatividade e Inovação na Prática</h3>
+            <p class="tl__desc">A criatividade como matéria-prima da inovação: ideia somada a ação para resolver problemas reais do mercado.</p>
+          </div>
+        </div>
+
+        <div class="tl__item" data-reveal style="--i:5">
+          <span class="tl__time">15h40 <small>às 17h00</small></span>
+          <span class="tl__node" aria-hidden="true"></span>
+          <div class="tl__content">
+            <h3 class="tl__name">Negócio com Propósito e Validação da Ideia</h3>
+            <p class="tl__desc">Dar ao negócio um motivo para existir, criar valor compartilhado e validar a ideia antes de investir no plano.</p>
+          </div>
+        </div>
+
+        <div class="tl__item" data-reveal style="--i:6">
+          <span class="tl__time">17h00 <small>às 18h00</small></span>
+          <span class="tl__node tl__node--social" aria-hidden="true"></span>
+          <div class="tl__content">
+            <h3 class="tl__name">Plano de Negócios, Q&amp;A e Networking Final</h3>
+            <p class="tl__desc">Você sai com o esqueleto do seu plano de negócios, tira dúvidas e faz as conexões que viram parceria.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="prog__seal" data-reveal>9h às 18h · Belo Horizonte (local a definir)</p>
+    </section>
+
+    <!-- ============ SEÇÃO 04 :: COMO VAI FUNCIONAR (cards sobrepostos) ============ -->
+    <section class="pilares" id="como">
+      <div class="pilares__head">
+        <p class="eyebrow" data-reveal><span class="eyebrow__num">04</span> Como vai funcionar</p>
+        <h2 class="pilares__title" data-reveal>Conteúdo, prática e networking no mesmo dia</h2>
+      </div>
+
+      <div class="pilares__deck">
+        <article class="pcard pcard--1" data-reveal style="--i:0">
+          <span class="pcard__idx">01</span>
+          <h3 class="pcard__name">Imersão envolvente</h3>
+          <p class="pcard__text">Com os autores do livro Empreenday. Método aplicável, exemplos reais de quem saiu do zero e a visão de quem já construiu negócio.</p>
+        </article>
+        <article class="pcard pcard--2" data-reveal style="--i:1">
+          <span class="pcard__idx">02</span>
+          <h3 class="pcard__name">Atividades práticas</h3>
+          <p class="pcard__text">Exercícios para validar a ideia, definir o cliente ideal e precificar sem medo, pra você sair com o método já aplicado ao seu negócio.</p>
+        </article>
+        <article class="pcard pcard--3" data-reveal style="--i:2">
+          <span class="pcard__idx">03</span>
+          <h3 class="pcard__name">Networking produtivo</h3>
+          <p class="pcard__text">Coffee, almoço e momentos dedicados à troca com outros empreendedores. O tipo de conexão que vira sociedade, parceria e negócio.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 05 :: QUEM SOBE AO PALCO (dark) ============ -->
+    <section class="autores section--dark" id="autores">
+      <div class="autores__inner">
+        <p class="eyebrow eyebrow--gold" data-reveal><span class="eyebrow__num">05</span> Quem sobe ao palco</p>
+        <h2 class="autores__title" data-reveal>Quem escreveu o livro sobe ao palco.</h2>
+        <p class="autores__text" data-reveal>
+          Empreenday é uma obra coletiva da Coleção Foco em Resultados. Os autores que
+          assinam os capítulos são os mesmos que conduzem o dia, cada um no tema que vive.
+        </p>
+        <figure class="autores__banner" data-reveal>
+          <img src="/.netlify/images?url=/academy/assets/autores/empreender.jpg&w=1280&fm=webp&q=82"
+               srcset="/.netlify/images?url=/academy/assets/autores/empreender.jpg&w=760&fm=webp&q=82 760w, /.netlify/images?url=/academy/assets/autores/empreender.jpg&w=1280&fm=webp&q=82 1280w"
+               sizes="(max-width: 1200px) 92vw, 1100px"
+               width="1280" height="720"
+               alt="Autores de Empreenday — Coleção Foco em Resultados"
+               loading="lazy" decoding="async" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 06 :: PARA QUEM É (bento) ============ -->
+    <section class="paraquem" id="paraquem">
+      <div class="paraquem__head">
+        <p class="eyebrow" data-reveal><span class="eyebrow__num">06</span> Para quem é</p>
+        <h2 class="paraquem__title" data-reveal>Esse é o seu lugar se você...</h2>
+      </div>
+
+      <div class="bento">
+        <article class="bento__cell bento__cell--feature" data-reveal>
+          <span class="bento__idx">01</span>
+          <p class="bento__text">Ainda está <b>decidindo empreender</b> e precisa de método para dar o primeiro passo com segurança</p>
+        </article>
+        <article class="bento__cell" data-reveal>
+          <span class="bento__idx">02</span>
+          <p class="bento__text">Já abriu o negócio, mas o <b>caixa não fecha</b> e cada mês vira uma corrida contra o vermelho</p>
+        </article>
+        <article class="bento__cell" data-reveal>
+          <span class="bento__idx">03</span>
+          <p class="bento__text">Não sabe ao certo <b>quem é o cliente ideal</b> e tenta vender para todo mundo ao mesmo tempo</p>
+        </article>
+        <article class="bento__cell" data-reveal>
+          <span class="bento__idx">04</span>
+          <p class="bento__text">Tem <b>medo de precificar</b> e acaba cobrando de menos, vivendo de desconto</p>
+        </article>
+        <article class="bento__cell" data-reveal>
+          <span class="bento__idx">05</span>
+          <p class="bento__text">Quer um negócio com <b>propósito que se sustenta</b>, não só uma ideia bonita no papel</p>
+        </article>
+        <article class="bento__cell bento__cell--cut" data-reveal>
+          <p class="bento__cuttext">Se a sua ideia depende só de coragem, esse dia existe pra trocar achismo por <b>método</b>.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 07 :: A OFERTA (dark spotlight, sem preço) ============ -->
+    <section class="oferta section--dark" id="oferta">
+      <canvas class="oferta__particles" aria-hidden="true"></canvas>
+      <div class="oferta__card" data-reveal>
+        <p class="eyebrow eyebrow--gold eyebrow--center"><span class="eyebrow__num">07</span> Garanta sua vaga</p>
+        <h2 class="oferta__title">Vagas <span class="gold">limitadas</span> ao espaço presencial</h2>
+        <p class="oferta__text">
+          O ingresso dá acesso ao dia completo: imersão, atividades práticas, coffee,
+          material de apoio e networking com outros empreendedores.
+          As inscrições abrem em breve e o espaço é presencial e limitado.
+        </p>
+
+        <div class="oferta__soon" data-reveal>
+          <span class="oferta__soontag">Inscrições em breve</span>
+          <p class="oferta__soontext">
+            Deixe seu nome e WhatsApp e seja avisado(a) em primeira mão — com
+            condição especial pra quem entrar na lista antes da abertura.
+          </p>
+        </div>
+
+        <a class="btn btn--primary btn--lg oferta__cta" href="#inscrever" data-cta>
+          Quero garantir minha vaga
+        </a>
+
+        <div class="oferta__reassure">
+          <span class="oferta__seal">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M12 3 4 6v6c0 5 3.5 7.5 8 9 4.5-1.5 8-4 8-9V6l-8-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Inscrição em poucos segundos
+          </span>
+          <span class="oferta__bullet" aria-hidden="true"></span>
+          <span class="oferta__micro">Vagas limitadas ao espaço presencial.</span>
+        </div>
+
+        <p class="oferta__anchor">
+          Uma única decisão certa sobre o seu negócio vale muitas vezes o valor
+          desse dia.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 08 :: INFORMAÇÕES PRÁTICAS (bilhete) ============ -->
+    <section class="infos" id="infos">
+      <div class="infos__head">
+        <p class="eyebrow" data-reveal><span class="eyebrow__num">08</span> Informações práticas</p>
+      </div>
+
+      <div class="ticket" data-reveal>
+        <div class="ticket__body">
+          <div class="ticket__row" data-reveal style="--i:0">
+            <span class="ticket__k">Data e horário</span>
+            <span class="ticket__v">14 de novembro de 2026 (sábado). Credenciamento a partir das 8h30. Evento das 9h às 18h.</span>
+          </div>
+          <div class="ticket__row" data-reveal style="--i:1">
+            <span class="ticket__k">Local</span>
+            <span class="ticket__v">Belo Horizonte - MG. Endereço completo a definir — enviado a todos os inscritos.</span>
+          </div>
+          <div class="ticket__row" data-reveal style="--i:2">
+            <span class="ticket__k">Inclui</span>
+            <span class="ticket__v">Imersão completa, atividades práticas, coffee, material de apoio e certificado de participação.</span>
+          </div>
+          <div class="ticket__row" data-reveal style="--i:3">
+            <span class="ticket__k">Inscrição</span>
+            <span class="ticket__v">As inscrições abrem em breve. Deixe seu nome e WhatsApp para garantir seu lugar e ser avisado(a) em primeira mão.</span>
+          </div>
+        </div>
+        <div class="ticket__stub">
+          <span class="ticket__vert">Empreenday</span>
+          <span class="ticket__date">14 NOV</span>
+          <span class="ticket__hour">9h</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 09 :: FAQ ============ -->
+    <section class="faq" id="faq">
+      <div class="faq__inner">
+        <div class="faq__head">
+          <p class="eyebrow" data-reveal><span class="eyebrow__num">09</span> Perguntas frequentes</p>
+          <h2 class="faq__title" data-reveal>Antes de você decidir</h2>
+        </div>
+
+        <div class="faq__list">
+          <div class="faq__item" data-reveal>
+            <button class="faq__q" aria-expanded="false">
+              <span class="faq__qnum">01</span>
+              <span class="faq__qtext">E se as pessoas à minha volta não acreditam na minha ideia?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__a"><div class="faq__a-inner"><p>Esse é um dos primeiros temas do dia. Você aprende a entender o medo de quem te ama, a parar de se comparar e a sustentar a decisão com método e clareza, em vez de depender da validação dos outros.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal>
+            <button class="faq__q" aria-expanded="false">
+              <span class="faq__qnum">02</span>
+              <span class="faq__qtext">Preciso já ter um negócio aberto?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__a"><div class="faq__a-inner"><p>Não. O dia atende desde quem ainda está decidindo empreender até quem já fatura e quer definir o cliente ideal, precificar melhor e estruturar o crescimento. Você sai sabendo por onde começar.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal>
+            <button class="faq__q" aria-expanded="false">
+              <span class="faq__qnum">03</span>
+              <span class="faq__qtext">Vai ter momento de networking?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__a"><div class="faq__a-inner"><p>Vai. Coffee, almoço e uma sessão dedicada à troca entre participantes. Boa parte do valor de um evento presencial está nas conexões.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal>
+            <button class="faq__q" aria-expanded="false">
+              <span class="faq__qnum">04</span>
+              <span class="faq__qtext">Preciso levar algo? Tem vestimenta?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__a"><div class="faq__a-inner"><p>Só o que quiser para anotar — o material de apoio a gente entrega. Sem vestimenta especial; a maioria vem direto do trabalho.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal>
+            <button class="faq__q" aria-expanded="false">
+              <span class="faq__qnum">05</span>
+              <span class="faq__qtext">Como funciona a inscrição? Já dá pra comprar?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__a"><div class="faq__a-inner"><p>As inscrições abrem em breve. Deixe seu nome e WhatsApp na página para entrar na lista: você é avisado(a) em primeira mão e garante condição especial antes da abertura ao público.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal>
+            <button class="faq__q" aria-expanded="false">
+              <span class="faq__qnum">06</span>
+              <span class="faq__qtext">E se eu não puder comparecer?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__a"><div class="faq__a-inner"><p>As condições de remarcação e reembolso serão informadas junto com a abertura das inscrições. Quem está na lista recebe tudo por escrito antes de confirmar.</p></div></div>
+          </div>
+          <div class="faq__item" data-reveal>
+            <button class="faq__q" aria-expanded="false">
+              <span class="faq__qnum">07</span>
+              <span class="faq__qtext">Como esclareço outras dúvidas?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq__a"><div class="faq__a-inner"><p>Deixe seu contato na página. A gente retorna pelo WhatsApp pra te ajudar com qualquer dúvida antes do evento.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 10 :: CTA FINAL (poster + countdown) ============ -->
+    <section class="final section--dark" id="final">
+      <div class="final__ghost" aria-hidden="true">
+        <span data-ghost="1">negócio</span>
+        <span data-ghost="2">ideia</span>
+        <span data-ghost="3">coragem</span>
+      </div>
+      <div class="final__inner">
+        <p class="eyebrow eyebrow--gold" data-reveal><span class="eyebrow__num">10</span> Última chamada</p>
+        <h2 class="final__title">
+          <span class="reveal-line">A ideia vai</span>
+          <span class="reveal-line">virar negócio de alguém.</span>
+          <span class="reveal-line"><em>Por que não o seu?</em></span>
+        </h2>
+        <p class="final__text" data-reveal>
+          Todos os dias, no Brasil inteiro, alguém decide tirar a ideia do papel e
+          começa a construir. A única dúvida é quem faz isso com método — e quem fica
+          esperando o momento perfeito que nunca chega.
+        </p>
+        <p class="final__text" data-reveal>
+          Nesse dia, em Belo Horizonte, você troca o achismo por um caminho que se
+          sustenta. Não é sobre ter a ideia perfeita. É sobre transformar decisão em
+          <span class="hl">negócio</span>.
+        </p>
+
+        <div class="count" data-reveal>
+          <p class="count__label">O evento começa em</p>
+          <div class="count__grid" id="countdown" data-target="2026-11-14T09:00:00-03:00">
+            <span class="count__cell"><span class="count__num" data-cd="d">--</span><span class="count__unit">dias</span></span>
+            <span class="count__sep" aria-hidden="true">:</span>
+            <span class="count__cell"><span class="count__num" data-cd="h">--</span><span class="count__unit">horas</span></span>
+            <span class="count__sep" aria-hidden="true">:</span>
+            <span class="count__cell"><span class="count__num" data-cd="m">--</span><span class="count__unit">min</span></span>
+            <span class="count__sep" aria-hidden="true">:</span>
+            <span class="count__cell"><span class="count__num" data-cd="s">--</span><span class="count__unit">seg</span></span>
+          </div>
+        </div>
+
+        <a class="btn btn--primary btn--lg" href="#inscrever" data-cta data-reveal>
+          Garantir minha vaga agora
+        </a>
+        <p class="final__micro" data-reveal>14 de novembro, 9h às 18h, Belo Horizonte. Vagas limitadas.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__brand">Empreenday · Coleção Foco em Resultados · Avantik</span>
+      <a class="footer__cta" href="#inscrever" data-cta>Garantir minha vaga</a>
+    </div>
+    <p class="footer__legal">Evento presencial · vagas limitadas ao espaço. Ao deixar seus dados você concorda em receber os detalhes do evento por WhatsApp e e-mail.</p>
+  </footer>
+
+  <script>
+    if (document.readyState !== 'loading') {
+      document.body.classList.add('is-loaded');
+    } else {
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('is-loaded');
+      });
+    }
+  </script>
+  <!-- ============ POPUP DE CAPTURA (nome + WhatsApp) ============ -->
+  <div class="lead-modal" id="leadModal" aria-hidden="true">
+    <div class="lead-modal__overlay" data-close></div>
+    <div class="lead-modal__card" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
+      <button class="lead-modal__x" type="button" data-close aria-label="Fechar">&times;</button>
+      <p class="lead-modal__eyebrow">Falta pouco</p>
+      <h3 class="lead-modal__title" id="leadModalTitle">Garanta sua vaga no evento</h3>
+      <p class="lead-modal__sub">Deixe seu nome e WhatsApp para garantir seu lugar no Empreenday e receber os detalhes em primeira mão.</p>
+      <form class="lead-modal__form" id="leadForm" novalidate>
+        <div class="lead-field">
+          <label for="lead-nome">Seu nome</label>
+          <input id="lead-nome" name="nome" type="text" autocomplete="name" placeholder="Nome completo" required>
+        </div>
+        <div class="lead-field">
+          <label for="lead-zap">Seu WhatsApp</label>
+          <input id="lead-zap" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000" required>
+        </div>
+        <p class="lead-modal__err" id="leadErr" hidden>Preencha nome e WhatsApp para continuar.</p>
+        <button class="btn btn--primary btn--lg lead-modal__submit" type="submit">Quero garantir minha vaga</button>
+        <p class="lead-modal__micro">As inscrições abrem em breve — avisamos você em primeira mão.</p>
+      </form>
+      <div class="lead-modal__done" id="leadDone" hidden style="text-align:center;">
+        <span aria-hidden="true" style="display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:var(--brasa-grad);color:#fff;font-size:1.7rem;margin:0.2rem auto 1.1rem;">&#10003;</span>
+        <h3 class="lead-modal__title">Inscrição registrada!</h3>
+        <p class="lead-modal__sub">Seu lugar no Empreenday está anotado. Em breve enviamos os detalhes no seu WhatsApp.</p>
+        <button class="btn btn--primary btn--lg" type="button" data-close style="margin-top:0.4rem;">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/eventos/evento.js?v=20260816a" defer></script>
+  <!-- rede animada do hero: mesmo modulo dos cards de /eventos/ e da Academy -->
+  <script type="module">
+    import { initPlexus } from '/lib/plexus.js?v=20260816a';
+    const c = document.querySelector('.hero__plexus');
+    if (c) initPlexus(c);
+  </script>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
+  <!-- Captura de lead + Meta Pixel/CAPI (modo placeholder: sem checkout, sem redirect) -->
+  <script>
+  (function () {
+    var SUPA_URL = "https://ajokzpjguhfxxudteetr.supabase.co";
+    var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqb2t6cGpndWhmeHh1ZHRlZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ4MjQ1NTQsImV4cCI6MjA5MDQwMDU1NH0.TG-ASfMGgNY4BoHsFQx8TQ-4HPVsdbGEu4zJuFAeiNg";
+
+    var EVENTO = "empreenday";
+    var CONTENT_NAME = "Empreenday";
+
+    var modal = document.getElementById("leadModal");
+    var form = document.getElementById("leadForm");
+    var errEl = document.getElementById("leadErr");
+    var doneEl = document.getElementById("leadDone");
+    var ERR_DEFAULT = errEl.textContent;
+
+    function open() {
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      var n = document.getElementById("lead-nome");
+      if (n) setTimeout(function () { n.focus(); }, 60);
+      // intencao de inscricao
+      if (typeof window.track === "function") {
+        window.track("InitiateCheckout", { content_name: CONTENT_NAME });
+      }
+    }
+    function close() {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    // Qualquer CTA [data-cta] abre o modal de captura
+    document.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest(".lead-modal")) {
+        if (e.target.closest("[data-close]")) close();
+        return;
+      }
+      var cta = e.target.closest && e.target.closest("[data-cta]");
+      if (cta) { e.preventDefault(); open(); return; }
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+
+    function saveLead(nome, whatsapp) {
+      try {
+        var utm = (window.getUTMs && window.getUTMs()) || {};
+        var payload = Object.assign(
+          { evento: EVENTO, nome: nome, whatsapp: whatsapp, origem: "lp-evento-" + EVENTO },
+          utm
+        );
+        return fetch(SUPA_URL + "/rest/v1/eventos_presenciais_leads", {
+          method: "POST",
+          headers: {
+            "apikey": SUPA_KEY,
+            "Authorization": "Bearer " + SUPA_KEY,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(payload),
+          keepalive: true
+        });
+      } catch (e) { return Promise.resolve(); }
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var nome = (document.getElementById("lead-nome").value || "").trim();
+      var zap = (document.getElementById("lead-zap").value || "").trim();
+      if (!nome || zap.replace(/\D/g, "").length < 8) {
+        errEl.textContent = ERR_DEFAULT;
+        errEl.hidden = false;
+        return;
+      }
+      errEl.hidden = true;
+      var btn = form.querySelector(".lead-modal__submit");
+      var btnLabel = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Enviando...";
+
+      // Lead (Pixel + CAPI) com nome/telefone para match
+      if (typeof window.track === "function") {
+        window.track("Lead", { content_name: CONTENT_NAME }, { ph: zap, fn: nome });
+      }
+
+      var settled = false;
+      function done() {
+        if (settled) return; settled = true;
+        form.hidden = true;
+        doneEl.hidden = false;
+      }
+      function fail() {
+        if (settled) return; settled = true;
+        errEl.textContent = "Nao conseguimos registrar sua inscricao. Tente de novo em instantes.";
+        errEl.hidden = false;
+        btn.disabled = false;
+        btn.textContent = btnLabel;
+      }
+      saveLead(nome, zap).then(function (res) {
+        // res undefined = saveLead caiu no catch de construcao; trata como falha.
+        if (!res || res.ok === false) return fail();
+        done();
+      }).catch(fail);
+      // Fallback so para rede lenta: se em 6s nem resolveu nem rejeitou, o
+      // keepalive provavelmente entregou. NAO e fallback de erro do servidor --
+      // um 404/401 rejeita em milissegundos e cai no fail() antes disso.
+      setTimeout(function () { if (!settled) done(); }, 6000);
+    });
+  })();
+  </script>
+
+</body>
+</html>

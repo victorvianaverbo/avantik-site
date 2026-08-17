@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -7,12 +7,14 @@
   <meta name="robots" content="noindex,nofollow">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <script src="/script.js" defer></script>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     .admin-page {
@@ -33,16 +35,23 @@
       background: transparent;
       border: 0;
       border-bottom: 2px solid transparent;
-      color: var(--color-text-secondary);
+      color: var(--color-text-muted);
       font-family: inherit;
-      font-size: 0.9375rem;
-      font-weight: 600;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       cursor: pointer;
       transition: color 0.2s, border-color 0.2s;
     }
 
-    .admin-tab--active {
-      color: var(--color-accent);
+    .admin-tab:hover {
+      color: var(--color-text-secondary);
+    }
+
+    .admin-tab--active,
+    .admin-tab--active:hover {
+      color: var(--color-accent-hover);
       border-bottom-color: var(--color-accent);
     }
 
@@ -61,18 +70,18 @@
     }
 
     .admin-stat {
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1rem;
+      border-radius: var(--radius-md);
       padding: 1.25rem 1.5rem;
     }
 
     .admin-stat__label {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
       color: var(--color-text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.2em;
       margin-bottom: 0.5rem;
     }
 
@@ -84,14 +93,14 @@
     }
 
     .admin-stat--accent .admin-stat__value {
-      color: var(--color-accent);
+      color: var(--color-accent-hover);
     }
 
     .admin-table {
       width: 100%;
       background: var(--color-surface);
       border: 1px solid var(--color-border);
-      border-radius: 1rem;
+      border-radius: var(--radius-md);
       overflow: hidden;
       border-collapse: collapse;
     }
@@ -100,18 +109,28 @@
     .admin-table td {
       padding: 0.875rem 1rem;
       text-align: left;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid rgba(35, 35, 35, 0.08);
       font-size: 0.875rem;
+      color: var(--color-text-secondary);
       vertical-align: top;
     }
 
     .admin-table th {
-      background: var(--color-muted-bg);
-      font-weight: 700;
-      font-size: 0.75rem;
+      background: rgba(35, 35, 35, 0.04);
+      font-weight: 500;
+      font-size: 0.6875rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--color-text-secondary);
+      letter-spacing: 0.18em;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+
+    .admin-table tbody tr {
+      transition: background 0.15s;
+    }
+
+    .admin-table tbody tr:hover {
+      background: rgba(35, 35, 35, 0.03);
     }
 
     .admin-table tr:last-child td {
@@ -133,34 +152,37 @@
       letter-spacing: 0.5px;
     }
 
-    .admin-status--pendente { background: #fef3c7; color: #78350f; }
-    .admin-status--paga { background: #ecfdf5; color: #065f46; }
-    .admin-status--cancelada { background: var(--color-muted-bg); color: var(--color-text-secondary); }
+    .admin-status--pendente { background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.28); color: #FCD34D; }
+    .admin-status--paga { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.28); color: #6EE7B7; }
+    .admin-status--cancelada { background: var(--color-muted-bg); border: 1px solid var(--color-border); color: var(--color-text-muted); }
 
     .admin-action {
       font-size: 0.75rem;
-      padding: 0.375rem 0.75rem;
-      border-radius: 0.375rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-xs);
       cursor: pointer;
       border: 1px solid var(--color-border);
-      background: var(--color-surface);
+      background: var(--color-muted-bg);
       color: var(--color-text);
       font-family: inherit;
-      transition: background 0.2s;
+      transition: background 0.2s, border-color 0.2s;
     }
 
     .admin-action:hover {
-      background: var(--color-muted-bg);
+      background: rgba(35, 35, 35, 0.09);
+      border-color: rgba(227, 179, 65, 0.35);
     }
 
     .admin-action--accent {
-      background: var(--color-accent);
+      background: linear-gradient(120deg, #ECC35C, #E3B341);
       border-color: var(--color-accent);
-      color: white;
+      color: #232323;
+      font-weight: 600;
     }
 
     .admin-action--accent:hover {
-      background: var(--color-accent-hover);
+      background: linear-gradient(120deg, #EBCB8B, #D4AE5A);
+      border-color: var(--color-accent-hover);
     }
 
     .admin-empty,
@@ -181,7 +203,7 @@
     }
   </style>
 </head>
-<body>
+<body class="theme-2026">
 
   <header class="header" id="header">
     <nav class="header__nav container">
@@ -232,7 +254,7 @@
   </main>
 
   <script type="module">
-    import { supabase, escapeHtml, getUser, getUserType } from '/lib/supabase.js';
+    import { supabase, escapeHtml, getUser, getUserType } from '/lib/supabase.js?v=20260816a';
 
     const loadingEl = document.getElementById('loading');
     const deniedEl = document.getElementById('denied');
@@ -418,7 +440,7 @@
               <td>${data}</td>
               <td class="strong">${escapeHtml(speaker.name || '—')}<br><small style="color:var(--color-text-secondary)">${escapeHtml(speaker.email || '')}<br>${escapeHtml(speaker.phone || '')}</small></td>
               <td>${escapeHtml(contractor.company || contractor.name || '—')}<br><small style="color:var(--color-text-secondary)">${escapeHtml(contractor.email || '')}</small></td>
-              <td>${escapeHtml(palestraTitle)}${isFree ? '<br><span class="admin-status" style="background:#eef2ff;color:#3730a3">Palestra grátis · Avantik paga o cachê</span>' : ''}</td>
+              <td>${escapeHtml(palestraTitle)}${isFree ? '<br><span class="admin-status" style="background:rgba(129,140,248,0.12);border:1px solid rgba(129,140,248,0.28);color:#C7D2FE">Palestra grátis · Avantik paga o cachê</span>' : ''}</td>
               <td class="strong">R$ ${(c.proposed_price || 0).toLocaleString('pt-BR')}</td>
               <td class="strong" style="color:var(--color-accent)">R$ ${(c.commission_amount || 0).toLocaleString('pt-BR')}<br><small style="color:var(--color-text-secondary);font-weight:400">${isFree ? 'cachê a pagar' : 'comissão 30%'}</small></td>
               <td><span class="admin-status admin-status--${c.status}">${c.status}</span></td>

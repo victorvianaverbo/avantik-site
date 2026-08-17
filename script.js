@@ -17,23 +17,120 @@ document.addEventListener('DOMContentLoaded', () => {
   initFAQ();
   initBlogFilter();
   initVideoThumbs();
-  initAuthNav();
+  initFunnelTracking();
+  agendarAuthNav();
 });
+
+/* ==========================================
+   TRACKING DE FUNIL (Meta Pixel + CAPI)
+
+   Eventos globais, ligados por delegacao — funcionam em qualquer pagina sem
+   precisar editar HTML. Os eventos por pagina (ViewContent do perfil e da
+   palestra, CompleteRegistration do cadastro) ficam nos proprios arquivos,
+   porque dependem de dado que so chega do Supabase.
+
+   Usa window.track() de /eventos/capi-client.js: dispara Pixel e CAPI com o
+   MESMO event_id, e o Meta deduplica. Se o capi-client nao carregou, cai
+   para fbq puro; se nem o pixel existe, nao faz nada (nunca quebra a pagina).
+   ========================================== */
+function initFunnelTracking() {
+  const enviar = (evento, custom) => {
+    try {
+      if (typeof window.track === 'function') { window.track(evento, custom); return; }
+      if (typeof window.fbq === 'function') window.fbq('track', evento, custom || {});
+    } catch (e) { /* tracking nunca derruba a pagina */ }
+  };
+
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest && e.target.closest('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href') || '';
+
+    // Escolheu um plano: intencao de compra
+    const plano = href.match(/\/cadastro\/\?plano=([a-z]+)/);
+    if (plano) {
+      enviar('InitiateCheckout', { content_name: 'Plano ' + plano[1], content_category: 'assinatura-palestrante' });
+      return;
+    }
+
+    // Contato por WhatsApp a partir do site
+    if (href.includes('wa.me/')) {
+      enviar('Contact', { content_category: 'whatsapp' });
+    }
+  }, { passive: true });
+}
+
+/* ==========================================
+   AUTH NAV — AGENDAMENTO
+
+   initAuthNav() importa /lib/supabase.js, que puxa ~80KB do esm.sh
+   (auth-js, realtime-js, phoenix, storage-js, postgrest-js, buffer).
+   Rodar isso no DOMContentLoaded de TODA pagina colocava essa cascata no
+   caminho critico do mobile mesmo para visitante deslogado — que e a
+   maioria absoluta do trafego.
+
+   Primeira tentativa foi adiar com requestIdleCallback, e a nota PIOROU:
+   o import passou a acontecer dentro da janela que o Lighthouse mede, e o
+   TBT do desktop foi de 70ms para 1070ms. Adiar so mudou o trabalho de
+   lugar.
+
+   Agora: sem sessao salva, nao importa nada. Nao ha estado de usuario para
+   renderizar, e o guard de rota das paginas logadas nao depende daqui — cada
+   uma faz o proprio getUser(). Se o visitante logar em outra aba, o evento
+   'storage' avisa e ai sim o modulo entra.
+   ========================================== */
+
+function temSessaoSalva() {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      // supabase-js grava a sessao em `sb-<project-ref>-auth-token`
+      if (ehChaveDeSessao(localStorage.key(i))) return true;
+    }
+  } catch (_) {
+    // localStorage bloqueado (modo privado/cookies off): trata como deslogado
+  }
+  return false;
+}
+
+function ehChaveDeSessao(k) {
+  return !!k && k.startsWith('sb-') && k.endsWith('-auth-token');
+}
+
+function agendarAuthNav() {
+  if (temSessaoSalva()) {
+    initAuthNav();
+    return;
+  }
+  // Deslogado: zero download. So reage se aparecer sessao vinda de outra aba.
+  window.addEventListener('storage', function aoMudarSessao(e) {
+    if (ehChaveDeSessao(e.key) && e.newValue) {
+      window.removeEventListener('storage', aoMudarSessao);
+      initAuthNav();
+    }
+  });
+}
 
 /* ==========================================
    AOS
    ========================================== */
 
 function initAOS() {
-  if (typeof AOS !== 'undefined') {
-    AOS.init({
-      duration: 800,
-      once: true,
-      offset: 50,
-      easing: 'ease-out-cubic',
-      disableMutationObserver: true
-    });
-  }
+  if (typeof AOS === 'undefined') return;
+
+  // Reveals suaves em todas as telas. No mobile o theme-noir.css converte
+  // fade-left/right em fade vertical (os 100px horizontais do AOS estouravam
+  // a largura do viewport e criavam scroll horizontal); as distancias tambem
+  // sao encurtadas la para um movimento mais elegante e discreto.
+  const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  AOS.init({
+    duration: 750,
+    once: true,
+    offset: 90,
+    easing: 'ease-out-quart',
+    disableMutationObserver: true,
+    disable: semMovimento
+  });
 }
 
 /* ==========================================
@@ -509,7 +606,7 @@ function initVideoThumbs() {
 
 async function initAuthNav() {
   try {
-    const { supabase, authSignOut, getUserType } = await import('/lib/supabase.js');
+    const { supabase, authSignOut, getUserType } = await import('/lib/supabase.js?v=20260727b');
 
     // Escuta mudancas de estado (login/logout) para re-renderizar.
     // INITIAL_SESSION dispara quando a sessao e hidratada do localStorage no load.

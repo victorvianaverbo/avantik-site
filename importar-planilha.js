@@ -24,8 +24,12 @@ import { createClient } from '@supabase/supabase-js';
 import { readFileSync } from 'fs';
 import * as XLSX from 'xlsx';
 
-const SUPABASE_URL = 'https://ajokzpjguhfxxudteetr.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqb2t6cGpndWhmeHh1ZHRlZXRyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDgyNDU1NCwiZXhwIjoyMDkwNDAwNTU0fQ.ORFf1oXdjZIUfY7FEuSsXW95p49OBouOQ1H5Zo03tXk';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ajokzpjguhfxxudteetr.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE;
+if (!SUPABASE_KEY) {
+  console.error('Defina SUPABASE_SERVICE_ROLE no ambiente antes de rodar (nunca commite a chave).');
+  process.exit(1);
+}
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 

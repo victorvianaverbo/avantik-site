@@ -90,6 +90,15 @@ export const PROGRAMS = {
       convidado: '',
     },
     theme: { primary: '#00A900', accent: '#00F900', dark: '#070C08' }, // Manual Empreenday (verde / verde neon)
+    // Edicao presencial deste tema. Desde 12/08/2026 os 6 programas tem
+    // evento (gestao foi o ultimo a ganhar data). O `if (p.evento)` no
+    // consumo fica: e a guarda para quando um evento sair da lista.
+    evento: {
+      url: '/eventos/empreenday/',
+      dataISO: '2026-11-14T09:00:00-03:00',
+      dataLabel: '14 NOV · sábado · 9h às 18h',
+      local: 'Belo Horizonte',
+    },
     preco: PRECO_PADRAO,
     hotmartCheckout: 'https://pay.hotmart.com/PLACEHOLDER-EMPREENDER',
     problema: {
@@ -148,6 +157,12 @@ export const PROGRAMS = {
       convidadoFem: true,
     },
     theme: { primary: '#0076F8', accent: '#004DBB', dark: '#05070D' }, // Manual Gestão (azul royal / azul elétrico)
+    evento: {
+      url: '/eventos/gestao-de-negocios/',
+      dataISO: '2026-11-07T09:00:00-03:00',
+      dataLabel: '07 NOV · sábado · 9h às 18h',
+      local: 'Belo Horizonte',
+    },
     preco: PRECO_PADRAO,
     hotmartCheckout: 'https://pay.hotmart.com/PLACEHOLDER-GESTAO',
     problema: {
@@ -213,6 +228,14 @@ export const PROGRAMS = {
       convidado: 'Alexandre Rodrigues',
     },
     theme: { primary: '#8D00FF', accent: '#9E55A0', dark: '#08020F' }, // Manual IE (violeta / magenta)
+    // Edicao presencial deste tema. So 5 dos 6 programas tem — gestao nao
+    // tem evento, entao todo consumo precisa checar `if (p.evento)`.
+    evento: {
+      url: '/eventos/inteligencia-emocional-e-neurociencia/',
+      dataISO: '2026-09-19T09:00:00-03:00',
+      dataLabel: '19 SET · sábado · 9h às 18h',
+      local: 'Belo Horizonte',
+    },
     preco: PRECO_PADRAO,
     hotmartCheckout: 'https://pay.hotmart.com/PLACEHOLDER-IE',
     problema: {
@@ -278,6 +301,14 @@ export const PROGRAMS = {
       convidado: 'JB Oliveira',
     },
     theme: { primary: '#FF4000', accent: '#FF6500', dark: '#0E0703' }, // Manual Oratória (laranja-fogo / âmbar)
+    // Edicao presencial deste tema. So 5 dos 6 programas tem — gestao nao
+    // tem evento, entao todo consumo precisa checar `if (p.evento)`.
+    evento: {
+      url: '/eventos/oratoria-e-persuasao/',
+      dataISO: '2026-10-24T09:00:00-03:00',
+      dataLabel: '24 OUT · sábado · 9h às 18h',
+      local: 'Belo Horizonte',
+    },
     preco: PRECO_PADRAO,
     hotmartCheckout: 'https://pay.hotmart.com/PLACEHOLDER-ORATORIA',
     problema: {
@@ -343,6 +374,14 @@ export const PROGRAMS = {
       convidado: '',
     },
     theme: { primary: '#FB0000', accent: '#A10000', dark: '#0C0303' }, // Manual Propulsão em Vendas (vermelho vivo / vermelho-sangue)
+    // Edicao presencial deste tema. So 5 dos 6 programas tem — gestao nao
+    // tem evento, entao todo consumo precisa checar `if (p.evento)`.
+    evento: {
+      url: '/eventos/propulsao-em-vendas/',
+      dataISO: '2026-09-12T09:00:00-03:00',
+      dataLabel: '12 SET · sábado · 9h às 18h',
+      local: 'Belo Horizonte',
+    },
     preco: PRECO_PADRAO,
     hotmartCheckout: 'https://pay.hotmart.com/PLACEHOLDER-VENDAS',
     problema: {
@@ -411,6 +450,14 @@ export const PROGRAMS = {
       convidadoFem: true,
     },
     theme: { primary: '#EBB700', accent: '#FFD200', dark: '#0C0A02' }, // Manual Liderança (dourado / amarelo-ouro)
+    // Edicao presencial deste tema. So 5 dos 6 programas tem — gestao nao
+    // tem evento, entao todo consumo precisa checar `if (p.evento)`.
+    evento: {
+      url: '/eventos/lideranca-extraordinaria/',
+      dataISO: '2026-10-03T09:00:00-03:00',
+      dataLabel: '03 OUT · sábado · 9h às 18h',
+      local: 'Belo Horizonte',
+    },
     preco: PRECO_PADRAO,
     hotmartCheckout: 'https://pay.hotmart.com/PLACEHOLDER-LIDERANCA',
     problema: {
@@ -459,6 +506,11 @@ export const PROGRAMS = {
 };
 
 /** Retorna os programas na ordem de exibição. */
+/** Programas que tem edicao presencial (exclui gestao). */
+export function getProgramsComEvento() {
+  return getProgramsInOrder().filter((p) => p.evento);
+}
+
 export function getProgramsInOrder() {
   return PROGRAM_ORDER.map((slug) => PROGRAMS[slug]).filter(Boolean);
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -8,12 +8,14 @@
   <meta name="description" content="Gerencie suas palestras cadastradas na Avantik.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="/style.css?v=20260521">
-  <script src="/script.js" defer></script>
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+  <link rel="dns-prefetch" href="//esm.sh">
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+<link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+  <script src="/script.js?v=20260816a" defer></script>
 
   <style>
     .mp {
@@ -31,22 +33,23 @@
     }
 
     .mp__upgrade-notice {
-      background: #fef3c7;
-      border: 1px solid #fcd34d;
-      border-radius: 0.75rem;
+      background: rgba(227, 179, 65, 0.10);
+      border: 1px solid rgba(227, 179, 65, 0.28);
+      border-left: 2px solid var(--color-accent);
+      border-radius: var(--radius-xs);
       padding: 1rem 1.25rem;
       font-size: 0.9375rem;
-      color: #78350f;
+      color: var(--color-text-secondary);
       margin-bottom: 1.5rem;
     }
 
     .mp__upgrade-notice a {
-      color: #78350f;
+      color: var(--color-accent-hover);
       font-weight: 600;
     }
 
     .mp__billing {
-      border-radius: 0.75rem;
+      border-radius: var(--radius-xs);
       padding: 1.25rem 1.5rem;
       margin-bottom: 1.5rem;
       display: flex;
@@ -55,10 +58,10 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
-    .mp__billing--info    { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a8a; }
-    .mp__billing--warn    { background: #fef3c7; border: 1px solid #fcd34d; color: #78350f; }
-    .mp__billing--danger  { background: #fee2e2; border: 1px solid #fca5a5; color: #7f1d1d; }
-    .mp__billing--success { background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; }
+    .mp__billing--info    { background: rgba(96, 165, 250, 0.10); border: 1px solid rgba(96, 165, 250, 0.26); color: #BFDBFE; }
+    .mp__billing--warn    { background: rgba(245, 158, 11, 0.10); border: 1px solid rgba(245, 158, 11, 0.28); color: #FCD34D; }
+    .mp__billing--danger  { background: rgba(239, 68, 68, 0.10); border: 1px solid rgba(239, 68, 68, 0.28); color: #FCA5A5; }
+    .mp__billing--success { background: rgba(16, 185, 129, 0.10); border: 1px solid rgba(16, 185, 129, 0.28); color: #6EE7B7; }
     .mp__billing-text { font-size: 0.9375rem; line-height: 1.4; }
     .mp__billing-text strong { font-weight: 700; }
     .mp__billing-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
@@ -66,15 +69,18 @@
 
     .mp__pay-modal-backdrop {
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(6, 7, 9, 0.78);
+      backdrop-filter: blur(3px);
       display: none;
       align-items: center; justify-content: center;
       z-index: 1000; padding: 1rem;
     }
     .mp__pay-modal-backdrop[open] { display: flex; }
     .mp__pay-modal {
-      background: var(--color-surface);
-      border-radius: 1rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(227, 179, 65, 0.22);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      border-radius: var(--radius-md);
       padding: 2rem;
       max-width: 720px; width: 100%;
       max-height: 90vh; overflow-y: auto;
@@ -88,8 +94,10 @@
       margin-bottom: 1.5rem;
     }
     .mp__pay-card {
-      border: 2px solid var(--color-border);
-      border-radius: 0.75rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-muted-bg);
+      color: var(--color-text);
+      border-radius: var(--radius-sm);
       padding: 1.25rem;
       text-align: center;
       cursor: pointer;
@@ -97,10 +105,11 @@
     }
     .mp__pay-card:hover { border-color: var(--color-accent); transform: translateY(-2px); }
     .mp__pay-card[disabled] { opacity: 0.5; cursor: not-allowed; }
-    .mp__pay-card-name { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.5rem; }
-    .mp__pay-card-price { font-size: 1.25rem; color: var(--color-accent); font-weight: 700; }
-    .mp__pay-card-price small { font-size: 0.75rem; color: var(--color-text-secondary); font-weight: 500; display: block; margin-top: 0.25rem; }
-    .mp__pay-modal-close { background: none; border: none; color: var(--color-text-secondary); cursor: pointer; font-size: 0.875rem; text-decoration: underline; }
+    .mp__pay-card-name { font-family: var(--font-heading); font-weight: 500; font-size: 1.125rem; margin-bottom: 0.5rem; color: var(--color-text); }
+    .mp__pay-card-price { font-size: 1.25rem; color: var(--color-accent-hover); font-weight: 600; }
+    .mp__pay-card-price small { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500; display: block; margin-top: 0.25rem; }
+    .mp__pay-modal-close { background: none; border: none; color: var(--color-text-muted); cursor: pointer; font-size: 0.875rem; text-decoration: underline; padding: 0.5rem 0; }
+    .mp__pay-modal-close:hover { color: var(--color-accent-hover); }
 
     .mp__grid {
       display: grid;
@@ -109,13 +118,18 @@
     }
 
     .mp-card {
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1rem;
+      border-radius: var(--radius-md);
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
+      transition: border-color 0.25s var(--ease-out);
+    }
+
+    .mp-card:hover {
+      border-color: rgba(227, 179, 65, 0.28);
     }
 
     .mp-card__header {
@@ -134,20 +148,24 @@
     }
 
     .mp-card__status {
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
       font-weight: 600;
-      padding: 0.25rem 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.625rem;
       border-radius: 100px;
       flex-shrink: 0;
     }
 
-    .mp-card__status--ativa { background: #ecfdf5; color: #065f46; }
-    .mp-card__status--inativa { background: var(--color-muted-bg); color: var(--color-text-secondary); }
+    .mp-card__status--ativa { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.28); color: #6EE7B7; }
+    .mp-card__status--inativa { background: var(--color-muted-bg); border: 1px solid var(--color-border); color: var(--color-text-muted); }
 
     .mp-card__theme {
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       color: var(--color-accent);
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .mp-card__meta {
@@ -172,9 +190,9 @@
     .mp__empty {
       text-align: center;
       padding: 4rem 2rem;
-      background: var(--color-surface);
+      background: #FFFFFF;
       border: 1px solid var(--color-border);
-      border-radius: 1.25rem;
+      border-radius: var(--radius-md);
     }
 
     .mp__empty-title {
@@ -226,7 +244,7 @@
     }
   </style>
 </head>
-<body>
+<body class="theme-2026">
 
   <header class="header" id="header">
     <nav class="header__nav container">
@@ -235,6 +253,7 @@
         <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
         <a href="/projetos/" class="header__link">Oportunidades</a>
         <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link">Setor Público</a>
       </div>
       <div class="header__actions" id="header-actions"></div>
       <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -243,6 +262,7 @@
       <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
       <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
       <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
       <div class="header__mobile-actions"></div>
     </div>
   </header>
@@ -275,7 +295,7 @@
           <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Navegação</h4>
+          <h2 class="footer__col-title">Navegação</h2>
           <nav class="footer__links">
             <a href="/diretorio/">Encontrar Palestrantes</a>
             <a href="/projetos/">Oportunidades</a>
@@ -283,14 +303,14 @@
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Legal</h4>
+          <h2 class="footer__col-title">Legal</h2>
           <nav class="footer__links">
             <a href="/privacidade/">Privacidade</a>
             <a href="/termos/">Termos</a>
           </nav>
         </div>
         <div class="footer__col">
-          <h4 class="footer__col-title">Contato</h4>
+          <h2 class="footer__col-title">Contato</h2>
           <div class="footer__contact">
             <a href="mailto:contato@avantik.com.br" class="footer__contact-item">contato@avantik.com.br</a>
           </div>
@@ -303,7 +323,7 @@
   </footer>
 
   <script type="module">
-    import { supabase, escapeHtml, formatPriceRange, formatDuration, requireAuth, PALESTRA_FORMATS, TIERS, getSubscriptionStatus, startCheckout } from '/lib/supabase.js';
+    import { supabase, escapeHtml, formatPriceRange, formatDuration, requireAuth, PALESTRA_FORMATS, TIERS, getSubscriptionStatus, startCheckout } from '/lib/supabase.js?v=20260816a';
 
     const auth = await requireAuth('speaker');
     if (!auth) throw new Error('redirect');
@@ -393,7 +413,7 @@
             <h2>Escolha seu plano anual</h2>
             <p class="mp__pay-modal-subtitle">12 meses de acesso. Parcele em até 12x sem juros no cartão.</p>
             <div class="mp__pay-grid">${cards}</div>
-            <div id="pay-error" style="color:#7f1d1d;margin-bottom:1rem;display:none"></div>
+            <div id="pay-error" style="color:#FCA5A5;margin-bottom:1rem;display:none"></div>
             <button class="mp__pay-modal-close" data-close-pay>Cancelar</button>
           </div>
         </div>`;

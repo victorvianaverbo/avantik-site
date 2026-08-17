@@ -1,0 +1,1724 @@
+/* =========================================================
+   LPs dos eventos presenciais — /eventos/<slug>/
+   Identidade: Avantik (creme + grafite + dourado)
+   Fontes: Bricolage Grotesque + Instrument Sans (auto-hospedadas)
+
+   ARQUIVO UNICO PARA AS 5 LPs. Antes eram 5 style.css de 1614 linhas que
+   diferiam em exatamente 5 linhas (o bloco --evento-*). Agora a cor do
+   programa vem do atributo style do <body> de cada LP:
+
+     <body style="--evento-primary:#EBB700;--evento-accent:#FFD200;
+                  --evento-glow:rgba(235,183,0,0.12)">
+
+   NAO CARREGUE style.css NEM theme-2026.css JUNTO COM ESTE ARQUIVO, e nao
+   coloque class="theme-2026" no body. As classes colidem de frente (.hero,
+   .footer, .faq__item, .btn, .container existem nos dois) e .section--dark tem
+   tratamento OPOSTO: o theme-2026 forca .section--dark a virar creme claro,
+   enquanto aqui as 5 secoes .section--dark sao escuras de proposito. A
+   coerencia de marca vem do mapa de tokens abaixo, nao do CSS compartilhado.
+
+   COR DO PROGRAMA: --evento-primary vale so para detalhes nao-textuais
+   (ponto do kicker, filetes, brilho). Como TEXTO ela reprovava no AA em 2 dos
+   5 eventos sobre o grafite — #FB0000 dava 3.95:1 e #8D00FF dava 2.77:1.
+   Todo texto que era colorido virou var(--accent) (dourado, 8.20:1).
+
+   UNICA EXCECAO: o wordmark do hero (.hero__wordmark). Ele repete o banner que
+   abre /academy/<slug>/, entao precisa da cor da marca no texto. Passa porque
+   e texto GRANDE (>=2.6rem no peso 900), onde o piso do AA cai de 4.5:1 para
+   3:1, e porque o fundo dele nao e mais o grafite: e o --evento-dark de cada
+   programa. A cor vem de --evento-wordmark, declarada no <body> de cada LP —
+   4 usam o primary, e a IE usa o accent (#B04DFF, 4.4:1) porque o roxo puro
+   dava 3.3:1, perto demais do limite. Nao troque por --evento-primary sem
+   remedir o roxo.
+   ========================================================= */
+
+/* Mesmas faces auto-hospedadas do theme-2026.css. As LPs nao carregam aquele
+   arquivo, entao as @font-face precisam existir aqui. Google Fonts e proibido
+   no projeto — as antigas Cormorant/Hanken/Jost vinham de fonts.gstatic.com. */
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/bricolage-grotesque-400-800-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/bricolage-grotesque-400-800-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/instrument-sans-400-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/instrument-sans-400-700-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Metropolis: fonte dos 6 manuais de marca, usada SO no wordmark do hero (o
+   mesmo banner que abre /academy/<slug>/). So o peso 900 entra aqui — os
+   outros 4 pesos ficam para as paginas da Academy, que carregam academy.css. */
+@font-face {
+  font-family: 'Metropolis';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/academy/assets/fonts/Metropolis-Black.woff') format('woff');
+}
+
+:root {
+  /* Dourado Avantik no lugar da brasa Apogeu. Os nomes --brasa-* foram
+     mantidos para nao reescrever 1600 linhas de referencias; o valor e que
+     mudou. Contrastes conferidos sobre o creme #FBF7EE. */
+  --brasa-300:#E6CF94; --brasa-400:#ECC35C; --brasa-500:#E3B341; --brasa-600:#856C24; --brasa-700:#6E5A1E;
+  /* --grafite-400 colapsa em -500: o equivalente direto (#8a8272) dava 3.56:1
+     no creme e reprovava o AA para texto pequeno. */
+  --grafite-950:#1B1C1E; --grafite-900:#1D1E21; --grafite-800:#2B2C2F; --grafite-700:#5C564A; --grafite-500:#6B6558; --grafite-400:#6B6558;
+  --marfim:#FBF7EE; --areia:#EEE4CD; --nevoa:#A9A49A; --bronze:#A08432;
+  --brasa-grad:linear-gradient(135deg,#ECC35C,#E3B341 50%,#A08432);
+  --av-gold-rgb: 227, 179, 65;   /* lido pelo evento.js para as particulas */
+
+  /* Cor do programa. Sobrescrita no style do <body> de cada LP.
+     Valor aqui = Lideranca Extraordinaria (fallback).
+     --evento-dark voltou: o hero de cada LP repete o banner do programa na
+     Academy, cuja base e o quase-preto tingido da marca (o mesmo
+     theme.dark de academy/data.js). --evento-wordmark e a cor do nome da
+     marca no hero; ver a nota de contraste no topo do arquivo. */
+  --evento-primary:#EBB700;
+  --evento-accent:#FFD200;
+  --evento-glow:rgba(235,183,0,0.12);
+  --evento-dark:#0C0A02;
+  --evento-wordmark:var(--evento-primary);
+
+  --bg:           var(--marfim);
+  --surface:      #FFFFFF;
+  --muted-bg:     #FFFDF8;
+  --text:         #232323;
+  --text-2:       var(--grafite-700);
+  --text-muted:   var(--grafite-500);
+  --primary:      var(--brasa-600);
+  --accent:       var(--brasa-500);
+  /* Apesar do nome, --accent-hover NAO e estado de hover: os 5 usos no arquivo
+     sao cor de TEXTO (numeros de secao, indices do bento, numero do FAQ) sobre
+     fundo claro. Precisa ser o dourado profundo — com o dourado claro esses
+     numeros cairam para 1.65:1 na medicao. Aqui da 4.71:1. */
+  --accent-hover: var(--brasa-600);
+  --accent-soft:  rgba(227, 179, 65, 0.14);
+  --border:       var(--areia);
+  --dark-2:       var(--grafite-900);
+  --dark-3:       var(--grafite-950);
+  --on-dark:      #F5F2EA;
+  --on-dark-2:    var(--nevoa);
+
+  --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body:    'Instrument Sans', system-ui, sans-serif;
+  --font-label:   'Instrument Sans', system-ui, sans-serif;
+
+  --maxw: 1200px;
+  --wrap: 760px;
+  --pad: clamp(1.25rem, 5vw, 2rem);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.0625rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+em { font-style: italic; }
+
+/* =========================================================
+   HERO :: o mesmo banner que abre /academy/<slug>/
+   Base --evento-dark + dois glows da marca + rede animada + wordmark.
+   Portado de .program-hero (academy.css) — as duas pecas devem ler como
+   uma so. Se mexer aqui, confira la.
+   ========================================================= */
+.hero {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding: clamp(6rem, 12vw, 9rem) var(--pad) clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
+  background: var(--evento-dark);
+  color: var(--on-dark);
+}
+/* glows da marca: mesma formula do .program-hero::before */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(80% 60% at 12% -10%, color-mix(in srgb, var(--evento-primary) 38%, transparent), transparent 60%),
+    radial-gradient(70% 60% at 100% 110%, color-mix(in srgb, var(--evento-accent) 26%, transparent), transparent 55%);
+  pointer-events: none;
+}
+/* rede/plexus animada — assinatura comum dos 6 manuais */
+.hero__plexus {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.55;
+  pointer-events: none;
+}
+/* brilho brasa na base */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 220px;
+  z-index: 0;
+  background: radial-gradient(60% 100% at 50% 100%, var(--evento-glow), transparent 75%);
+  pointer-events: none;
+}
+
+.hero__grid {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 3.5rem);
+  align-items: center;
+}
+.hero__main { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+/* Logo da Colecao Foco em Resultados, acima do kicker.
+   O PNG e 395x395 QUADRADO, com a arte numa faixa central de ~100px — dar
+   height a ele rende um quadrado de 52x52 (o logo espremido), e dar width
+   rende 200px de altura, quase toda transparente. Daí aspect-ratio + cover:
+   recorta a faixa util e o box no layout fica do tamanho do que se ve.
+   O filter e o mesmo do .program-hero__colecao (a arte e preta na origem).
+   flex-shrink:0 porque .hero__main e flex column e o conteudo passa de 100svh:
+   sem isso o flex encolhe a unica caixa encolhivel, que e a imagem. */
+.hero__colecao {
+  display: block;
+  flex-shrink: 0;
+  width: clamp(150px, 20vw, 200px);
+  aspect-ratio: 395 / 110;
+  object-fit: cover;
+  object-position: center;
+  margin: 0 auto clamp(1.1rem, 2.5vw, 1.5rem);
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+/* wordmark: nome da marca em Metropolis Black, igual ao .program-hero__title.
+   E um <p>, nao o <h1>: o h1 continua sendo a headline de conversao. */
+.hero__wordmark {
+  font-family: 'Metropolis', var(--font-heading), system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: clamp(2.6rem, 7.5vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  /* rede de seguranca: se alguma marca futura tiver palavra maior que a tela,
+     ela quebra em vez de empurrar scroll lateral na pagina toda. */
+  max-width: 100%;
+  overflow-wrap: break-word;
+  margin: 0 0 clamp(0.9rem, 2.5vw, 1.4rem);
+  color: var(--evento-wordmark);
+  text-shadow: 0 0 36px color-mix(in srgb, var(--evento-wordmark) 45%, transparent);
+}
+
+/* kicker (eyebrow do evento) */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--nevoa);
+  margin-bottom: clamp(0.9rem, 2vw, 1.2rem);
+}
+.kicker__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--evento-primary); flex-shrink: 0; }
+.kicker__sep { width: 1px; height: 0.85rem; background: rgba(255,255,255,0.2); }
+/* TEXTO: dourado, nao a cor do programa. #FB0000 dava 3.95:1 e #8D00FF 2.77:1
+   sobre o grafite; o dourado da 8.20:1. */
+.kicker__ed { color: var(--accent); letter-spacing: 0.16em; }
+@media (prefers-reduced-motion: no-preference) {
+  .is-loaded .kicker__dot { animation: dotPulse 2.4s ease-out infinite; }
+}
+@keyframes dotPulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--evento-primary) 50%, transparent); }
+  70%  { box-shadow: 0 0 0 8px color-mix(in srgb, var(--evento-primary) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--evento-primary) 0%, transparent); }
+}
+
+/* Headline de conversao. Era o elemento gigante do hero; com o wordmark acima
+   ela desce um degrau na hierarquia — continua sendo o <h1> (e o que o Google
+   le e o que prende o leitor), mas quem grita agora e o nome da marca. */
+.hero__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4.2vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+  max-width: 22ch;
+}
+.hero__title span { display: block; }
+/* O italico era a assinatura do Cormorant. Bricolage Grotesque nao tem italico
+   real e o sintetico fica ruim em peso 800 — o destaque passa a ser cor + peso.
+   A cor e o dourado (8.20:1 no grafite), nao a do programa. */
+.hero__title em {
+  font-style: normal;
+  color: var(--accent);
+  position: relative;
+}
+.hero__title em::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0.08em;
+  width: 100%; height: 0.09em;
+  background: var(--evento-primary);
+  opacity: 0.85;
+}
+
+.hero__sub {
+  max-width: 46ch;
+  margin: clamp(1.4rem, 3vw, 2rem) auto 0;
+  font-size: clamp(1.05rem, 1rem + 0.4vw, 1.28rem);
+  color: var(--nevoa);
+  line-height: 1.55;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.hero__micro {
+  margin-top: 1.3rem;
+  font-family: var(--font-label);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--grafite-400);
+}
+
+/* ----- botões ----- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 999px;
+  transition: transform 0.4s var(--ease-spring),
+              box-shadow 0.4s var(--ease-out),
+              background-color 0.3s, color 0.3s;
+}
+.btn--primary {
+  background: var(--brasa-grad);
+  color: #fff;
+  padding: 0.95rem 1.6rem;
+  box-shadow: 0 12px 32px rgba(217, 100, 26, 0.32);
+}
+.btn--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(217, 100, 26, 0.42);
+}
+.btn__price {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0;
+  padding-left: 0.7rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+}
+.btn--ghost {
+  position: relative;
+  color: var(--brasa-400);
+  padding: 0.95rem 0.2rem;
+  font-weight: 500;
+}
+.btn--ghost::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0.55rem;
+  width: 100%; height: 2px;
+  background: var(--brasa-500);
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-out);
+}
+.btn--ghost:hover::after { transform: scaleX(1); }
+
+/* ----- card do evento (vidro escuro, bilhete) ----- */
+.hero__aside {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.5rem;
+  padding: clamp(2rem, 4vw, 2.8rem) clamp(1.6rem, 4vw, 2.6rem);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45), 0 0 50px var(--evento-glow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+/* fio de brasa no topo do card (mesmo detalhe da oferta do low ticket) */
+.hero__aside::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: clamp(120px, 45%, 260px);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--evento-primary), transparent);
+  opacity: 0.85;
+}
+.aside__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--nevoa);
+  margin-bottom: 1.8rem;
+}
+.aside__label::before,
+.aside__label::after {
+  content: "";
+  width: 1.6rem;
+  height: 2px;
+  background: var(--evento-primary);
+  flex-shrink: 0;
+}
+/* livro (mockup) em destaque no topo do card do hero */
+.hero__book {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: -0.3rem auto 1.7rem;
+}
+.hero__book::before {
+  content: "";
+  position: absolute;
+  inset: -18% -8% -4%;
+  z-index: 0;
+  background: radial-gradient(58% 58% at 50% 46%, var(--evento-glow), transparent 72%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+.hero__book img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  filter: drop-shadow(0 20px 38px rgba(0,0,0,0.55));
+}
+.evlist { list-style: none; display: flex; flex-direction: column; }
+.evrow {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  align-items: baseline;
+  gap: 1.2rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: left;
+}
+.evrow__k {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--grafite-400);
+}
+.evrow__v {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.22rem, 2.16vw, 1.53rem);
+  line-height: 1.15;
+  color: var(--on-dark);
+}
+.evrow__mut { font-family: var(--font-body); font-weight: 400; font-size: 0.85rem; color: var(--nevoa); white-space: nowrap; }
+
+.evprice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.8rem;
+  padding: 1.6rem 0 0.4rem;
+}
+.evprice__tag {
+  font-family: var(--font-label);
+  font-size: 0.66rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brasa-400);
+}
+.evprice__line { display: flex; align-items: baseline; gap: 0.75rem; }
+.evprice__now {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2.88rem, 6.4vw, 3.84rem);
+  line-height: 0.9;
+  color: var(--brasa-500);
+  letter-spacing: -0.01em;
+}
+.evprice__cond { font-family: var(--font-label); font-size: 0.9rem; color: var(--nevoa); }
+
+.aside__foot {
+  margin-top: 1.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--grafite-400);
+  text-align: center;
+}
+
+/* ----- scroll cue ----- */
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.4rem, 3vw, 2.4rem);
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-label);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--grafite-400);
+}
+.scroll-cue__rail {
+  width: 1px;
+  height: 2.6rem;
+  background: linear-gradient(to bottom, var(--evento-primary), transparent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .is-loaded .scroll-cue__rail { animation: cueDrop 2s var(--ease-out) infinite; transform-origin: top; }
+}
+@keyframes cueDrop { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+@media (max-width: 880px) { .scroll-cue { display: none; } }
+
+/* =========================================================
+   REVEAL pós-carregamento
+   ========================================================= */
+/* Hero: animação pós-carregamento SÓ com transform (conteúdo pintado
+   no primeiro frame -> LCP imediato, sem opacity:0 no hero) */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { transform: translateY(18px); }
+  .is-loaded .reveal { animation: revealUp 0.7s var(--ease-out) forwards; }
+  .reveal[data-delay="1"] { animation-delay: 0.05s; }
+  .reveal[data-delay="2"] { animation-delay: 0.12s; }
+  .reveal[data-delay="3"] { animation-delay: 0.20s; }
+  .reveal[data-delay="4"] { animation-delay: 0.28s; }
+  .reveal[data-delay="5"] { animation-delay: 0.40s; }
+  .reveal[data-delay="6"] { animation-delay: 0.52s; }
+  .reveal[data-delay="7"] { animation-delay: 0.62s; }
+}
+@keyframes revealUp { to { transform: translateY(0); } }
+
+/* =========================================================
+   SEÇÃO 01 :: A VERDADE (editorial / pull-quote centralizado)
+   ========================================================= */
+.pergunta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  min-height: 82svh;
+  background: var(--muted-bg);
+  border-top: 1px solid var(--border);
+  padding: clamp(5rem, 11vw, 9rem) var(--pad);
+}
+.pergunta__inner {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  text-align: center;
+}
+.section-mark {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: clamp(1.6rem, 3vw, 2.4rem);
+}
+.section-mark__num { font-family: var(--font-heading); font-weight: 600; font-size: 1.1rem; color: var(--accent-hover); }
+.section-mark__label {
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+}
+.pullquote {
+  position: relative;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.78rem, 3.91vw, 3.15rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  max-width: 20ch;
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
+}
+.pullquote em { color: var(--primary); font-style: italic; }
+.pullquote__mark {
+  position: absolute;
+  top: -0.7em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5em;
+  color: var(--accent);
+  opacity: 0.62;
+}
+.pergunta__body { max-width: 620px; margin: 0 auto; }
+.pergunta__body p { margin-bottom: 1.15rem; color: var(--text-2); }
+.pergunta__body strong { color: var(--text); font-weight: 700; }
+.pergunta__highlight {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.17rem, 1.8vw, 1.44rem);
+  line-height: 1.3;
+  color: var(--primary) !important;
+  margin-top: 1.8rem;
+  padding-top: 1.4rem;
+  border-top: 2px solid var(--accent);
+  display: inline-block;
+}
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+@media (max-width: 540px) {
+  .hero { padding-top: clamp(4rem, 14vw, 6rem); padding-bottom: 3.5rem; }
+  /* O piso de 2.6rem do clamp base nao cabe aqui: "EMPREENDAY" e
+     "EXTRAORDINÁRIA" sao palavras longas e indivisiveis, e a 41.6px em
+     Metropolis Black elas passam da largura da tela e criam scroll lateral
+     na pagina inteira. Abaixo de 540px o tamanho passa a acompanhar a vw. */
+  .hero__wordmark { font-size: clamp(1.5rem, 7.4vw, 2.4rem); }
+  .hero__title { font-size: clamp(2.16rem, 10.4vw, 2.88rem); }
+  .hero__sub { font-size: 1.02rem; }
+  .kicker { gap: 0.5rem; font-size: 0.64rem; letter-spacing: 0.14em; }
+  .kicker__ed { letter-spacing: 0.1em; }
+  .hero__actions { flex-direction: column; align-items: stretch; width: 100%; }
+  .btn--primary, .btn--ghost { width: 100%; }
+  .hero__aside { padding: 1.6rem 1.2rem; }
+  .evrow { grid-template-columns: 1fr; gap: 0.2rem; padding: 0.95rem 0; }
+  .evrow__v { font-size: 1.3rem; }
+  .evrow__mut { white-space: normal; }
+  .evprice__now { font-size: 3rem; }
+  .pullquote { font-size: clamp(1.45rem, 6.8vw, 1.79rem); }
+}
+
+/* =========================================================
+   UTILITÁRIOS COMPARTILHADOS (dobras escuras, eyebrow, reveal)
+   ========================================================= */
+.section--dark {
+  background: radial-gradient(80% 70% at 50% 0%, #26262C, var(--grafite-950) 75%);
+  color: var(--on-dark);
+  position: relative;
+  overflow: hidden;
+}
+/* O motivo de xadrez saiu daqui junto com o do hero (2026-08-11): manter o
+   quadriculado so nas dobras internas deixaria a pagina inconsistente. As
+   secoes escuras ficam com o grafite liso. */
+.prog::before, .autores::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.section--dark > * { position: relative; z-index: 1; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+  margin-bottom: clamp(1.2rem, 2.5vw, 1.8rem);
+}
+.eyebrow__num { font-family: var(--font-heading); font-weight: 600; color: var(--accent-hover); letter-spacing: 0; }
+.eyebrow--gold { color: var(--on-dark-2); }
+.eyebrow--gold .eyebrow__num { color: var(--accent); }
+.eyebrow--center { justify-content: center; }
+
+.hl { color: var(--accent); }
+.gold { color: var(--accent); }
+.k { font-weight: 600; color: var(--primary); }
+.btn--lg { padding: 1.1rem 2.1rem; font-size: 1.05rem; }
+
+/* reveal ao scroll */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  [data-reveal].is-in { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   SEÇÃO 02 :: O QUE VOCÊ VAI LEVAR (modular numerado)
+   ========================================================= */
+.levar { background: var(--bg); padding: clamp(5rem, 11vw, 9rem) var(--pad); }
+.levar__head { max-width: var(--wrap); margin: 0 auto; text-align: center; }
+.levar__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.78rem, 4.25vw, 3.06rem);
+  line-height: 1.04;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+}
+.levar__intro {
+  font-size: clamp(1.05rem, 1vw + 0.9rem, 1.25rem);
+  color: var(--text-2);
+  line-height: 1.55;
+  max-width: 56ch;
+  margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+}
+.levar__list { list-style: none; max-width: 720px; margin: 0 auto; }
+.levar__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 1.4rem;
+  align-items: baseline;
+  padding: 1.5rem 1rem 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s var(--ease-out);
+}
+.levar__item:last-child { border-bottom: none; }
+.levar__item::before {
+  content: "";
+  position: absolute;
+  left: -1rem; top: 15%;
+  width: 3px; height: 70%;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.35s var(--ease-out);
+}
+.levar__num {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.87rem, 2.98vw, 2.55rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--accent);
+  transition: -webkit-text-stroke-color 0.3s, transform 0.3s var(--ease-out);
+}
+.levar__text { font-weight: 500; font-size: 1.08rem; line-height: 1.5; color: var(--text); }
+@media (hover: hover) {
+  .levar__item:hover { background: rgba(237, 125, 43, 0.04); }
+  .levar__item:hover::before { transform: scaleY(1); }
+  .levar__item:hover .levar__num { -webkit-text-stroke-color: var(--brasa-600); transform: translateX(4px); }
+}
+.levar__item--segredo {
+  background: var(--surface);
+  border: 1px solid rgba(237, 125, 43, 0.35);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  margin-top: 0.75rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+.levar__item--segredo::before { display: none; }
+@media (hover: hover) {
+  .levar__item--segredo:hover {
+    background: var(--surface);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(20, 20, 23, 0.10);
+  }
+}
+.levar__close {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-style: italic;
+  font-size: clamp(1.17rem, 1.8vw, 1.44rem);
+  line-height: 1.35;
+  color: var(--primary);
+  text-align: center;
+  max-width: 34ch;
+  margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+  padding-top: 1.4rem;
+  border-top: 2px solid var(--accent);
+  display: block;
+}
+@media (max-width: 540px) {
+  .levar__item { grid-template-columns: 3rem 1fr; gap: 1rem; }
+  .levar__num { font-size: 1.8rem; }
+  .levar__text { font-size: 1rem; }
+}
+
+/* =========================================================
+   SEÇÃO 03 :: PROGRAMAÇÃO (timeline dark)
+   ========================================================= */
+.prog { padding: clamp(5rem, 11vw, 9rem) var(--pad); }
+.prog__head { max-width: var(--wrap); margin: 0 auto; text-align: center; }
+.prog__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.78rem, 4.25vw, 3.06rem);
+  line-height: 1.04;
+  color: var(--on-dark);
+  margin-bottom: 1.2rem;
+}
+.prog__intro { color: var(--on-dark-2); font-size: clamp(1.02rem, 1vw + 0.85rem, 1.18rem); max-width: 46ch; margin: 0 auto; }
+
+.tl {
+  position: relative;
+  max-width: 680px;
+  margin: clamp(3rem, 6vw, 4.5rem) auto 0;
+}
+/* trilho base */
+.tl::before {
+  content: "";
+  position: absolute;
+  left: 6.2rem; top: 0; bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.10);
+}
+/* trilho de progresso (preenchido via JS) */
+.tl__fill {
+  position: absolute;
+  left: 6.2rem; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--brasa-400), var(--brasa-600));
+  transform: scaleY(0);
+  transform-origin: top;
+  will-change: transform;
+}
+.tl__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 5rem 2.4rem 1fr;
+  gap: 0 1rem;
+  padding: 1.4rem 0;
+}
+.tl__time {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--brasa-400);
+  text-align: right;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.tl__time small { display: block; font-size: 0.68rem; font-weight: 400; color: var(--grafite-400); letter-spacing: 0.04em; }
+.tl__node {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--brasa-500);
+  background: var(--grafite-950);
+  justify-self: center;
+  align-self: start;
+  margin-top: 0.2rem;
+  transition: background 0.4s var(--ease-out), transform 0.3s var(--ease-spring);
+}
+.tl__node--social { border-radius: 3px; transform: rotate(45deg); }
+.tl__item.is-in .tl__node {
+  background: var(--brasa-500);
+  box-shadow: 0 0 16px rgba(237, 125, 43, 0.55);
+  animation: nodePulse 0.9s var(--ease-out) 1;
+}
+@keyframes nodePulse {
+  0% { box-shadow: 0 0 0 0 rgba(237, 125, 43, 0.55); }
+  100% { box-shadow: 0 0 0 10px rgba(237, 125, 43, 0); }
+}
+.tl__name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.22rem, 1.98vw, 1.53rem);
+  line-height: 1.15;
+  color: var(--on-dark);
+  transition: transform 0.3s var(--ease-out);
+}
+.tl__desc { color: var(--on-dark-2); font-size: 0.95rem; line-height: 1.5; margin-top: 0.3rem; }
+@media (hover: hover) {
+  .tl__item:hover .tl__name { transform: translateX(4px); }
+  .tl__item:hover .tl__node { transform: scale(1.25); }
+  .tl__item:hover .tl__node--social { transform: rotate(45deg) scale(1.25); }
+}
+.prog__seal {
+  display: table;
+  margin: clamp(2rem, 4vw, 3rem) auto 0;
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--nevoa);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+}
+@media (max-width: 640px) {
+  .tl::before, .tl__fill { left: 4.4rem; }
+  .tl__item { grid-template-columns: 3.6rem 1.8rem 1fr; }
+  .tl__time { font-size: 0.72rem; }
+  .tl__time small { font-size: 0.62rem; }
+  .tl__name { font-size: 1.25rem; }
+}
+
+/* =========================================================
+   SEÇÃO 04 :: COMO VAI FUNCIONAR (cards sobrepostos)
+   ========================================================= */
+.pilares { background: var(--bg); padding: clamp(5rem, 11vw, 9rem) var(--pad); }
+.pilares__head { max-width: var(--wrap); margin: 0 auto; text-align: center; }
+.pilares__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.78rem, 4.25vw, 3.06rem);
+  line-height: 1.04;
+  color: var(--text);
+}
+.pilares__deck {
+  max-width: 880px;
+  margin: clamp(3rem, 6vw, 4rem) auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.pcard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: clamp(1.8rem, 3vw, 2.4rem);
+  box-shadow: 0 16px 44px rgba(20, 20, 23, 0.08);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transition: transform 0.8s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+.pcard--1 { transform: rotate(-2deg) translateY(18px); z-index: 1; margin-right: -14px; }
+.pcard--2 {
+  transform: rotate(0.5deg) translateY(-14px);
+  z-index: 3;
+  border-color: rgba(237, 125, 43, 0.45);
+  box-shadow: 0 24px 60px rgba(20, 20, 23, 0.14), 0 0 40px rgba(237, 125, 43, 0.10);
+}
+.pcard--3 { transform: rotate(2deg) translateY(24px); z-index: 2; margin-left: -14px; }
+.pcard__idx { font-family: var(--font-heading); font-weight: 600; font-size: 1.1rem; color: var(--accent-hover); }
+.pcard__name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.35rem, 1.98vw, 1.71rem);
+  line-height: 1.1;
+  color: var(--text);
+}
+.pcard__text { font-size: 0.98rem; color: var(--text-2); line-height: 1.55; }
+/* reveal custom: entram de baixo, pousam na pose rotacionada */
+@media (prefers-reduced-motion: no-preference) {
+  .pcard[data-reveal] { transform: translateY(60px) rotate(0deg); }
+  .pcard--1[data-reveal].is-in { transform: rotate(-2deg) translateY(18px); }
+  .pcard--2[data-reveal].is-in { transform: rotate(0.5deg) translateY(-14px); }
+  .pcard--3[data-reveal].is-in { transform: rotate(2deg) translateY(24px); }
+}
+@media (hover: hover) {
+  .pcard--1:hover { transform: rotate(-2deg) translateY(8px); box-shadow: 0 28px 70px rgba(20, 20, 23, 0.16); transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-out); }
+  .pcard--2:hover { transform: rotate(0.5deg) translateY(-24px); box-shadow: 0 28px 70px rgba(20, 20, 23, 0.16), 0 0 60px rgba(237, 125, 43, 0.16); transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-out); }
+  .pcard--3:hover { transform: rotate(2deg) translateY(14px); box-shadow: 0 28px 70px rgba(20, 20, 23, 0.16); transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-out); }
+}
+@media (max-width: 840px) {
+  .pilares__deck { grid-template-columns: 1fr; max-width: 480px; gap: 1.25rem; }
+  .pcard { min-height: 0; margin: 0 !important; }
+  .pcard--1, .pcard--1[data-reveal].is-in { transform: rotate(-1deg); }
+  .pcard--2, .pcard--2[data-reveal].is-in { transform: rotate(0.25deg); }
+  .pcard--3, .pcard--3[data-reveal].is-in { transform: rotate(1deg); }
+}
+
+/* =========================================================
+   SEÇÃO 05 :: QUEM SOBE AO PALCO (dark, banner dos autores)
+
+   Substituiu o split foto+bio de um condutor unico. Quem sobe ao palco sao
+   os autores do livro, e a arte oficial de cada titulo ja os traz todos numa
+   peca so (/academy/assets/autores/<slug>.jpg, 1280x720, na cor do manual).
+   Mesmo asset da secao .program-autores em /academy/<slug>/.
+   ========================================================= */
+.autores { padding: clamp(5rem, 11vw, 9rem) var(--pad); }
+.autores__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  text-align: center;
+}
+.autores__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2.08rem, 4.8vw, 3.6rem);
+  line-height: 1.04;
+  color: var(--on-dark);
+  margin-bottom: 1.1rem;
+  max-width: 20ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.autores__text {
+  color: var(--on-dark-2);
+  font-size: clamp(1.02rem, 1vw + 0.85rem, 1.18rem);
+  line-height: 1.6;
+  max-width: 56ch;
+  margin: 0 auto;
+}
+.autores__banner {
+  margin: clamp(2.2rem, 5vw, 3.2rem) auto 0;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5),
+              0 0 50px var(--evento-glow);
+}
+/* width/height no <img> travam o 16:9 antes do download (anti-CLS) */
+.autores__banner img { display: block; width: 100%; height: auto; }
+
+/* =========================================================
+   SEÇÃO 06 :: PARA QUEM É (bento centralizado)
+   ========================================================= */
+.paraquem { background: var(--bg); padding: clamp(5rem, 11vw, 9rem) var(--pad); }
+.paraquem__head { max-width: var(--wrap); margin: 0 auto clamp(2.5rem, 5vw, 3.5rem); text-align: center; }
+.paraquem__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4.25vw, 2.89rem);
+  color: var(--text);
+}
+.bento { display: grid; grid-template-columns: 1fr; max-width: 680px; margin: 0 auto; gap: 1rem; }
+.bento__cell {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  text-align: center;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.3s;
+}
+.bento__idx {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--accent-hover);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.bento__text { font-weight: 500; font-size: 1.15rem; line-height: 1.35; color: var(--text); }
+.bento__text b { color: var(--primary); font-weight: 600; }
+.bento__cell--feature { background: var(--grafite-900); }
+.bento__cell--feature .bento__idx { color: var(--accent); }
+.bento__cell--feature .bento__text {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.26rem, 1.8vw, 1.71rem);
+  color: var(--on-dark);
+}
+.bento__cell--feature .bento__text b { color: var(--accent); }
+.bento__cell--cut { background: var(--accent); }
+.bento__cuttext {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.35rem, 2.34vw, 1.98rem);
+  line-height: 1.2;
+  color: var(--grafite-950);
+}
+.bento__cuttext b { color: #fff; }
+.bento__cell::after {
+  content: "";
+  position: absolute;
+  left: 50%; bottom: 0;
+  transform: translateX(-50%);
+  width: 0; height: 2px;
+  background: var(--accent);
+  transition: width 0.4s var(--ease-out);
+}
+@media (hover: hover) {
+  .bento__cell:not(.bento__cell--cut):hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(20, 20, 23, 0.12);
+    border-color: rgba(237, 125, 43, 0.5);
+  }
+  .bento__cell:not(.bento__cell--cut):not(.bento__cell--feature):hover::after { width: 2.4rem; }
+  .bento__cell--cut:hover { transform: scale(1.01); }
+}
+@media (max-width: 540px) { .bento__cell { padding: 1.4rem; } }
+
+/* =========================================================
+   SEÇÃO 07 :: A OFERTA / LOTES (dark spotlight)
+   ========================================================= */
+.oferta {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(5rem, 11vw, 9rem) var(--pad);
+  background: radial-gradient(80% 80% at 50% 30%, var(--dark-2), var(--dark-3) 75%);
+}
+.oferta__particles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.7; z-index: 0; }
+.oferta__card {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 1.75rem;
+  padding: clamp(2.4rem, 5vw, 3.6rem) clamp(1.8rem, 5vw, 3.4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 60px rgba(237, 125, 43, 0.10);
+  overflow: hidden;
+}
+.oferta__card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: clamp(120px, 40%, 240px);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--brasa-500), transparent);
+  opacity: 0.8;
+}
+.oferta__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(237, 125, 43, 0.10), transparent 60%);
+}
+@media (hover: hover) { .oferta__card:hover::before { opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) {
+  .oferta__card[data-reveal] { transform: scale(0.97); }
+  .oferta__card[data-reveal].is-in { transform: scale(1); }
+}
+.oferta__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.87rem, 4.25vw, 2.72rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--on-dark);
+  margin-bottom: 0.9rem;
+  text-wrap: balance;
+}
+.oferta__text { color: var(--on-dark-2); font-size: 1.02rem; line-height: 1.55; margin: 0 auto; max-width: 44ch; text-wrap: balance; }
+
+/* ----- escada de lotes ----- */
+.lotes {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  align-items: end;
+  width: 100%;
+  max-width: 460px;
+  margin: clamp(1.8rem, 4vw, 2.4rem) auto;
+  padding: 1.6rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+.lote { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+.lote__bar { display: block; width: 100%; border-radius: 4px 4px 0 0; }
+.lote:nth-child(1) .lote__bar { height: 22px; }
+.lote:nth-child(2) .lote__bar { height: 30px; }
+.lote:nth-child(3) .lote__bar { height: 38px; }
+.lote:nth-child(4) .lote__bar { height: 46px; }
+.lote__price { font-family: var(--font-heading); font-weight: 600; font-size: 1.1rem; line-height: 1; }
+.lote__name { font-family: var(--font-label); font-weight: 500; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.lote__state { font-family: var(--font-label); font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.14em; }
+/* encerrado */
+.lote--done .lote__bar { background: rgba(255, 255, 255, 0.08); }
+.lote--done .lote__price { color: var(--grafite-500); text-decoration: line-through; text-decoration-color: rgba(138, 138, 148, 0.7); }
+.lote--done .lote__name, .lote--done .lote__state { color: var(--grafite-500); }
+/* ativo */
+.lote--active .lote__bar {
+  background: var(--brasa-grad);
+  box-shadow: 0 0 20px rgba(237, 125, 43, 0.45);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lote--active .lote__bar { animation: lotePulse 2.4s ease-in-out infinite; }
+}
+@keyframes lotePulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(237, 125, 43, 0.45); }
+  50% { box-shadow: 0 0 10px rgba(237, 125, 43, 0.15); }
+}
+.lote--active .lote__price { color: var(--brasa-400); font-size: 1.5rem; }
+.lote--active .lote__name { color: var(--on-dark); }
+.lote--active .lote__state { color: var(--brasa-400); }
+.lote__badge {
+  position: absolute;
+  top: -1.55rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.56rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--grafite-950);
+  background: var(--brasa-400);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  white-space: nowrap;
+}
+/* futuros */
+.lote--next .lote__bar { background: rgba(255, 255, 255, 0.14); outline: 1px dashed rgba(255, 255, 255, 0.2); outline-offset: -1px; }
+.lote--next .lote__price { color: var(--nevoa); }
+.lote--next .lote__name, .lote--next .lote__state { color: var(--grafite-400); }
+
+/* ----- preço hero + CTA ----- */
+.oferta__price { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; margin-bottom: clamp(1.6rem, 3.5vw, 2.1rem); }
+.oferta__pricetag {
+  font-family: var(--font-label);
+  font-size: 0.66rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brasa-400);
+}
+.oferta__priceline { display: flex; align-items: baseline; justify-content: center; gap: 0.9rem; }
+.oferta__now {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2.88rem, 6.4vw, 3.84rem);
+  line-height: 0.9;
+  color: var(--brasa-500);
+  letter-spacing: -0.01em;
+}
+.oferta__cond { font-family: var(--font-label); font-size: 0.9rem; letter-spacing: 0.04em; color: var(--nevoa); }
+/* ----- estado "inscrições em breve" (sem preço) ----- */
+.oferta__soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  margin: clamp(1.4rem, 3vw, 2rem) auto clamp(1.6rem, 3.5vw, 2.2rem);
+  max-width: 460px;
+}
+.oferta__soontag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brasa-400);
+  padding: 0.5rem 1.1rem;
+  border: 1px solid rgba(237, 125, 43, 0.35);
+  border-radius: 999px;
+  background: rgba(237, 125, 43, 0.08);
+}
+.oferta__soontext {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--nevoa);
+  text-align: center;
+}
+.oferta__cta { width: 100%; max-width: 420px; }
+.oferta__reassure { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.1rem; }
+.oferta__bullet { width: 3px; height: 3px; border-radius: 50%; background: var(--grafite-500); }
+.oferta__micro { font-family: var(--font-label); font-size: 0.78rem; color: var(--grafite-400); text-align: center; }
+.oferta__seal { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--font-label); font-size: 0.78rem; font-weight: 500; color: var(--brasa-400); }
+.oferta__anchor {
+  width: 100%;
+  max-width: 420px;
+  margin: clamp(1.8rem, 4vw, 2.4rem) auto 0;
+  color: var(--on-dark-2);
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  line-height: 1.45;
+  font-style: italic;
+  padding-top: clamp(1.4rem, 3vw, 1.8rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  text-wrap: balance;
+}
+@media (max-width: 540px) {
+  .oferta__card { padding: 1.8rem 1.4rem; }
+  .lote__name { display: none; }
+  .oferta__bullet { display: none; }
+  .oferta__reassure { flex-direction: column; gap: 0.35rem; }
+}
+
+/* =========================================================
+   SEÇÃO 08 :: INFORMAÇÕES PRÁTICAS (bilhete)
+   ========================================================= */
+.infos { background: var(--bg); padding: clamp(4rem, 9vw, 7rem) var(--pad); }
+.infos__head { max-width: var(--wrap); margin: 0 auto clamp(1.5rem, 3vw, 2rem); text-align: center; }
+.ticket {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  box-shadow: 0 16px 44px rgba(20, 20, 23, 0.07);
+  transition: transform 0.4s var(--ease-spring);
+}
+/* recortes de bilhete na divisa do canhoto */
+.ticket::before, .ticket::after {
+  content: "";
+  position: absolute;
+  right: calc(7.5rem - 11px);
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  z-index: 2;
+}
+.ticket::before { top: -12px; }
+.ticket::after { bottom: -12px; }
+@media (hover: hover) { .ticket:hover { transform: rotate(-0.4deg); } }
+.ticket__body { padding: clamp(1.8rem, 3.5vw, 2.6rem); }
+.ticket__row {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1.2rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+.ticket__row:last-child { border-bottom: none; }
+.ticket__k {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+.ticket__v { font-weight: 500; font-size: 1rem; color: var(--text); line-height: 1.5; }
+.ticket__map { position: relative; color: var(--primary); }
+.ticket__map::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 100%; height: 1px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+.ticket__map:hover::after { transform: scaleX(1); }
+.ticket__stub {
+  width: 7.5rem;
+  border-left: 1px dashed var(--border);
+  padding: clamp(1.8rem, 3.5vw, 2.6rem) clamp(1.2rem, 2.5vw, 1.8rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--muted-bg);
+  border-radius: 0 1.25rem 1.25rem 0;
+}
+.ticket__vert {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  writing-mode: vertical-rl;
+}
+.ticket__date { font-family: var(--font-heading); font-weight: 600; font-size: 2rem; line-height: 1; color: var(--primary); }
+.ticket__hour { font-family: var(--font-label); font-weight: 500; font-size: 0.8rem; color: var(--text-2); }
+@media (max-width: 600px) {
+  .ticket { grid-template-columns: 1fr; }
+  .ticket::before, .ticket::after { display: none; }
+  .ticket__stub {
+    order: -1;
+    width: 100%;
+    flex-direction: row;
+    gap: 0.8rem;
+    border-left: none;
+    border-bottom: 1px dashed var(--border);
+    border-radius: 1.25rem 1.25rem 0 0;
+    padding: 1rem 1.4rem;
+  }
+  .ticket__vert { writing-mode: horizontal-tb; }
+  .ticket__date { font-size: 1.5rem; }
+  .ticket__row { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+
+/* =========================================================
+   SEÇÃO 09 :: FAQ
+   ========================================================= */
+.faq { background: var(--muted-bg); padding: clamp(5rem, 11vw, 9rem) var(--pad); }
+.faq__inner { max-width: var(--wrap); margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 4vw, 2.8rem); }
+.faq__head { text-align: center; }
+.faq__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3.82vw, 2.72rem);
+  color: var(--text);
+}
+.faq__list { border-top: 1px solid var(--border); }
+.faq__item { border-bottom: 1px solid var(--border); }
+.faq__q {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 1.5rem 0;
+  font-family: var(--font-body);
+}
+.faq__q:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+.faq__qnum { font-family: var(--font-heading); font-weight: 600; font-size: 1.4rem; color: var(--accent-hover); transition: color 0.3s; }
+.faq__qtext { font-weight: 600; font-size: clamp(1.05rem, 1.4vw, 1.25rem); color: var(--text); transition: color 0.3s; }
+.faq__icon { position: relative; width: 18px; height: 18px; flex-shrink: 0; }
+.faq__icon::before, .faq__icon::after {
+  content: "";
+  position: absolute;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: transform 0.35s var(--ease-out), opacity 0.35s;
+}
+.faq__icon::before { left: 0; top: 8px; width: 18px; height: 2px; }
+.faq__icon::after { left: 8px; top: 0; width: 2px; height: 18px; }
+.faq__item[data-open] .faq__icon::after { transform: rotate(90deg); opacity: 0; }
+.faq__item[data-open] .faq__icon::before { transform: rotate(180deg); }
+.faq__item[data-open] .faq__qnum, .faq__item[data-open] .faq__qtext { color: var(--primary); }
+.faq__a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s var(--ease-out); }
+.faq__item[data-open] .faq__a { grid-template-rows: 1fr; }
+.faq__a-inner { overflow: hidden; }
+.faq__a-inner p { color: var(--text-2); font-size: 1.02rem; line-height: 1.6; max-width: 58ch; padding-bottom: 1.5rem; }
+@media (hover: hover) { .faq__q:hover .faq__qnum, .faq__q:hover .faq__qtext { color: var(--primary); } }
+
+/* =========================================================
+   SEÇÃO 10 :: CTA FINAL (poster + countdown)
+   ========================================================= */
+.final {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: clamp(5rem, 11vw, 9rem) var(--pad);
+  background: radial-gradient(70% 90% at 50% 60%, var(--dark-2), var(--dark-3) 80%);
+}
+.final__ghost { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.final__ghost span {
+  position: absolute;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
+  line-height: 1;
+  will-change: transform;
+}
+.final__ghost span[data-ghost="1"] { font-size: 14vw; top: 8%; left: -4%; }
+.final__ghost span[data-ghost="2"] { font-size: 18vw; bottom: 6%; right: -2%; }
+.final__ghost span[data-ghost="3"] { font-size: 11vw; top: 45%; left: 30%; }
+.final__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.final__title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2.08rem, 7.2vw, 5.2rem);
+  line-height: 0.98;
+  color: var(--on-dark);
+  margin-bottom: 1.6rem;
+}
+.final__title .reveal-line { display: block; }
+.final__title em { color: var(--accent); font-style: italic; }
+.final__text {
+  color: var(--on-dark-2);
+  font-size: clamp(1.05rem, 1vw + 1rem, 1.3rem);
+  line-height: 1.55;
+  max-width: 54ch;
+  margin-bottom: 1rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .final__title .reveal-line { opacity: 0; transform: translateY(100%); }
+  .final.is-in .final__title .reveal-line { animation: lineUp 0.7s var(--ease-out) forwards; }
+  .final.is-in .final__title .reveal-line:nth-child(1) { animation-delay: 0.05s; }
+  .final.is-in .final__title .reveal-line:nth-child(2) { animation-delay: 0.18s; }
+  .final.is-in .final__title .reveal-line:nth-child(3) { animation-delay: 0.31s; }
+}
+@keyframes lineUp { to { opacity: 1; transform: translateY(0); } }
+
+/* countdown */
+.count { margin: clamp(1.8rem, 4vw, 2.4rem) 0 0.6rem; }
+.count__label {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--nevoa);
+  margin-bottom: 0.9rem;
+}
+.count__grid { display: flex; align-items: baseline; justify-content: center; gap: clamp(1rem, 3vw, 2rem); }
+.count__cell { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+.count__num {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2.04rem, 5.1vw, 3.23rem);
+  line-height: 1;
+  color: var(--brasa-400);
+  font-variant-numeric: tabular-nums;
+}
+.count__unit {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--grafite-400);
+}
+.count__sep { font-family: var(--font-heading); font-size: clamp(1.44rem, 3.6vw, 2.16rem); color: rgba(255, 255, 255, 0.18); align-self: flex-start; }
+.count--urgent .count__num { color: var(--brasa-500); }
+@media (prefers-reduced-motion: no-preference) {
+  .count--urgent .count__num { animation: countPulse 1.6s ease-in-out infinite; }
+}
+@keyframes countPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.72; } }
+.count__live {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brasa-400);
+}
+.final .btn--lg { margin-top: 1.4rem; padding: 1.15rem 2.2rem; font-size: 1.1rem; }
+.final__micro { margin-top: 1.2rem; font-family: var(--font-label); font-size: 0.85rem; color: var(--on-dark-2); }
+@media (max-width: 540px) {
+  .final__ghost span[data-ghost="3"] { display: none; }
+  .count__grid { gap: 0.8rem; }
+  .count__num { font-size: 2rem; }
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer { background: var(--dark-3); color: var(--on-dark-2); padding: 2.5rem var(--pad); }
+.footer__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.footer__brand { font-family: var(--font-label); font-size: 0.85rem; }
+.footer__cta {
+  position: relative;
+  color: var(--accent);
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.footer__cta::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -3px;
+  width: 100%; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+.footer__cta:hover::after { transform: scaleX(1); }
+.footer__legal {
+  max-width: var(--maxw);
+  margin: 1.2rem auto 0;
+  font-family: var(--font-label);
+  font-size: 0.72rem;
+  /* Rodape da LP e escuro: --grafite-500 aqui media 2.95:1. Texto legal e
+     texto de verdade (fala de consentimento de dados), entao vai para o tom
+     claro — 6.26:1. */
+  color: var(--on-dark-2);
+}
+@media (max-width: 540px) { .footer__inner { flex-direction: column; align-items: flex-start; } }
+
+/* =========================================================
+   REDUCED MOTION :: desligar efeitos pesados
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .oferta__particles { display: none; }
+  .tl__fill { transform: scaleY(1) !important; }
+  .final__ghost span { transform: none !important; }
+}
+
+/* =========================================================
+   POPUP DE CAPTURA (nome + WhatsApp)
+   ========================================================= */
+.lead-modal { position: fixed; inset: 0; z-index: 9999; display: none; }
+.lead-modal.is-open { display: block; }
+.lead-modal__overlay {
+  position: absolute; inset: 0;
+  background: rgba(10, 10, 12, 0.72);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  animation: leadFade 0.25s var(--ease-out);
+}
+.lead-modal__card {
+  position: relative;
+  z-index: 1;
+  width: min(440px, calc(100vw - 2rem));
+  margin: max(6vh, 1.5rem) auto;
+  max-height: 90vh; overflow-y: auto;
+  background: linear-gradient(180deg, #202027, #16161a);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.5rem;
+  padding: clamp(1.8rem, 5vw, 2.6rem);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), 0 0 60px rgba(237, 125, 43, 0.10);
+  animation: leadPop 0.35s var(--ease-spring);
+  text-align: center;
+}
+.lead-modal__card::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: clamp(120px, 45%, 220px); height: 2px;
+  background: linear-gradient(90deg, transparent, var(--brasa-500), transparent);
+}
+@keyframes leadFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes leadPop { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: none; } }
+.lead-modal__x {
+  position: absolute; top: 0.9rem; right: 1.1rem;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.7rem; line-height: 1; color: var(--grafite-400);
+  transition: color 0.2s;
+}
+.lead-modal__x:hover { color: var(--on-dark); }
+.lead-modal__eyebrow {
+  font-family: var(--font-label); font-size: 0.68rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.22em; color: var(--brasa-400);
+  margin-bottom: 0.7rem;
+}
+.lead-modal__title {
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: clamp(1.44rem, 3.6vw, 1.89rem); line-height: 1.1;
+  color: var(--on-dark); margin-bottom: 0.7rem;
+}
+.lead-modal__sub {
+  font-size: 0.98rem; line-height: 1.5; color: var(--on-dark-2);
+  margin-bottom: 1.6rem; max-width: 34ch; margin-left: auto; margin-right: auto;
+}
+.lead-modal__form { display: flex; flex-direction: column; gap: 0.9rem; text-align: left; }
+.lead-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.lead-field label {
+  font-family: var(--font-label); font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.14em; color: var(--nevoa);
+}
+.lead-field input {
+  width: 100%; font-family: var(--font-body); font-size: 1rem;
+  color: var(--on-dark); background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 0.7rem;
+  padding: 0.85rem 1rem; transition: border-color 0.25s, background 0.25s;
+}
+.lead-field input::placeholder { color: var(--grafite-400); }
+.lead-field input:focus {
+  outline: none; border-color: var(--brasa-500);
+  background: rgba(255, 255, 255, 0.08);
+}
+.lead-modal__err { color: #ff9d6b; font-size: 0.85rem; margin: 0.2rem 0 0; }
+.lead-modal__submit { width: 100%; margin-top: 0.4rem; }
+.lead-modal__submit:disabled { opacity: 0.7; cursor: default; }
+.lead-modal__micro {
+  font-family: var(--font-label); font-size: 0.76rem; color: var(--grafite-400);
+  text-align: center; margin-top: 0.2rem;
+}
+.lead-modal__done {
+  text-align: center; padding: 0.5rem 0 0.3rem;
+}
+.lead-modal__done h3 {
+  font-family: var(--font-heading); font-weight: 600; font-size: clamp(1.35rem, 3.6vw, 1.8rem);
+  color: var(--on-dark); margin-bottom: 0.6rem;
+}
+.lead-modal__done p { color: var(--on-dark-2); font-size: 0.98rem; line-height: 1.5; }
+@media (prefers-reduced-motion: reduce) {
+  .lead-modal__overlay, .lead-modal__card { animation: none; }
+}
+/* ============================================================
+   MOBILE HARDENING — sem rolagem horizontal + refino em telas muito pequenas
+   ============================================================ */
+@media (max-width: 380px) {
+  .hero__title { font-size: clamp(1.76rem, 9.6vw, 2.36rem); }
+  .kicker { font-size: 0.6rem; letter-spacing: 0.12em; }
+  .count__num { font-size: 1.7rem; }
+  .count__grid { gap: 0.5rem; }
+  .oferta__soontag { text-align: center; }
+}

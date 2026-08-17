@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Meta Pixel Code (adiado para idle: nao bloqueia o carregamento) -->
+  <script>
+  window.__loadPixel=function(){if(window.fbq)return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1028501882025260');fbq('track','PageView');};
+  // Carrega na primeira interacao; se ninguem interagir, em 6s. Mantem o
+  // pixel fora da janela de medicao do PageSpeed (que nao interage) sem
+  // atrasar quem esta de fato usando a pagina.
+  (function(){var t=setTimeout(window.__loadPixel,6000);
+  var go=function(){clearTimeout(t);window.__loadPixel();};
+  ['pointerdown','keydown','scroll','touchstart'].forEach(function(ev){
+    addEventListener(ev,go,{once:true,passive:true});});})();
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1028501882025260&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <title>Palestrantes para o Setor Público | Avantik</title>
+  <meta name="description" content="Banco de palestrantes habilitados para contratação por órgãos públicos. Curadoria com documentação validada, para prefeituras, câmaras, autarquias e escolas de governo.">
+
+  <meta property="og:title" content="Palestrantes para o Setor Público | Avantik">
+  <meta property="og:description" content="Banco de palestrantes habilitados para contratação por órgãos públicos, com documentação validada pela curadoria.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://avantikpalestras.com.br/images/logo.png">
+  <meta property="og:url" content="https://avantikpalestras.com.br/setor-publico/">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="canonical" href="https://avantikpalestras.com.br/setor-publico/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<link rel="preconnect" href="https://ajokzpjguhfxxudteetr.supabase.co" crossorigin>
+<!-- esm.sh, nao unpkg: e de la que lib/supabase.js importa o client. -->
+<link rel="preconnect" href="https://esm.sh" crossorigin>
+<link rel="dns-prefetch" href="//connect.facebook.net">
+
+  <!-- Figura do banner: candidata a LCP no desktop. Mesma URL do <img>. -->
+  <link rel="preload" as="image" fetchpriority="high"
+        href="/.netlify/images?url=/images/alexandre-mansur-recorte.png&w=560&q=90&fm=webp">
+
+  <link href="/lib/aos.css" rel="stylesheet">
+
+  <!-- Fontes auto-hospedadas: preload das criticas -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bricolage-grotesque-400-800-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/instrument-sans-400-700-latin.woff2">
+  <link rel="stylesheet" href="/style.css?v=20260816a">
+  <link rel="stylesheet" href="/theme-2026.css?v=20260816a">
+
+  <script src="/lib/aos.js" defer></script>
+  <script src="/script.js?v=20260816a" defer></script>
+  <script src="/eventos/capi-client.js?v=20260816a" defer></script>
+</head>
+<!-- A classe `sp-directory` e o que troca o acento de dourado para chumbo
+     (bloco no fim do theme-2026.css). O layout, os cards e o grid sao os
+     mesmos do /diretorio/ — a vertical se distingue pelo detalhe, nao por
+     uma segunda identidade. -->
+<body class="theme-2026 sp-directory">
+
+  <!-- HEADER -->
+  <header class="header header--solid" id="header">
+    <nav class="header__nav container">
+      <a href="/" class="header__logo">
+        <img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="header__logo-img" width="150" height="40">
+      </a>
+
+      <div class="header__links" id="nav-links">
+        <a href="/diretorio/" class="header__link">Encontrar Palestrantes</a>
+        <a href="/projetos/" class="header__link">Oportunidades</a>
+        <a href="/academy/" class="header__link">Academy</a>
+        <a href="/setor-publico/" class="header__link header__link--active">Setor Público</a>
+        <a href="/para-palestrantes/" class="header__link">Para Palestrantes</a>
+      </div>
+
+      <div class="header__actions" id="header-actions">
+        <a href="/entrar/" class="btn btn--outline btn--sm">Entrar</a>
+        <a href="/para-palestrantes/" class="btn btn--accent btn--sm">Sou Palestrante</a>
+      </div>
+
+      <button class="header__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu overlay -->
+    <div class="header__mobile" id="mobile-menu">
+      <a href="/diretorio/" class="header__mobile-link">Encontrar Palestrantes</a>
+      <a href="/projetos/" class="header__mobile-link">Oportunidades</a>
+      <a href="/academy/" class="header__mobile-link">Academy</a>
+      <a href="/setor-publico/" class="header__mobile-link">Setor Público</a>
+      <a href="/para-empresas/" class="header__mobile-link">Para Empresas</a>
+      <a href="/para-palestrantes/" class="header__mobile-link">Para Palestrantes</a>
+      <div class="header__mobile-actions">
+        <a href="/entrar/" class="btn btn--outline">Entrar</a>
+        <a href="/para-palestrantes/" class="btn btn--accent">Sou Palestrante</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- BANCO DA VERTICAL: mesmo layout de 2 colunas do /diretorio/ -->
+    <section class="directory section">
+      <div class="container directory__layout">
+
+        <!-- COLUNA ESQUERDA: painel de filtros -->
+        <aside class="filters-panel" id="filters-panel">
+          <div class="filters-panel__head">
+            <span class="filters-panel__title">Filtros</span>
+            <button type="button" class="filters-panel__clear" id="clear-filters">
+              Limpar filtros
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+            </button>
+          </div>
+
+          <!-- Busca -->
+          <div class="directory-search">
+            <input type="text" class="directory-search__input" id="search-input" placeholder="Buscar por nome ou tema...">
+          </div>
+
+          <!-- Filtros basicos: Estado + Faixa de preco -->
+          <div class="filters-panel__basics">
+            <label class="filters-field">
+              <span class="filters-field__label">Estado</span>
+              <select class="filters-field__select" id="state-filter">
+                <option value="">Todos</option>
+              </select>
+            </label>
+            <label class="filters-field">
+              <span class="filters-field__label">Faixa de preço</span>
+              <select class="filters-field__select" id="price-filter">
+                <option value="">Todos</option>
+                <option value="0-5000">Até R$ 5.000</option>
+                <option value="5000-10000">R$ 5.000 - R$ 10.000</option>
+                <option value="10000-20000">R$ 10.000 - R$ 20.000</option>
+                <option value="20000-999999">Acima de R$ 20.000</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Campanhas, Normas & Datas (recolhivel) -->
+          <details class="filter-group" id="seasonal-wrap" hidden>
+            <summary class="filter-group__summary">
+              <span class="filter-group__title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                Campanhas, Normas &amp; Datas
+              </span>
+              <span class="filter-group__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="filter-group__chips" id="seasonal-filters"></div>
+          </details>
+
+          <!-- Grupos de temas (injetados via JS, cada um <details>) -->
+          <div id="theme-groups"></div>
+
+          <!-- Caixa de apoio -->
+          <div class="filters-help">
+            <div class="filters-help__icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <strong class="filters-help__title">Precisa de apoio no processo?</strong>
+            <p class="filters-help__text">Enviamos currículo, portfólio e certidões no formato que o setor de compras anexa ao processo administrativo.</p>
+            <a href="https://wa.me/5531992185328" target="_blank" rel="noopener noreferrer" class="btn btn--accent btn--sm filters-help__cta">Falar com a curadoria →</a>
+          </div>
+        </aside>
+
+        <!-- COLUNA DIREITA: hero + resultados -->
+        <div class="directory__main">
+
+          <!-- Hero: fala com quem contrata pelo orgao, nao com o palestrante.
+               A figura do embaixador entra recortada e ancorada na base, no
+               lugar do "A" decorativo do /diretorio/ (o ::after e desligado no
+               tema). Ela sai do fluxo abaixo de 900px — ver secao 19 do CSS. -->
+          <div class="directory-hero sp-hero">
+            <div class="sp-hero__text">
+              <span class="directory-hero__eyebrow">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                Vertical Setor Público
+              </span>
+              <h1 class="directory-hero__title">Palestrantes preparados para contratação por órgão público.</h1>
+              <p class="directory-hero__subtitle">
+                Todos os nomes desta lista passaram por curadoria: trajetória comprovável para sustentar a
+                justificativa de notória especialização e documentação revisada antes de chegar ao seu processo.
+                Contratação por inexigibilidade (Art. 74, III) ou dispensa por valor (Art. 75, II) da Lei 14.133/2021.
+              </p>
+            </div>
+
+            <figure class="sp-hero__amb">
+              <img class="sp-hero__amb-photo"
+                   src="/.netlify/images?url=/images/alexandre-mansur-recorte.png&w=560&q=90&fm=webp"
+                   alt="Alexandre Mansur, embaixador da vertical Setor Público da Avantik"
+                   width="466" height="380" loading="eager" decoding="async" fetchpriority="high">
+              <figcaption class="sp-hero__amb-tag">
+                <strong>Alexandre Mansur</strong>
+                <span>Embaixador da vertical</span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <!-- Cabecalho de resultados -->
+          <div class="directory-results-head">
+            <div class="directory-results-head__info">
+              <span class="directory-results-head__count" id="results-count">Carregando palestrantes…</span>
+              <small class="directory-results-head__sub">Habilitados pela curadoria da vertical</small>
+            </div>
+            <label class="directory-sort">
+              <span>Ordenar por</span>
+              <select class="filters-field__select" id="sort-filter">
+                <option value="relevantes">Mais relevantes</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Results grid -->
+          <div class="directory-grid" id="results-grid">
+            <!-- Skeleton loading (6 items, shown initially) -->
+            <div class="speaker-skeleton"><div class="speaker-skeleton__photo"></div><div class="speaker-skeleton__body"><div class="speaker-skeleton__line--medium speaker-skeleton__line"></div><div class="speaker-skeleton__line--short speaker-skeleton__line"></div><div class="speaker-skeleton__line--tags speaker-skeleton__line"></div></div></div>
+            <div class="speaker-skeleton"><div class="speaker-skeleton__photo"></div><div class="speaker-skeleton__body"><div class="speaker-skeleton__line--medium speaker-skeleton__line"></div><div class="speaker-skeleton__line--short speaker-skeleton__line"></div><div class="speaker-skeleton__line--tags speaker-skeleton__line"></div></div></div>
+            <div class="speaker-skeleton"><div class="speaker-skeleton__photo"></div><div class="speaker-skeleton__body"><div class="speaker-skeleton__line--medium speaker-skeleton__line"></div><div class="speaker-skeleton__line--short speaker-skeleton__line"></div><div class="speaker-skeleton__line--tags speaker-skeleton__line"></div></div></div>
+            <div class="speaker-skeleton"><div class="speaker-skeleton__photo"></div><div class="speaker-skeleton__body"><div class="speaker-skeleton__line--medium speaker-skeleton__line"></div><div class="speaker-skeleton__line--short speaker-skeleton__line"></div><div class="speaker-skeleton__line--tags speaker-skeleton__line"></div></div></div>
+            <div class="speaker-skeleton"><div class="speaker-skeleton__photo"></div><div class="speaker-skeleton__body"><div class="speaker-skeleton__line--medium speaker-skeleton__line"></div><div class="speaker-skeleton__line--short speaker-skeleton__line"></div><div class="speaker-skeleton__line--tags speaker-skeleton__line"></div></div></div>
+            <div class="speaker-skeleton"><div class="speaker-skeleton__photo"></div><div class="speaker-skeleton__body"><div class="speaker-skeleton__line--medium speaker-skeleton__line"></div><div class="speaker-skeleton__line--short speaker-skeleton__line"></div><div class="speaker-skeleton__line--tags speaker-skeleton__line"></div></div></div>
+          </div>
+
+          <!-- Load more -->
+          <div class="directory-load-more" id="load-more-wrap" hidden>
+            <button class="btn btn--outline" id="load-more-btn">Carregar mais palestrantes</button>
+          </div>
+
+          <!-- Rodape do banco: a saida para quem chegou aqui como palestrante -->
+          <p class="sp-dir-note">
+            É palestrante e quer entrar nesta lista?
+            <a href="/para-palestrantes/#planos">Veja como funciona a vertical →</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Coluna 1: Marca -->
+        <div class="footer__brand">
+          <a href="/" class="footer__logo">
+            <img src="/.netlify/images?url=/images/logo.png&w=300&q=85&fm=webp" alt="Avantik" class="footer__logo-img" width="150" height="44">
+          </a>
+          <p class="footer__desc">Conectando empresas aos melhores palestrantes do Brasil.</p>
+          <div class="footer__socials">
+            <a href="https://instagram.com/apogeudopalestrante" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <a href="https://facebook.com/avantik" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://youtube.com/avantik" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Navegação -->
+        <div class="footer__col">
+          <h2 class="footer__col-title">Navegação</h2>
+          <nav class="footer__links">
+            <a href="/diretorio/">Encontrar Palestrantes</a>
+            <a href="/para-palestrantes/">Para Palestrantes</a>
+            <a href="/setor-publico/">Setor Público</a>
+            <a href="/para-empresas/">Para Empresas</a>
+            <a href="/eventos/">Eventos Presenciais</a>
+            <a href="/sobre/">Sobre</a>
+            <a href="/blog/">Blog</a>
+          </nav>
+        </div>
+
+        <!-- Coluna 3: Legal -->
+        <div class="footer__col">
+          <h2 class="footer__col-title">Legal</h2>
+          <nav class="footer__links">
+            <a href="/privacidade/">Política de Privacidade</a>
+            <a href="/termos/">Termos e Condições</a>
+            <a href="/contrato/">Contrato do Assinante</a>
+          </nav>
+        </div>
+
+        <!-- Coluna 4: Contato -->
+        <div class="footer__col">
+          <h2 class="footer__col-title">Contato</h2>
+          <div class="footer__contact">
+            <a href="tel:+5531992185328" class="footer__contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              (31) 99218-5328
+            </a>
+            <a href="mailto:contato@avantik.com.br" class="footer__contact-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              contato@avantik.com.br
+            </a>
+            <a href="https://wa.me/5531992185328" target="_blank" rel="noopener noreferrer" class="footer__whatsapp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+              Fale pelo WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright bar -->
+      <div class="footer__bottom">
+        <p>&copy; <span id="year"></span> Avantik. Todos os direitos reservados.</p>
+        <p class="footer__made">Feito com cuidado em BH</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+import { supabase, formatPriceRange, ESTADOS_BR, renderBadges, escapeHtml, cdnImg } from '/lib/supabase.js?v=20260816a';
+
+// ============================================================================
+// BANCO DA VERTICAL SETOR PUBLICO
+//
+// Mesmo motor do /diretorio/, com tres diferencas deliberadas:
+//
+// 1. A query filtra `public_sector_ready` NO SERVIDOR. O /diretorio/ traz todo
+//    mundo e filtra no cliente porque precisa da lista inteira para os chips;
+//    aqui a lista inteira nunca e usada, entao trazer 310 linhas para exibir
+//    ~21 seria desperdicio de payload.
+//
+// 2. Os filtros sao derivados do RESULTADO, nao da taxonomia. Com ~21
+//    palestrantes, renderizar os 49 temas da tabela `themes` e as 27 UFs de
+//    ESTADOS_BR encheria o painel de chips que so devolvem lista vazia. Por
+//    isso a ordem de init inverte a do /diretorio/: busca os palestrantes
+//    PRIMEIRO, e so entao monta os filtros com o que existe.
+//
+// 3. O escudo Setor Publico nao aparece no card. Aqui 100% da lista tem a
+//    flag — o badge deixaria de distinguir e viraria ruido visual repetido em
+//    todo card. `has_seal` e `did_apogeu` continuam aparecendo.
+// ============================================================================
+
+const PAGE_SIZE = 12;
+let allSpeakers = [];
+let filteredSpeakers = [];
+let displayCount = PAGE_SIZE;
+
+const grid = document.getElementById('results-grid');
+const searchInput = document.getElementById('search-input');
+const stateFilter = document.getElementById('state-filter');
+const priceFilter = document.getElementById('price-filter');
+const themeGroupsDiv = document.getElementById('theme-groups');
+const resultsCount = document.getElementById('results-count');
+const loadMoreWrap = document.getElementById('load-more-wrap');
+const loadMoreBtn = document.getElementById('load-more-btn');
+
+// Grupos da taxonomia (mesma ordem do /diretorio/).
+const THEME_GROUPS = [
+  { categoria: 'mais-procurados', title: 'Temas mais procurados' },
+  { categoria: 'sociedade',       title: 'Sociedade & valores' },
+  { categoria: 'especializados',  title: 'Temas especializados' },
+];
+
+const PLACEHOLDER_AVATAR = '/images/avatar-placeholder.svg';
+let activeTheme = null;
+let allThemes = [];
+let activeCampaignThemes = null; // slugs de tema quando uma campanha sazonal esta ativa
+let activeCampaignKey = null;    // key vinda de ?campanha= (para realcar o chip)
+
+// Campanhas -> slugs de temas canonicos (taxonomia v2).
+// `month` (1-12) destaca a campanha no mes; null = sempre visivel.
+const SEASONAL_CAMPAIGNS = [
+  { key: 'sipat',             label: 'SIPAT',             month: null, dot: '#16A34A', slugs: ['seguranca-do-trabalho'] },
+  { key: 'nr1',               label: 'NR1',               month: null, dot: '#2563EB', slugs: ['seguranca-do-trabalho'] },
+  { key: 'janeiro-branco',    label: 'Janeiro Branco',    month: 1,    dot: '#E5E7EB', slugs: ['saude-mental'] },
+  { key: 'dia-das-mulheres',  label: 'Dia das Mulheres',  month: 3,    dot: '#EC4899', slugs: ['diversidade-e-inclusao'] },
+  { key: 'dia-das-maes',      label: 'Dia das Mães',      month: 5,    dot: '#F472B6', slugs: ['familia-e-relacoes-humanas'] },
+  { key: 'dia-dos-pais',      label: 'Dia dos Pais',      month: 8,    dot: '#60A5FA', slugs: ['familia-e-relacoes-humanas'] },
+  { key: 'setembro-amarelo',  label: 'Setembro Amarelo',  month: 9,    dot: '#F59E0B', slugs: ['saude-mental'] },
+  { key: 'outubro-rosa',      label: 'Outubro Rosa',      month: 10,   dot: '#EC4899', slugs: ['saude-mental'] },
+  { key: 'novembro-azul',     label: 'Novembro Azul',     month: 11,   dot: '#3B82F6', slugs: ['saude-mental'] },
+  { key: 'consciencia-negra', label: 'Consciência Negra', month: 11,   dot: '#A8A29E', slugs: ['diversidade-e-inclusao'] },
+  { key: 'diversidade-esg',   label: 'Diversidade e ESG', month: null, dot: '#10B981', slugs: ['diversidade-e-inclusao'] },
+];
+
+// Grupos abrem expandidos no desktop; no mobile ficam recolhidos para nao
+// empurrar os palestrantes para baixo de um painel muito alto.
+const groupsOpenByDefault = window.matchMedia('(min-width: 900px)').matches;
+
+// Conjunto dos slugs de tema efetivamente presentes entre os habilitados.
+// Preenchido por fetchAllSpeakers() e consumido pelos dois loaders de filtro.
+let presentThemeSlugs = new Set();
+
+// Busca os palestrantes habilitados na vertical.
+// Usa a view `speakers_public` — nao expoe email/phone pra anonimos (LGPD).
+async function fetchAllSpeakers() {
+  const { data, error } = await supabase
+    .from('speakers_public')
+    .select('id, slug, name, city, state, bio, photo_url, plan, rating, has_seal, did_apogeu, public_sector_ready, active, created_at, speaker_themes!speaker_id(themes(name, slug, categoria)), palestras!speaker_id(id, title, slug, price_min, price_max, theme_id, themes!palestras_theme_id_fkey(name, slug, categoria))')
+    .eq('active', true)
+    .eq('public_sector_ready', true)
+    .not('photo_url', 'is', null)
+    .neq('photo_url', PLACEHOLDER_AVATAR)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    grid.innerHTML = '<div class="directory-empty">Erro ao carregar palestrantes. Tente recarregar a página.</div>';
+    return;
+  }
+
+  allSpeakers = (data || []).filter(s => s.photo_url && s.photo_url !== PLACEHOLDER_AVATAR).map(s => {
+    const talks = (s.palestras || []).filter(Boolean);
+    // Temas: fonte de verdade = speaker_themes (taxonomia v2); fallback = palestras.theme_id.
+    const themesMap = new Map();
+    (s.speaker_themes || []).forEach(st => {
+      if (st.themes) themesMap.set(st.themes.slug, st.themes);
+    });
+    if (themesMap.size === 0) {
+      talks.forEach(t => { if (t.themes) themesMap.set(t.themes.slug, t.themes); });
+    }
+    const themes = [...themesMap.values()];
+    themes.forEach(t => presentThemeSlugs.add(t.slug));
+
+    // Derivar preco a partir das palestras
+    let derivedPriceMin = s.price_min;
+    let derivedPriceMax = s.price_max;
+    if (talks.length > 0) {
+      const prices = talks.flatMap(t => [t.price_min, t.price_max].filter(Boolean));
+      if (prices.length > 0) {
+        derivedPriceMin = Math.min(...prices);
+        derivedPriceMax = Math.max(...prices);
+      }
+    }
+
+    return {
+      ...s,
+      themes,
+      talks_count: talks.length,
+      derived_price_min: derivedPriceMin,
+      derived_price_max: derivedPriceMax,
+      _rand: Math.random(),   // ordem aleatoria estavel durante a sessao
+    };
+  });
+
+  applyFilters();
+}
+
+// Popula o select de estado SO com as UFs presentes na lista, na ordem
+// canonica de ESTADOS_BR. Um select com 27 opcoes das quais 22 devolvem
+// zero resultados e pior do que nao ter select nenhum.
+function loadStateFilter() {
+  const present = new Set(allSpeakers.map(s => s.state).filter(Boolean));
+  if (present.size === 0) {
+    stateFilter.closest('.filters-field')?.setAttribute('hidden', '');
+    return;
+  }
+  ESTADOS_BR.filter(uf => present.has(uf)).forEach(uf => {
+    const opt = document.createElement('option');
+    opt.value = uf;
+    opt.textContent = uf;
+    stateFilter.appendChild(opt);
+  });
+}
+
+// Renderiza os chips de tema, mantendo apenas os temas que alguem da lista
+// realmente tem. Grupo que ficar vazio nao e criado.
+async function loadThemeFilters() {
+  const { data } = await supabase.from('themes').select('*').order('name');
+  if (!data) return;
+  allThemes = data;
+
+  const onThemeClick = (slug, btn) => {
+    document.querySelectorAll('[data-theme-slug]').forEach(b => b.classList.remove('directory-filter--active'));
+    document.querySelectorAll('[data-season]').forEach(b => b.classList.remove('directory-season--active'));
+    activeCampaignThemes = null;
+    if (activeTheme === slug) {
+      activeTheme = null;
+    } else {
+      activeTheme = slug;
+      btn.classList.add('directory-filter--active');
+    }
+    applyFilters();
+  };
+
+  THEME_GROUPS.forEach(group => {
+    const themes = data.filter(t => t.categoria === group.categoria && presentThemeSlugs.has(t.slug));
+    if (!themes.length) return;
+    const block = document.createElement('details');
+    block.className = 'filter-group';
+    block.open = groupsOpenByDefault;
+    const summary = document.createElement('summary');
+    summary.className = 'filter-group__summary';
+    summary.innerHTML = `<span class="filter-group__title">${escapeHtml(group.title)}</span><span class="filter-group__chevron" aria-hidden="true"></span>`;
+    const chips = document.createElement('div');
+    chips.className = 'filter-group__chips';
+    themes.forEach(theme => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'directory-filter';
+      btn.textContent = theme.name;
+      btn.dataset.themeSlug = theme.slug;
+      btn.addEventListener('click', () => onThemeClick(theme.slug, btn));
+      chips.appendChild(btn);
+    });
+    block.appendChild(summary);
+    block.appendChild(chips);
+    themeGroupsDiv.appendChild(block);
+  });
+}
+
+// Chips de campanha. Alem de exigir que o tema exista no banco (regra do
+// /diretorio/), aqui a campanha so aparece se alguem da lista atende a ela.
+function loadSeasonalFilters() {
+  const wrap = document.getElementById('seasonal-wrap');
+  const container = document.getElementById('seasonal-filters');
+  if (!wrap || !container || !allThemes.length) return;
+
+  const currentMonth = new Date().getMonth() + 1;
+
+  const known = new Set(allThemes.map(t => t.slug));
+  const resolved = SEASONAL_CAMPAIGNS
+    .map(c => ({ ...c, slugs: c.slugs.filter(sl => known.has(sl) && presentThemeSlugs.has(sl)) }))
+    .filter(c => c.slugs.length > 0);
+
+  if (resolved.length === 0) return;
+
+  // Campanhas do mes atual aparecem primeiro.
+  resolved.sort((a, b) => (b.month === currentMonth ? 1 : 0) - (a.month === currentMonth ? 1 : 0));
+
+  resolved.forEach(c => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'directory-season';
+    if (c.month === currentMonth) btn.classList.add('directory-season--now');
+    btn.dataset.season = c.key;
+    btn.style.setProperty('--season-dot', c.dot);
+    btn.textContent = c.label;
+
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-theme-slug]').forEach(b => b.classList.remove('directory-filter--active'));
+      activeTheme = null;
+
+      const isActive = btn.classList.contains('directory-season--active');
+      document.querySelectorAll('[data-season]').forEach(b => b.classList.remove('directory-season--active'));
+
+      if (isActive) {
+        activeCampaignThemes = null;
+      } else {
+        activeCampaignThemes = c.slugs;
+        btn.classList.add('directory-season--active');
+      }
+      applyFilters();
+    });
+
+    container.appendChild(btn);
+  });
+
+  wrap.hidden = false;
+  wrap.open = groupsOpenByDefault;
+}
+
+// "Limpar filtros" — zera busca, estado, preco, tema e campanha
+document.getElementById('clear-filters').addEventListener('click', () => {
+  activeTheme = null;
+  activeCampaignThemes = null;
+  searchInput.value = '';
+  stateFilter.value = '';
+  priceFilter.value = '';
+  document.querySelectorAll('.directory-filter').forEach(b => b.classList.remove('directory-filter--active'));
+  document.querySelectorAll('[data-season]').forEach(b => b.classList.remove('directory-season--active'));
+  applyFilters();
+});
+
+function applyFilters() {
+  const search = searchInput.value.trim().toLowerCase();
+  const stateVal = stateFilter.value;
+  const priceVal = priceFilter.value;
+
+  filteredSpeakers = allSpeakers.filter(s => {
+    // Search filter
+    if (search) {
+      const haystack = `${s.name} ${s.bio || ''} ${s.city || ''} ${s.themes.map(t => t.name).join(' ')}`.toLowerCase();
+      if (!haystack.includes(search)) return false;
+    }
+    // Theme filter (campanha sazonal tem prioridade sobre tema unico)
+    if (activeCampaignThemes) {
+      if (!s.themes.some(t => activeCampaignThemes.includes(t.slug))) return false;
+    } else if (activeTheme) {
+      if (!s.themes.some(t => t.slug === activeTheme)) return false;
+    }
+    // State filter
+    if (stateVal && s.state !== stateVal) return false;
+    // Price filter (usa preco derivado das palestras quando disponivel)
+    if (priceVal) {
+      const [min, max] = priceVal.split('-').map(Number);
+      const pMin = s.derived_price_min || s.price_min;
+      const pMax = s.derived_price_max || s.price_max;
+      if (pMin && pMin > max) return false;
+      if (pMax && pMax < min) return false;
+      if (!pMin && !pMax) return false;
+    }
+    return true;
+  });
+
+  // Ranking: selo de curadoria primeiro; dentro de cada grupo, ordem aleatoria
+  // estavel na sessao — o topo varia a cada carregamento.
+  filteredSpeakers.sort((a, b) => {
+    const sealDiff = (b.has_seal ? 1 : 0) - (a.has_seal ? 1 : 0);
+    if (sealDiff !== 0) return sealDiff;
+    return a._rand - b._rand;
+  });
+
+  displayCount = PAGE_SIZE;
+  renderResults();
+}
+
+function renderResults() {
+  const total = filteredSpeakers.length;
+  if (resultsCount) {
+    resultsCount.textContent = total === 1
+      ? '1 palestrante habilitado'
+      : `${total} palestrantes habilitados`;
+  }
+
+  const toShow = filteredSpeakers.slice(0, displayCount);
+
+  if (toShow.length === 0) {
+    grid.innerHTML = '<div class="directory-empty">Nenhum palestrante encontrado nesta combinação de filtros. Tente ampliar sua busca.</div>';
+    loadMoreWrap.hidden = true;
+    return;
+  }
+
+  grid.innerHTML = toShow.map(s => renderCard(s)).join('');
+  loadMoreWrap.hidden = displayCount >= filteredSpeakers.length;
+}
+
+function renderCard(s) {
+  const photoHtml = `<div class="speaker-card__photo"><img src="${cdnImg(s.photo_url, 360)}" alt="${escapeHtml(s.name)}" loading="lazy" decoding="async"></div>`;
+
+  // Mostra ate 3 temas no card
+  const tagsHtml = s.themes.slice(0, 3).map(t => `<span>${escapeHtml(t.name)}</span>`).join('');
+  const location = [s.city, s.state].filter(Boolean).map(v => escapeHtml(v)).join(', ');
+  // Escudo suprimido: nesta pagina todo mundo tem a flag (ver nota do topo).
+  const badgeHtml = renderBadges({ ...s, public_sector_ready: false });
+  const eliteClass = s.plan === 'elite' ? ' speaker-card--elite' : '';
+  const talksLabel = s.talks_count > 0
+    ? `<span class="speaker-card__talks">${s.talks_count} palestra${s.talks_count > 1 ? 's' : ''}</span>`
+    : '';
+
+  // Preco: "A partir de R$ X" quando ha valor; senao o texto retornado (ex.: "Sob consulta").
+  const priceStr = formatPriceRange(s.derived_price_min, s.derived_price_max) || 'Sob consulta';
+  const hasPrice = !/sob consulta/i.test(priceStr);
+  const priceHtml = hasPrice
+    ? `<span class="speaker-card__price-label">A partir de</span><span class="speaker-card__price-value">${priceStr}</span>`
+    : `<span class="speaker-card__price-value">${priceStr}</span>`;
+
+  return `
+    <a href="/palestrante/?slug=${escapeHtml(s.slug)}" class="speaker-card${eliteClass}">
+      ${photoHtml}
+      <div class="speaker-card__body">
+        <div class="speaker-card__head">
+          <span class="speaker-card__name">${escapeHtml(s.name)}</span>
+          ${badgeHtml}
+        </div>
+        ${location ? `<span class="speaker-card__location">${location}</span>` : ''}
+        <div class="speaker-card__tags">${tagsHtml}</div>
+        <div class="speaker-card__meta">
+          ${talksLabel}
+          <span class="speaker-card__rating">&#9733; ${s.rating || '5.0'}</span>
+        </div>
+        <div class="speaker-card__bottom">
+          <span class="speaker-card__price">${priceHtml}</span>
+          <span class="speaker-card__arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+        </div>
+      </div>
+    </a>
+  `;
+}
+
+// Event listeners
+searchInput.addEventListener('input', debounce(applyFilters, 300));
+stateFilter.addEventListener('change', applyFilters);
+priceFilter.addEventListener('change', applyFilters);
+loadMoreBtn.addEventListener('click', () => {
+  displayCount += PAGE_SIZE;
+  renderResults();
+});
+
+function debounce(fn, ms) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), ms);
+  };
+}
+
+// Read URL params on load
+function readURLParams() {
+  const params = new URLSearchParams(window.location.search);
+  const tema = params.get('tema');
+  const q = params.get('q');
+  const campanha = params.get('campanha');
+
+  if (campanha) {
+    const c = SEASONAL_CAMPAIGNS.find(x => x.key === campanha);
+    if (c) { activeCampaignThemes = c.slugs; activeCampaignKey = campanha; }
+  } else if (tema) {
+    activeTheme = tema;
+  }
+  if (q) searchInput.value = q;
+}
+
+// Init — os palestrantes vem PRIMEIRO porque os filtros sao derivados deles.
+readURLParams();
+await fetchAllSpeakers();
+loadStateFilter();
+await loadThemeFilters();
+loadSeasonalFilters();
+
+// Highlight active theme pill from URL
+if (activeTheme) {
+  const pill = document.querySelector(`[data-theme-slug="${activeTheme}"]`);
+  if (pill) pill.classList.add('directory-filter--active');
+}
+// Highlight active campaign chip from ?campanha=
+if (activeCampaignKey) {
+  const chip = document.querySelector(`[data-season="${activeCampaignKey}"]`);
+  if (chip) chip.classList.add('directory-season--active');
+}
+  </script>
+</body>
+</html>

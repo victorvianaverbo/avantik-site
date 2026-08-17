@@ -1,0 +1,907 @@
+/* ==========================================================
+   THEME NOIR — identidade visual escura editorial (Avantik)
+   Grafite #101113 + dourado champanhe #CBA35C/#E3C078
+   Playfair Display (títulos) + Archivo (texto)
+   Carregado APENAS pelas páginas com <body class="theme-noir">,
+   sempre DEPOIS do style.css. Nenhuma regra aqui afeta páginas
+   sem a classe.
+   ========================================================== */
+
+/* ---------- 1. Tokens ---------- */
+
+body.theme-noir {
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Archivo', sans-serif;
+
+  --color-bg: #101113;
+  --color-text: #F0ECE3;
+  --color-text-secondary: #B4B0A7;
+  --color-text-muted: #8B8880;
+  --color-primary: #CBA35C;
+  --color-primary-light: #E3C078;
+  --color-accent: #CBA35C;
+  --color-accent-hover: #E3C078;
+  --color-accent-light: rgba(203, 163, 92, 0.10);
+  --color-surface: #16171A;
+  --color-border: rgba(255, 255, 255, 0.10);
+  --color-muted-bg: rgba(255, 255, 255, 0.05);
+  --color-dark: #101113;
+  --color-dark-surface: #1A1B1E;
+  --color-dark-border: rgba(255, 255, 255, 0.08);
+
+  /* Tons noir compartilhados */
+  --noir-gold: #CBA35C;
+  --noir-gold-bright: #E3C078;
+  --noir-gold-deep: #9E7B3E;
+  --noir-gold-grad: linear-gradient(120deg, #E3C078, #C9A24B);
+  --noir-card-grad: linear-gradient(170deg, #1A1B1E, #141518);
+  --noir-cream-grad: linear-gradient(180deg, #F4F0E7, #EDE7D9);
+  --noir-cream-card: #FBF8F1;
+  --noir-cream-border: rgba(158, 123, 62, 0.3);
+
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Fio dourado no topo da página (assinatura da identidade) */
+body.theme-noir::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(203, 163, 92, 0.55), transparent);
+  z-index: 1001;
+  pointer-events: none;
+}
+
+body.theme-noir ::selection {
+  background: rgba(203, 163, 92, 0.35);
+  color: #F0ECE3;
+}
+
+body.theme-noir h1,
+body.theme-noir h2,
+body.theme-noir h3.hero__card-name {
+  letter-spacing: -0.01em;
+}
+
+/* ---------- 2. Botões ---------- */
+
+.theme-noir .btn,
+.theme-noir .btn--sm,
+.theme-noir .btn--lg {
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+}
+
+.theme-noir .btn--accent {
+  background: var(--noir-gold-grad);
+  color: #17130A;
+  box-shadow: 0 8px 28px rgba(203, 163, 92, 0.22);
+}
+
+.theme-noir .btn--accent:hover {
+  background: var(--noir-gold-grad);
+  color: #17130A;
+  box-shadow: 0 10px 34px rgba(203, 163, 92, 0.35);
+}
+
+/* ---------- 3. Header ---------- */
+
+.theme-noir .header--scrolled {
+  background: rgba(16, 17, 19, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Logo antigo mantido; sobre fundo escuro segue o tratamento branco já usado no site */
+.theme-noir .header--scrolled .header__logo-img {
+  filter: brightness(0) invert(1);
+}
+
+.theme-noir .header--scrolled .header__link {
+  color: var(--color-text-secondary);
+}
+
+.theme-noir .header--scrolled .header__link:hover {
+  color: var(--noir-gold-bright);
+}
+
+.theme-noir .header__link:hover {
+  color: var(--noir-gold-bright);
+}
+
+.theme-noir .header--scrolled .btn--outline {
+  color: #F0ECE3;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-noir .header--scrolled .btn--outline:hover {
+  border-color: rgba(203, 163, 92, 0.6);
+  color: var(--noir-gold-bright);
+  background: rgba(203, 163, 92, 0.08);
+}
+
+.theme-noir .header .btn--accent,
+.theme-noir .header--scrolled .btn--accent {
+  background: transparent;
+  color: var(--noir-gold-bright);
+  border: 1px solid rgba(203, 163, 92, 0.45);
+  box-shadow: none;
+}
+
+.theme-noir .header .btn--accent:hover,
+.theme-noir .header--scrolled .btn--accent:hover {
+  background: rgba(203, 163, 92, 0.08);
+  border-color: var(--noir-gold-bright);
+  color: var(--noir-gold-bright);
+}
+
+/* User menu (estado logado, injetado pelo script.js) */
+.theme-noir .header--scrolled .user-menu__trigger {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #F0ECE3;
+}
+
+.theme-noir .header--scrolled .user-menu__trigger:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(203, 163, 92, 0.45);
+}
+
+.theme-noir .header--scrolled .user-menu__chevron {
+  color: #8B8880;
+}
+
+.theme-noir .user-menu__panel {
+  background: #1A1B1E;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  border-radius: 6px;
+}
+
+.theme-noir .header__mobile {
+  background: rgba(16, 17, 19, 0.98);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.theme-noir .header__mobile-link {
+  color: #F0ECE3;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.theme-noir .header__burger span {
+  background: #F0ECE3;
+}
+
+/* ---------- 4. Hero ---------- */
+
+.theme-noir .hero {
+  background: var(--color-bg);
+  background-image:
+    radial-gradient(1200px 600px at 75% -10%, rgba(203, 163, 92, 0.10), transparent 60%),
+    linear-gradient(175deg, #16171A 0%, #101113 100%);
+}
+
+.theme-noir .hero__eyebrow {
+  color: var(--noir-gold);
+  letter-spacing: 0.28em;
+  font-weight: 600;
+  /* O fio noir tem 2.25rem; o padding base (2rem) e menor e o traco invadia o texto */
+  padding-left: 3rem;
+}
+
+.theme-noir .hero__eyebrow::before {
+  background: var(--noir-gold);
+  width: 2.25rem;
+  height: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 0;
+}
+
+.theme-noir .hero__title-line {
+  font-size: clamp(2.75rem, 5.4vw, 4.75rem);
+  font-weight: 400;
+  color: #F0ECE3;
+  line-height: 1.06;
+}
+
+.theme-noir .hero__title-accent {
+  font-size: clamp(3.25rem, 6.4vw, 5.75rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  background: linear-gradient(100deg, #E3C078 10%, #CBA35C 45%, #9E7B3E 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.theme-noir .hero__tab--active {
+  color: #F0ECE3;
+}
+
+.theme-noir .hero__subtitle {
+  color: #B4B0A7;
+  font-weight: 300;
+}
+
+/* Trust: colunas com fio dourado à esquerda (mosaico editorial) */
+.theme-noir .hero__trust {
+  gap: 0;
+  align-items: stretch;
+}
+
+.theme-noir .hero__trust-item {
+  border-left: 1px solid rgba(203, 163, 92, 0.25);
+  padding: 0.125rem clamp(1.25rem, 2.6vw, 2.25rem);
+  gap: 0.25rem;
+}
+
+.theme-noir .hero__trust-divider {
+  display: none;
+}
+
+.theme-noir .hero__trust-number {
+  font-size: 1.875rem;
+  color: var(--noir-gold-bright);
+}
+
+.theme-noir .hero__trust-label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: #8B8880;
+}
+
+/* Visual do hero */
+.theme-noir .hero__blob--1 {
+  background: radial-gradient(circle, rgba(203, 163, 92, 0.16), transparent 70%);
+}
+
+.theme-noir .hero__blob--2 {
+  background: radial-gradient(circle, rgba(203, 163, 92, 0.07), transparent 70%);
+}
+
+.theme-noir .hero__card {
+  background: linear-gradient(165deg, #212226, #191A1D);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+.theme-noir .hero__card--front {
+  border-color: rgba(203, 163, 92, 0.22);
+}
+
+.theme-noir .hero__card-avatar {
+  background: linear-gradient(135deg, #2B2C31, #1C1D20);
+  border: 1px solid rgba(203, 163, 92, 0.4);
+}
+
+.theme-noir .hero__card-avatar--alt {
+  background: linear-gradient(135deg, #26272B, #1B1C1F);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.theme-noir .hero__card-name {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 1.1875rem;
+}
+
+.theme-noir .hero__card-role {
+  color: #8B8880;
+}
+
+.theme-noir .hero__card-tags span {
+  background: transparent;
+  border: 1px solid rgba(203, 163, 92, 0.3);
+  color: var(--noir-gold);
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.theme-noir .hero__card-rating {
+  color: var(--noir-gold-bright);
+}
+
+.theme-noir .hero__float-tag {
+  background: rgba(24, 25, 28, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #CFCBC2;
+  border-radius: 99px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.theme-noir .hero__float-tag--1 {
+  border-color: rgba(203, 163, 92, 0.3);
+  color: var(--noir-gold-bright);
+}
+
+/* ---------- 5. Como funciona (banda creme) ---------- */
+
+.theme-noir .how {
+  --color-text: #1C1D20;
+  --color-text-secondary: #5C594F;
+  --color-text-muted: #8B8478;
+  --color-accent: #9E7B3E;
+  --color-accent-hover: #7E5F2C;
+  --color-border: rgba(158, 123, 62, 0.3);
+  background: var(--noir-cream-grad);
+  border-top: 1px solid rgba(158, 123, 62, 0.3);
+  border-bottom: 1px solid rgba(158, 123, 62, 0.2);
+}
+
+.theme-noir .how__label {
+  letter-spacing: 0.28em;
+  font-weight: 600;
+}
+
+/* Passos em mosaico: gap de 1px dourado, cartões creme */
+.theme-noir .how__steps {
+  gap: 1px;
+  background: var(--noir-cream-border);
+  border: 1px solid var(--noir-cream-border);
+}
+
+.theme-noir .how__step {
+  background: var(--noir-cream-card);
+  padding: clamp(1.75rem, 3vw, 2.75rem);
+}
+
+.theme-noir .how__step-number-wrap {
+  margin-bottom: 1rem;
+}
+
+.theme-noir .how__step-number {
+  opacity: 1;
+  color: rgba(158, 123, 62, 0.65);
+  font-size: clamp(2.5rem, 4vw, 2.75rem);
+}
+
+.theme-noir .how__step-line {
+  display: none;
+}
+
+.theme-noir .how__step-title {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 1.375rem;
+}
+
+.theme-noir .how__step-text {
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .theme-noir .how__step {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+/* ---------- 6. Categorias ---------- */
+
+.theme-noir .categories {
+  background: var(--color-bg);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(203, 163, 92, 0.05) 0%, transparent 50%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theme-noir .categories__label {
+  letter-spacing: 0.28em;
+  font-weight: 600;
+}
+
+.theme-noir .categories__title {
+  color: #F0ECE3;
+}
+
+.theme-noir .categories__subtitle {
+  color: #A9A69E;
+  font-weight: 300;
+}
+
+.theme-noir .categories__card {
+  background: var(--noir-card-grad);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 4px;
+}
+
+.theme-noir .categories__card:hover {
+  border-color: rgba(203, 163, 92, 0.55);
+  box-shadow: 0 0 0 1px rgba(203, 163, 92, 0.15), 0 8px 32px rgba(203, 163, 92, 0.08);
+}
+
+.theme-noir .categories__card::after {
+  background: var(--noir-gold);
+  height: 2px;
+}
+
+.theme-noir .categories__name {
+  font-weight: 500;
+  color: #F0ECE3;
+}
+
+.theme-noir .categories__count {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #77746D;
+}
+
+.theme-noir .categories__cta {
+  color: var(--noir-gold);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.theme-noir .categories__cta:hover {
+  color: var(--noir-gold-bright);
+}
+
+/* ---------- 7. Palestrantes (carrossel) ---------- */
+
+.theme-noir .speakers {
+  background: var(--color-bg);
+}
+
+.theme-noir .speakers__label {
+  letter-spacing: 0.28em;
+  font-weight: 600;
+}
+
+.theme-noir .speakers__subtitle {
+  font-weight: 300;
+  color: #A9A69E;
+}
+
+.theme-noir .speakers__fade--left {
+  background: linear-gradient(to right, var(--color-bg) 0%, transparent 100%);
+}
+
+.theme-noir .speakers__fade--right {
+  background: linear-gradient(to left, var(--color-bg) 0%, transparent 100%);
+}
+
+.theme-noir .speakers__card {
+  background: var(--noir-card-grad);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 4px;
+}
+
+.theme-noir .speakers__card:hover {
+  border-color: rgba(203, 163, 92, 0.45);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+}
+
+.theme-noir .speakers__name {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: #F0ECE3;
+}
+
+.theme-noir .speakers__tags span {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  color: #B4B0A7;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.theme-noir .speakers__bottom {
+  border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+.theme-noir .speakers__rating {
+  color: var(--noir-gold-bright);
+}
+
+.theme-noir .speakers__price {
+  color: #8B8880;
+}
+
+.theme-noir .speakers__arrow {
+  background: #16171A;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #E8E4DC;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.theme-noir .speakers__arrow:hover {
+  background: #1E1F23;
+  border-color: rgba(203, 163, 92, 0.45);
+  color: var(--noir-gold-bright);
+}
+
+/* ---------- 8. Diferenciais (colunas abertas com fio dourado) ---------- */
+
+.theme-noir .why {
+  background: radial-gradient(900px 500px at 20% 0%, rgba(203, 163, 92, 0.07), transparent 60%), #141518;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theme-noir .why::before {
+  display: none;
+}
+
+.theme-noir .why__label {
+  letter-spacing: 0.28em;
+  font-weight: 600;
+}
+
+.theme-noir .why__title {
+  color: #F0ECE3;
+}
+
+.theme-noir .why__deco-line {
+  display: none;
+}
+
+.theme-noir .why__grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.75rem, 3vw, 3rem);
+  row-gap: 2.5rem;
+}
+
+.theme-noir .why__card--1,
+.theme-noir .why__card--2,
+.theme-noir .why__card--3,
+.theme-noir .why__card--4 {
+  grid-column: auto;
+  margin-top: 0;
+}
+
+.theme-noir .why__card {
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(203, 163, 92, 0.35);
+  border-radius: 0;
+  padding: 1.5rem 0 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.theme-noir .why__card:hover {
+  transform: none;
+  box-shadow: none;
+  border-top-color: rgba(203, 163, 92, 0.7);
+}
+
+.theme-noir .why__number {
+  position: static;
+  display: block;
+  font-size: 2.375rem;
+  color: var(--noir-gold);
+  margin-bottom: 1rem;
+}
+
+.theme-noir .why__card.counted .why__number {
+  color: var(--noir-gold);
+}
+
+.theme-noir .why__icon-wrap {
+  display: none;
+}
+
+.theme-noir .why__card-title {
+  color: #F0ECE3;
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+
+.theme-noir .why__card-text {
+  color: #A9A69E;
+  font-size: 0.875rem;
+  font-weight: 300;
+}
+
+@media (max-width: 960px) {
+  .theme-noir .why__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .theme-noir .why__grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
+/* ---------- 9. Sobre (banda creme) ---------- */
+
+.theme-noir .about-home {
+  --color-text: #1C1D20;
+  --color-text-secondary: #5C594F;
+  --color-accent: #9E7B3E;
+  --color-primary: #9E7B3E;
+  --color-surface: #FBF8F1;
+  --color-border: rgba(158, 123, 62, 0.3);
+  background: var(--noir-cream-grad);
+  border-top: 1px solid rgba(158, 123, 62, 0.3);
+  border-bottom: 1px solid rgba(158, 123, 62, 0.2);
+}
+
+.theme-noir .about-home__label {
+  letter-spacing: 0.28em;
+  font-weight: 600;
+}
+
+/* Números em mosaico creme com gap dourado */
+.theme-noir .about-home__numbers {
+  gap: 1px;
+  background: var(--noir-cream-border);
+  border: 1px solid var(--noir-cream-border);
+}
+
+.theme-noir .about-home__numbers li {
+  border: none;
+  border-radius: 0;
+  background: var(--noir-cream-card);
+  text-align: left;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.theme-noir .about-home__num {
+  color: var(--noir-gold-deep);
+}
+
+.theme-noir .about-home__numbers span {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  color: #6E6B64;
+}
+
+.theme-noir .about-home__text {
+  font-weight: 300;
+}
+
+/* ---------- 10. Depoimentos ---------- */
+
+.theme-noir .social__wrapper {
+  border-radius: 0;
+  margin: 0;
+  background: #141518;
+  background-image: radial-gradient(ellipse at 20% 30%, rgba(203, 163, 92, 0.05) 0%, transparent 50%);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theme-noir .social__label {
+  color: var(--noir-gold);
+  letter-spacing: 0.28em;
+  font-weight: 600;
+}
+
+.theme-noir .social__title {
+  color: #F0ECE3;
+}
+
+.theme-noir .social__title-accent {
+  background: linear-gradient(135deg, #E3C078, #CBA35C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-noir .social__main-glow {
+  background: radial-gradient(ellipse at 50% 50%, rgba(203, 163, 92, 0.12) 0%, transparent 65%);
+}
+
+.theme-noir .social__main-video-inner {
+  border-radius: 6px;
+}
+
+.theme-noir .social__thumb {
+  border-radius: 4px;
+}
+
+.theme-noir .social__thumb--active {
+  border-color: rgba(203, 163, 92, 0.45);
+  box-shadow: 0 0 24px rgba(203, 163, 92, 0.15);
+}
+
+.theme-noir .social__thumb--active .social__thumb-overlay {
+  background: rgba(203, 163, 92, 0.15);
+}
+
+/* ---------- 11. Clientes e parceiros ---------- */
+
+.theme-noir .clients {
+  background: var(--color-bg);
+}
+
+.theme-noir .clients__icon {
+  display: none;
+}
+
+.theme-noir .clients__title {
+  color: #77746D;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+/* Placa creme por logo. Necessario porque a colecao mistura dois tipos de arquivo:
+   wordmarks de tinta escura com fundo transparente (invisiveis direto no grafite)
+   e logos-selo com fundo proprio solido (ex.: contabilidade, crie), que um filtro
+   de monocromatico transformaria em blocos chapados. A placa clara resolve os dois
+   e conversa com as bandas creme da identidade. */
+.theme-noir .clients__logo {
+  background: var(--noir-cream-card);
+  border: 1px solid var(--noir-cream-border);
+  border-radius: 4px;
+}
+
+.theme-noir .clients__logo:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(203, 163, 92, 0.55);
+}
+
+/* Parede de parceiros monocromatica: os 22 arquivos foram medidos e a colecao e
+   mista — 16 tem tinta escura (aparecem na placa creme) e 6 tem tinta clara
+   (sumiriam nela). Os 6 claros sao invertidos para virar marca escura tambem,
+   deixando a faixa inteira coerente. Sem tocar nos PNGs. */
+.theme-noir .clients__logo img {
+  filter: grayscale(1);
+  opacity: 0.68;
+  transition: opacity 400ms;
+}
+
+.theme-noir .clients__logo img[src*="contabilidade"],
+.theme-noir .clients__logo img[src*="empreender"],
+.theme-noir .clients__logo img[src*="ourominas"],
+.theme-noir .clients__logo img[src*="prefeitura-contagem"],
+.theme-noir .clients__logo img[src*="sbt"],
+.theme-noir .clients__logo img[src*="unisv"] {
+  filter: grayscale(1) invert(1);
+}
+
+.theme-noir .clients__logo:hover img {
+  opacity: 1;
+}
+
+/* ---------- 12. CTA final (full-bleed, sem card) ---------- */
+
+.theme-noir .cta-final {
+  background:
+    radial-gradient(800px 400px at 50% 0%, rgba(203, 163, 92, 0.12), transparent 65%),
+    linear-gradient(180deg, #16171A, #101113);
+  border-top: 1px solid rgba(203, 163, 92, 0.2);
+}
+
+.theme-noir .cta-final__card {
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+  max-width: 860px;
+  padding: clamp(1rem, 2vw, 2rem) 0;
+}
+
+.theme-noir .cta-final__particle {
+  display: none;
+}
+
+.theme-noir .cta-final__tabs {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-noir .cta-final__tab--active {
+  color: #F0ECE3;
+}
+
+.theme-noir .cta-final__title {
+  font-size: clamp(2.125rem, 4vw, 3.5rem);
+  color: #F0ECE3;
+  line-height: 1.12;
+}
+
+.theme-noir .cta-final__text {
+  color: #A9A69E;
+  font-weight: 300;
+}
+
+.theme-noir .cta-final__btn {
+  border-radius: 2px;
+  animation: none;
+  box-shadow: 0 8px 28px rgba(203, 163, 92, 0.25);
+}
+
+.theme-noir .cta-final__btn:hover {
+  box-shadow: 0 10px 34px rgba(203, 163, 92, 0.4);
+}
+
+/* ---------- 13. Footer ---------- */
+
+.theme-noir .footer {
+  background: #0D0E10;
+  background-image: none;
+}
+
+.theme-noir .footer::before {
+  background: linear-gradient(90deg, transparent, rgba(203, 163, 92, 0.5), transparent);
+}
+
+.theme-noir .footer__col-title {
+  color: #77746D;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+}
+
+.theme-noir .footer__desc {
+  color: #8B8880;
+  font-weight: 300;
+}
+
+.theme-noir .footer__links a,
+.theme-noir .footer__contact-item {
+  color: #B4B0A7;
+  font-size: 0.875rem;
+}
+
+.theme-noir .footer__links a:hover,
+.theme-noir .footer__contact-item:hover {
+  color: var(--noir-gold-bright);
+}
+
+.theme-noir .footer__socials a:hover {
+  color: var(--noir-gold-bright);
+}
+
+/* WhatsApp vira link dourado editorial */
+.theme-noir .footer__whatsapp {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  color: var(--noir-gold);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.theme-noir .footer__whatsapp:hover {
+  background: transparent;
+  color: var(--noir-gold-bright);
+}
+
+.theme-noir .footer__whatsapp svg {
+  fill: currentColor;
+}
+
+/* ---------- Reveals editoriais (AOS) ----------
+   Curso menor + duracao maior = movimento discreto e elegante.
+   No mobile, fade-left/right viram fade vertical: os 100px horizontais
+   padrao do AOS estouravam o viewport (scroll horizontal / pagina bamba). */
+body.theme-noir [data-aos='fade-up'] { transform: translate3d(0, 28px, 0); }
+body.theme-noir [data-aos='fade-down'] { transform: translate3d(0, -28px, 0); }
+body.theme-noir [data-aos='fade-left'] { transform: translate3d(36px, 0, 0); }
+body.theme-noir [data-aos='fade-right'] { transform: translate3d(-36px, 0, 0); }
+body.theme-noir [data-aos^='zoom'] { transform: scale(0.97); }
+
+@media (max-width: 900px) {
+  body.theme-noir [data-aos='fade-left'],
+  body.theme-noir [data-aos='fade-right'] { transform: translate3d(0, 24px, 0); }
+  body.theme-noir [data-aos='fade-up'],
+  body.theme-noir [data-aos='fade-down'] { transform: translate3d(0, 24px, 0); }
+}
+
+/* Estado revelado: sempre volta ao lugar (mantem o contrato do aos.css) */
+body.theme-noir [data-aos].aos-animate { transform: translate3d(0, 0, 0); }
+body.theme-noir [data-aos^='zoom'].aos-animate { transform: scale(1); }
