@@ -25,7 +25,7 @@
   to = "/404.html"
   status = 404
   force = true
-# Paginas aposentadas guardadas para consulta (o repo nao esta sob git).
+# Paginas aposentadas guardadas para consulta.
 # Ex.: setor-publico-recrutamento.html, a landing que precedeu o banco da vertical.
 [[redirects]]
   from = "/_arquivo/*"
@@ -59,6 +59,14 @@
   force = true
 [[redirects]]
   from = "/corrigir-slugs-palestras.js"
+  to = "/404.html"
+  status = 404
+  force = true
+# Scripts one-shot que reescreveram HTML em massa (pixel, header do setor
+# publico). Ficam versionados como registro do que foi tocado, mas o publish
+# e a raiz do repo — sem esta regra eles sao servidos na web.
+[[redirects]]
+  from = "/patch-*"
   to = "/404.html"
   status = 404
   force = true
